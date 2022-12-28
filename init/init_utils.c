@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 20:17:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 21:18:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ int	skip_spaces(char *to_parse, int i)
 	return (i);
 }
 
-int	count_words(int index, char *to_parse)
+int	count_words(char *to_parse)
 {
 	size_t	i;
 	int		length;
 	
 	i = -1;
 	length = 0;
-	(void)index;
 	while (to_parse[++i])
 	{
 		while (to_parse[i] && to_parse[i] == ' ')

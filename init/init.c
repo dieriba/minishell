@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 20:51:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 21:08:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ size_t	how_many_cmds(char *to_process)
 	size_t	i;
 	size_t	count;
 
-	
 	i = -1;
 	count = 0;
 	while (to_process[++i])
@@ -53,48 +52,6 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 	}
 }
 
-void	print_tab(char **tab)
-{
-	size_t	i;
-
-	i = -1;
-	if (!tab)
-	{
-		printf("No args\n");
-		return ;
-	}
-	while (tab[++i])
-		printf("%s | ", tab[i]);
-}
-
-void	print_struct(t_cmd **cmds)
-{
-	int	i;
-	
-	i = -1;
-	while (cmds[++i])
-	{
-		printf("Commande Numéro : %d\n", i + 1);
-		printf("\nCommande : %s\n", cmds[i] -> cmd);
-		printf("\nCommande Args : \n");
-		print_tab(cmds[i] -> args);
-		printf("\nInfile : \n");
-		print_tab(cmds[i] -> in);
-		printf("\nOutfile : \n");
-		print_tab(cmds[i] -> out);
-		printf("\nHere_Doc : \n");
-		print_tab(cmds[i] -> in_here_doc);
-		printf("\nOUt_append : \n");
-		print_tab(cmds[i] -> out_append);
-		if (cmds[i] -> stop == 0)
-			printf("\nPas de symbole donc seule commande \n");
-		else
-			printf("\nSymbole :%c \n", cmds[i] -> stop);
-		if (cmds[i + 1])
-			printf("---------------------------------\n");
-	}
-}
-
 void	init_cmd(t_data *data, char *to_process)
 {
 	size_t	i;
@@ -103,13 +60,11 @@ void	init_cmd(t_data *data, char *to_process)
 	j = -1;
 	i = how_many_cmds(to_process);
 	data -> cmds = ft_calloc(sizeof(t_cmd *), i + 1);
-	//if (!data -> cmd)
-		//exit function;
+	is_error(data, data -> cmds, MALLOC_ERR);
 	while (++j < i)
 	{
 		data -> cmds[j] = ft_calloc(sizeof(t_cmd), 1);
-		//if (!data -> cmd[i])
-			//exit funct;
+		is_error(data, data -> cmds, MALLOC_ERR);
 		data -> cmds[j] -> data = data;
 		data -> cmds[j] -> index = j + 1;
 	}

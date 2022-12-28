@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:28:27 by dtoure           ###   ########.fr       */
+/*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
+/*   Updated: 2022/12/28 22:30:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+/*char	*get_path(t_data *data, char *var)
 {
-	t_data	*data;
-	
-	(void)argc;
-	(void)argv;
-	data = ft_calloc(sizeof(t_data), 1);
-	is_error(data, data, MALLOC_ERR);
-	set_env(data, envp);
-	init_cmd(data, argv[1]);
-	free_all(data);
+	char	*res;
+		
+	return (res);	
+}*/
+
+void	set_env(t_data *data, char **envp)
+{
+	data -> env = ft_calloc(sizeof(t_env), 1);
+	is_error(data, data -> env, MALLOC_ERR);
+	create_list(data, envp);
+	print_env(data -> env -> start);
 }

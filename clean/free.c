@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 20:44:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 22:20:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_cmd(t_cmd **cmds)
 	size_t	i;
 
 	i = -1;
+	if (!cmds)
+		return ;
 	while (cmds[++i])
 	{
 		if (cmds[i] -> args)
@@ -34,15 +36,16 @@ void	free_cmd(t_cmd **cmds)
 	free(cmds);
 }
 
-void	free_list(t_line **head)
+void	free_list(t_env *env, t_node **head)
 {
-	t_line	*next;
-	t_line	*node;
+	t_node	*next;
+	t_node	*node;
 
+	if (!head)
+		return ;
 	node =  (*head);
 	while (node)
 	{
-		free(node -> line);
 		node -> line = NULL;
 		next = node -> next;
 		node -> next = NULL;
@@ -51,4 +54,12 @@ void	free_list(t_line **head)
 		node = next;
 	}
 	(*head) = NULL;
+	free(env);
+}
+
+void	free_all(t_data *data)
+{
+	free_list(data -> env, &data -> env -> start);
+	free_cmd(data -> cmds);
+	free(data);
 }

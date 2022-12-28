@@ -12,20 +12,24 @@
 # define R_COMBO "<>"
 # define STOP	"|& "
 # define STOP_	"|&"
-typedef struct t_line	t_line;
+# define STOP_CMD "|&<>"
+# define MALLOC_ERR "Sorry, no memory enough left for you."
+# define ENV_ERR "Sorry, no environnement variable avaible right now."
+
+typedef struct t_node	t_node;
 typedef struct t_data	t_data;
 
-typedef struct t_line
+typedef struct t_node
 {
     char	*line;
-	t_line	*next;
-	t_line	*prev;
-}	t_line;
+	t_node	*next;
+	t_node	*prev;
+}	t_node;
 
 typedef struct t_env
 {
-	t_line	*first;
-	t_line	*last;
+	t_node	*start;
+	t_node	*last;
 	t_data	*data;
 }	t_env;
 
@@ -55,21 +59,30 @@ typedef struct t_data
 	int		pipes[2];
 }t_data;
 
+/*-----------------DEBUG_UTILS-----------------*/
+void	print_tab(char **tab, char *name);
+void	print_struct(t_cmd **cmds);
+void	print_env(t_node *node);
+/*-----------------DEBUG_UTILS-----------------*/
+
 /*-----------------INITIALIZATION_UTILS-----------------*/
 int		skip_spaces(char *to_parse, int i);
-int		count_words(int length, char *to_parse);
+int		count_words(char *to_parse);
+void	create_list(t_data *data, char **envp);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/
 void	init_cmd(t_data *data, char *to_process);
+void	set_env(t_data *data, char **envp);
 void	set_commands(t_cmd *cmd, char *to_parse);
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect);
 void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect);
 /*-----------------INITIALIZATION-----------------*/
 
 /*-----------------FREE_STRUCT-----------------*/
-void	free_list(t_line **head);
+void	free_list(t_env *env, t_node **head);
 void	free_cmd(t_cmd **cmds);
+void	free_all(t_data *data);
 /*-----------------FREE_STRUCT-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/

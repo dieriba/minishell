@@ -1,10 +1,13 @@
-SRCS		= minishell.c
+SRCS		= 	minishell.c \
+				print.c
 
 SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_files.c \
 				./init/init.c \
 				./init/init_utils.c \
 				./init/init_redirection.c \
+				./init/env.c \
+				./init/env_utils.c
 
 SRCS_ERROR	=	./error/error_handling.c
 
