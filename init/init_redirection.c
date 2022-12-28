@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_files.c                                       :+:      :+:    :+:   */
+/*   init_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 19:04:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 18:39:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@ static int	skip_to_redirect(char *to_parse, char redirect, size_t i)
 {
 	while (to_parse[++i])
 	{
-		if  (to_parse[i] == redirect && to_parse[i + 1] != redirect)
+		if  (to_parse[i] == redirect && to_parse[i + 1] == redirect)
 		{
-			i++;
+			i += 2;
 			while (to_parse[i] && to_parse[i] == ' ')
 				i++;
 			return (i);
@@ -37,11 +37,7 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 	i = -1;
 	while (to_parse[++i] && !ft_strchr(STOP_, to_parse[i]))
 	{
-		if ((i > 0) && (to_parse[i] == redirect
-			&& to_parse[i - 1] != redirect && to_parse[i + 1] != redirect))
-			k++;
-		else if (i == 0 && to_parse[i] == redirect 
-			&& to_parse[i + 1] != redirect)
+		if (to_parse[i] == redirect && to_parse[i + 1] == redirect)
 			k++;
 	}
 	if (ft_strchr(STOP_, to_parse[i]))
@@ -79,28 +75,26 @@ static void	set_tabs(char **redirection, char *to_parse, char redirect, int leng
 	}
 }
 
-void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect)
+void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect)
 {
 	char	**redirection;
 	int		length;
-	length = find_tab_length(cmd, to_parse, redirect);
+	
+	length = find_tab_length(cmd, to_parse, redirect[0]);
 	if (length == -1)
 		return ;
-	(void)redirection;
 	redirection = ft_calloc(sizeof(char *), length + 1);
 	//if (!redirection)
 	//	exit function;	
-	set_tabs(redirection, to_parse, redirect, length);
-	if (redirect == R_IN)
+	set_tabs(redirection, to_parse, redirect[0], length);
+	if (redirect[0] == R_IN)
 	{
-		cmd -> in = redirection;
-		cmd -> data -> in_redirection = length;
-		cmd -> last_in = redirection[--length];
+		cmd -> in_here_doc = redirection;
+		cmd -> data -> in_redirection += length;
 	}
 	else
 	{
-		cmd -> out = redirection;
-		cmd -> data -> out_redirection = length;
-		cmd -> last_out = redirection[--length];
+		cmd -> out_append = redirection;
+		cmd -> data -> out_redirection += length;
 	}
 }

@@ -1,14 +1,26 @@
-SRCS	=     ./init/init_cmds.c \
-              ./init/init_files.c \
-			  ./init/init.c \
-			  ./init/init_utils.c \
-			  minishell.c
+SRCS		= minishell.c
+
+SRCS_INIT	=	./init/init_cmds.c \
+				./init/init_files.c \
+				./init/init.c \
+				./init/init_utils.c \
+				./init/init_redirection.c \
+
+SRCS_ERROR	=	./error/error_handling.c
+
+SRCS_CLEAN	=	./clean/free.c
 
 INCLUDES	= 	-I ./includes
 
-OBJS		= 	$(SRCS:.c=.o)
+OBJS		= 	$(SRCS:.c=.o) \
+				$(SRCS_INIT:.c=.o) \
+				$(SRCS_ERROR:.c=.o) \
+				$(SRCS_CLEAN:.c=.o) \
 
-DEPS		= 	$(SRCS:.c=.d)
+DEPS		= 	$(SRCS:.c=.d) \
+				$(SRCS_INIT:.c=.d) \
+				$(SRCS_ERROR:.c=.d) \
+				$(SRCS_CLEAN:.c=.d) \
 
 CC			=	cc
 

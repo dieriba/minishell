@@ -6,20 +6,27 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 17:26:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 20:50:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_err_and(t_data *data)
+void	free_all(t_data *data)
 {
-	free_all(data);
-	perror("Error");
+	free_list(&data -> env -> first);
+	free_cmd(data -> cmds);
 }
 
-void	is_error(t_data *data, void *elem)
+void	print_err_and(t_data *data, char *err_msg)
+{
+	if (!errno)
+		perror("Error");
+	free_all(data);
+}
+
+void	is_error(t_data *data, void *elem, char *err_msg)
 {
 	if (!elem)
-		print_err_and_exit(data);
+		print_err_and_exit(data, err_msg);
 }
