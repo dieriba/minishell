@@ -1,43 +1,48 @@
-SRCS		=   ./srcs/initialization.c \
-				./srcs/philo.c \
-				./srcs/threading.c \
-				./srcs/state.c \
-				./srcs/death.c \
-				./srcs/time.c \
-				./srcs/mutex.c \
-				./srcs/print.c \
-				./srcs/syscall.c \
-				./srcs/routine.c \
-				./srcs/lib.c \
+SRCS	=     ./init/init_cmds.c \
+              ./init/init_files.c \
+			  ./init/init.c \
+			  minishell.c
 
-OBJS		= $(SRCS:.c=.o)
+INCLUDES	= 	-I ./includes
 
-DEPS		= $(SRCS:.c=.d)
+OBJS		= 	$(SRCS:.c=.o)
+
+DEPS		= 	$(SRCS:.c=.d)
 
 CC			=	cc
 
-CFLAGS		=	-Wall -Wextra -Werror -MMD
+CFLAGS		=   -Wall -Wextra -Werror -MMD
 
-PHILO		=	philo
+MINISHELL	=	minishell
 
-all:		$(PHILO)
+all:			$(MINISHELL)
 
 .c.o :	
-			$(CC) -g3 $(CFLAGS) -c $< -o $@
+				$(CC) -g3 $(CFLAGS) -c $< -o $@
 
-$(PHILO):	${OBJS}
-			$(CC) $(CFLAGS) ${OBJS} -g3 -lpthread -o $(PHILO)
+$(MINISHELL):	${OBJS}
+				make -C ./libft/ft_printf
+				cp ./libft/ft_printf/libprintf.a ./lib
+				make -C ./libft
+				cp ./libft/libft.a ./lib
+				make -C ./libft/get_next_line
+				cp ./libft/get_next_line/libgnl.a ./lib
+				$(CC) $(CFLAGS) ${OBJS} $(INCLUDES) -g3 -L./lib -lft -lprintf -lgnl -o $(MINISHELL)
 
 
 clean:
-			rm -rf $(OBJS)
-			rm -rf $(DEPS)
+				rm -rf $(OBJS)
+				rm -rf $(DEPS)
 			
-fclean:		clean
-			rm -rf $(PHILO)
+fclean:			clean
+				make -C ./libft/ft_printf fclean
+				make -C ./libft/get_next_line fclean
+				make -C ./libft/ fclean
+				rm -rf $(MINISHELL) ./lib/libprintf.a ./lib/libgnl.a ./lib/libft.a 
+				
 
-re:			fclean all
+re:				fclean all
 
--include : $(DEPS)
+-include : 		$(DEPS)
 
-.PHONY:		all clean fclean re
+.PHONY:			all clean fclean re
