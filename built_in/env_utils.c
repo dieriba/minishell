@@ -1,24 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 23:16:16 by dtoure           ###   ########.fr       */
+/*   Created: 2022/12/28 22:58:15 by dtoure            #+#    #+#             */
+/*   Updated: 2022/12/28 23:28:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	export(t_data *data, t_node *prev_last, char *new_var)
+int	check(char *env, char *to_check, size_t size)
 {
-	t_node	*new_last;
+	size_t	i;
 
-	new_last = create_node(data, new_var, 1);
-	is_error(data, new_last, MALLOC_ERR);
-	prev_last -> next = new_last;
-	new_last -> prev = prev_last;
-	data -> env -> last = new_last;
+	i = -1;
+	while ((to_check[++i] && env[++i]) && i < size && (to_check[i] == env[i]))
+		;
+	if (env[i] == '=' && !to_check[i])
+		return (1);
+	return (0);
+}
+
+t_node	*find_var(t_node *node, char *to_find)
+{
+	while (node)
+	{
+		if (node -> line[0] != to_find[0])
+			continue ;
+		if (check(node -> line, to_find, ft_strlen(to_find)))
+			return (node);
+	}
+	return (NULL);
 }

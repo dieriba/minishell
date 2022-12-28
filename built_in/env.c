@@ -6,8 +6,17 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:02:28 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:35:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 23:01:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	env(t_node *node)
+{
+	while (node)
+	{
+		ft_printf("%s\n", node -> line);
+		node = node -> next;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:38:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 23:35:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ void	free_list(t_env *env, t_node **head)
 	node = (*head);
 	while (node)
 	{
-		node -> line = NULL;
 		next = node -> next;
 		node -> next = NULL;
 		node -> prev = NULL;
 		free(node);
+		if (node -> alloc)
+			free(node -> line);
 		node = next;
 	}
 	(*head) = NULL;

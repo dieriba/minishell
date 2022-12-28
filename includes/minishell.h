@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:52:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 23:28:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "../libft/ft_printf/ft_printf.h"
+# include "../libft/get_next_line/get_next_line.h"
 # include <unistd.h>
 # include <errno.h>
 # include <stdio.h>
@@ -34,6 +36,7 @@ typedef struct t_data	t_data;
 typedef struct t_node
 {
 	char	*line;
+	char	alloc;
 	t_node	*next;
 	t_node	*prev;
 }	t_node;
@@ -71,6 +74,11 @@ typedef struct t_data
 	int		pipes[2];
 }t_data;
 
+/*-----------------GLOBAL_UTILS-----------------*/
+t_node	*create_node(t_data *data, char *line, int alloc);
+t_node	*find_var(t_node *node, char *to_find);
+/*-----------------GLOBAL_UTILS-----------------*/
+
 /*-----------------DEBUG_UTILS-----------------*/
 void	print_tab(char **tab, char *name);
 void	print_struct(t_cmd **cmds);
@@ -90,6 +98,14 @@ void	set_commands(t_cmd *cmd, char *to_parse);
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect);
 void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect);
 /*-----------------INITIALIZATION-----------------*/
+
+/*-----------------BUILT_IN_UTILS-----------------*/
+
+/*-----------------BUILT_IN_UTILS-----------------*/
+
+/*-----------------BUILT_IN-----------------*/
+void	env(t_node *node);
+/*-----------------BUILT_IN-----------------*/
 
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);

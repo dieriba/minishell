@@ -6,18 +6,42 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:05:39 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:36:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 23:41:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	unset(t_env *env)
+void	remove_node(t_env *env, t_node *node, char alloc)
 {
-	t_node	*prev;
+	if (node -> prev == NULL)
+	{
+		env -> start = node -> next;
+		node -> next = NULL;
+	}
+	else if (node -> next == NULL)
+	{
+		env -> last = node -> prev;
+		node -> prev = NULL;
+	}
+	else
+	{
+		node -> prev -> next = node -> next;
+		node -> next -> prev = node -> prev;
+		node -> next = NULL;
+		node -> prev = NULL;
+	}
+	free(node);
+	if (alloc)
+		free(node -> line);
+}
 
-	prev = env -> last -> prev;
-	env -> last -> prev = NULL;
-	prev -> next = NULL;
-	env -> last = prev;
+void	unset(t_env *env, char *to_find)
+{
+	t_node	*var;
+
+	var = find_var(env -> data, to_find);
+	if (var == NULL)
+		return ;
+	remove_node(env, var, var -> alloc);
 }
