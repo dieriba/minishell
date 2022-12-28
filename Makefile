@@ -1,6 +1,7 @@
 SRCS	=     ./init/init_cmds.c \
               ./init/init_files.c \
 			  ./init/init.c \
+			  ./init/init_utils.c \
 			  minishell.c
 
 INCLUDES	= 	-I ./includes

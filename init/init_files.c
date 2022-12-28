@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 08:24:32 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 17:10:51 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	skip_to_redirect(char *to_parse, char redirect, size_t i)
 	return (-1);
 }
 
-static int	create_tab(t_cmd *cmd, char *to_parse, char redirect)
+static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 {
 	size_t	i;
 	int		k;
@@ -81,7 +81,7 @@ void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect)
 {
 	char	**redirection;
 	int		length;
-	length = create_tab(cmd, to_parse, redirect);
+	length = find_tab_length(cmd, to_parse, redirect);
 	if (length == -1)
 		return ;
 	(void)redirection;
@@ -90,7 +90,13 @@ void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect)
 	//	exit function;	
 	set_tabs(redirection, to_parse, redirect, length);
 	if (redirect == R_IN)
+	{
 		cmd -> in = redirection;
+		cmd -> data -> in_redirection = length;
+	}
 	else
+	{
 		cmd -> out = redirection;
+		cmd -> data -> out_redirection = length;
+	}
 }

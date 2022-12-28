@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 08:24:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 17:21:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,20 @@
 
 size_t	skip_redirect(char *to_parse, size_t i)
 {
-	int	flags;
-
-	flags = 1;
 	while (1)
 	{
-		while (to_parse[i] && to_parse[i] == ' ')
+		i = skip_spaces(to_parse, i);
+		if (!to_parse[i] || ft_strchr(STOP_, to_parse[i]))
+			return (-1);
+		while (to_parse[i] && !(ft_strchr(STOP, to_parse[i])))
 			i++;
 		if (!to_parse[i] || ft_strchr(STOP_, to_parse[i]))
 			return (-1);
-		while (to_parse[i] && to_parse[i] != ' ')
-			i++;
-		if (!to_parse[i] || ft_strchr(STOP_, to_parse[i]))
-			return (-1);
-		if (!flags && !ft_strchr(R_COMBO, to_parse[i]))
+		i = skip_spaces(to_parse, i);
+		if (!ft_strchr(R_COMBO, to_parse[i]))
 			break ;
-		while (to_parse[i] && to_parse[i] == ' ')
-			i++;
-		if (to_parse[i + 1] && !ft_strchr(R_COMBO, to_parse[i + 1]))
-			break ;
-		flags = 0;
 	}
 	return (i);
-}
-
-static int	create_tab(char *to_parse)
-{
-	int		i;
-	int		k;
-
-	k = 0;
-	i = -1;
-	while (to_parse[++i] && !ft_strchr(STOP_, to_parse[i]))
-	{
-		if (ft_strchr(R_COMBO, to_parse[i]))
-			i = skip_redirect(to_parse, i);
-		if (i == -1)
-			break ;
-		while (to_parse[i] && !ft_strchr(STOP, to_parse[i]) && !ft_strchr(R_COMBO, to_parse[i]))
-			i++;
-		k++;
-		if (ft_strchr(STOP_, to_parse[i]) || !to_parse[i])
-			break ;
-		else if (ft_strchr(R_COMBO, to_parse[i]))
-			i--;
-	}
-	if (!k)
-		return (-1);
-	return (k);
 }
 
 static void	set_tabs(char **cmds, char *to_parse, int length)
@@ -80,6 +46,7 @@ static void	set_tabs(char **cmds, char *to_parse, int length)
 		if (j == -1)
 			break ;
 		k = j;
+		j = skip_spaces(to_parse, j);
 		while (to_parse[j] && !ft_strchr(STOP, to_parse[j]) && !ft_strchr(R_COMBO, to_parse[j]))
 			j++;
 		cmds[i] = ft_calloc(sizeof(char), (j - k + 1));
@@ -97,8 +64,8 @@ void	set_commands(t_cmd *cmd, char *to_parse)
 {
 	int	length;
 
-	length = create_tab(to_parse);
-	if (length == -1)
+	length = count_words(to_parse) - cmd -> data -> in_redirection - cmd -> data -> out_redirection;
+	if (length <= 0)
 		return ;
 	cmd -> args = ft_calloc(sizeof(char *), length + 1);
 	//if (!cmd -> args)

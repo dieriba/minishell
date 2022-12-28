@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 08:19:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 17:13:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	print_tab(char **tab)
 		return ;
 	}
 	while (tab[++i])
-		printf("%s ", tab[i]);
+		printf("%s _ ", tab[i]);
 }
 
 void	print_struct(t_cmd **cmds)
@@ -100,6 +100,7 @@ void	init_cmd(t_data *data, char *to_process)
 		data -> cmd[j] = ft_calloc(sizeof(t_cmd), 1);
 		//if (!data -> cmd[i])
 			//exit funct;
+		data -> cmd[j] -> data = data;
 	}
 	fill_cmds(data -> cmd, to_process, i);
 	print_struct(data -> cmd);

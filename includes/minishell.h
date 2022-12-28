@@ -44,10 +44,15 @@ typedef struct t_cmd
 typedef struct t_data
 {
 	int		status;
+	int		out_redirection;
+	int		in_redirection;
 	t_env	*env;
 	t_cmd	**cmd;
 	int		pipes[2];
 }t_data;
+
+int		skip_spaces(char *to_parse, int i);
+int		count_words(char *to_parse);
 
 void	init_cmd(t_data *data, char *to_process);
 void	set_commands(t_cmd *cmd, char *to_parse);
