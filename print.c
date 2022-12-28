@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:08:29 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:29:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 22:41:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,27 @@ void	print_tab(char **tab, char *name)
 	printf("-------------%s END -------------\n", name);
 }
 
-
 void	print_struct(t_cmd **cmds)
 {
 	int	i;
+
 	i = -1;
 	printf("\n\n");
 	while (cmds[++i])
 	{
 		printf("*************** Command : %d ***************\n\n", i + 1);
-		printf("Main Command : %s\n", cmds[i] -> cmd);
+		printf("Main Command : %s\n", cmds[i]-> cmd);
 		printf("\n");
-		print_tab(cmds[i] -> args, "Commands Args Tab");
+		print_tab(cmds[i]-> args, "Commands Args Tab");
 		printf("\n");
-		print_tab(cmds[i] -> in, "Infile Tab");
+		print_tab(cmds[i]-> in, "Infile Tab");
 		printf("\n");
-		print_tab(cmds[i] -> out, "Outfile Tab");		
+		print_tab(cmds[i]-> out, "Outfile Tab");
 		printf("\n");
-		print_tab(cmds[i] -> in_here_doc, "Here_docs Tab");		
+		print_tab(cmds[i]-> in_here_doc, "Here_docs Tab");
 		printf("\n");
-		print_tab(cmds[i] -> out_append, "Out append Tab");
-		printf("\n***************************************\n\n\n");	
+		print_tab(cmds[i]-> out_append, "Out append Tab");
+		printf("\n***************************************\n\n\n");
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/27 06:01:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 22:34:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	echo(char *msg, char **env)
 {
-	char	**tab;
+	char		**tab;
 	size_t		i;
 	char		*expand;
 	int			err;

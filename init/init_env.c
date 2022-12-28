@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:30:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 22:39:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 	return (res);	
 }*/
 
-void	set_env(t_data *data, char **envp)
+void	init_env(t_data *data, char **envp)
 {
 	data -> env = ft_calloc(sizeof(t_env), 1);
 	is_error(data, data -> env, MALLOC_ERR);

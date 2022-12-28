@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
+/*   Updated: 2022/12/28 22:52:06 by dtoure           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
 # include "../libft/libft.h"
 # include <unistd.h>
@@ -12,7 +24,7 @@
 # define R_COMBO "<>"
 # define STOP	"|& "
 # define STOP_	"|&"
-# define STOP_CMD "|&<>"
+# define STOP_F "|&<> "
 # define MALLOC_ERR "Sorry, no memory enough left for you."
 # define ENV_ERR "Sorry, no environnement variable avaible right now."
 
@@ -21,7 +33,7 @@ typedef struct t_data	t_data;
 
 typedef struct t_node
 {
-    char	*line;
+	char	*line;
 	t_node	*next;
 	t_node	*prev;
 }	t_node;
@@ -45,7 +57,7 @@ typedef struct t_cmd
 	char	*last_out;
 	char	stop;
 	int		exec;
-	int		index; //for debug
+	int		index;
 	t_data	*data;
 }	t_cmd;
 
@@ -73,7 +85,7 @@ void	create_list(t_data *data, char **envp);
 
 /*-----------------INITIALIZATION-----------------*/
 void	init_cmd(t_data *data, char *to_process);
-void	set_env(t_data *data, char **envp);
+void	init_env(t_data *data, char **envp);
 void	set_commands(t_cmd *cmd, char *to_parse);
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect);
 void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect);
@@ -88,6 +100,5 @@ void	free_all(t_data *data);
 /*-----------------ERROR_HANDLING-----------------*/
 void	is_error(t_data *data, void *elem, char *err_msg);
 /*-----------------ERROR_HANDLING-----------------*/
-
 
 #endif

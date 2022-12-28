@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:20:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 22:38:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void	free_cmd(t_cmd **cmds)
 		return ;
 	while (cmds[++i])
 	{
-		if (cmds[i] -> args)
-			ft_free_tab(cmds[i] -> args);
-		if (cmds[i] -> in)
-			ft_free_tab(cmds[i] -> in);
-		if (cmds[i] -> out)
-			ft_free_tab(cmds[i] -> out);
-		if (cmds[i] -> in_here_doc)
-			ft_free_tab(cmds[i] -> in_here_doc);
-		if (cmds[i] -> out_append)
-			ft_free_tab(cmds[i] -> out_append);
+		if (cmds[i]-> args)
+			ft_free_tab(cmds[i]-> args);
+		if (cmds[i]-> in)
+			ft_free_tab(cmds[i]-> in);
+		if (cmds[i]-> out)
+			ft_free_tab(cmds[i]-> out);
+		if (cmds[i]-> in_here_doc)
+			ft_free_tab(cmds[i]-> in_here_doc);
+		if (cmds[i]-> out_append)
+			ft_free_tab(cmds[i]-> out_append);
 		free(cmds[i]);
 	}
 	free(cmds);
@@ -43,7 +43,7 @@ void	free_list(t_env *env, t_node **head)
 
 	if (!head)
 		return ;
-	node =  (*head);
+	node = (*head);
 	while (node)
 	{
 		node -> line = NULL;

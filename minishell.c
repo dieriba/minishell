@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:28:27 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 22:52:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-	
+
 	(void)argc;
-	(void)argv;
 	data = ft_calloc(sizeof(t_data), 1);
 	is_error(data, data, MALLOC_ERR);
-	set_env(data, envp);
+	init_env(data, envp);
 	init_cmd(data, argv[1]);
 	free_all(data);
 }

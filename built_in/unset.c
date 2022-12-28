@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:05:39 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/27 06:16:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 22:36:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	unset(t_env *env)
 {
-	t_line	*prev;
-	
+	t_node	*prev;
+
 	prev = env -> last -> prev;
 	env -> last -> prev = NULL;
 	prev -> next = NULL;

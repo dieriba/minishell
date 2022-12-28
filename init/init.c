@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 21:08:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/28 22:39:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		set_heredoc_app_redirect(cmds[i], &to_parse[j], "<<");
 		set_heredoc_app_redirect(cmds[i], &to_parse[j], ">>");
 		set_commands(cmds[i], &to_parse[j]);
-		cmds[0] -> data -> in_redirection = 0;
-		cmds[0] -> data -> out_redirection = 0;
+		cmds[0]-> data -> in_redirection = 0;
+		cmds[0]-> data -> out_redirection = 0;
 		while (to_parse[j] && !ft_strchr(STOP_, to_parse[j]))
 			j++;
 		j++;
@@ -65,8 +65,8 @@ void	init_cmd(t_data *data, char *to_process)
 	{
 		data -> cmds[j] = ft_calloc(sizeof(t_cmd), 1);
 		is_error(data, data -> cmds, MALLOC_ERR);
-		data -> cmds[j] -> data = data;
-		data -> cmds[j] -> index = j + 1;
+		data -> cmds[j]-> data = data;
+		data -> cmds[j]-> index = j + 1;
 	}
 	fill_cmds(data -> cmds, to_process, i);
 	print_struct(data -> cmds);
