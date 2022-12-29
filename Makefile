@@ -10,7 +10,8 @@ SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_env_utils.c
 
 SRCS_ERROR	=	./error/error_handling.c \
-				./error/bad_input_token.c
+				./error/bad_input_token.c \
+				./error/check_parentheses.c
 
 SRCS_CLEAN	=	./clean/free.c
 

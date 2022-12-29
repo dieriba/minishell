@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:50:13 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 23:12:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 15:00:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_node	*create_node(t_data *data, char *line, int alloc)
 	
 	node = ft_calloc(sizeof(t_node), 1);
 	is_error(data, node, MALLOC_ERR);
-	if (!alloc)
+	if (!alloc || !line)
 		node -> line = line;
 	else
 	{
@@ -34,7 +34,8 @@ t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new)
 	if (!(*node))
 	{
 		*(node) = new;
-		data -> env -> last = new;
+		if (data)
+			data -> env -> last = new;
 	}
 	else
 	{

@@ -6,11 +6,21 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 04:23:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 15:03:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	check_behind(char *to_parse, int j)
+{
+	while (--j > -1 && !ft_strchr(FORMAT_TOKEN, to_parse[j]))
+	{
+		if (!ft_strchr(STOP_F, to_parse[j]))
+			return (0);
+	}
+	return (1);
+}
 
 int	check_double(char *to_parse)
 {
@@ -47,24 +57,19 @@ int	check_token_length(char *to_parse)
 	return (0);
 }
 
-int	check_validity(char *to_parse, size_t i)
+int	check_validity(char *to_parse, size_t i, int both)
 {
 	int	flags;
 	int	am_i_alone;
-	int	j;
 	
-	j = i;
 	flags = -1;
-	am_i_alone = 1;
-	while (--j > -1 && !ft_strchr(FORMAT_TOKEN, to_parse[j]))
-	{
-		if (!ft_strchr(STOP_F, to_parse[j]))
-		{
-			am_i_alone = 0;
-			break ;
-		}
-	}
-	while(to_parse[++i])
+	am_i_alone = both;
+	if (both)
+		am_i_alone = check_behind(to_parse, i);
+	if (ft_strchr(FORMAT_TOKEN, to_parse[i + 1 ])
+		&& to_parse[i] == to_parse[i + 1])
+		i++;
+	while(to_parse[++i] && !ft_strchr(FORMAT_TOKEN, to_parse[i]))
 	{
 		if (!ft_strchr(FORMAT_TOKEN_SP, to_parse[i]))
 		{
@@ -85,9 +90,16 @@ int	valid_format_token(char *to_parse)
 	i = -1;
 	while (to_parse[++i])
 	{
-		if (ft_strchr(FORMAT_TOKEN, to_parse[i]))
+		if (ft_strchr(STOP_, to_parse[i]))
 		{
-			flags = check_validity(to_parse, i);
+			flags = check_validity(to_parse, i, 1);
+			if (flags == -1)
+				return (to_parse[i]);
+			i = flags;
+		}
+		else if (ft_strchr(R_COMBO, to_parse[i]))
+		{
+			flags = check_validity(to_parse, i, 0);
 			if (flags == -1)
 				return (to_parse[i]);
 			i = flags;
@@ -101,15 +113,15 @@ int	is_str_valid(t_data *data, char *to_parse)
 	int	err;
 
 	err = valid_format_token(to_parse);
-	printf("Err val is : %d\n", err);
 	if (err)
 		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
 	err = check_double(to_parse);
-	printf("Err val ids : %d\n", err);
 	if (err)
 		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
 	err = check_token_length(to_parse);
-	printf("Err val is : %d\n", err);
+	if (err)
+		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
+	err = valid_parentheses(data, to_parse);
 	if (err)
 		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
 	return (0);

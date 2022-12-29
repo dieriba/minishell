@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 04:40:10 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 14:54:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define FORMAT_TOKEN "|&<>"
 # define FORMAT_TOKEN_SP "|&<> \0"
 # define MAX_LEN_TOKEN 2
+# define EXCLUDE_TOKEN "{[]};"
 /*-----------------GLOBAL_CHECK-----------------*/
 
 # define MALLOC_ERR "Sorry, no memory enough left for you."
@@ -90,6 +91,7 @@ typedef struct t_data
 
 /*-----------------ERROR_HANDLING-----------------*/
 int		is_str_valid(t_data *data, char *to_parse);
+int		valid_parentheses(t_data *data, char *to_parse);
 int		print_bad_syntax(t_data *data, char *str, char token);
 /*-----------------ERROR_HANDLING-----------------*/
 
@@ -97,6 +99,7 @@ int		print_bad_syntax(t_data *data, char *str, char token);
 /*-----------------GLOBAL_UTILS-----------------*/
 t_node	*create_node(t_data *data, char *line, int alloc);
 t_node	*find_var(t_node *node, char *to_find);
+t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new);
 /*-----------------GLOBAL_UTILS-----------------*/
 
 /*-----------------DEBUG_UTILS-----------------*/

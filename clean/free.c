@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 00:09:45 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 14:53:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ void	free_list(t_env *env, t_node **head)
 		next = node -> next;
 		node -> next = NULL;
 		node -> prev = NULL;
-		if (node -> alloc)
+		if (node -> alloc && node -> line)
 			free(node -> line);
 		free(node);
 		node = next;
 	}
 	(*head) = NULL;
-	free(env);
+	if (env)
+		free(env);
 }
 
 void	free_all(t_data *data)
