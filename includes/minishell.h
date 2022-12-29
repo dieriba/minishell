@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 00:01:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 04:40:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,21 @@
 # define R_IN '<'
 # define R_OUT '>'
 # define R_COMBO "<>"
+
 # define STOP	"|& "
 # define STOP_	"|&"
 # define STOP_F "|&<> "
+
+/*-----------------GLOBAL_CHECK-----------------*/
+# define FORMAT_TOKEN "|&<>"
+# define FORMAT_TOKEN_SP "|&<> \0"
+# define MAX_LEN_TOKEN 2
+/*-----------------GLOBAL_CHECK-----------------*/
+
 # define MALLOC_ERR "Sorry, no memory enough left for you."
 # define ENV_ERR "Sorry, no environnement variable avaible right now."
+
+# define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
 
 typedef struct t_node	t_node;
 typedef struct t_data	t_data;
@@ -78,6 +88,12 @@ typedef struct t_data
 	int		pipes[2];
 }t_data;
 
+/*-----------------ERROR_HANDLING-----------------*/
+int		is_str_valid(t_data *data, char *to_parse);
+int		print_bad_syntax(t_data *data, char *str, char token);
+/*-----------------ERROR_HANDLING-----------------*/
+
+
 /*-----------------GLOBAL_UTILS-----------------*/
 t_node	*create_node(t_data *data, char *line, int alloc);
 t_node	*find_var(t_node *node, char *to_find);
@@ -91,7 +107,7 @@ void	print_env(t_node *node);
 
 /*-----------------INITIALIZATION_UTILS-----------------*/
 int		skip_spaces(char *to_parse, int i);
-int		count_words(char *to_parse);
+int		count_words(int index, char *to_parse);
 void	create_list(t_data *data, char **envp);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 

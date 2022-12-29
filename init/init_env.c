@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:39:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 04:29:51 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void	init_env(t_data *data, char **envp)
 	data -> env = ft_calloc(sizeof(t_env), 1);
 	is_error(data, data -> env, MALLOC_ERR);
 	create_list(data, envp);
-	print_env(data -> env -> start);
+	//print_env(data -> env -> start);
 }

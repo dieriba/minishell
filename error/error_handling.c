@@ -6,11 +6,20 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:51:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 03:48:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	print_bad_syntax(t_data *data, char *str, char token)
+{
+	ft_putstr_fd(str, 2);
+	ft_putchar_fd(token, 2);
+	ft_putchar_fd('\n', 2);
+	data -> status = 2;
+	return (1);
+}
 
 void	print_err_and_exit(t_data *data, char *err_msg)
 {

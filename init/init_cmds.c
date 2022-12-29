@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:49:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 04:40:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	set_commands(t_cmd *cmd, char *to_parse)
 {
 	int	length;
 
-	length = count_words(to_parse)
+	length = count_words(cmd -> index, to_parse)
 		- cmd -> data -> in_redirection - cmd -> data -> out_redirection;
 	if (length <= 0)
 		return ;

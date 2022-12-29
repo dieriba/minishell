@@ -1,28 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 03:42:18 by dtoure           ###   ########.fr       */
+/*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
+/*   Updated: 2022/12/29 03:36:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_data	*data;
-
-	(void)argc;
-	data = ft_calloc(sizeof(t_data), 1);
-	is_error(data, data, MALLOC_ERR);
-	is_str_valid(data, argv[1]);
-	if (data -> status == 2)
-		return (1);
-	init_env(data, envp);
-	init_cmd(data, argv[1]);
-	free_all(data);
-}
+#include "../includes/minishell.h"
