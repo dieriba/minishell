@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 23:28:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 00:01:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ typedef struct t_cmd
 	char	**out_append;
 	char	*last_in;
 	char	*last_out;
+	int		pos_in;
+	int		pos_out;
+	int		pos_app;
+	int		pos_here;
 	char	stop;
 	int		exec;
 	int		index;

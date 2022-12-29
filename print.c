@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:08:29 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:41:44 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 01:17:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ void	print_struct(t_cmd **cmds)
 		print_tab(cmds[i]-> in_here_doc, "Here_docs Tab");
 		printf("\n");
 		print_tab(cmds[i]-> out_append, "Out append Tab");
+		printf("*************** Last Infile *************** \n\n");
+		printf("%s\n", cmds[i] -> last_in ? cmds[i] -> last_in : "No infile");
+		printf("*************** Last Outfile *************** \n\n");
+		printf("%s\n", cmds[i] -> last_out ? cmds[i] -> last_out : "Not oufile");
 		printf("\n***************************************\n\n\n");
 	}
 }

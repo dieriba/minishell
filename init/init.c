@@ -6,11 +6,24 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:39:04 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/29 01:16:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	set_last_in_last_out(t_cmd *cmd)
+{
+	int	len_in;
+	int	len_out;
+
+	len_out = ft_tab_len(cmd -> out) - 1;
+	len_in = ft_tab_len(cmd -> in) - 1;
+	if (cmd -> pos_in > cmd -> pos_here)
+		cmd -> last_in = cmd -> in[len_in];
+	if (cmd -> pos_out > cmd -> pos_app)
+		cmd -> last_out = cmd -> out[len_out];
+}
 
 size_t	how_many_cmds(char *to_process)
 {
@@ -45,6 +58,7 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		set_commands(cmds[i], &to_parse[j]);
 		cmds[0]-> data -> in_redirection = 0;
 		cmds[0]-> data -> out_redirection = 0;
+		set_last_in_last_out(cmds[i]);
 		while (to_parse[j] && !ft_strchr(STOP_, to_parse[j]))
 			j++;
 		j++;
