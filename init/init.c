@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 03:29:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 04:16:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,8 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		cmds[0]-> data -> in_redirection = 0;
 		cmds[0]-> data -> out_redirection = 0;
 		set_last_in_last_out(cmds[i]);
-		while (to_parse[j] && !ft_strchr(STOP_, to_parse[j]))
-			j++;
-		while (to_parse[j] && ft_strchr(STOP_, to_parse[j]))
-			j++;
+		j = skip_char_in_str(j, to_parse, STOP_, 1);
+		j = skip_char_in_str(j, to_parse, STOP_, 0);
 		j = skip_spaces(to_parse, j);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 03:47:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 04:16:03 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct t_cmd
 	char	**out_append;
 	char	*last_in;
 	char	*last_out;
+	char	*sub_commands;
+	char	par;
 	int		pos_in;
 	int		pos_out;
 	int		pos_app;
@@ -112,6 +114,7 @@ void	print_env(t_node *node);
 int		skip_spaces(char *to_parse, int i);
 int		count_words(char *to_parse);
 int		is_same_token(char c, char d);
+int		skip_char_in_str(size_t i, char *to_parse, char *to_skip, int opt);
 void	create_list(t_data *data, char **envp);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
