@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 05:41:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 05:44:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,6 @@ void	set_last_in_last_out(t_cmd *cmd)
 		cmd -> last_in = cmd -> in[len_in];
 	if (len_out > -1 && cmd -> pos_out >= cmd -> pos_app)
 		cmd -> last_out = cmd -> out[len_out];
-}
-
-void	set_parenthese(t_cmd *cmd, char *to_parse)
-{
-	size_t	i;
-	
-	i = -1;
-	while (to_parse[++i] && !ft_strchr(STOP_, to_parse[i]))
-	{
-		if (to_parse[i] == '(')
-			cmd -> p_open++;
-		else if (to_parse[i] == ')')
-			cmd -> p_close--;
-	}
 }
 
 void	fill_cmds_par(t_cmd **cmds, char *to_parse, int length)
