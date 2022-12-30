@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 04:18:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 05:18:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	skip_char_in_str(size_t i, char *to_parse, char *to_skip, int opt)
 			i++;
 	return (i);
 }
-
 
 int	count_words(char *to_parse)
 {

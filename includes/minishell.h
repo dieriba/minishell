@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 04:23:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 05:33:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define STOP	"|& "
 # define STOP_	"|&"
 # define STOP_F "|&<> "
+# define STOP_F_P "|&<> )"
 
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"
@@ -78,14 +79,16 @@ typedef struct t_cmd
 	int		out_redirection;
 	int		in_redirection;
 	char	stop[2];
-	int		subshell;
 	int		index;
+	int		p_open;
+	int		p_close;
 	t_data	*data;
 }	t_cmd;
 
 typedef struct t_data
 {
 	int		status;
+	char	*cp_to_parse;
 	t_env	*env;
 	t_cmd	**cmds;
 	int		pipes[2];
@@ -116,6 +119,7 @@ int		count_words(char *to_parse);
 int		is_same_token(char c, char d);
 int		skip_char_in_str(size_t i, char *to_parse, char *to_skip, int opt);
 void	create_list(t_data *data, char **envp);
+void	par_to_space(char *str);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/

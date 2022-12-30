@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 04:24:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 04:58:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	set_tabs_(char **redirection, char *to_parse, char redirect, int length)
 		if (j == -1)
 			return (0);
 		k = j;
-		while (to_parse[j] && (!ft_strchr(STOP_F, to_parse[j])))
+		while (to_parse[j] && (!ft_strchr(STOP_F_P, to_parse[j])))
 			j++;
 		redirection[i] = ft_calloc(sizeof(char), (j - k + 1));
 		if (!redirection[i])

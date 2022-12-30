@@ -7,7 +7,8 @@ SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_utils.c \
 				./init/init_redirection.c \
 				./init/init_env.c \
-				./init/init_env_utils.c
+				./init/init_env_utils.c \
+				./init/init_parentheses.c
 
 SRCS_ERROR	=	./error/error_handling.c \
 				./error/bad_input_token.c \

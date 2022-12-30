@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 04:24:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 05:19:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	set_tabs(char **cmds, char *to_parse, int length)
 			return ;
 		j = skip_spaces(to_parse, j);
 		k = j;
-		while (to_parse[j] && !ft_strchr(STOP_F, to_parse[j]))
+		while (to_parse[j] && !ft_strchr(STOP_F_P, to_parse[j]))
 			j++;
 		cmds[i] = ft_calloc(sizeof(char), (j - k + 1));
 		m = -1;
@@ -62,7 +62,7 @@ void	set_commands(t_cmd *cmd, char *to_parse)
 {
 	int	length;
 
-	length = count_words(to_parse)
+	length = count_words(cmd -> data -> cp_to_parse)
 		- cmd -> in_redirection - cmd -> out_redirection;
 	if (length <= 0)
 		return ;

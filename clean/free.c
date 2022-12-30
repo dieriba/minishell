@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 14:53:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 05:20:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,7 @@ void	free_all(t_data *data)
 {
 	free_list(data -> env, &data -> env -> start);
 	free_cmd(data -> cmds);
+	if (data -> cp_to_parse)
+		free(data -> cp_to_parse);
 	free(data);
 }
