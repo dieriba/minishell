@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 04:25:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 04:26:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 
 	j = 0;
 	i = -1;
+	j = skip_spaces(to_parse, j);
 	while (++i < length)
 	{
-		j = skip_spaces(to_parse, j);
 		set_redirect_cmd(cmds[i], &to_parse[j], '<');
 		set_redirect_cmd(cmds[i], &to_parse[j], '>');
 		set_heredoc_app_redirect(cmds[i], &to_parse[j], "<<");
