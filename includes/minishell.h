@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 03:36:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 03:47:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct t_cmd
 	int		pos_app;
 	int		pos_here;
 	char	stop[2];
-	int		exec;
+	int		subshell;
 	int		index;
 	t_data	*data;
 }	t_cmd;
