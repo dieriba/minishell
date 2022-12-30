@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 04:16:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 04:25:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		set_heredoc_app_redirect(cmds[i], &to_parse[j], "<<");
 		set_heredoc_app_redirect(cmds[i], &to_parse[j], ">>");
 		set_commands(cmds[i], &to_parse[j]);
-		cmds[0]-> data -> in_redirection = 0;
-		cmds[0]-> data -> out_redirection = 0;
 		set_last_in_last_out(cmds[i]);
 		j = skip_char_in_str(j, to_parse, STOP_, 1);
 		j = skip_char_in_str(j, to_parse, STOP_, 0);

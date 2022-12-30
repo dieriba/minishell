@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 03:25:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 04:24:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,11 @@ void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect)
 	if (redirect == R_IN)
 	{
 		cmd -> in = redirection;
-		cmd -> data -> in_redirection += length;
+		cmd -> in_redirection += length;
 	}
 	else
 	{
 		cmd -> out = redirection;
-		cmd -> data -> out_redirection += length;
+		cmd -> out_redirection += length;
 	}
 }

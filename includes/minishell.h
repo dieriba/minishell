@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 04:16:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 04:23:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ typedef struct t_cmd
 	int		pos_out;
 	int		pos_app;
 	int		pos_here;
+	int		out_redirection;
+	int		in_redirection;
 	char	stop[2];
 	int		subshell;
 	int		index;
@@ -84,8 +86,6 @@ typedef struct t_cmd
 typedef struct t_data
 {
 	int		status;
-	int		out_redirection;
-	int		in_redirection;
 	t_env	*env;
 	t_cmd	**cmds;
 	int		pipes[2];
