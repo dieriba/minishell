@@ -6,20 +6,23 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 03:36:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 18:29:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_behind(char *to_parse, int j)
+int	check_behind(char *to_parse, char *in, int j, int index)
 {
-	while (--j > -1 && !ft_strchr(FORMAT_TOKEN, to_parse[j]))
+	int	seen;
+
+	seen = 1;
+	while (--j > index && !ft_strchr(in, to_parse[j]))
 	{
 		if (!ft_strchr(STOP_F, to_parse[j]))
-			return (0);
+			seen = 0;
 	}
-	return (1);
+	return (seen);
 }
 
 int	check_double(char *to_parse)
@@ -65,7 +68,7 @@ int	check_validity(char *to_parse, size_t i, int both)
 	flags = -1;
 	am_i_alone = both;
 	if (both)
-		am_i_alone = check_behind(to_parse, i);
+		am_i_alone = check_behind(to_parse, FORMAT_TOKEN, i, -1);
 	if (ft_strchr(FORMAT_TOKEN, to_parse[i + 1 ])
 		&& to_parse[i] == to_parse[i + 1])
 		i++;
@@ -90,20 +93,15 @@ int	valid_format_token(char *to_parse)
 	i = -1;
 	while (to_parse[++i])
 	{
+		flags = 0;
 		if (ft_strchr(STOP_, to_parse[i]))
-		{
 			flags = check_validity(to_parse, i, 1);
-			if (flags == -1)
-				return (to_parse[i]);
-			i = flags;
-		}
 		else if (ft_strchr(R_COMBO, to_parse[i]))
-		{
 			flags = check_validity(to_parse, i, 0);
-			if (flags == -1)
-				return (to_parse[i]);
+		if (flags == -1)
+			return (to_parse[i]);
+		if (flags > 0)
 			i = flags;
-		}
 	}
 	return (0);
 }
@@ -112,16 +110,16 @@ int	is_str_valid(t_data *data, char *to_parse)
 {
 	int	err;
 
-	err = valid_format_token(to_parse);
-	if (err)
-		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
-	err = check_double(to_parse);
+	//err = valid_format_token(to_parse);
+	//if (err)
+		//return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
+	/*err = check_double(to_parse);
 	if (err)
 		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
 	err = check_token_length(to_parse);
 	if (err)
-		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
-	err = valid_parentheses(to_parse);
+		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));*/
+	err = check_parenthese(to_parse);
 	if (err)
 		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
 	return (0);

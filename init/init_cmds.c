@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 05:19:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 18:50:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static void	set_tabs(char **cmds, char *to_parse, int length)
 void	set_commands(t_cmd *cmd, char *to_parse)
 {
 	int	length;
-
-	length = count_words(cmd -> data -> cp_to_parse)
+	
+	length = count_words(to_parse)
 		- cmd -> in_redirection - cmd -> out_redirection;
 	if (length <= 0)
 		return ;

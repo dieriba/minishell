@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 05:44:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 17:46:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@
 
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"
+# define FORMAT_TOKEN_P "|&<>()"
 # define FORMAT_TOKEN_SP "|&<> \0"
+# define FORMAT_TOKEN_SP_R "|&<> \0)"
 # define MAX_LEN_TOKEN 2
 # define EXCLUDE_TOKEN "{[]};"
 /*-----------------GLOBAL_CHECK-----------------*/
@@ -96,7 +98,7 @@ typedef struct t_data
 
 /*-----------------ERROR_HANDLING-----------------*/
 int		is_str_valid(t_data *data, char *to_parse);
-int		valid_parentheses(char *to_parse);
+int		check_parenthese(char *to_parse);
 int		print_bad_syntax(t_data *data, char *str, char token);
 /*-----------------ERROR_HANDLING-----------------*/
 
@@ -105,6 +107,7 @@ int		print_bad_syntax(t_data *data, char *str, char token);
 t_node	*create_node(t_data *data, char *line, int alloc);
 t_node	*find_var(t_node *node, char *to_find);
 t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new);
+int		check_behind(char *to_parse, char *in, int j, int index);
 /*-----------------GLOBAL_UTILS-----------------*/
 
 /*-----------------DEBUG_UTILS-----------------*/
