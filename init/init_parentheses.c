@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tablen.c                                        :+:      :+:    :+:   */
+/*   init_parentheses.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 13:11:20 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 03:27:17 by dtoure           ###   ########.fr       */
+/*   Created: 2022/12/30 01:19:53 by dtoure            #+#    #+#             */
+/*   Updated: 2022/12/30 01:31:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-int	ft_tab_len(char **tab)
+void	parse_parentheses(char *to_parse)
 {
-	int	i;
+	size_t	i;
+	int		p_open;
 
-	if (!tab)
-		return (0);
+	p_open =  1;
 	i = -1;
-	while (tab[++i])
-		;
-	return (i);
+	while (to_parse[++i])
+	{
+		if (to_parse[i] == '(')
+			p_open++;
+		else if (to_parse[i] == ')')
+			p_open--;
+		if (p_open == 0)
+			break ;
+	}
 }

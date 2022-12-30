@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 04:41:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 03:29:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,32 @@ void	set_last_in_last_out(t_cmd *cmd)
 
 	len_out = ft_tab_len(cmd -> out) - 1;
 	len_in = ft_tab_len(cmd -> in) - 1;
-	if (cmd -> pos_in > cmd -> pos_here)
+	if (len_in > -1 && cmd -> pos_in >= cmd -> pos_here)
 		cmd -> last_in = cmd -> in[len_in];
-	if (cmd -> pos_out > cmd -> pos_app)
+	if (len_out > -1 && cmd -> pos_out >= cmd -> pos_app)
 		cmd -> last_out = cmd -> out[len_out];
+}
+
+int	skip_parentheses(char *to_process, size_t i)
+{
+	int	p_open;
+
+	p_open = 1;
+	while (to_process[++i])
+	{
+		if (to_process[i] == '(')
+			p_open++;
+		else if (to_process[i] == ')')
+			p_open--;
+		if (p_open == 0)
+		{
+			while (to_process[++i] 
+				&& !ft_strchr(STOP_, to_process[i]))
+				;
+			break ;
+		}
+	}
+	return (i);
 }
 
 size_t	how_many_cmds(char *to_process)
@@ -34,8 +56,17 @@ size_t	how_many_cmds(char *to_process)
 	count = 0;
 	while (to_process[++i])
 	{
-		if (ft_strchr(STOP_, to_process[i]))
+		if (to_process[i] == '(')
+			i = skip_parentheses(to_process, i);
+		if (ft_strchr(STOP_, to_process[i]) 
+			&& ft_strchr(STOP_, to_process[i + 1]))
+		{
+			++i;
 			count++;
+		}
+		else if (ft_strchr(STOP_, to_process[i]))
+			count++;
+		
 	}
 	count++;
 	return (count);
@@ -61,7 +92,8 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		set_last_in_last_out(cmds[i]);
 		while (to_parse[j] && !ft_strchr(STOP_, to_parse[j]))
 			j++;
-		j++;
+		while (to_parse[j] && ft_strchr(STOP_, to_parse[j]))
+			j++;
 		j = skip_spaces(to_parse, j);
 	}
 }

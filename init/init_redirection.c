@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 00:27:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 03:11:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 			k++;
 		}
 	}
-	if (ft_strchr(STOP_, to_parse[i]))
-		cmd -> stop = to_parse[i];
+	if (is_same_token(to_parse[i], to_parse[i + 1]))
+		ft_memcpy(cmd-> stop, &to_parse[i], 2);
+	cmd -> stop[0] = to_parse[i];
 	if (!k)
 		return (-1);
 	return (k);

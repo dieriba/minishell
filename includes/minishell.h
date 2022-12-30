@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 14:54:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 03:36:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct t_cmd
 	int		pos_out;
 	int		pos_app;
 	int		pos_here;
-	char	stop;
+	char	stop[2];
 	int		exec;
 	int		index;
 	t_data	*data;
@@ -91,7 +91,7 @@ typedef struct t_data
 
 /*-----------------ERROR_HANDLING-----------------*/
 int		is_str_valid(t_data *data, char *to_parse);
-int		valid_parentheses(t_data *data, char *to_parse);
+int		valid_parentheses(char *to_parse);
 int		print_bad_syntax(t_data *data, char *str, char token);
 /*-----------------ERROR_HANDLING-----------------*/
 
@@ -110,7 +110,8 @@ void	print_env(t_node *node);
 
 /*-----------------INITIALIZATION_UTILS-----------------*/
 int		skip_spaces(char *to_parse, int i);
-int		count_words(int index, char *to_parse);
+int		count_words(char *to_parse);
+int		is_same_token(char c, char d);
 void	create_list(t_data *data, char **envp);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 

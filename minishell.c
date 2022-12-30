@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 15:06:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 03:38:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*data;
 
 	(void)argc;
-	(void)envp;
 	data = ft_calloc(sizeof(t_data), 1);
 	is_error(data, data, MALLOC_ERR);
 	is_str_valid(data, argv[1]);

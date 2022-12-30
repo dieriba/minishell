@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 15:03:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 03:36:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	is_str_valid(t_data *data, char *to_parse)
 	err = check_token_length(to_parse);
 	if (err)
 		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
-	err = valid_parentheses(data, to_parse);
+	err = valid_parentheses(to_parse);
 	if (err)
 		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
 	return (0);

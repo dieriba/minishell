@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/29 04:41:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 03:01:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,18 @@ int	skip_spaces(char *to_parse, int i)
 	return (i);
 }
 
-int	count_words(int index, char *to_parse)
+int	is_same_token(char c, char d)
+{
+	if (ft_strchr(FORMAT_TOKEN, c) 
+		&& ft_strchr(FORMAT_TOKEN, d))
+	{
+		if (c == d)
+			return (1);
+	}
+	return (0);
+}
+
+int	count_words(char *to_parse)
 {
 	size_t	i;
 	int		length;
@@ -40,8 +51,6 @@ int	count_words(int index, char *to_parse)
 		if (ft_strchr(STOP_, to_parse[i]) || !to_parse[i])
 			break ;
 	}
-	if (index == 4)
-		printf("Length : %d\n", length);
 	if (ft_strchr(STOP_, to_parse[i]) && to_parse[i - 1] == ' ')
 		--length;
 	return (length);
