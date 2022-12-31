@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 08:08:17 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 17:15:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	lets_read(t_data *data)
 	t_node	*node;
 	while (1)
 	{
-		data -> cp_to_parse = readline("minishell");
+		data -> cp_to_parse = readline("minishell  : ");
 		if (ft_strlen(data -> cp_to_parse))
 		{
 			add_history(data -> cp_to_parse);

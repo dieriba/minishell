@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 08:17:31 by dtoure           ###   ########.fr       */
+/*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
+/*   Updated: 2022/12/31 18:55:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	close_fd(char *str, int fd)
+void	wait_all_child(t_cmd **cmds)
 {
-	if (close(fd) < 0)
-		print_err_and_exit(NULL, str, 1);
-}
-
-void	check_files(char **files, int flags)
-{
-	int	i;
+	size_t	i;
+	int		status;
 
 	i = -1;
-	while (files[++i])
+	while (cmds[++i])
 	{
-		if (access(files[i], flags))
-			print_err_and_exit(NULL, "bash", 1);
+		if (waitpid(cmds[i]-> pid, &status, 0) < 0 && errno != ECHILD)
+			print_err_and_exit(NULL, "Error with waitpid", 1);
 	}
+	if (WIFEXITED(status))
+		data -> status = WEXITSTATUS(status);
 }

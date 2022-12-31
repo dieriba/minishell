@@ -21,11 +21,12 @@ SRCS_ERROR	=	./error/error_handling.c \
 
 SRCS_CLEAN	=	./clean/free.c
 
-SRCS_EXEC	=	./exec/check.c \
+SRCS_EXEC	=	./exec/fd.c \
 				./exec/command_redirection.c \
 				./exec/execute.c \
 				./exec/subshell.c \
-				./exec/utils.c \
+				./exec/command_utils.c \
+				./exec/child.c \
 				
 
 INCLUDES	= 	-I ./includes

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 07:19:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 22:00:51 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct t_cmd
 	int		no_path;
 	int		p_open;
 	int		p_close;
+	int		executed;
 	t_data	*data;
 }	t_cmd;
 
@@ -107,6 +108,9 @@ typedef struct t_data
 	int					pipes[2];
 	int					inited;
 	int					prev_pipes;
+	int					to_exec;
+	int					no_exec;
+	int					executed;
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
@@ -167,8 +171,8 @@ void	env(t_node *node);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/
-int		prepare_next_step(t_cmd **cmd, char *stop, int i, pid_t pid_ret);
-int		get_status(pid_t pid_ret);
+int		prepare_next_step(t_cmd **cmd, char *stop, int i);
+int		get_status(t_cmd *prev_cmd, pid_t pid_ret, char *stop);
 int		find_cmd_in_par(t_cmd **cmds, t_cmd *cmd, int i);
 char	*find_lim_par(t_cmd **cmds, int p_num, int i);
 void	executing(t_cmd **cmds);
