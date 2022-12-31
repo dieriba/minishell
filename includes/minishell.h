@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:02:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:50:19 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
 void	free_list(t_env *env, t_node **head);
 void	free_cmd(t_cmd **cmds);
 void	free_all(t_data *data, int status);
+void	clean_struct(void);
 /*-----------------FREE_STRUCT-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
