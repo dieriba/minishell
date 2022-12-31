@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 18:52:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 05:00:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,20 @@ void	init_cmd(t_data *data, char *to_process)
 
 	j = -1;
 	data -> cp_to_parse = ft_strdup(to_process);
-	is_error(data, data -> cp_to_parse, MALLOC_ERR);
+	is_error(data -> cp_to_parse, MALLOC_ERR, 1);
 	i = how_many_cmds(data -> cp_to_parse);
 	data -> cmds = ft_calloc(sizeof(t_cmd *), i + 1);
-	is_error(data, data -> cmds, MALLOC_ERR);
+	is_error(data -> cmds, MALLOC_ERR, 1);
 	par_to_space(data -> cp_to_parse);
 	while (++j < i)
 	{
 		data -> cmds[j] = ft_calloc(sizeof(t_cmd), 1);
-		is_error(data, data -> cmds, MALLOC_ERR);
+		is_error(data -> cmds, MALLOC_ERR, 1);
 		data -> cmds[j]-> data = data;
 		data -> cmds[j]-> index = j + 1;
 	}
 	fill_cmds(data -> cmds, data -> cp_to_parse, i);
 	fill_cmds_par(data -> cmds, to_process, i);
+	init_path(data -> cmds);
 	print_struct(data -> cmds);
 }

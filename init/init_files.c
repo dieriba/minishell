@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 05:15:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/30 22:22:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect)
 	if (length == -1)
 		return ;
 	redirection = ft_calloc(sizeof(char *), length + 1);
-	is_error(cmd -> data, redirection, MALLOC_ERR);
+	is_error(redirection, MALLOC_ERR, 1);
 	err = set_file_tabs(redirection, to_parse, redirect, length);
 	if (err)
-		is_error(cmd -> data, NULL, MALLOC_ERR);
+		is_error(NULL, MALLOC_ERR, 1);
 	if (redirect == R_IN)
 	{
 		cmd -> in = redirection;

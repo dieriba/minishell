@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 17:46:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 04:49:43 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <errno.h>
 # include <stdio.h>
 # include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # define R_IN '<'
 # define R_OUT '>'
@@ -41,7 +45,7 @@
 
 # define MALLOC_ERR "Sorry, no memory enough left for you."
 # define ENV_ERR "Sorry, no environnement variable avaible right now."
-
+# define PIPE_INIT_ERROR "Pipe initialization  error"
 # define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
 
 typedef struct t_node	t_node;
@@ -73,15 +77,19 @@ typedef struct t_cmd
 	char	*last_in;
 	char	*last_out;
 	char	*sub_commands;
+	char	**paths;
 	char	par;
 	int		pos_in;
 	int		pos_out;
+	int		pid;
 	int		pos_app;
 	int		pos_here;
 	int		out_redirection;
 	int		in_redirection;
 	char	stop[2];
+	int		fd;
 	int		index;
+	int		no_path;
 	int		p_open;
 	int		p_close;
 	t_data	*data;
@@ -89,22 +97,37 @@ typedef struct t_cmd
 
 typedef struct t_data
 {
-	int		status;
-	char	*cp_to_parse;
-	t_env	*env;
-	t_cmd	**cmds;
-	int		pipes[2];
+	int					status;
+	struct sigaction	ctrl_c;
+	char				*path;
+	char				*cp_to_parse;
+	t_env				*env;
+	t_node				*collector;
+	t_cmd				**cmds;
+	int					pipes[2];
+	int					inited;
+	int					prev_pipes;
 }t_data;
+
+/*-----------------GLOBAL_VARIABLE_SET-----------------*/
+extern t_data *data;
+/*-----------------GLOBAL_VARIABLE_SET-----------------*/
+
+/*-----------------SIGNAL_FUNCTION-----------------*/
+void    handle_signals(void);
+/*-----------------SIGNAL_FUNCTION-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
 int		is_str_valid(t_data *data, char *to_parse);
 int		check_parenthese(char *to_parse);
+void	print_err_and_exit(t_cmd *cmd, char *err_msg, int type);
 int		print_bad_syntax(t_data *data, char *str, char token);
+void	check_lines(t_data *data, char *files, char *err, int flags);
 /*-----------------ERROR_HANDLING-----------------*/
 
 
 /*-----------------GLOBAL_UTILS-----------------*/
-t_node	*create_node(t_data *data, char *line, int alloc);
+t_node	*create_node(char *line, int alloc);
 t_node	*find_var(t_node *node, char *to_find);
 t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new);
 int		check_behind(char *to_parse, char *in, int j, int index);
@@ -132,6 +155,7 @@ void	init_env(t_data *data, char **envp);
 void	set_commands(t_cmd *cmd, char *to_parse);
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect);
 void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect);
+void	init_path(t_cmd **cmds);
 /*-----------------INITIALIZATION-----------------*/
 
 /*-----------------BUILT_IN_UTILS-----------------*/
@@ -145,11 +169,11 @@ void	env(t_node *node);
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);
 void	free_cmd(t_cmd **cmds);
-void	free_all(t_data *data);
+void	free_all(t_data *data, int status);
 /*-----------------FREE_STRUCT-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
-void	is_error(t_data *data, void *elem, char *err_msg);
+void	is_error(void *elem, char *err_msg, int type);
 /*-----------------ERROR_HANDLING-----------------*/
 
 #endif

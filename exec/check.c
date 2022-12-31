@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 05:00:39 by dtoure           ###   ########.fr       */
+/*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
+/*   Updated: 2022/12/31 04:20:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*char	*get_path(t_node *node, char *var)
+void	close_fd(t_data *data, int fd, char *str)
 {
-	char	*res;
-	
-	res = 	
-	return (res);	
-}*/
+	if (close(fd) < 0)
+		print_err_and_exit(NULL, str, 1);
+}
 
-void	init_env(t_data *data, char **envp)
+void	check_files(char **files, int flags)
 {
-	t_node	*path;
-	
-	data -> env = ft_calloc(sizeof(t_env), 1);
-	is_error(data -> env, MALLOC_ERR, 1);
-	create_list(data, envp);
-	path = find_var(data -> env -> start, "PATH");
-	if (path)
-		data -> path = path -> line;
+	int	i;
+
+	i = -1;
+	while (files[++i])
+	{
+		if (access(files[i], flags))
+			print_err_and_exit(NULL, "bash", 1);
+	}
+}
+
+void	close_pipes(void)
+{
+	if (data -> inited == 0)
+		return ;
+	if (close(data -> pipes[0]) < 0 || close(data -> pipes[1]) < 0)
+		print_err_and_exit(NULL, "bash", 1); 
 }

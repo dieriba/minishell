@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   check_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 05:00:39 by dtoure           ###   ########.fr       */
+/*   Created: 2022/12/30 19:28:43 by dtoure            #+#    #+#             */
+/*   Updated: 2022/12/31 02:52:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+# include "../includes/minishell.h"
 
-/*char	*get_path(t_node *node, char *var)
+void	check_files(char *files, char *err, int flags)
 {
-	char	*res;
-	
-	res = 	
-	return (res);	
-}*/
-
-void	init_env(t_data *data, char **envp)
-{
-	t_node	*path;
-	
-	data -> env = ft_calloc(sizeof(t_env), 1);
-	is_error(data -> env, MALLOC_ERR, 1);
-	create_list(data, envp);
-	path = find_var(data -> env -> start, "PATH");
-	if (path)
-		data -> path = path -> line;
+	if (access(files, flags))
+		print_err_and_exit(data, err, 1);
 }

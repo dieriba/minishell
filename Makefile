@@ -1,6 +1,10 @@
 SRCS		= 	minishell.c \
 				print.c
 
+SRCS_SIGNAL =	./signal/signal.c
+
+SRCS_BUILT	=	./built_in/env_utils.c
+
 SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_files.c \
 				./init/init.c \
@@ -8,7 +12,8 @@ SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_redirection.c \
 				./init/init_env.c \
 				./init/init_env_utils.c \
-				./init/init_parentheses.c
+				./init/init_parentheses.c \
+				./init/init_path_cmd.c
 
 SRCS_ERROR	=	./error/error_handling.c \
 				./error/bad_input_token.c \
@@ -22,11 +27,15 @@ OBJS		= 	$(SRCS:.c=.o) \
 				$(SRCS_INIT:.c=.o) \
 				$(SRCS_ERROR:.c=.o) \
 				$(SRCS_CLEAN:.c=.o) \
+				$(SRCS_SIGNAL:.c=.o) \
+				$(SRCS_BUILT:.c=.o) \
 
 DEPS		= 	$(SRCS:.c=.d) \
 				$(SRCS_INIT:.c=.d) \
 				$(SRCS_ERROR:.c=.d) \
 				$(SRCS_CLEAN:.c=.d) \
+				$(SRCS_SIGNAL:.c=.d) \
+				$(SRCS_BUILT:.c=.d) \
 
 CC			=	cc
 
@@ -46,7 +55,7 @@ $(MINISHELL):	${OBJS}
 				cp ./libft/libft.a ./lib
 				make -C ./libft/get_next_line
 				cp ./libft/get_next_line/libgnl.a ./lib
-				$(CC) $(CFLAGS) ${OBJS} $(INCLUDES) -g3 -L./lib -lft -lprintf -lgnl -o $(MINISHELL)
+				$(CC) $(CFLAGS) ${OBJS} $(INCLUDES) -g3 -L./lib -lft -lprintf -lgnl -lreadline -o $(MINISHELL)
 
 
 clean:

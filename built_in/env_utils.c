@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:58:15 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 23:28:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 04:55:02 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ t_node	*find_var(t_node *node, char *to_find)
 {
 	while (node)
 	{
-		if (node -> line[0] != to_find[0])
-			continue ;
 		if (check(node -> line, to_find, ft_strlen(to_find)))
 			return (node);
+		node = node -> next;
 	}
 	return (NULL);
 }

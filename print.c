@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:08:29 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 05:39:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 04:59:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	print_struct(t_cmd **cmds)
 		printf("Main Command : %s\n", cmds[i]-> cmd);
 		printf("\n");
 		print_tab(cmds[i]-> args, "Commands Args Tab");
+		printf("\n");
+		print_tab(cmds[i]-> paths, "Possible commands paths");
 		printf("\n");
 		print_tab(cmds[i]-> in, "Infile Tab");
 		printf("\n");
