@@ -52,23 +52,15 @@ SRCS 		=	ft_atoi.c \
 				ft_strcmp.c \
 				ft_check_empty.c
 
-BONUS		=	ft_lstnew.c \
-				ft_lstadd_front.c \
-				ft_lstsize.c \
-				ft_lstlast.c \
-				ft_lstadd_back.c \
-				ft_lstdelone.c \
-				ft_lstclear.c \
-				ft_lstiter.c \
-				ft_lstmap.c \
-
 OBJS		=	$(SRCS:.c=.o)
+
+DEPS		=	$(SRCS:.c.d)
 
 OBJS_BONUS	=	$(BONUS:.c=.o)
 
 INCLUDES	=	-I includes
 
-CC			=	gcc
+CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror
 
 .c.o :	
@@ -83,11 +75,13 @@ bonus:		$(OBJS) $(OBJS_BONUS)
 			ar rcs $(NAME) $(OBJS) $(OBJS_BONUS)
 
 clean:
-			rm -rf $(OBJS) $(OBJS_BONUS)
+			rm -rf $(OBJS) $(OBJS_BONUS) $(DEPS)
 
 fclean:		clean
 			rm -rf $(NAME)
 
 re:			fclean all
+
+-include : 	$(DEPS)
 
 .PHONY:		all clean fclean re
