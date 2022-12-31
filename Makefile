@@ -21,6 +21,13 @@ SRCS_ERROR	=	./error/error_handling.c \
 
 SRCS_CLEAN	=	./clean/free.c
 
+SRCS_EXEC	=	./exec/check.c \
+				./exec/command_redirection.c \
+				./exec/execute.c \
+				./exec/subshell.c \
+				./exec/utils.c \
+				
+
 INCLUDES	= 	-I ./includes
 
 OBJS		= 	$(SRCS:.c=.o) \
@@ -29,6 +36,7 @@ OBJS		= 	$(SRCS:.c=.o) \
 				$(SRCS_CLEAN:.c=.o) \
 				$(SRCS_SIGNAL:.c=.o) \
 				$(SRCS_BUILT:.c=.o) \
+				$(SRCS_EXEC:.c=.o) \
 
 DEPS		= 	$(SRCS:.c=.d) \
 				$(SRCS_INIT:.c=.d) \
@@ -36,6 +44,7 @@ DEPS		= 	$(SRCS:.c=.d) \
 				$(SRCS_CLEAN:.c=.d) \
 				$(SRCS_SIGNAL:.c=.d) \
 				$(SRCS_BUILT:.c=.d) \
+				$(SRCS_EXEC:.c=.d) \
 
 CC			=	cc
 

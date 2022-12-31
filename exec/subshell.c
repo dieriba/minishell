@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:21:14 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 02:21:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 06:24:11 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,9 @@ int	find_cmd_in_par(t_cmd **cmds, t_cmd *cmd, int i)
 	return (num);
 }
 
-char	*find_lim_par(t_cmd **cmds, t_cmd *cmd, int i)
+char	*find_lim_par(t_cmd **cmds, int p_num, int i)
 {
-	int	p_open;
-	
-	p_open = cmd -> p_open;
-	while (cmds[++i])
-	{
-		p_open += cmd -> p_open + cmd -> p_close;
-		if (p_open == 0)
-			return (cmd -> stop) ;
-	}
-	return (0);
+	if (p_num == 0)
+		return (cmds[i]-> stop);
+	return (cmds[i + p_num - 1] -> stop);
 }

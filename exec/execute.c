@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 04:21:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 07:06:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,33 @@ void	forking(t_cmd **cmds, int i)
 	run_cmd(cmd);
 }
 
-void	piping()
+void	executing(t_cmd **cmds)
 {
 	int		i;
-	t_cmd	**cmds;
 	pid_t	pid_ret;
 	int		p_num;
 	char	*stop;
 
-	cmds = data -> cmds;
 	i = -1;
-	pid_ret = 0;
 	while (cmds[++i])
 	{
 		p_num = find_cmd_in_par(cmds, cmds[i], i);
-		stop = find_lim_par(cmds, cmds[i], i);
-		prepare_next_step(stop, cmds[i]-> stop, pid_ret);
+		stop = find_lim_par(cmds, p_num, i);
+		prepare_next_step(cmds, stop, i, pid_ret);
 		pid_ret = fork();
 		if (pid_ret < 0)
 			print_err_and_exit(NULL, "bash", 1);
 		if (pid_ret == 0)
 			forking(cmds, i);
 		cmds[i]-> pid = pid_ret;
-		if (close(data -> pipes[1]) < 0)
-			print_err_and_exit(NULL, "bash", 1);
+		if (data -> prev_pipes > 0)
+			close_fd("bash", data -> prev_pipes);
+		if (data -> inited)
+		{
+			data -> prev_pipes = data -> pipes[0];
+			close_fd("bash", data -> pipes[1]);
+		}
+		data -> inited = 0;
 	}
 	wait_all_child(cmds);
 }

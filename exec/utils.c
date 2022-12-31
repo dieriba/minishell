@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 03:42:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 07:24:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,23 @@ int	get_status(pid_t pid_ret)
 	return (status);
 }
 
-int	prepare_next_step(char *stop, char cmd_stop, pid_t pid_ret)
+int	prepare_next_step(t_cmd** cmds, char *stop, int i, pid_t pid_ret)
 {
 	int				status;
 	static	char	*line;
 	
 	status = 0;
-	if (!stop)
-		stop = cmd_stop;
 	if (!line)
 		line = stop; 
-	if (!ft_strcmp("||", line) && pid_ret)
+	if (i > 0 && !ft_strcmp("||", line) && cmds[--i]-> pid)
 		status = get_status(pid_ret);
-	else if (!ft_strcmp("&&", line) && pid_ret)
+	else if (i > 0 && !ft_strcmp("&&", line) && cmds[--i]-> pid)
 		status = get_status(pid_ret);
-	else if (!ft_strcmp("|", line))
+	else if (!ft_strcmp("|", stop))
 	{
-		if (pipe(data -> pipes) < 1)
+		if (pipe(data -> pipes) < 0)
 			print_err_and_exit(NULL, PIPE_INIT_ERROR, 0);
-		data -> prev_pipes = data -> pipes[0];
+		data -> inited = 1;
 	}
 	line = stop;
 	return (status);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 04:49:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 07:19:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,20 @@ void	init_path(t_cmd **cmds);
 void	env(t_node *node);
 /*-----------------BUILT_IN-----------------*/
 
+/*-----------------EXECUTION-----------------*/
+int		prepare_next_step(t_cmd **cmd, char *stop, int i, pid_t pid_ret);
+int		get_status(pid_t pid_ret);
+int		find_cmd_in_par(t_cmd **cmds, t_cmd *cmd, int i);
+char	*find_lim_par(t_cmd **cmds, int p_num, int i);
+void	executing(t_cmd **cmds);
+void	run_cmd(t_cmd *cmd);
+void	wait_all_child(t_cmd **cmds);
+void	open_files(char **files, int length, int flags);
+void	close_fd(char *str, int fd);
+void	check_files(char **files, int flags);
+void	close_pipes(void);
+void	set_redirections_files(t_cmd *cmd, char *str);
+/*-----------------EXECUTION-----------------*/
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);
 void	free_cmd(t_cmd **cmds);

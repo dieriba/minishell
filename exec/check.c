@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 04:20:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 05:43:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	close_fd(t_data *data, int fd, char *str)
+void	close_fd(char *str, int fd)
 {
 	if (close(fd) < 0)
 		print_err_and_exit(NULL, str, 1);
@@ -34,6 +34,6 @@ void	close_pipes(void)
 {
 	if (data -> inited == 0)
 		return ;
-	if (close(data -> pipes[0]) < 0 || close(data -> pipes[1]) < 0)
-		print_err_and_exit(NULL, "bash", 1); 
+	close_fd("bash", data -> pipes[0]);
+	close_fd("bash", data -> pipes[1]);
 }
