@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:18:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:42:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,21 @@ void	lets_read(t_data *data)
 	}
 }
 
-void	shell(t_data *data, char **envp)
+void	shell(t_data *data, char **envp, char *argv)
 {
 	init_env(data, envp);
-	lets_read(data);
+	//lets_read(data);
+	init_cmd(data, argv);
+	executing(data -> cmds);
 	free_all(data, 0);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
-	(void)argv;
-	//handle_signals();
 	g_data = ft_calloc(sizeof(t_data), 1);
+	handle_signals();
 	is_error(g_data, MALLOC_ERR, 1);
-	shell(g_data, envp);
+	shell(g_data, envp, argv[1]);
 	//is_str_valid(data, argv[1]);
 }
