@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 05:43:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 08:17:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,4 @@ void	check_files(char **files, int flags)
 		if (access(files[i], flags))
 			print_err_and_exit(NULL, "bash", 1);
 	}
-}
-
-void	close_pipes(void)
-{
-	if (data -> inited == 0)
-		return ;
-	close_fd("bash", data -> pipes[0]);
-	close_fd("bash", data -> pipes[1]);
 }

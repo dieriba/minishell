@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 04:50:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 09:49:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ void	print_err(char *str, t_cmd *cmd, int type)
 
 void	print_err_and_exit(t_cmd *cmd, char *err_msg, int type)
 {
+	if (data -> inited)
+	{
+		close_fd("bash", data -> pipes[0]);
+		close_fd("bash", data -> pipes[1]);
+	}
+	if (data -> prev_pipes > 0)
+		close_fd("bash", data -> prev_pipes);
 	print_err(err_msg, cmd, type);
 	free_all(data, data -> status);
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 07:15:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 08:08:17 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	shell(t_data *data, char **envp)
 {
 	init_env(data, envp);
 	lets_read(data);
-	free_all(data, data -> status);
+	free_all(data, 0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -49,7 +49,6 @@ int	main(int argc, char **argv, char **envp)
 	//handle_signals();
 	data = ft_calloc(sizeof(t_data), 1);
 	is_error(data, MALLOC_ERR, 1);
-	data -> prev_pipes = -1;
 	shell(data, envp);
 	//is_str_valid(data, argv[1]);
 }
