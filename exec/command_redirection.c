@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 09:47:11 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:24:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	open_infile(t_cmd *cmd)
 {
 	int	fd;
-	
+
 	if (cmd -> last_in && cmd -> pos_in < cmd -> pos_here)
 		return (-2);
 	else if (cmd -> last_in == NULL)
@@ -30,29 +30,11 @@ int	open_infile(t_cmd *cmd)
 int	open_outfile(t_cmd *cmd)
 {
 	int	fd;
-	int	flags;
-	int	len_out;
-	int	len_out_ap;
-	
+
 	if (cmd -> last_out == NULL)
 		return (-1);
-	len_out = ft_tab_len(cmd -> out);
-	len_out_ap = ft_tab_len(cmd -> out_append);
-	flags = O_RDWR | O_TRUNC | O_CREAT;
-	if (cmd -> pos_out > cmd -> pos_app)
-	{
-		if (len_out > 1)
-			open_files(cmd -> out, len_out - 1, flags);
-		open_files(cmd -> out_append, len_out_ap, O_RDWR | O_APPEND | O_CREAT);
-		fd = open(cmd -> out[len_out - 1], flags, 0666);
-	}
-	else
-	{
-		if (len_out_ap > 1)
-			open_files(cmd -> out_append, len_out_ap - 1, flags);
-		open_files(cmd -> out, len_out, O_RDWR | O_TRUNC | O_CREAT);
-		fd = open(cmd -> out_append[len_out_ap - 1], flags, 0666);
-	}
+	fd = opener_outfile(
+			cmd, ft_tab_len(cmd -> out), ft_tab_len(cmd -> out_append));
 	if (fd == -1)
 		print_err_and_exit(NULL, "bash", 1);
 	return (fd);
@@ -68,7 +50,7 @@ void	set_out_redirection(t_cmd *cmd, int fd)
 	}
 	else if (!ft_strcmp("|", cmd -> stop))
 	{
-		if (dup2(data -> pipes[1], STDOUT_FILENO) < 0)
+		if (dup2(g_data -> pipes[1], STDOUT_FILENO) < 0)
 			print_err_and_exit(NULL, "bash", 1);
 	}
 }
@@ -83,7 +65,7 @@ void	set_in_redirection(int fd, int pipes)
 	}
 	else if (!pipes)
 	{
-		if (dup2(data -> prev_pipes, STDIN_FILENO) < 0)
+		if (dup2(g_data -> prev_pipes, STDIN_FILENO) < 0)
 			print_err_and_exit(NULL, "bash", 1);
 	}
 }
@@ -93,7 +75,7 @@ void	set_redirections_files(t_cmd *cmd, char *prev)
 	int	fd_in;
 	int	fd_out;
 	int	pipes;
-	
+
 	pipes = -1;
 	if (prev)
 		pipes = ft_strcmp("|", prev);
@@ -101,13 +83,13 @@ void	set_redirections_files(t_cmd *cmd, char *prev)
 	fd_out = open_outfile(cmd);
 	set_in_redirection(fd_in, pipes);
 	set_out_redirection(cmd, fd_out);
-	if (data -> inited)
+	if (g_data -> inited)
 	{
-		close_fd("bash", data -> pipes[0]);
-		close_fd("bash", data -> pipes[1]);
-		data -> inited = 0;
+		close_fd("bash", g_data -> pipes[0]);
+		close_fd("bash", g_data -> pipes[1]);
+		g_data -> inited = 0;
 	}
-	if (data -> prev_pipes > 0)
-		close_fd("bash", data -> prev_pipes);
-	data -> prev_pipes = -1;
+	if (g_data -> prev_pipes > 0)
+		close_fd("bash", g_data -> prev_pipes);
+	g_data -> prev_pipes = -1;
 }

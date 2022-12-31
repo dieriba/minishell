@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:50:13 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 04:49:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:11:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_node	*create_node(char *line, int alloc)
 {
 	t_node	*node;
-	
+
 	node = ft_calloc(sizeof(t_node), 1);
 	is_error(node, MALLOC_ERR, 1);
 	if (!alloc || !line)

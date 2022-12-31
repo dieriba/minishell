@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 22:22:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:11:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 	size_t	i;
 	int		k;
 	int		pos;
-	
+
 	k = 0;
 	i = -1;
 	pos = 0;

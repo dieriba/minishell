@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 22:10:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:22:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,25 @@ void	run_cmd(t_cmd *cmd)
 
 void	handle_pipes(void)
 {
-	if (data -> prev_pipes > 0)
-		close_fd("bash", data -> prev_pipes);
-	if (data -> inited)
+	if (g_data -> prev_pipes > 0)
+		close_fd("bash", g_data -> prev_pipes);
+	if (g_data -> inited)
 	{
-		data -> prev_pipes = data -> pipes[0];
-		close_fd("bash", data -> pipes[1]);
+		g_data -> prev_pipes = g_data -> pipes[0];
+		close_fd("bash", g_data -> pipes[1]);
 	}
-	data -> inited = 0;
+	g_data -> inited = 0;
 }
 
 void	forking(t_cmd **cmds, int i)
 {
-	t_cmd 	*cmd;
 	char	*prev;
+	t_cmd	*cmd;
 
 	cmd = cmds[i];
 	if (i > 0)
 		prev = cmds[--i]-> stop;
-	else 
+	else
 		prev = NULL;
 	set_redirections_files(cmd, prev);
 	run_cmd(cmd);
@@ -68,7 +68,7 @@ void	executing(t_cmd **cmds)
 	char	*stop;
 
 	i = -1;
-	data -> prev_pipes = -1;
+	g_data -> prev_pipes = -1;
 	while (cmds[++i])
 	{
 		p_num = find_cmd_in_par(cmds, cmds[i], i);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 07:20:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:12:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ size_t	how_many_cmds(char *to_process)
 	count = 0;
 	while (to_process[++i])
 	{
-		if (ft_strchr(STOP_, to_process[i]) 
+		if (ft_strchr(STOP_, to_process[i])
 			&& ft_strchr(STOP_, to_process[i + 1]))
 		{
 			++i;
@@ -59,7 +59,6 @@ size_t	how_many_cmds(char *to_process)
 		}
 		else if (ft_strchr(STOP_, to_process[i]))
 			count++;
-		
 	}
 	count++;
 	return (count);

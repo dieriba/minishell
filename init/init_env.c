@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 05:00:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:12:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 void	init_env(t_data *data, char **envp)
 {
 	t_node	*path;
-	
+
 	data -> env = ft_calloc(sizeof(t_env), 1);
 	is_error(data -> env, MALLOC_ERR, 1);
 	create_list(data, envp);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 18:55:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:21:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void	wait_all_child(t_cmd **cmds)
 			print_err_and_exit(NULL, "Error with waitpid", 1);
 	}
 	if (WIFEXITED(status))
-		data -> status = WEXITSTATUS(status);
+		g_data -> status = WEXITSTATUS(status);
 }

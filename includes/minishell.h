@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 22:00:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:02:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ typedef struct t_data
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
-extern t_data *data;
+extern t_data			*g_data;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
-void    handle_signals(void);
+void	handle_signals(void);
 /*-----------------SIGNAL_FUNCTION-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
@@ -128,7 +128,6 @@ void	print_err_and_exit(t_cmd *cmd, char *err_msg, int type);
 int		print_bad_syntax(t_data *data, char *str, char token);
 void	check_lines(t_data *data, char *files, char *err, int flags);
 /*-----------------ERROR_HANDLING-----------------*/
-
 
 /*-----------------GLOBAL_UTILS-----------------*/
 t_node	*create_node(char *line, int alloc);
@@ -183,6 +182,7 @@ void	close_fd(char *str, int fd);
 void	check_files(char **files, int flags);
 void	close_pipes(void);
 void	set_redirections_files(t_cmd *cmd, char *str);
+int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
 /*-----------------EXECUTION-----------------*/
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);

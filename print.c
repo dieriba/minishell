@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:08:29 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 04:59:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:16:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	print_struct(t_cmd **cmds)
 		printf("\n");
 		print_tab(cmds[i]-> out_append, "Out append Tab");
 		printf("*************** Last Infile *************** \n\n");
-		printf("%s\n", cmds[i] -> last_in ? cmds[i] -> last_in : "No infile");
+		printf("%s\n", cmds[i]-> last_in ? cmds[i]-> last_in : "No infile");
 		printf("*************** Last Outfile *************** \n\n");
-		printf("%s\n", cmds[i] -> last_out ? cmds[i] -> last_out : "Not oufile");
+		printf("%s\n", cmds[i]-> last_out ? cmds[i]-> last_out : "Not oufile");
 		printf("\n***************************************\n\n\n");
 		printf("*************** STOP TOKEN *************** \n\n");
 		printf("%s\n", cmds[i]-> stop);

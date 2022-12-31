@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/30 18:40:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2022/12/31 23:13:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	skip_spaces(char *to_parse, int i)
 
 int	is_same_token(char c, char d)
 {
-	if (ft_strchr(FORMAT_TOKEN, c) 
+	if (ft_strchr(FORMAT_TOKEN, c)
 		&& ft_strchr(FORMAT_TOKEN, d))
 	{
 		if (c == d)
