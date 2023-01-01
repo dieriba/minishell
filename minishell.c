@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 00:06:19 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/01 17:20:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ void	lets_read(t_data *data)
 	while (1)
 	{
 		data -> cp_to_parse = readline("minishell  : ");
+		//quoted_str(data -> cp_to_parse);
 		if (ft_strlen(data -> cp_to_parse))
 		{
 			add_history(data -> cp_to_parse);
+			//is_str_valid(data, data -> cp_to_parse);
 			init_cmd(data, data -> cp_to_parse);
-			executing(data -> cmds);
+			//executing(data -> cmds);
 		}
 		if (!data -> cp_to_parse)
 			free_all(data, 130);
@@ -48,7 +50,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	//handle_signals();
 	g_data = ft_calloc(sizeof(t_data), 1);
+	g_data -> neg_single_start = '\'' * -1;
+	g_data -> neg_single_end = '\'' * -2;
+	g_data -> neg_double_start = '"' * -1;
+	g_data -> neg_double_end = '"' * -2;
 	is_error(g_data, MALLOC_ERR, 1);
 	shell(g_data, envp);
-	//is_str_valid(data, argv[1]);
 }

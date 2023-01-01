@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:11:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/01 02:50:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ static int	skip_to_redirect(char *to_parse, char redirect, size_t i)
 	{
 		if (to_parse[i] == redirect && to_parse[i + 1] != redirect)
 		{
-			i++;
-			while (to_parse[i] && to_parse[i] == ' ')
+			if (!check_quotes(to_parse, i))
+			{
 				i++;
-			return (i);
+				i = skip_spaces(to_parse, i, 1);
+				return (i);
+			}
 		}
 		else if (to_parse[i] == redirect && to_parse[i + 1] == redirect)
 			++i;
@@ -53,8 +55,11 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 	{
 		if (to_parse[i] == redirect && to_parse[i + 1] != redirect)
 		{
-			pos = i;
-			k++;
+			if (!check_quotes(to_parse, i))
+			{
+				pos = i;
+				k++;
+			}
 		}
 		else if (to_parse[i] == redirect && to_parse[i + 1] == redirect)
 			++i;
@@ -80,7 +85,7 @@ int	set_file_tabs(char **redirection, char *to_parse, char redirect, int length)
 		if (j == -1)
 			return (0);
 		k = j;
-		while (to_parse[j] && !ft_strchr(STOP_F, to_parse[j]))
+		while (to_parse[j] && !ft_strchr(STOP_F_P, to_parse[j]))
 			j++;
 		redirection[i] = ft_calloc(sizeof(char), (j - k + 1));
 		if (!redirection[i])

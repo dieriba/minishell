@@ -27,7 +27,8 @@ SRCS_EXEC	=	./exec/fd.c \
 				./exec/subshell.c \
 				./exec/command_utils.c \
 				./exec/child.c \
-				
+
+SRCS_PARSER	=	./parser/parser.c		
 
 INCLUDES	= 	-I ./includes
 
@@ -38,6 +39,7 @@ OBJS		= 	$(SRCS:.c=.o) \
 				$(SRCS_SIGNAL:.c=.o) \
 				$(SRCS_BUILT:.c=.o) \
 				$(SRCS_EXEC:.c=.o) \
+				$(SRCS_PARSER:.c=.o)
 
 DEPS		= 	$(SRCS:.c=.d) \
 				$(SRCS_INIT:.c=.d) \
@@ -46,6 +48,7 @@ DEPS		= 	$(SRCS:.c=.d) \
 				$(SRCS_SIGNAL:.c=.d) \
 				$(SRCS_BUILT:.c=.d) \
 				$(SRCS_EXEC:.c=.d) \
+				$(SRCS_PARSER:.c=.d)
 
 CC			=	cc
 

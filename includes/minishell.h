@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:50:19 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/01 17:13:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define STOP	"|& "
 # define STOP_	"|&"
 # define STOP_F "|&<> "
-# define STOP_F_P "|&<> )"
+# define STOP_F_P "|&<> )\"'"
 
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"
@@ -111,6 +111,10 @@ typedef struct t_data
 	int					to_exec;
 	int					no_exec;
 	int					executed;
+	int					neg_single_start;
+	int					neg_single_end;
+	int					neg_double_start;
+	int					neg_double_end;
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
@@ -143,13 +147,14 @@ void	print_env(t_node *node);
 /*-----------------DEBUG_UTILS-----------------*/
 
 /*-----------------INITIALIZATION_UTILS-----------------*/
-int		skip_spaces(char *to_parse, int i);
+int		skip_spaces(char *to_parse, int i, int skip);
 int		count_words(char *to_parse);
 int		is_same_token(char c, char d);
 int		skip_char_in_str(size_t i, char *to_parse, char *to_skip, int opt);
 void	create_list(t_data *data, char **envp);
 void	par_to_space(char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
+int		check_quotes(char *to_parse, int i);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/
@@ -161,9 +166,12 @@ void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect);
 void	init_path(t_cmd **cmds);
 /*-----------------INITIALIZATION-----------------*/
 
-/*-----------------BUILT_IN_UTILS-----------------*/
-
-/*-----------------BUILT_IN_UTILS-----------------*/
+/*-----------------PARSER-----------------*/
+int		valid_quotes(char *to_parse);
+int		find_end_quotes(char *to_parse, size_t i);
+int		find_end_quotes(char *to_parse, size_t i);
+void	quote_to_neg(char *to_parse);
+/*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/
 void	env(t_node *node);

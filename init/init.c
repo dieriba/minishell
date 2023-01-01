@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:12:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/01 17:21:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,34 @@ void	fill_cmds_par(t_cmd **cmds, char *to_parse, int length)
 
 	i = -1;
 	j = 0;
-	j = skip_spaces(to_parse, j);
+	j = skip_spaces(to_parse, j, 0);
 	while (++i < length)
 	{
 		set_parenthese(cmds[i], &to_parse[j]);
 		j = skip_char_in_str(j, to_parse, STOP_, 1);
 		j = skip_char_in_str(j, to_parse, STOP_, 0);
-		j = skip_spaces(to_parse, j);
+		j = skip_spaces(to_parse, j, 0);
 	}
 }
 
-size_t	how_many_cmds(char *to_process)
+int	how_many_cmds(char *to_process)
 {
 	size_t	i;
-	size_t	count;
-
-	i = -1;
+	int		count;
+	
 	count = 0;
+	i = -1;
 	while (to_process[++i])
 	{
 		if (ft_strchr(STOP_, to_process[i])
-			&& ft_strchr(STOP_, to_process[i + 1]))
+			&& ft_strchr(STOP_, to_process[i + 1])
+			&& !find_end_quotes(to_process, i))
 		{
 			++i;
 			count++;
 		}
-		else if (ft_strchr(STOP_, to_process[i]))
+		else if (ft_strchr(STOP_, to_process[i]) 
+			&& !find_end_quotes(to_process, i))
 			count++;
 	}
 	count++;
@@ -71,7 +73,7 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 
 	i = -1;
 	j = 0;
-	j = skip_spaces(to_parse, j);
+	j = skip_spaces(to_parse, j, 0);
 	while (++i < length)
 	{
 		set_redirect_cmd(cmds[i], &to_parse[j], '<');
@@ -82,7 +84,7 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		set_last_in_last_out(cmds[i]);
 		j = skip_char_in_str(j, to_parse, STOP_, 1);
 		j = skip_char_in_str(j, to_parse, STOP_, 0);
-		j = skip_spaces(to_parse, j);
+		j = skip_spaces(to_parse, j, 0);
 	}
 }
 
@@ -95,6 +97,7 @@ void	init_cmd(t_data *data, char *to_process)
 	data -> cp_to_parse = ft_strdup(to_process);
 	is_error(data -> cp_to_parse, MALLOC_ERR, 1);
 	i = how_many_cmds(data -> cp_to_parse);
+	quote_to_neg(data -> cp_to_parse);
 	data -> cmds = ft_calloc(sizeof(t_cmd *), i + 1);
 	is_error(data -> cmds, MALLOC_ERR, 1);
 	par_to_space(data -> cp_to_parse);
@@ -108,5 +111,5 @@ void	init_cmd(t_data *data, char *to_process)
 	fill_cmds(data -> cmds, data -> cp_to_parse, i);
 	fill_cmds_par(data -> cmds, to_process, i);
 	init_path(data -> cmds);
-	//print_struct(data -> cmds);
+	print_struct(data -> cmds);
 }

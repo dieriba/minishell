@@ -6,16 +6,22 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:13:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/01 13:54:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	skip_spaces(char *to_parse, int i)
+int	skip_spaces(char *to_parse, int i, int skip)
 {
 	while (to_parse[i] && to_parse[i] == ' ')
 		i++;
+	if (skip)
+	{
+		while (to_parse[i] && (to_parse[i] == '"' 
+			||  to_parse[i] == '\''))
+			i++;
+	}
 	return (i);
 }
 
@@ -65,4 +71,13 @@ int	count_words(char *to_parse)
 	if (ft_strchr(STOP_, to_parse[i]) && to_parse[i - 1] == ' ')
 		--length;
 	return (length);
+}
+
+int	is_real_stop(char *to_parse, int i ,char c, char *in)
+{
+	if (ft_strchr(in , c) && !check_quotes(to_parse, i))
+	{
+		
+	}
+	return (0);
 }
