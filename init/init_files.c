@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 02:50:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 00:39:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,23 @@ static int	skip_to_redirect(char *to_parse, char redirect, size_t i)
 {
 	while (to_parse[i])
 	{
-		if (to_parse[i] == redirect && to_parse[i + 1] != redirect)
+		if (to_parse[i] == redirect && to_parse[i + 1] != redirect
+			&& !find_start_quotes(to_parse, i))
 		{
-			if (!check_quotes(to_parse, i))
-			{
+			i++;
+			i = skip_spaces(to_parse, i, 0);
+			if (to_parse[i] == g_data -> neg_single_start
+				|| to_parse[i] == g_data -> neg_double_start)
 				i++;
-				i = skip_spaces(to_parse, i, 1);
-				return (i);
-			}
+			if (to_parse[i] == '$' 
+				&& (to_parse[i + 1] == g_data -> neg_single_start
+					|| to_parse[i + 1] == g_data -> neg_double_start))
+				i++;
+			return (i);
 		}
 		else if (to_parse[i] == redirect && to_parse[i + 1] == redirect)
 			++i;
-		if (ft_strchr(STOP_, to_parse[i]))
+		if (!is_real_stop(to_parse, i, STOP_))
 			return (-1);
 		i++;
 	}
@@ -51,15 +56,14 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 	k = 0;
 	i = -1;
 	pos = 0;
-	while (to_parse[++i] && !ft_strchr(STOP_, to_parse[i]))
+	while (to_parse[++i] && is_real_stop(to_parse, i, STOP_))
 	{
-		if (to_parse[i] == redirect && to_parse[i + 1] != redirect)
+		if (to_parse[i] == redirect 
+			&& to_parse[i + 1] != redirect
+			&& !find_start_quotes(to_parse, i))
 		{
-			if (!check_quotes(to_parse, i))
-			{
-				pos = i;
-				k++;
-			}
+			pos = i;
+			k++;
 		}
 		else if (to_parse[i] == redirect && to_parse[i + 1] == redirect)
 			++i;
@@ -70,7 +74,7 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 	return (k);
 }
 
-int	set_file_tabs(char **redirection, char *to_parse, char redirect, int length)
+void	set_file_tabs(char **redirection, char *to_parse, char redirect, int length)
 {
 	int	i;
 	int	j;
@@ -83,34 +87,33 @@ int	set_file_tabs(char **redirection, char *to_parse, char redirect, int length)
 	{
 		j = skip_to_redirect(to_parse, redirect, j);
 		if (j == -1)
-			return (0);
+			return ;
 		k = j;
-		while (to_parse[j] && !ft_strchr(STOP_F_P, to_parse[j]))
-			j++;
+		if (to_parse[j - 1] == g_data -> neg_single_start)
+			j = calcul_word(to_parse, '\'', j);
+		else if (to_parse[j - 1] == g_data -> neg_double_start)
+			j = calcul_word(to_parse, '"', j);
+		else
+			j = calcul_word(to_parse, 0, j);
 		redirection[i] = ft_calloc(sizeof(char), (j - k + 1));
-		if (!redirection[i])
-			return (1);
+		is_error(redirection, MALLOC_ERR, 0);
 		m = -1;
 		while (k < j)
 			redirection[i][++m] = to_parse[k++];
 	}
-	return (0);
 }
 
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect)
 {
 	char	**redirection;
 	int		length;
-	int		err;
 
 	length = find_tab_length(cmd, to_parse, redirect);
 	if (length == -1)
 		return ;
 	redirection = ft_calloc(sizeof(char *), length + 1);
 	is_error(redirection, MALLOC_ERR, 1);
-	err = set_file_tabs(redirection, to_parse, redirect, length);
-	if (err)
-		is_error(NULL, MALLOC_ERR, 1);
+	set_file_tabs(redirection, to_parse, redirect, length);
 	if (redirect == R_IN)
 	{
 		cmd -> in = redirection;

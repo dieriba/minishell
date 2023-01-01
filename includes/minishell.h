@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 17:13:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 00:05:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void	create_list(t_data *data, char **envp);
 void	par_to_space(char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
 int		check_quotes(char *to_parse, int i);
+int		calcul_word(char *to_parse, char quote, int j);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/
@@ -168,13 +169,17 @@ void	init_path(t_cmd **cmds);
 
 /*-----------------PARSER-----------------*/
 int		valid_quotes(char *to_parse);
-int		find_end_quotes(char *to_parse, size_t i);
-int		find_end_quotes(char *to_parse, size_t i);
+int		is_real_stop(char *to_parse, size_t i, char *in);
+int		find_start_quotes(char *to_parse, int i);
+int		find_end_quotes(char *to_parse, int i);
+int		loop_nested_quote(char *to_parse, int j, int end);
+int		length_of_quotes(char *to_parse, char quote);
 void	quote_to_neg(char *to_parse);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/
 void	env(t_node *node);
+char	*get_var_line(t_node *node);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/

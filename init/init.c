@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 17:21:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 00:49:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,13 @@ int	how_many_cmds(char *to_process)
 	i = -1;
 	while (to_process[++i])
 	{
-		if (ft_strchr(STOP_, to_process[i])
-			&& ft_strchr(STOP_, to_process[i + 1])
-			&& !find_end_quotes(to_process, i))
+		if (!is_real_stop(to_process, i, STOP_) 
+			&& to_process[i] == to_process[i + 1])
 		{
 			++i;
 			count++;
 		}
-		else if (ft_strchr(STOP_, to_process[i]) 
-			&& !find_end_quotes(to_process, i))
+		else if (!is_real_stop(to_process, i, STOP_))
 			count++;
 	}
 	count++;
@@ -77,11 +75,11 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 	while (++i < length)
 	{
 		set_redirect_cmd(cmds[i], &to_parse[j], '<');
-		set_redirect_cmd(cmds[i], &to_parse[j], '>');
-		set_heredoc_app_redirect(cmds[i], &to_parse[j], "<<");
-		set_heredoc_app_redirect(cmds[i], &to_parse[j], ">>");
-		set_commands(cmds[i], &to_parse[j]);
-		set_last_in_last_out(cmds[i]);
+		//set_redirect_cmd(cmds[i], &to_parse[j], '>');
+		//set_heredoc_app_redirect(cmds[i], &to_parse[j], "<<");
+		//set_heredoc_app_redirect(cmds[i], &to_parse[j], ">>");
+		//set_commands(cmds[i], &to_parse[j]);
+		//set_last_in_last_out(cmds[i]);
 		j = skip_char_in_str(j, to_parse, STOP_, 1);
 		j = skip_char_in_str(j, to_parse, STOP_, 0);
 		j = skip_spaces(to_parse, j, 0);
@@ -109,7 +107,7 @@ void	init_cmd(t_data *data, char *to_process)
 		data -> cmds[j]-> index = j + 1;
 	}
 	fill_cmds(data -> cmds, data -> cp_to_parse, i);
-	fill_cmds_par(data -> cmds, to_process, i);
-	init_path(data -> cmds);
+	//fill_cmds_par(data -> cmds, to_process, i);
+	//init_path(data -> cmds);
 	print_struct(data -> cmds);
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 02:20:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/01 21:15:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ size_t	skip_redirect(char *to_parse, size_t i)
 {
 	while (1)
 	{
-		i = skip_spaces(to_parse, i, 1);
+		i = skip_spaces(to_parse, i, 0);
 		if (!to_parse[i] || ft_strchr(STOP_, to_parse[i]))
 			return (-1);
 		while (to_parse[i] && to_parse[i] != ' ')
 			i++;
-		if (!to_parse[i] || ft_strchr(STOP_, to_parse[i]))
+		if (!to_parse[i] || !is_real_stop(to_parse, i, STOP_))
 			return (-1);
 		i = skip_spaces(to_parse, i, 1);
-		if (!ft_strchr(R_COMBO, to_parse[i]) || check_quotes(to_parse, i))
+		if (!ft_strchr(R_COMBO, to_parse[i]))
 			break ;
 	}
 	return (i);
@@ -47,8 +47,12 @@ static void	set_tabs(char **cmds, char *to_parse, int length)
 			return ;
 		j = skip_spaces(to_parse, j, 1);
 		k = j;
-		while (to_parse[j] && !ft_strchr(STOP_F_P, to_parse[j]))
-			j++;
+		if (to_parse[j] == g_data -> neg_single_start)
+			j = calcul_word(to_parse, '\'', j);
+		else if (to_parse[j] == g_data -> neg_double_start)
+			j = calcul_word(to_parse, '"', j);
+		else
+			j = calcul_word(to_parse, 0, j);
 		cmds[i] = ft_calloc(sizeof(char), (j - k + 1));
 		m = -1;
 		while (k < j)

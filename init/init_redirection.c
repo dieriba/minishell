@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:11:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 00:20:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,21 @@ static int	skip_to_redirect(char *to_parse, char redirect, size_t i)
 {
 	while (to_parse[i])
 	{
-		if (to_parse[i] == redirect && to_parse[i + 1] == redirect)
+		if (to_parse[i] == redirect && to_parse[i + 1] == redirect
+			&& !find_start_quotes(to_parse, i))
 		{
 			i += 2;
-			while (to_parse[i] && to_parse[i] == ' ')
+			i = skip_spaces(to_parse, i, 0);
+			if (to_parse[i] == g_data -> neg_double_start 
+				|| to_parse[i] == g_data -> neg_single_start)
+				i++;
+			if (to_parse[i] == '$' 
+				&& (to_parse[i + 1] == g_data -> neg_single_start
+					|| to_parse[i + 1] == g_data -> neg_double_start))
 				i++;
 			return (i);
 		}
-		if (ft_strchr(STOP_, to_parse[i]))
+		if (!is_real_stop(to_parse, i, STOP_))
 			return (-1);
 		i++;
 	}
@@ -42,9 +49,10 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 		pos = &cmd -> pos_here;
 	else
 		pos = &cmd -> pos_app;
-	while (to_parse[++i] && !ft_strchr(STOP_, to_parse[i]))
+	while (to_parse[++i] && !is_real_stop(to_parse, i, STOP_))
 	{
-		if (to_parse[i] == redirect && to_parse[i + 1] == redirect)
+		if (to_parse[i] == redirect && to_parse[i + 1] == redirect
+			&& !find_start_quotes(to_parse, i))
 		{
 			(*pos) = i;
 			k++;
@@ -74,11 +82,14 @@ int	set_tabs_(char **redirection, char *to_parse, char redirect, int length)
 		if (j == -1)
 			return (0);
 		k = j;
-		while (to_parse[j] && (!ft_strchr(STOP_F_P, to_parse[j])))
-			j++;
+		if (to_parse[j] == g_data -> neg_single_start)
+			j = calcul_word(to_parse, '\'', j);
+		else if (to_parse[j] == g_data -> neg_double_start)
+			j = calcul_word(to_parse, '"', j);
+		else
+			j = calcul_word(to_parse, 0, j);
 		redirection[i] = ft_calloc(sizeof(char), (j - k + 1));
-		if (!redirection[i])
-			return (1);
+		is_error(redirection, MALLOC_ERR, 0);
 		m = -1;
 		while (k < j)
 			redirection[i][++m] = to_parse[k++];

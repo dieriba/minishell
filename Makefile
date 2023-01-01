@@ -28,7 +28,8 @@ SRCS_EXEC	=	./exec/fd.c \
 				./exec/command_utils.c \
 				./exec/child.c \
 
-SRCS_PARSER	=	./parser/parser.c		
+SRCS_PARSER	=	./parser/parser.c \
+				./parser/quote_utils.c	
 
 INCLUDES	= 	-I ./includes
 

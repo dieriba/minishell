@@ -6,25 +6,11 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 17:17:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/01 21:13:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int		find_end_quotes(char *to_parse, size_t i)
-{
-	while (to_parse[++i])
-	{
-		if (to_parse[i] == g_data -> neg_single_start 
-				|| to_parse[i] == g_data -> neg_double_start)
-				break ;
-		else if (to_parse[i] == g_data -> neg_double_end 
-				|| to_parse[i] == g_data -> neg_single_end)
-				return (1);
-	}
-	return (0);
-}
 
 int		check_quotes(char *to_parse, int i)
 {
@@ -101,3 +87,12 @@ void	quote_to_neg(char *to_parse)
 			break ;
 	}
 }
+
+/*int	set_string(char *to_parse, char quote)
+{
+	if (to_parse[0] == '"')
+		//func;
+	else
+		//func;
+	return (1);
+}*/
