@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 00:05:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 04:38:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,11 +151,12 @@ int		skip_spaces(char *to_parse, int i, int skip);
 int		count_words(char *to_parse);
 int		is_same_token(char c, char d);
 int		skip_char_in_str(size_t i, char *to_parse, char *to_skip, int opt);
+int		check_quotes(char *to_parse, int i);
+int		calcul_word(char *to_parse, char quote, int j);
+int		find_end_string(char *to_parse, int j);
 void	create_list(t_data *data, char **envp);
 void	par_to_space(char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
-int		check_quotes(char *to_parse, int i);
-int		calcul_word(char *to_parse, char quote, int j);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/

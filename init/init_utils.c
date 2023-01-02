@@ -6,11 +6,22 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 02:20:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 04:35:03 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	find_end_string(char *to_parse, int j)
+{
+	if (to_parse[j] == g_data -> neg_single_start)
+		j = calcul_word(to_parse, '\'', j);
+	else if (to_parse[j] == g_data -> neg_double_start)
+		j = calcul_word(to_parse, '"', j);
+	else
+		j = calcul_word(to_parse, 0, j);
+	return (j);
+}
 
 int	skip_spaces(char *to_parse, int i, int skip)
 {
@@ -56,19 +67,22 @@ int	count_words(char *to_parse)
 	length = 0;
 	while (to_parse[++i])
 	{
-		while (to_parse[i] && to_parse[i] == ' ')
-			i++;
-		while (ft_strchr(R_COMBO, to_parse[i]))
-			i++;
-		while (to_parse[i] && to_parse[i] == ' ')
-			i++;
-		while (to_parse[i] && !is_real_stop(to_parse, i, STOP_F))
+		i = skip_spaces(to_parse, i, 0);
+		if (to_parse[i] == g_data -> neg_single_start )
+			i = loop_nested_quote(to_parse, i, g_data -> neg_single_end);
+		else if (to_parse[i] == g_data -> neg_double_start)
+			i = loop_nested_quote(to_parse, i, g_data -> neg_double_end);
+		else if (ft_strchr(R_COMBO, to_parse[i]) 
+			&& !find_start_quotes(to_parse, i))
+			i = skip_spaces(to_parse, i, 0);
+		i = skip_spaces(to_parse, i, 0);
+		while (to_parse[i] && is_real_stop(to_parse, i, STOP_F))
 			i++;
 		length++;
-		if (!is_real_stop(to_parse, i, STOP_F) || !to_parse[i])
+		if (ft_strchr(STOP_, to_parse[i]) || !to_parse[i])
 			break ;
 	}
-	if (ft_strchr(STOP_, to_parse[i]) && to_parse[i - 1] == ' ')
+	if (!is_real_stop(to_parse, i, STOP_) && to_parse[i - 1] == ' ')
 		--length;
 	return (length);
 }

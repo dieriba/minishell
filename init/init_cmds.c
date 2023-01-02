@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 21:15:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 04:59:36 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,22 @@ size_t	skip_redirect(char *to_parse, size_t i)
 	while (1)
 	{
 		i = skip_spaces(to_parse, i, 0);
-		if (!to_parse[i] || ft_strchr(STOP_, to_parse[i]))
-			return (-1);
 		while (to_parse[i] && to_parse[i] != ' ')
 			i++;
 		if (!to_parse[i] || !is_real_stop(to_parse, i, STOP_))
 			return (-1);
-		i = skip_spaces(to_parse, i, 1);
+		i = skip_spaces(to_parse, i, 0);
 		if (!ft_strchr(R_COMBO, to_parse[i]))
+		{
+			if (to_parse[i] == g_data -> neg_single_start
+				|| to_parse[i] == g_data -> neg_double_start)
+				i++;
+			else if (to_parse[i] == '$' 
+				&& (to_parse[i + 1] == g_data -> neg_single_start
+					|| to_parse[i + 1] == g_data -> neg_double_start))
+				i++;
 			break ;
+		}
 	}
 	return (i);
 }
@@ -41,18 +48,17 @@ static void	set_tabs(char **cmds, char *to_parse, int length)
 	j = -1;
 	while (++i < length)
 	{	
-		if (ft_strchr(R_COMBO, to_parse[++j]))
+		if (ft_strchr(R_COMBO, to_parse[++j])
+			&& !find_start_quotes(to_parse, j))
 			j = skip_redirect(to_parse, j);
 		if (j == -1)
 			return ;
-		j = skip_spaces(to_parse, j, 1);
+		j = skip_spaces(to_parse, j, 0);
 		k = j;
-		if (to_parse[j] == g_data -> neg_single_start)
-			j = calcul_word(to_parse, '\'', j);
-		else if (to_parse[j] == g_data -> neg_double_start)
-			j = calcul_word(to_parse, '"', j);
-		else
-			j = calcul_word(to_parse, 0, j);
+		if (to_parse[j] == g_data -> neg_double_start
+			|| to_parse[j] == g_data -> neg_double_end)
+			k++;
+		j = find_end_string(to_parse, j);
 		cmds[i] = ft_calloc(sizeof(char), (j - k + 1));
 		m = -1;
 		while (k < j)
