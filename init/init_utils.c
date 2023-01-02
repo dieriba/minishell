@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 04:35:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 05:53:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,26 @@ int	count_words(char *to_parse)
 
 	i = -1;
 	length = 0;
-	while (to_parse[++i])
+	while (to_parse[++i] && is_real_stop(to_parse, i, STOP_))
 	{
 		i = skip_spaces(to_parse, i, 0);
-		if (to_parse[i] == g_data -> neg_single_start )
-			i = loop_nested_quote(to_parse, i, g_data -> neg_single_end);
-		else if (to_parse[i] == g_data -> neg_double_start)
+		if (to_parse[i] == g_data -> neg_double_start)
 			i = loop_nested_quote(to_parse, i, g_data -> neg_double_end);
-		else if (ft_strchr(R_COMBO, to_parse[i]) 
-			&& !find_start_quotes(to_parse, i))
-			i = skip_spaces(to_parse, i, 0);
+		else if (to_parse[i] == g_data -> neg_single_start)
+			i = loop_nested_quote(to_parse, i, g_data -> neg_single_end);
+		else if (ft_strchr(R_COMBO, to_parse[i]))
+			while (to_parse[i] && to_parse[i] != ' ')
+				i++;
+		else
+		{
+			while (to_parse[i] && to_parse[i] != ' ')
+				i++;
+			length++;
+		}
 		i = skip_spaces(to_parse, i, 0);
-		while (to_parse[i] && is_real_stop(to_parse, i, STOP_F))
-			i++;
-		length++;
-		if (ft_strchr(STOP_, to_parse[i]) || !to_parse[i])
+		if (!to_parse[i] || ft_strchr(STOP_, to_parse[i]))
 			break ;
 	}
-	if (!is_real_stop(to_parse, i, STOP_) && to_parse[i - 1] == ' ')
-		--length;
 	return (length);
 }
 

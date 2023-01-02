@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 04:59:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 05:54:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	skip_redirect(char *to_parse, size_t i)
 {
 	while (1)
 	{
+		while (to_parse[i] && ft_strchr(R_COMBO, to_parse[i]))
+			i++;
 		i = skip_spaces(to_parse, i, 0);
 		while (to_parse[i] && to_parse[i] != ' ')
 			i++;
@@ -24,10 +26,7 @@ size_t	skip_redirect(char *to_parse, size_t i)
 		i = skip_spaces(to_parse, i, 0);
 		if (!ft_strchr(R_COMBO, to_parse[i]))
 		{
-			if (to_parse[i] == g_data -> neg_single_start
-				|| to_parse[i] == g_data -> neg_double_start)
-				i++;
-			else if (to_parse[i] == '$' 
+			if (to_parse[i] == '$' 
 				&& (to_parse[i + 1] == g_data -> neg_single_start
 					|| to_parse[i + 1] == g_data -> neg_double_start))
 				i++;
@@ -72,8 +71,7 @@ void	set_commands(t_cmd *cmd, char *to_parse)
 {
 	int	length;
 
-	length = count_words(to_parse)
-		- cmd -> in_redirection - cmd -> out_redirection;
+	length = count_words(to_parse);
 	if (length <= 0)
 		return ;
 	cmd -> args = ft_calloc(sizeof(char *), length + 1);

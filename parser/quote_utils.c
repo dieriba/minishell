@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 04:49:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 05:03:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int		loop_nested_quote(char *to_parse, int j, int end)
 	{
 		while (to_parse[j])
 		{
-			if (to_parse[j] == end && ft_strchr(STOP_F, to_parse[j + 1]))
+			if (to_parse[j] == end 
+				&& ft_strchr(STOP_F, to_parse[j + 1]))
 				return (j);
 			j++;
 		}
