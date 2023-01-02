@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 00:20:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 02:48:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	skip_to_redirect(char *to_parse, char redirect, size_t i)
 			if (to_parse[i] == g_data -> neg_double_start 
 				|| to_parse[i] == g_data -> neg_single_start)
 				i++;
-			if (to_parse[i] == '$' 
+			else if (to_parse[i] == '$' 
 				&& (to_parse[i + 1] == g_data -> neg_single_start
 					|| to_parse[i + 1] == g_data -> neg_double_start))
 				i++;
@@ -49,7 +49,7 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 		pos = &cmd -> pos_here;
 	else
 		pos = &cmd -> pos_app;
-	while (to_parse[++i] && !is_real_stop(to_parse, i, STOP_))
+	while (to_parse[++i] && is_real_stop(to_parse, i, STOP_))
 	{
 		if (to_parse[i] == redirect && to_parse[i + 1] == redirect
 			&& !find_start_quotes(to_parse, i))
@@ -67,7 +67,7 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 	return (k);
 }
 
-int	set_tabs_(char **redirection, char *to_parse, char redirect, int length)
+void	set_tabs_(char **redirection, char *to_parse, char redirect, int length)
 {
 	int	i;
 	int	j;
@@ -80,11 +80,11 @@ int	set_tabs_(char **redirection, char *to_parse, char redirect, int length)
 	{
 		j = skip_to_redirect(to_parse, redirect, j);
 		if (j == -1)
-			return (0);
+			return ;
 		k = j;
-		if (to_parse[j] == g_data -> neg_single_start)
+		if (to_parse[j - 1] == g_data -> neg_single_start)
 			j = calcul_word(to_parse, '\'', j);
-		else if (to_parse[j] == g_data -> neg_double_start)
+		else if (to_parse[j - 1] == g_data -> neg_double_start)
 			j = calcul_word(to_parse, '"', j);
 		else
 			j = calcul_word(to_parse, 0, j);
@@ -94,23 +94,19 @@ int	set_tabs_(char **redirection, char *to_parse, char redirect, int length)
 		while (k < j)
 			redirection[i][++m] = to_parse[k++];
 	}
-	return (0);
 }
 
 void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect)
 {
 	char	**redirection;
 	int		length;
-	int		err;
 
 	length = find_tab_length(cmd, to_parse, redirect[0]);
 	if (length == -1)
 		return ;
 	redirection = ft_calloc(sizeof(char *), length + 1);
 	is_error(redirection, MALLOC_ERR, 1);
-	err = set_tabs_(redirection, to_parse, redirect[0], length);
-	if (err)
-		is_error(NULL, MALLOC_ERR, 1);
+	set_tabs_(redirection, to_parse, redirect[0], length);
 	if (redirect[0] == R_IN)
 	{
 		cmd -> in_here_doc = redirection;

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 00:39:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 02:42:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	skip_to_redirect(char *to_parse, char redirect, size_t i)
 			if (to_parse[i] == g_data -> neg_single_start
 				|| to_parse[i] == g_data -> neg_double_start)
 				i++;
-			if (to_parse[i] == '$' 
+			else if (to_parse[i] == '$' 
 				&& (to_parse[i + 1] == g_data -> neg_single_start
 					|| to_parse[i + 1] == g_data -> neg_double_start))
 				i++;

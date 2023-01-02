@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 02:30:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 02:52:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	init_cmd(t_data *data, char *to_process)
 	is_error(data -> cp_to_parse, MALLOC_ERR, 1);
 	quote_to_neg(data -> cp_to_parse);
 	i = how_many_cmds(data -> cp_to_parse);
-	printf("i : %ld\n", i);
 	data -> cmds = ft_calloc(sizeof(t_cmd *), i + 1);
 	is_error(data -> cmds, MALLOC_ERR, 1);
 	par_to_space(data -> cp_to_parse);
