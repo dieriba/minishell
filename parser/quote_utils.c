@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 00:52:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 02:01:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int		find_start_quotes(char *to_parse, int i)
 
 int		find_end_quotes(char *to_parse, int i)
 {
-	printf("The index : %d is real toke,n : %c\n", i, to_parse[i]);
 	while (to_parse[++i])
 	{
 		if (to_parse[i] == g_data -> neg_single_start 
@@ -36,10 +35,7 @@ int		find_end_quotes(char *to_parse, int i)
 				break ;
 		else if (to_parse[i] == g_data -> neg_double_end 
 				|| to_parse[i] == g_data -> neg_single_end)
-			{
-				printf("THis chad is dead %c\n", to_parse[i]);
 				return (1);
-			}
 	}
 	return (0);
 }
