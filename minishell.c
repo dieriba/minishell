@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 05:58:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 06:01:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	lets_read(t_data *data)
 			add_history(data -> cp_to_parse);
 			//is_str_valid(data, data -> cp_to_parse);
 			init_cmd(data, data -> cp_to_parse);
-			//executing(data -> cmds);
+			executing(data -> cmds);
 		}
 		if (!data -> cp_to_parse)
 			free_all(data, 130);

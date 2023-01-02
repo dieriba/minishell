@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 05:58:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 06:12:19 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int	how_many_cmds(char *to_process)
 {
 	size_t	i;
 	int		count;
-	
+
 	count = 0;
 	i = -1;
 	while (to_process[++i])
 	{
-		if (!is_real_stop(to_process, i, STOP_) 
+		if (!is_real_stop(to_process, i, STOP_)
 			&& to_process[i] == to_process[i + 1])
 		{
 			++i;
@@ -109,5 +109,5 @@ void	init_cmd(t_data *data, char *to_process)
 	fill_cmds(data -> cmds, data -> cp_to_parse, i);
 	fill_cmds_par(data -> cmds, to_process, i);
 	init_path(data -> cmds);
-	print_struct(data -> cmds);
+	//print_struct(data -> cmds);
 }
