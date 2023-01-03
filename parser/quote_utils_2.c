@@ -6,13 +6,17 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:31:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:32:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 18:24:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+/*
+char	*expand_clean(char *to_clean)
+{
+	
+}
 
-/*char	*expand_and_quotes(char *to_clean)
 {
 	char	*res;
 
@@ -29,11 +33,11 @@ void	clean_quotes(char **tab)
 	while (tab[++i])
 	{
 		if (length_ < ft_strlen(tab[i]) || ft_strchr(tab[i], '$'))
-			tab[i] = expand_and_quotes(tab[i]);
+			tab[i] = expand_clean_(tab[i]);
 	}
-}*/
+}
 
-/*int	length_(char *to_parse)
+int	length_(char *to_clean)
 {
 	size_t	i;
 	len		len;
