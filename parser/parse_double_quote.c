@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 23:01:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 23:03:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ size_t	copy_expands_in_str(char *res, t_node *expands)
 
 	if (!expands || expands -> line == NULL)
 		return (0);
-	printf("entered\n");
 	i = -1;
 	while (expands -> line[++i])
 		res[i] = expands -> line[i];
@@ -84,7 +83,6 @@ char	*expand_and_clean(
 		{
 			j += copy_expands_in_str(&res[j], expands);
 			i += skip_next_stop(&to_clean[i]);
-			printf("i val :  %ld\n", i);
 			if (expands -> prev)
 				expands = expands -> prev;
 		}
