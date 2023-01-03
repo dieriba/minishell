@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 01:08:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 06:18:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	run_cmd(t_cmd *cmd)
 void	handle_pipes(void)
 {
 	if (g_data -> prev_pipes > 0)
+	{
 		close_fd("bash error", g_data -> prev_pipes);
+		g_data -> prev_pipes = -1;
+	}
 	if (g_data -> inited)
 	{
 		g_data -> prev_pipes = g_data -> pipes[0];
@@ -70,20 +73,18 @@ void	executing(t_cmd **cmds)
 	char	*stop;
 
 	i = -1;
-	g_data -> prev_pipes = -1;
-	g_data -> inited = 0;
 	while (cmds[++i])
 	{
 		p_num = find_cmd_in_par(cmds, cmds[i], i);
 		stop = find_lim_par(cmds, p_num, i);
-		prepare_next_step(cmds, stop, i);
+		if (prepare_next_step(cmds, stop, i))
+			continue;
 		pid_ret = fork();
 		if (pid_ret < 0)
 			print_err_and_exit(NULL, "bash", 1);
 		if (pid_ret == 0)
 			forking(cmds, i);
 		cmds[i]-> pid = pid_ret;
-		cmds[i]-> executed = 1;
 		handle_pipes();
 	}
 	wait_all_child(cmds);

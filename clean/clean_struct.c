@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child.c                                            :+:      :+:    :+:   */
+/*   clean_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 05:59:59 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/03 05:36:27 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/03 05:40:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	wait_all_child(t_cmd **cmds)
+void	clean_struct(t_data *data)
 {
-	size_t	i;
-	int		status;
-
-	i = -1;
-	status = 0;
-	while (cmds[++i])
-	{
-		if (waitpid(cmds[i]-> pid, &status, 0) < 0 && errno != ECHILD)
-			print_err_and_exit(NULL, "Error with waitpid", 1);
-	}
-	if (WIFEXITED(status))
-		g_data -> status = WEXITSTATUS(status);
+	data -> status = 0;
+	data -> prev_pipes = -1;
+	data -> last_exec_stat = 0;
+	data -> inited = 0;
 }

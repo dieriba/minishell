@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 20:21:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 05:56:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,22 @@ int	to_exec_or_not(char *stop, int status)
 		return (0);
 }
 
-int	get_status(t_cmd *prev_cmd, pid_t pid_ret, char *stop)
+int	get_status(pid_t pid_ret, char *stop)
 {
 	int	status;
-
+	
 	status = 0;
-	if (prev_cmd -> executed)
+	if (pid_ret)
 	{
 		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(NULL, "Error with waitpid", 1);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
+		g_data -> last_exec_stat = (status > 0);
 		status = to_exec_or_not(stop, status);
 	}
 	else
-	{
-		if (!ft_strcmp("&&", stop))
-			status = 1;
-		else if (!ft_strcmp("||", stop))
-			status = 1;
-	}
+		status = to_exec_or_not(stop, g_data -> last_exec_stat);
 	return (status);
 }
 
@@ -55,10 +51,10 @@ int	prepare_next_step(t_cmd **cmds, char *stop, int i)
 	status = 0;
 	if (!line)
 		line = stop;
-	if (i > 0 && !ft_strcmp("||", line) && cmds[--i]-> pid)
-		status = get_status(cmds[i], cmds[i]-> pid, "||");
-	else if (i > 0 && !ft_strcmp("&&", line) && cmds[--i]-> pid)
-		status = get_status(cmds[i], cmds[i]-> pid, "&&");
+	if (i > 0 && !ft_strcmp("||", line))
+		status = get_status(cmds[i - 1]-> pid, "||");
+	else if (i > 0 && !ft_strcmp("&&", line))
+		status = get_status(cmds[i - 1]-> pid, "&&");
 	if (!ft_strcmp("|", stop))
 	{
 		if (pipe(g_data -> pipes) < 0)

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 05:42:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 05:40:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,7 @@ typedef struct t_data
 	int					pipes[2];
 	int					inited;
 	int					prev_pipes;
-	int					to_exec;
-	int					no_exec;
-	int					executed;
+	int					last_exec_stat;
 	int					neg_single_start;
 	int					neg_single_end;
 	int					neg_double_start;
@@ -185,7 +183,6 @@ char	*get_var_line(t_node *node);
 
 /*-----------------EXECUTION-----------------*/
 int		prepare_next_step(t_cmd **cmd, char *stop, int i);
-int		get_status(t_cmd *prev_cmd, pid_t pid_ret, char *stop);
 int		find_cmd_in_par(t_cmd **cmds, t_cmd *cmd, int i);
 char	*find_lim_par(t_cmd **cmds, int p_num, int i);
 void	executing(t_cmd **cmds);
@@ -202,7 +199,7 @@ int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
 void	free_list(t_env *env, t_node **head);
 void	free_cmd(t_cmd **cmds);
 void	free_all(t_data *data, int status);
-void	clean_struct(void);
+void	clean_struct(t_data *data);
 /*-----------------FREE_STRUCT-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
