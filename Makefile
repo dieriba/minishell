@@ -33,6 +33,7 @@ SRCS_EXEC	=	./exec/fd.c \
 SRCS_PARSER	=	./parser/parser.c \
 				./parser/quote_utils.c \
 				./parser/quote_utils_2.c \
+				./parser/parse_double_quote.c \
 
 INCLUDES	= 	-I ./includes
 

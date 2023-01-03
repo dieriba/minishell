@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:56:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 21:55:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define STOP_	"|&"
 # define STOP_F "|&<> "
 # define STOP_F_P "|&<> )\"'"
+# define STOP_EXP "\\ '\"$"
 
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"
@@ -134,6 +135,7 @@ void	check_lines(t_data *data, char *files, char *err, int flags);
 t_node	*create_node(t_data *data, char *line, int alloc);
 t_node	*find_var(t_node *node, char *to_find);
 t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new);
+t_node	*ft_lstlast_s(t_node *lst);
 int		check_behind(char *to_parse, char *in, int j, int index);
 /*-----------------GLOBAL_UTILS-----------------*/
 
@@ -176,6 +178,10 @@ int		loop_nested_quote(char *to_parse, int j, int end);
 int		length_of_quotes(char *to_parse, char quote);
 void	quote_to_neg(t_data *data, char *to_parse);
 int		char_is_quote(t_data *data, char c);
+char	*parse_double_q(t_data *data, char *to_clean);
+void	parser(t_data *data, char **tab);
+int		skip_next_stop(char *to_clean);
+char	*cleaner(t_data *data, char *to_clean);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/

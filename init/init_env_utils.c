@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:50:13 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 16:26:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 21:35:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,13 @@ void	create_list(t_data *data, char **envp)
 		ft_lst_add_front_s(data, &data -> env -> start, node);
 		i--;
 	}
+}
+
+t_node	*ft_lstlast_s(t_node *lst)
+{
+	if (!(lst))
+		return (NULL);
+	while (lst -> next)
+		lst = lst -> next;
+	return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:35:37 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 23:00:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,27 @@ void	quote_to_neg(t_data *data, char *to_parse)
 	}
 }
 
-/*int	set_string(char *to_parse, char quote)
+void	parser(t_data *data, char **tab)
 {
-	if (to_parse[0] == '"')
-		//func;
-	else
-		//func;
-	return (1);
-}*/
+	size_t	i;
+	size_t	j;
+
+	i = -1;
+	while (tab[++i])
+	{
+		j = -1;
+		while (tab[i][++j])
+		{
+			if (tab[i][j] == data -> neg_double_start)
+			{
+				tab[i] = parse_double_q(data, tab[i]);
+				break ;
+			}
+			else if (tab[i][j] == data -> neg_single_start)
+			{
+				tab[i] = cleaner(data, tab[i]);
+				break ;
+			}
+		}
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:58:15 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 18:35:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 21:03:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*get_var_line(t_node *node)
 {
 	size_t	i;
 
+	if (!node)
+		return (NULL);
 	i = -1;
 	while (node -> line[++i] != '=')
 		;
