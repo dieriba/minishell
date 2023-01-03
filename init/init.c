@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:27:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 18:02:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,18 @@ void	fill_cmds_par(t_cmd **cmds, char *to_parse, int length)
 {
 	int		i;
 	size_t	j;
+	t_data	*data;
 
+	data = cmds[0]-> data;
 	i = -1;
 	j = 0;
-	j = skip_spaces(to_parse, j, 0);
+	j = skip_spaces(data, to_parse, j, 0);
 	while (++i < length)
 	{
 		set_parenthese(cmds[i], &to_parse[j]);
 		j = skip_char_letter_str(cmds[0]-> data, j, to_parse, STOP_);
 		j = skip_char_token_str(j, to_parse, STOP_);
-		j = skip_spaces(to_parse, j, 0);
+		j = skip_spaces(data, to_parse, j, 0);
 	}
 }
 
@@ -68,10 +70,12 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 {
 	int		i;
 	size_t	j;
+	t_data	*data;
 
+	data = cmds[0]-> data;
 	i = -1;
 	j = 0;
-	j = skip_spaces(to_parse, j, 0);
+	j = skip_spaces(data, to_parse, j, 0);
 	while (++i < length)
 	{
 		set_redirect_cmd(cmds[i], &to_parse[j], '<');
@@ -82,7 +86,7 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		set_last_in_last_out(cmds[i]);
 		j = skip_char_letter_str(cmds[0]-> data, j, to_parse, STOP_);
 		j = skip_char_token_str(j, to_parse, STOP_);
-		j = skip_spaces(to_parse, j, 0);
+		j = skip_spaces(data, to_parse, j, 0);
 	}
 }
 

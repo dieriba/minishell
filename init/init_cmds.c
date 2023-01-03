@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:02:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:58:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,14 @@ size_t	skip_redirect(t_data *data, char *to_parse, size_t i)
 	{
 		while (to_parse[i] && ft_strchr(R_COMBO, to_parse[i]))
 			i++;
-		i = skip_spaces(to_parse, i, 0);
+		i = skip_spaces(data, to_parse, i, 0);
 		while (to_parse[i] && to_parse[i] != ' ')
 			i++;
 		if (!to_parse[i] || !is_real_stop(data, to_parse, i, STOP_))
 			return (-1);
-		i = skip_spaces(to_parse, i, 0);
-		if (!ft_strchr(R_COMBO, to_parse[i]))
-		{
-			if (to_parse[i] == '$'
-				&& (to_parse[i + 1] == data -> neg_single_start
-					|| to_parse[i + 1] == data -> neg_double_start))
-				i++;
-			if (to_parse[i] == data -> neg_double_start
-				|| to_parse[i] == data -> neg_single_start)
-				i++;
+		i = skip_spaces(data, to_parse, i, 1);
+		if (!ft_strchr(R_COMBO, to_parse[i])) 
 			break ;
-		}
 	}
 	return (i);
 }
@@ -55,7 +46,7 @@ void	set_tabs_cmd(t_data *data, char **cmds, char *to_parse, int length)
 			j = skip_redirect(data, to_parse, j);
 		if (j == -1)
 			return ;
-		j = skip_spaces(to_parse, j, 0);
+		j = skip_spaces(data, to_parse, j, 1);
 		k = j;
 		j = find_end_string(data, to_parse, j);
 		cmds[i] = ft_calloc(sizeof(char), (j - k + 1));

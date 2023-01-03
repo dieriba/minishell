@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:26:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 18:11:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	find_end_string(t_data *data, char *to_parse, int j)
 {
-	if (to_parse[j] == data -> neg_single_start)
+	if (to_parse[j - 1] == data -> neg_single_start)
 		j = calcul_word(data, to_parse, '\'', j);
-	else if (to_parse[j] == data -> neg_double_start)
+	else if (to_parse[j - 1] == data -> neg_double_start)
 		j = calcul_word(data, to_parse, '"', j);
 	else
 		j = calcul_word(data, to_parse, 0, j);

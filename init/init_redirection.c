@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:24:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:59:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ static int	skip_to_redirect(
 			&& !find_start_quotes(data, to_parse, i))
 		{
 			i += 2;
-			i = skip_spaces(to_parse, i, 0);
-			if (char_is_quote(data, to_parse[i]))
-				i++;
-			else if (to_parse[i] == '$' && char_is_quote(data, to_parse[i + 1]))
-				i++;
+			i = skip_spaces(data, to_parse, i, 1);
 			return (i);
 		}
 		if (!is_real_stop(data, to_parse, i, STOP_))

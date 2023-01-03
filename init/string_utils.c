@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 06:10:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:17:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 18:10:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,15 @@ int	is_same_token(char c, char d)
 	return (0);
 }
 
-int	skip_spaces(char *to_parse, int i, int skip)
+int	skip_spaces(t_data *data, char *to_parse, int i, int skip)
 {
 	while (to_parse[i] && to_parse[i] == ' ')
 		i++;
 	if (skip)
 	{
-		while (to_parse[i] && (to_parse[i] == '"'
-				|| to_parse[i] == '\''))
+		if (to_parse[i] == '$' && char_is_quote(data, to_parse[i + 1]))
+			i++;
+		if (char_is_quote(data, to_parse[i]))
 			i++;
 	}
 	return (i);

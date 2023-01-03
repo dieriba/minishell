@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:40:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:56:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	print_env(t_node *node);
 /*-----------------DEBUG_UTILS-----------------*/
 
 /*-----------------INITIALIZATION_UTILS-----------------*/
-int		skip_spaces(char *to_parse, int i, int skip);
+int		skip_spaces(t_data *data, char *to_parse, int i, int skip);
 int		count_words(t_data *data, char *to_parse);
 int		is_same_token(char c, char d);
 int		skip_char_letter_str(
