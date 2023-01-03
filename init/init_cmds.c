@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 06:15:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 20:35:36 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 size_t	skip_redirect(char *to_parse, size_t i)
 {
-	if (ft_strchr(R_COMBO, to_parse[j])
-		&& find_start_quotes(to_parse, j))
-			return (i);
 	while (1)
 	{
 		while (to_parse[i] && ft_strchr(R_COMBO, to_parse[i]))
@@ -50,7 +47,9 @@ static void	set_tabs(char **cmds, char *to_parse, int length)
 	j = -1;
 	while (++i < length)
 	{	
-		j = skip_redirect(to_parse, j);
+		if (ft_strchr(R_COMBO, to_parse[++j])
+			&& !find_start_quotes(to_parse, j))
+			j = skip_redirect(to_parse, j);
 		if (j == -1)
 			return ;
 		j = skip_spaces(to_parse, j, 0);

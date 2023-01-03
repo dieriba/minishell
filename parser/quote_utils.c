@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 05:03:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 23:51:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int		find_start_quotes(char *to_parse, int i)
 
 int		find_end_quotes(char *to_parse, int i)
 {
+	if (!to_parse[i])
+		return (0);
 	while (to_parse[++i])
 	{
 		if (to_parse[i] == g_data -> neg_single_start 

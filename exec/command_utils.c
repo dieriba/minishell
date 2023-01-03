@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:22:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/02 20:21:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	get_status(t_cmd *prev_cmd, pid_t pid_ret, char *stop)
 {
 	int	status;
 
+	status = 0;
 	if (prev_cmd -> executed)
 	{
 		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)

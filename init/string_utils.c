@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 06:10:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/02 06:11:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 00:00:30 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/minishell.h"
+
 int	is_real_stop(char *to_parse ,size_t i ,char *in)
 {
+	if (!to_parse[i])
+		return (0);
 	if (ft_strchr(in ,to_parse[i]) && !find_end_quotes(to_parse, i))
 		return (0);
 	return (1);
