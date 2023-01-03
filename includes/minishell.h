@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 05:40:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 06:33:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ typedef struct t_cmd
 	int		no_path;
 	int		p_open;
 	int		p_close;
-	int		executed;
 	t_data	*data;
 }	t_cmd;
 
