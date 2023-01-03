@@ -3,38 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 00:03:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:26:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	find_end_string(char *to_parse, int j)
+int	find_end_string(t_data *data, char *to_parse, int j)
 {
-	if (to_parse[j] == g_data -> neg_single_start)
-		j = calcul_word(to_parse, '\'', j);
-	else if (to_parse[j] == g_data -> neg_double_start)
-		j = calcul_word(to_parse, '"', j);
+	if (to_parse[j] == data -> neg_single_start)
+		j = calcul_word(data, to_parse, '\'', j);
+	else if (to_parse[j] == data -> neg_double_start)
+		j = calcul_word(data, to_parse, '"', j);
 	else
-		j = calcul_word(to_parse, 0, j);
+		j = calcul_word(data, to_parse, 0, j);
 	return (j);
 }
 
-int	skip_char_in_str(size_t i, char *to_parse, char *to_skip, int opt)
+int	skip_char_letter_str(t_data *data, size_t i, char *to_parse, char *to_skip)
 {
-	if (opt)
-		while (to_parse[i] && is_real_stop(to_parse, i, to_skip))
-			i++;
-	else
-		while (to_parse[i] && ft_strchr(to_skip, to_parse[i]))
-			i++;
+	while (to_parse[i] && is_real_stop(data, to_parse, i, to_skip))
+		i++;
 	return (i);
 }
 
-int	count_words(char *to_parse)
+int	skip_char_token_str(size_t i, char *to_parse, char *to_skip)
+{
+	while (to_parse[i] && ft_strchr(to_skip, to_parse[i]))
+		i++;
+	return (i);
+}
+
+int	count_words(t_data *data, char *to_parse)
 {
 	size_t	i;
 	int		length;
@@ -49,10 +52,10 @@ int	count_words(char *to_parse)
 			i++;
 		while (to_parse[i] && to_parse[i] == ' ')
 			i++;
-		while (to_parse[i] && is_real_stop(to_parse, i, STOP_F))
+		while (to_parse[i] && is_real_stop(data, to_parse, i, STOP_F))
 			i++;
 		length++;
-		if (!is_real_stop(to_parse, i, STOP_) || !to_parse[i])
+		if (!is_real_stop(data, to_parse, i, STOP_) || !to_parse[i])
 			break ;
 	}
 	if (ft_strchr(STOP_, to_parse[i]) && to_parse[i - 1] == ' ')

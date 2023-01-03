@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 01:47:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:36:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	free_cmd(t_cmd **cmds)
 		return ;
 	while (cmds[++i])
 	{
-		//if (cmds[i]-> cmd != cmds[i] -> args[0])
-		//	free(cmds[i]-> cmd);
+		/*if (cmds[i]-> cmd != cmds[i] -> args[0])
+			free(cmds[i]-> cmd);*/
 		if (cmds[i]-> args)
 			ft_free_tab(cmds[i]-> args);
 		if (cmds[i]-> in)

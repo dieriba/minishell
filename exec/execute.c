@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 06:18:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:37:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,29 @@ void	run_cmd(t_cmd *cmd)
 			if (access(cmd -> paths[i], X_OK) != -1)
 				execve(cmd -> paths[i], cmd -> args, NULL);
 		}
-		print_err_and_exit(cmd, "bash: ", 1);
+		print_err_and_exit(cmd -> data, cmd, "bash: ", 1);
 	}
 	else
 	{
 		if (access(cmd -> cmd, X_OK) != -1)
 			execve(cmd -> cmd, cmd -> args, NULL);
-		print_err_and_exit(cmd, "bash: ", 1);
+		print_err_and_exit(cmd -> data, cmd, "bash: ", 1);
 	}
 }
 
-void	handle_pipes(void)
+void	handle_pipes(t_data *data)
 {
-	if (g_data -> prev_pipes > 0)
+	if (data -> prev_pipes > 0)
 	{
-		close_fd("bash error", g_data -> prev_pipes);
-		g_data -> prev_pipes = -1;
+		close_fd(data, "bash error", data -> prev_pipes);
+		data -> prev_pipes = -1;
 	}
-	if (g_data -> inited)
+	if (data -> inited)
 	{
-		g_data -> prev_pipes = g_data -> pipes[0];
-		close_fd("bash pipes close", g_data -> pipes[1]);
+		data -> prev_pipes = data -> pipes[0];
+		close_fd(data, "bash pipes close", data -> pipes[1]);
 	}
-	g_data -> inited = 0;
+	data -> inited = 0;
 }
 
 void	forking(t_cmd **cmds, int i)
@@ -65,7 +65,7 @@ void	forking(t_cmd **cmds, int i)
 	run_cmd(cmd);
 }
 
-void	executing(t_cmd **cmds)
+void	executing(t_data *data, t_cmd **cmds)
 {
 	int		i;
 	pid_t	pid_ret;
@@ -78,14 +78,14 @@ void	executing(t_cmd **cmds)
 		p_num = find_cmd_in_par(cmds, cmds[i], i);
 		stop = find_lim_par(cmds, p_num, i);
 		if (prepare_next_step(cmds, stop, i))
-			continue;
+			continue ;
 		pid_ret = fork();
 		if (pid_ret < 0)
-			print_err_and_exit(NULL, "bash", 1);
+			print_err_and_exit(data, NULL, "bash", 1);
 		if (pid_ret == 0)
 			forking(cmds, i);
 		cmds[i]-> pid = pid_ret;
-		handle_pipes();
+		handle_pipes(data);
 	}
-	wait_all_child(cmds);
+	wait_all_child(data, cmds);
 }

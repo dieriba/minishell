@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 05:59:59 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 16:46:02 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	wait_all_child(t_cmd **cmds)
+void	wait_all_child(t_data *data, t_cmd **cmds)
 {
 	size_t	i;
 	int		status;
@@ -22,8 +22,8 @@ void	wait_all_child(t_cmd **cmds)
 	while (cmds[++i])
 	{
 		if (waitpid(cmds[i]-> pid, &status, 0) < 0 && errno != ECHILD)
-			print_err_and_exit(NULL, "Error with waitpid", 1);
+			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 	}
 	if (WIFEXITED(status))
-		g_data -> status = WEXITSTATUS(status);
+		data -> status = WEXITSTATUS(status);
 }

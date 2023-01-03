@@ -6,19 +6,19 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 06:15:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:39:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	close_fd(char *str, int fd)
+void	close_fd(t_data *data, char *str, int fd)
 {
 	if (close(fd) < 0)
-		print_err_and_exit(NULL, str, 1);
+		print_err_and_exit(data, NULL, str, 1);
 }
 
-void	check_files(char **files, int flags)
+void	check_files(t_data *data, char **files, int flags)
 {
 	int	i;
 
@@ -26,11 +26,11 @@ void	check_files(char **files, int flags)
 	while (files[++i])
 	{
 		if (access(files[i], flags))
-			print_err_and_exit(NULL, "bash", 1);
+			print_err_and_exit(data, NULL, "bash", 1);
 	}
 }
 
-void	open_files(char **files, int length, int flags)
+void	open_files(t_data *data, char **files, int length, int flags)
 {
 	int	i;
 
@@ -38,28 +38,31 @@ void	open_files(char **files, int length, int flags)
 	while (++i < length)
 	{
 		if (open(files[i], flags, 0644) < 0)
-			print_err_and_exit(NULL, "bash", 1);
+			print_err_and_exit(data, NULL, "bash", 1);
 	}
 }
 
 int	opener_outfile(t_cmd *cmd, int len_out, int len_out_ap)
 {
-	int	fd;
-	int	flags;
+	t_data	*data;
+	int		fd;
+	int		flags;
 
+	data = cmd -> data;
 	flags = O_RDWR | O_TRUNC | O_CREAT;
 	if (cmd -> pos_out > cmd -> pos_app)
 	{
 		if (len_out > 1)
-			open_files(cmd -> out, len_out - 1, flags);
-		open_files(cmd -> out_append, len_out_ap, O_RDWR | O_APPEND | O_CREAT);
+			open_files(data, cmd -> out, len_out - 1, flags);
+		open_files(
+			data, cmd -> out_append, len_out_ap, O_RDWR | O_APPEND | O_CREAT);
 		fd = open(cmd -> out[len_out - 1], flags, 0666);
 	}
 	else
 	{
 		if (len_out_ap > 1)
-			open_files(cmd -> out_append, len_out_ap - 1, flags);
-		open_files(cmd -> out, len_out, O_RDWR | O_TRUNC | O_CREAT);
+			open_files(data, cmd -> out_append, len_out_ap - 1, flags);
+		open_files(data, cmd -> out, len_out, O_RDWR | O_TRUNC | O_CREAT);
 		fd = open(cmd -> out_append[len_out_ap - 1], flags, 0666);
 	}
 	return (fd);

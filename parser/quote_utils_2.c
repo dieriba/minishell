@@ -1,33 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   quote_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 08:56:13 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/03 17:31:49 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/03 17:32:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*char	*get_path(t_node *node, char *var)
+/*char	*expand_and_quotes(char *to_clean)
 {
 	char	*res;
+
 	
-	res = 	
-	return (res);	
+	free(to_clean);
+	return (res)
+}
+
+void	clean_quotes(char **tab)
+{
+	size_t	i;
+
+	i = -1;
+	while (tab[++i])
+	{
+		if (length_ < ft_strlen(tab[i]) || ft_strchr(tab[i], '$'))
+			tab[i] = expand_and_quotes(tab[i]);
+	}
 }*/
 
-void	init_env(t_data *data, char **envp)
+/*int	length_(char *to_parse)
 {
-	t_node	*path;
-
-	data -> env = ft_calloc(sizeof(t_env), 1);
-	is_error(data, data -> env, MALLOC_ERR, 1);
-	create_list(data, envp);
-	path = find_var(data -> env -> start, "PATH");
-	if (path)
-		data -> path = path -> line;
+	size_t	i;
+	len		len;
+	
+	i = 0;
+	len = 0;
+	while (to_parse[++i])
+	{
+		if (to_parse[i] > 0)
+			len++;
+	}
+	return (len);
 }
+*/

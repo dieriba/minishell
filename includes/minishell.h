@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 06:33:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:40:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,23 +115,23 @@ typedef struct t_data
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
-extern t_data			*g_data;
+extern int				g_exit_prog;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
-void	handle_signals(void);
+void	handle_signals(t_data *data);
 /*-----------------SIGNAL_FUNCTION-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
 int		is_str_valid(t_data *data, char *to_parse);
 int		check_parenthese(char *to_parse);
-void	print_err_and_exit(t_cmd *cmd, char *err_msg, int type);
+void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type);
 int		print_bad_syntax(t_data *data, char *str, char token);
 void	check_lines(t_data *data, char *files, char *err, int flags);
 /*-----------------ERROR_HANDLING-----------------*/
 
 /*-----------------GLOBAL_UTILS-----------------*/
-t_node	*create_node(char *line, int alloc);
+t_node	*create_node(t_data *data, char *line, int alloc);
 t_node	*find_var(t_node *node, char *to_find);
 t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new);
 int		check_behind(char *to_parse, char *in, int j, int index);
@@ -145,12 +145,14 @@ void	print_env(t_node *node);
 
 /*-----------------INITIALIZATION_UTILS-----------------*/
 int		skip_spaces(char *to_parse, int i, int skip);
-int		count_words(char *to_parse);
+int		count_words(t_data *data, char *to_parse);
 int		is_same_token(char c, char d);
-int		skip_char_in_str(size_t i, char *to_parse, char *to_skip, int opt);
+int		skip_char_letter_str(
+			t_data *data, size_t i, char *to_parse, char *to_skip);
+int		skip_char_token_str(size_t i, char *to_parse, char *to_skip);
 int		check_quotes(char *to_parse, int i);
-int		calcul_word(char *to_parse, char quote, int j);
-int		find_end_string(char *to_parse, int j);
+int		calcul_word(t_data *data, char *to_parse, char quote, int j);
+int		find_end_string(t_data *data, char *to_parse, int j);
 void	create_list(t_data *data, char **envp);
 void	par_to_space(char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
@@ -167,12 +169,13 @@ void	init_path(t_cmd **cmds);
 
 /*-----------------PARSER-----------------*/
 int		valid_quotes(char *to_parse);
-int		is_real_stop(char *to_parse, size_t i, char *in);
-int		find_start_quotes(char *to_parse, int i);
-int		find_end_quotes(char *to_parse, int i);
+int		is_real_stop(t_data *data, char *to_parse, size_t i, char *in);
+int		find_start_quotes(t_data *data, char *to_parse, int i);
+int		find_end_quotes(t_data *data, char *to_parse, int i);
 int		loop_nested_quote(char *to_parse, int j, int end);
 int		length_of_quotes(char *to_parse, char quote);
-void	quote_to_neg(char *to_parse);
+void	quote_to_neg(t_data *data, char *to_parse);
+int		char_is_quote(t_data *data, char c);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/
@@ -184,13 +187,13 @@ char	*get_var_line(t_node *node);
 int		prepare_next_step(t_cmd **cmd, char *stop, int i);
 int		find_cmd_in_par(t_cmd **cmds, t_cmd *cmd, int i);
 char	*find_lim_par(t_cmd **cmds, int p_num, int i);
-void	executing(t_cmd **cmds);
+void	executing(t_data *data, t_cmd **cmds);
 void	run_cmd(t_cmd *cmd);
-void	wait_all_child(t_cmd **cmds);
-void	open_files(char **files, int length, int flags);
-void	close_fd(char *str, int fd);
-void	check_files(char **files, int flags);
-void	close_pipes(void);
+void	wait_all_child(t_data *data, t_cmd **cmds);
+void	open_files(t_data *data, char **files, int length, int flags);
+void	close_fd(t_data *data, char *str, int fd);
+void	check_files(t_data *data, char **files, int flags);
+void	close_pipes(t_data *data);
 void	set_redirections_files(t_cmd *cmd, char *str);
 int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
 /*-----------------EXECUTION-----------------*/
@@ -202,7 +205,7 @@ void	clean_struct(t_data *data);
 /*-----------------FREE_STRUCT-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
-void	is_error(void *elem, char *err_msg, int type);
+void	is_error(t_data *data, void *elem, char *err_msg, int type);
 /*-----------------ERROR_HANDLING-----------------*/
 
 #endif

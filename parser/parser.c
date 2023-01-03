@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 21:13:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:35:37 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		check_quotes(char *to_parse, int i)
+int	check_quotes(char *to_parse, int i)
 {
 	while (--i > -1)
 	{
@@ -31,7 +31,7 @@ int	how_many_quotes(char *to_parse, char quote, int *count)
 	{
 		if (to_parse[i] == '"' && to_parse[i - 1] != '\\')
 			break ;
-		else if (to_parse[i] ==  quote && quote == '\'')
+		else if (to_parse[i] == quote && quote == '\'')
 			break ;
 	}
 	(*count) += 1 + (to_parse[i] == quote);
@@ -43,7 +43,7 @@ int	valid_quotes(char *to_parse)
 	size_t	i;
 	int		sing_q;
 	int		double_q;
-	
+
 	i = -1;
 	sing_q = 0;
 	double_q = 0;
@@ -52,36 +52,36 @@ int	valid_quotes(char *to_parse)
 		if (to_parse[i] == '"')
 			i += how_many_quotes(&to_parse[i], '"', &double_q);
 		else if (to_parse[i] == '\'')
-			i += how_many_quotes(&to_parse[i], '\'', &sing_q);	
+			i += how_many_quotes(&to_parse[i], '\'', &sing_q);
 	}
 	if (sing_q % 2 || double_q % 2)
 		return (1);
 	return (0);
 }
 
-void	quote_to_neg(char *to_parse)
+void	quote_to_neg(t_data *data, char *to_parse)
 {
 	size_t	i;
-	
+
 	i = -1;
 	while (to_parse[++i])
 	{
 		if (to_parse[i] && to_parse[i] == '"')
 		{
-			to_parse[i] = g_data -> neg_double_start;
+			to_parse[i] = data -> neg_double_start;
 			while (to_parse[++i])
 				if (to_parse[i] == '"' && to_parse[i - 1] != '\\')
-					break ;				
+					break ;
 			if (to_parse[i])
-				to_parse[i] = g_data -> neg_double_end;
+				to_parse[i] = data -> neg_double_end;
 		}
 		else if (to_parse[i] && to_parse[i] == '\'')
 		{
-			to_parse[i] = g_data -> neg_single_start;
+			to_parse[i] = data -> neg_single_start;
 			while (to_parse[++i] && to_parse[i] != '\'')
 				;
 			if (to_parse[i])
-				to_parse[i] = g_data -> neg_single_end;
+				to_parse[i] = data -> neg_single_end;
 		}
 		if (!to_parse[i])
 			break ;

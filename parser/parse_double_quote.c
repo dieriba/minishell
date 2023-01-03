@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/01 19:57:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:36:03 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ size_t	count_words(char *to_parse)
 	size_t	len;
 	size_t	i;
 	char	**tab;
-	
+
 	i = -1;
 	len = 0;
 	while (to_parse[++i] && to_parse[i] != g_data -> neg_double_end)
@@ -63,7 +63,7 @@ size_t	count_words(char *to_parse)
 	return (len);
 }
 
-char	*double_s_q(char *to_parse)
+/*char	*double_s_q(char *to_parse)
 {
 	
-}
+}*/
