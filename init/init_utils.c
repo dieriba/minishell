@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 18:46:19 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 02:55:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,10 @@ int	count_words(t_data *data, char *to_parse)
 	length = 0;
 	while (to_parse[++i])
 	{
-		while (to_parse[i] && to_parse[i] == ' ')
-			i++;
+		i = skip_spaces(data, to_parse, i, 0);
 		while (to_parse[i] && ft_strchr(R_COMBO, to_parse[i]))
 			i++;
-		while (to_parse[i] && to_parse[i] == ' ')
-			i++;
+		i = skip_spaces(data, to_parse, i, 0);
 		while (to_parse[i] && is_real_stop(data, to_parse, i, STOP_F))
 			i++;
 		length++;
@@ -62,3 +60,18 @@ int	count_words(t_data *data, char *to_parse)
 		--length;
 	return (length);
 }
+
+/*int	skip_invalid_dollars(t_data *data, char *to_parse, int j)
+{
+	while (1)
+	{
+		if (is_valid_expand(data, &to_parse[j]))
+			return (1);
+		j += skip_next_stop(&to_parse[j]);
+		if (to_parse[j] != '$')
+			break ;
+		if (to_parse[j] == 0 || !is_real_stop(data, to_parse, j, STOP_))
+			return (-1);
+	}
+	return (j);
+}*/

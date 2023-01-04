@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 23:00:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 02:21:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	parser(t_data *data, char **tab)
 		j = -1;
 		while (tab[i][++j])
 		{
-			if (tab[i][j] == data -> neg_double_start)
+			if (tab[i][j] == data -> neg_double_start 
+				|| tab[i][j] == '$')
 			{
 				tab[i] = parse_double_q(data, tab[i]);
 				break ;

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 06:10:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 18:45:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 04:03:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,22 @@ int	calcul_word(t_data *data, char *to_parse, char quote, int j)
 	else if (quote == '"')
 		j = loop_nested_quote(to_parse, j, data -> neg_double_end);
 	else
-		while (to_parse[j] && !ft_strchr(STOP_F_P, to_parse[j]))
+	{
+		while (1)
+		{
+			while (to_parse[j] && !ft_strchr(STOP_F_P, to_parse[j]))
+				j++;
+			if (to_parse[j] != '$')
+				break;
 			j++;
+		}
+	}
 	return (j);
 }
 
 int	is_same_token(char c, char d)
 {
-	if (ft_strchr(FORMAT_TOKEN, c)
-		&& ft_strchr(FORMAT_TOKEN, d))
+	if (ft_strchr(FORMAT_TOKEN, c) && ft_strchr(FORMAT_TOKEN, d))
 	{
 		if (c == d)
 			return (1);

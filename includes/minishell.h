@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 21:55:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 02:49:01 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@
 # define STOP	"|& "
 # define STOP_	"|&"
 # define STOP_F "|&<> "
-# define STOP_F_P "|&<> )\"'"
-# define STOP_EXP "\\ '\"$"
-
+# define STOP_F_P "|&<> )$\"'"
+# define STOP_EXP "\\'\"$&|<> "
+# define VALID_COMB_EXP "\0$\" "
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"
 # define FORMAT_TOKEN_P "|&<>()"
@@ -182,6 +182,8 @@ char	*parse_double_q(t_data *data, char *to_clean);
 void	parser(t_data *data, char **tab);
 int		skip_next_stop(char *to_clean);
 char	*cleaner(t_data *data, char *to_clean);
+char	*is_valid_expand(t_data *data, char *to_check);
+int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/

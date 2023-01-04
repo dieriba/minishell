@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 23:03:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 02:20:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ char	*is_valid_expand(t_data *data, char *to_check)
 	char	stop;
 	char	*line;
 	size_t	i;
-
+	int		j;
+		
+	if (ft_strchr(VALID_COMB_EXP, to_check[1]))
+		return (&to_check[0]);
+	j = (to_check[0] == '$');
 	i = skip_next_stop(to_check);
 	stop = to_check[i];
 	to_check[i] = 0;
-	line = get_var_line(find_var(data -> env -> start, &to_check[0]));
+	line = get_var_line(find_var(data -> env -> start, &to_check[j]));
 	to_check[i] = stop;
 	return (line);
 }
