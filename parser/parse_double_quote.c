@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 02:20:59 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 16:30:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*is_valid_expand(t_data *data, char *to_check)
 	size_t	i;
 	int		j;
 		
-	if (ft_strchr(VALID_COMB_EXP, to_check[1]))
+	if (ft_strchr(VALID_COMB_EXP, to_check[1])
+		|| char_is_quote(data, to_check[1]))
 		return (&to_check[0]);
 	j = (to_check[0] == '$');
 	i = skip_next_stop(to_check);
