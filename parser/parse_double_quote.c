@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_double_quote.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 16:30:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 21:55:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*is_valid_expand(t_data *data, char *to_check)
 		|| char_is_quote(data, to_check[1]))
 		return (&to_check[0]);
 	j = (to_check[0] == '$');
-	i = skip_next_stop(to_check);
+	i = skip_next_stop(data, to_check);
 	stop = to_check[i];
 	to_check[i] = 0;
 	line = get_var_line(find_var(data -> env -> start, &to_check[j]));
@@ -49,7 +49,7 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean)
 			node = create_node(data, line, (line != NULL));
 			is_error(data, node, MALLOC_ERR, 0);
 			ft_lst_add_front_s(data, expands, node);
-			i += skip_next_stop(&to_clean[i]);
+			i += skip_next_stop(data, &to_clean[i]);
 		}
 		if (to_clean[i] > 0 && to_clean[i] != '$')
 			len++;
@@ -87,7 +87,7 @@ char	*expand_and_clean(
 		if (to_clean[i] == '$')
 		{
 			j += copy_expands_in_str(&res[j], expands);
-			i += skip_next_stop(&to_clean[i]);
+			i += skip_next_stop(data, &to_clean[i]);
 			if (expands -> prev)
 				expands = expands -> prev;
 		}

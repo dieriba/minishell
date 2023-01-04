@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 06:10:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 16:53:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 23:21:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,15 @@ int	is_real_stop(t_data *data, char *to_parse, size_t i, char *in)
 	return (1);
 }
 
-int	calcul_word(t_data *data, char *to_parse, char quote, int j)
+int	calcul_word(t_data *data, char *to_parse, int j)
 {
-	if (quote == '\'')
+	if (to_parse[j] == data -> neg_single_start)
 		j = loop_nested_quote(to_parse, j, data -> neg_single_end);
-	else if (quote == '"')
+	else if (to_parse[j] == data -> neg_double_start)
 		j = loop_nested_quote(to_parse, j, data -> neg_double_end);
 	else
-	{
 		while (to_parse[j] && !ft_strchr(STOP_F_P, to_parse[j]))
 			j++;
-	}
 	return (j);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 03:12:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 21:31:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		j = skip_char_token_str(j, to_parse, STOP_);
 		j = skip_spaces(data, to_parse, j, 0);
 	}
-		printf("END of i %d\n", length);
 }
 
 void	init_cmd(t_data *data, char *to_process)

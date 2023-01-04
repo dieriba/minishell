@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 02:55:04 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 23:22:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	find_end_string(t_data *data, char *to_parse, int j)
 {
 	if (to_parse[j] == data -> neg_single_start)
-		j = calcul_word(data, to_parse, '\'', j);
+		j = calcul_word(data, to_parse, j);
 	else if (to_parse[j] == data -> neg_double_start)
-		j = calcul_word(data, to_parse, '"', j);
+		j = calcul_word(data, to_parse, j);
 	else
-		j = calcul_word(data, to_parse, 0, j);
+		j = calcul_word(data, to_parse, j);
 	return (j);
 }
 

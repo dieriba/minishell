@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 16:53:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 23:24:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int		skip_char_letter_str(
 			t_data *data, size_t i, char *to_parse, char *to_skip);
 int		skip_char_token_str(size_t i, char *to_parse, char *to_skip);
 int		check_quotes(char *to_parse, int i);
-int		calcul_word(t_data *data, char *to_parse, char quote, int j);
+int		calcul_word(t_data *data, char *to_parse, int j);
 int		find_end_string(t_data *data, char *to_parse, int j);
 void	create_list(t_data *data, char **envp);
 void	par_to_space(char *str);
@@ -178,9 +178,10 @@ int		loop_nested_quote(char *to_parse, int j, int end);
 int		length_of_quotes(char *to_parse, char quote);
 void	quote_to_neg(t_data *data, char *to_parse);
 int		char_is_quote(t_data *data, char c);
+int		char_is_end_quote(t_data *data, char c);
 char	*parse_double_q(t_data *data, char *to_clean);
 void	parser(t_data *data, char **tab);
-int		skip_next_stop(char *to_clean);
+int		skip_next_stop(t_data *data, char *to_clean);
 char	*cleaner(t_data *data, char *to_clean);
 char	*is_valid_expand(t_data *data, char *to_check);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);

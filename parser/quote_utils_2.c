@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:31:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 23:00:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 21:48:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,21 @@ char	*cleaner(t_data *data, char *to_clean)
 	return (res);
 }
 
-int	skip_next_stop(char *to_clean)
+int	skip_next_stop(t_data *data, char *to_clean)
 {
 	size_t	i;
 
 	i = -1;
 	if (to_clean[0] == '$')
 		i = 0;
-	while (to_clean[++i] && !ft_strchr(STOP_EXP, to_clean[i]))
-		;
+	while (to_clean[++i])
+	{
+		if (ft_strchr(STOP_EXP, to_clean[i]))
+			break ;
+		else if (char_is_quote(data, to_clean[i]))
+			break ;
+		else if (char_is_end_quote(data, to_clean[i]))
+			break ;
+	}
 	return (i);
 }

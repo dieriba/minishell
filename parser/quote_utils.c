@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 19:33:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/04 22:05:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 int	char_is_quote(t_data *data, char c)
 {
 	if (c == data -> neg_single_start || c == data -> neg_double_start)
+		return (1);
+	return (0);
+}
+
+int	char_is_end_quote(t_data *data, char c)
+{
+	if (c == data -> neg_single_end || c == data -> neg_double_end)
 		return (1);
 	return (0);
 }
