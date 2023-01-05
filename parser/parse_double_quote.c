@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 03:49:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 04:50:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ char	*parse_double_q(t_data *data, char *to_clean)
 	t_node	*expands;
 	char	*res;
 	size_t	len;
-	(void)res;
-	(void)len;
+	
 	expands = NULL;
 	len = get_expand_val(data, &expands, to_clean);
 	expands = ft_lstlast_s(expands);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 03:28:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 04:20:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define STOP_	"|&"
 # define STOP_F "|&<> "
 # define STOP_F_P "|&<> )\"'"
-# define STOP_EXP "\\'\"$&|<> "
+# define STOP_EXP "\\ '\"$&|<> "
 # define VALID_COMB_EXP "$ "
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"

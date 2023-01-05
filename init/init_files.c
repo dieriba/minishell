@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 23:22:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 05:02:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	set_file_tabs(t_cmd *cmd, char *to_parse, char redirect, int length)
 		while (k < j)
 			redirection[i][++m] = to_parse[k++];
 	}
+	parser(cmd -> data, redirection);
 }
 
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect)

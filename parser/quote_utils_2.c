@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:31:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 21:48:58 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 05:09:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	length_(char *to_clean)
 	size_t	i;
 	size_t	len;
 
-	i = 0;
+	i = -1;
 	len = 0;
 	while (to_clean[++i])
 	{

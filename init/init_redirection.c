@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:59:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 05:24:30 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	set_tabs_(t_cmd *cmd, char *to_parse, char redirect, int length)
 		while (k < j)
 			redirection[i][++m] = to_parse[k++];
 	}
+	parser(cmd -> data, redirection);
 }
 
 void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect)

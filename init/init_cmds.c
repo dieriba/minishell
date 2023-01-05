@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 03:36:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 05:17:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ size_t	skip_redirect(t_data *data, char *to_parse, size_t i)
 		if (!to_parse[i] || !is_real_stop(data, to_parse, i, STOP_))
 			return (-1);
 		i = skip_spaces(data, to_parse, i, 1);
-		if (!ft_strchr(R_COMBO, to_parse[i]) 
-			&& !find_end_quotes(data, to_parse, i))
+		if (!ft_strchr(R_COMBO, to_parse[i]))
 			break ;
 	}
 	return (i);
