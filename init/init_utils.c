@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 06:32:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 07:17:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,31 +47,16 @@ int	count_words(t_data *data, char *to_parse)
 	while (to_parse[++i])
 	{
 		i = skip_spaces(data, to_parse, i, 0);
-		while (to_parse[i] && ft_strchr(R_COMBO, to_parse[i]))
-			i++;
-		i = skip_spaces(data, to_parse, i, 0);
-		while (to_parse[i] && is_real_stop(data, to_parse, i, STOP_F))
-			i++;
-		length++;
+		if (!ft_strchr(FORMAT_TOKEN, to_parse[i]))
+		{
+			length++;
+			while (to_parse[++i] && to_parse[i] != ' ')
+				;
+		}
+		if (ft_strchr(R_COMBO, to_parse[i]))
+			i = skip_redirect(data, to_parse, i);
 		if (!is_real_stop(data, to_parse, i, STOP_) || !to_parse[i])
 			break ;
 	}
-	if (ft_strchr(STOP_, to_parse[i]) && to_parse[i - 1] == ' ')
-		--length;
 	return (length);
 }
-
-/*int	skip_invalid_dollars(t_data *data, char *to_parse, int j)
-{
-	while (1)
-	{
-		if (is_valid_expand(data, &to_parse[j]))
-			return (1);
-		j += skip_next_stop(&to_parse[j]);
-		if (to_parse[j] != '$')
-			break ;
-		if (to_parse[j] == 0 || !is_real_stop(data, to_parse, j, STOP_))
-			return (-1);
-	}
-	return (j);
-}*/

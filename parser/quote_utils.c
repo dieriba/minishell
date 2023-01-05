@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 22:05:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 07:06:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	loop_nested_quote(char *to_parse, int j, int end)
 				return (j);
 			j++;
 		}
+		if (to_parse[j] == 0)
+			break ;
 	}
 	return (j);
 }
