@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 04:50:45 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 06:02:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*is_valid_expand(t_data *data, char *to_check)
 	char	*line;
 	size_t	i;
 	int		j;
-		
+
 	j = (to_check[0] == '$');
 	i = skip_next_stop(data, to_check);
 	stop = to_check[i];
@@ -26,13 +26,6 @@ char	*is_valid_expand(t_data *data, char *to_check)
 	line = get_var_line(find_var(data -> env -> start, &to_check[j]));
 	to_check[i] = stop;
 	return (line);
-}
-
-int	check_dollars(char c)
-{
-	if (ft_strchr(VALID_COMB_EXP, c) || c == 0)
-		return (1);
-	return (0);
 }
 
 size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean)
@@ -108,7 +101,7 @@ char	*parse_double_q(t_data *data, char *to_clean)
 	t_node	*expands;
 	char	*res;
 	size_t	len;
-	
+
 	expands = NULL;
 	len = get_expand_val(data, &expands, to_clean);
 	expands = ft_lstlast_s(expands);

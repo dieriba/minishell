@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 05:40:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 06:00:37 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_cmd(t_cmd **cmds)
 		return ;
 	while (cmds[++i])
 	{
-		if (cmds[i]-> args && cmds[i]-> cmd != cmds[i] -> args[0])
+		if (cmds[i]-> args && cmds[i]-> cmd != cmds[i]-> args[0])
 			free(cmds[i]-> cmd);
 		if (cmds[i]-> args)
 			ft_free_tab(cmds[i]-> args);
@@ -66,8 +66,6 @@ void	free_list(t_env *env, t_node **head)
 void	free_all(t_data *data, int status)
 {
 	free_list(data -> env, &data -> env -> start);
-	free_list(NULL, &data -> collector);
-	free_cmd(data -> cmds);
 	if (data -> cp_to_parse)
 		free(data -> cp_to_parse);
 	free(data);

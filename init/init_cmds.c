@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 05:17:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 06:01:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	set_tabs_cmd(t_data *data, char **cmds, char *to_parse, int length)
 	j = -1;
 	while (++i < length)
 	{
-		if (ft_strchr(R_COMBO, to_parse[++j]) 
+		if (ft_strchr(R_COMBO, to_parse[++j])
 			&& !find_start_quotes(data, to_parse, j))
 			j = skip_redirect(data, to_parse, j);
 		if (j == -1 || !to_parse[j])

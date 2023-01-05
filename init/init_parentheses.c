@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 01:19:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 01:52:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 06:00:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_parenthese(t_cmd *cmd, char *to_parse)
 	i = -1;
 	while (to_parse[++i] && !ft_strchr(STOP_, to_parse[i]))
 	{
-		if (to_parse[i] == '(' 
+		if (to_parse[i] == '('
 			&& !find_start_quotes(cmd -> data, to_parse, i))
 			cmd -> p_open++;
 		else if (to_parse[i] == ')'

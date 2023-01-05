@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_struct.c                                     :+:      :+:    :+:   */
+/*   dollars_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 05:36:27 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 05:53:19 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/05 06:03:06 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/05 06:03:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	clean_struct(t_data *data)
+int	check_dollars(char c)
 {
-	data -> prev_pipes = -1;
-	data -> last_exec_stat = 0;
-	data -> inited = 0;
-	free_cmd(data -> cmds);
-	free(data -> cp_to_parse);
+	if (ft_strchr(VALID_COMB_EXP, c) || c == 0)
+		return (1);
+	return (0);
 }
