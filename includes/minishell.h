@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 04:20:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 06:06:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,15 +176,16 @@ int		find_start_quotes(t_data *data, char *to_parse, int i);
 int		find_end_quotes(t_data *data, char *to_parse, int i);
 int		loop_nested_quote(char *to_parse, int j, int end);
 int		length_of_quotes(char *to_parse, char quote);
-void	quote_to_neg(t_data *data, char *to_parse);
+int		check_dollars(char c);
 int		char_is_quote(t_data *data, char c);
 int		char_is_end_quote(t_data *data, char c);
-char	*parse_double_q(t_data *data, char *to_clean);
-void	parser(t_data *data, char **tab);
 int		skip_next_stop(t_data *data, char *to_clean);
-char	*cleaner(t_data *data, char *to_clean);
-char	*is_valid_expand(t_data *data, char *to_check);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
+char	*cleaner(t_data *data, char *to_clean);
+char	*parse_double_q(t_data *data, char *to_clean);
+char	*is_valid_expand(t_data *data, char *to_check);
+void	parser(t_data *data, char **tab);
+void	quote_to_neg(t_data *data, char *to_parse);
 void	rid_of_useless_expands(t_data *data, char *to_clean);
 /*-----------------PARSER-----------------*/
 
