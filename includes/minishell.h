@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 07:19:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 23:14:01 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"
 # define FORMAT_TOKEN_P "|&<>()"
-# define FORMAT_TOKEN_SP "|&<> \0"
+# define FORMAT_TOKEN_SP "|&<> "
 # define FORMAT_TOKEN_SP_R "|&<> \0)"
 # define MAX_LEN_TOKEN 2
 # define EXCLUDE_TOKEN "{[]};"

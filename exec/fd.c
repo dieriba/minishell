@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 17:39:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 23:49:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ int	opener_outfile(t_cmd *cmd, int len_out, int len_out_ap)
 		if (len_out > 1)
 			open_files(data, cmd -> out, len_out - 1, flags);
 		open_files(
-			data, cmd -> out_append, len_out_ap, O_RDWR | O_APPEND | O_CREAT);
+			data, cmd -> out_append, len_out_ap, flags);
 		fd = open(cmd -> out[len_out - 1], flags, 0666);
 	}
 	else
 	{
+		flags = O_RDWR | O_APPEND | O_CREAT;
 		if (len_out_ap > 1)
 			open_files(data, cmd -> out_append, len_out_ap - 1, flags);
-		open_files(data, cmd -> out, len_out, O_RDWR | O_TRUNC | O_CREAT);
+		open_files(data, cmd -> out, len_out, flags);
 		fd = open(cmd -> out_append[len_out_ap - 1], flags, 0666);
 	}
 	return (fd);

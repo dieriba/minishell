@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 07:17:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/06 00:08:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,25 @@ int	skip_char_token_str(size_t i, char *to_parse, char *to_skip)
 
 int	count_words(t_data *data, char *to_parse)
 {
-	size_t	i;
+	int		i;
 	int		length;
 
-	i = -1;
 	length = 0;
+	i = -1;
 	while (to_parse[++i])
 	{
 		i = skip_spaces(data, to_parse, i, 0);
-		if (!ft_strchr(FORMAT_TOKEN, to_parse[i]))
+		if (!ft_strchr(FORMAT_TOKEN_SP, to_parse[i]))
 		{
 			length++;
-			while (to_parse[++i] && to_parse[i] != ' ')
-				;
+			while (to_parse[i] && to_parse[i] != ' ' && is_real_stop(data, to_parse, i, STOP_))
+				i++;
+			i = skip_spaces(data, to_parse, i, 0);
 		}
 		if (ft_strchr(R_COMBO, to_parse[i]))
 			i = skip_redirect(data, to_parse, i);
+		if (i == -1)
+			return (length);
 		if (!is_real_stop(data, to_parse, i, STOP_) || !to_parse[i])
 			break ;
 	}
