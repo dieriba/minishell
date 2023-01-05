@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 05:02:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 07:18:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,11 @@ void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect)
 		cmd -> in = ft_calloc(sizeof(char *), length + 1);
 		is_error(data, cmd -> in, MALLOC_ERR, 1);
 		set_file_tabs(cmd, to_parse, redirect, length);
-		cmd -> in_redirection += length;
 	}
 	else
 	{
 		cmd -> out = ft_calloc(sizeof(char *), length + 1);
 		is_error(data, cmd -> out, MALLOC_ERR, 1);
 		set_file_tabs(cmd, to_parse, redirect, length);
-		cmd -> out_redirection += length;
 	}
 }

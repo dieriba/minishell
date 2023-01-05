@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 05:24:30 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 07:19:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect)
 		set_tabs_(cmd, to_parse, redirect[0], length);
 		is_error(cmd -> data, cmd -> in_here_doc, MALLOC_ERR, 1);
 		cmd -> last_in = cmd -> in_here_doc[length - 1];
-		cmd -> in_redirection += length;
 	}
 	else
 	{
@@ -108,6 +107,5 @@ void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect)
 		set_tabs_(cmd, to_parse, redirect[0], length);
 		is_error(cmd -> data, cmd -> out_append, MALLOC_ERR, 1);
 		cmd -> last_out = cmd -> out_append[length - 1];
-		cmd -> out_redirection += length;
 	}
 }

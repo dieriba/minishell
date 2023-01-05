@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 06:56:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 07:19:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ typedef struct t_cmd
 	int		pid;
 	int		pos_app;
 	int		pos_here;
-	int		out_redirection;
-	int		in_redirection;
 	char	stop[2];
 	int		fd;
 	int		index;
