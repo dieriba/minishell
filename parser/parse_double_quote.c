@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_double_quote.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 21:55:10 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 03:49:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ char	*is_valid_expand(t_data *data, char *to_check)
 	size_t	i;
 	int		j;
 		
-	if (ft_strchr(VALID_COMB_EXP, to_check[1])
-		|| char_is_quote(data, to_check[1]))
-		return (&to_check[0]);
 	j = (to_check[0] == '$');
 	i = skip_next_stop(data, to_check);
 	stop = to_check[i];
@@ -29,6 +26,13 @@ char	*is_valid_expand(t_data *data, char *to_check)
 	line = get_var_line(find_var(data -> env -> start, &to_check[j]));
 	to_check[i] = stop;
 	return (line);
+}
+
+int	check_dollars(char c)
+{
+	if (ft_strchr(VALID_COMB_EXP, c) || c == 0)
+		return (1);
+	return (0);
 }
 
 size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean)
@@ -42,18 +46,18 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean)
 	i = -1;
 	while (to_clean[++i])
 	{
-		if (to_clean[i] == '$')
+		if (to_clean[i] == '$' && !check_dollars(to_clean[i + 1]))
 		{
-			line = is_valid_expand(data, &to_clean[++i]);
+			line = is_valid_expand(data, &to_clean[i]);
 			len += ft_strlen(line);
 			node = create_node(data, line, (line != NULL));
 			is_error(data, node, MALLOC_ERR, 0);
 			ft_lst_add_front_s(data, expands, node);
 			i += skip_next_stop(data, &to_clean[i]);
+			i -= (to_clean[i] == '$');
 		}
-		if (to_clean[i] > 0 && to_clean[i] != '$')
+		else if (to_clean[i] > 0)
 			len++;
-		i -= (to_clean[i] == '$');
 		i -= (to_clean[i] == '\0');
 	}
 	return (len);
@@ -84,16 +88,16 @@ char	*expand_and_clean(
 	i = -1;
 	while (to_clean[++i])
 	{
-		if (to_clean[i] == '$')
+		if (to_clean[i] == '$' && !check_dollars(to_clean[i + 1]))
 		{
 			j += copy_expands_in_str(&res[j], expands);
 			i += skip_next_stop(data, &to_clean[i]);
 			if (expands -> prev)
 				expands = expands -> prev;
+			i -= (to_clean[i] == '$');
 		}
-		if (to_clean[i] > 0 && to_clean[i] != '$')
+		else if (to_clean[i] > 0)
 			res[j++] = to_clean[i];
-		i -= (to_clean[i] == '$');
 		i -= (to_clean[i] == '\0');
 	}
 	return (res);
@@ -104,7 +108,8 @@ char	*parse_double_q(t_data *data, char *to_clean)
 	t_node	*expands;
 	char	*res;
 	size_t	len;
-
+	(void)res;
+	(void)len;
 	expands = NULL;
 	len = get_expand_val(data, &expands, to_clean);
 	expands = ft_lstlast_s(expands);

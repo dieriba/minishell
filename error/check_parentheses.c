@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:25:28 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:20:11 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 03:50:32 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	check_empty_parentheses(char *to_parse)
 		j = i;
 		while (to_parse[++i] && to_parse[i] != '(' && to_parse[i] != ')')
 			;
-		printf("I val : %ld J val : %ld\n", j, i);
 		if (check_condition(to_parse, j, i))
 			return (')');
 	}

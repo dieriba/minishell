@@ -6,21 +6,21 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 01:19:53 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:12:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 01:52:51 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	par_to_space(char *str)
+void	par_to_space(char *to_clean)
 {
 	size_t	i;
 
 	i = -1;
-	while (str[++i])
+	while (to_clean[++i])
 	{
-		if (str[i] == '(' || str[i] == ')')
-			str[i] = ' ';
+		if (to_clean[i] == '(' || to_clean[i] == ')')
+			to_clean[i] = ' ';
 	}
 }
 
@@ -31,9 +31,11 @@ void	set_parenthese(t_cmd *cmd, char *to_parse)
 	i = -1;
 	while (to_parse[++i] && !ft_strchr(STOP_, to_parse[i]))
 	{
-		if (to_parse[i] == '(')
+		if (to_parse[i] == '(' 
+			&& !find_start_quotes(cmd -> data, to_parse, i))
 			cmd -> p_open++;
-		else if (to_parse[i] == ')')
+		else if (to_parse[i] == ')'
+			&& !find_start_quotes(cmd -> data, to_parse, i))
 			cmd -> p_close--;
 	}
 }

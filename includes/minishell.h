@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 23:24:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 03:28:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define STOP_F "|&<> "
 # define STOP_F_P "|&<> )\"'"
 # define STOP_EXP "\\'\"$&|<> "
-# define VALID_COMB_EXP "\0$\" "
+# define VALID_COMB_EXP "$ "
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"
 # define FORMAT_TOKEN_P "|&<>()"
@@ -185,6 +185,7 @@ int		skip_next_stop(t_data *data, char *to_clean);
 char	*cleaner(t_data *data, char *to_clean);
 char	*is_valid_expand(t_data *data, char *to_check);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
+void	rid_of_useless_expands(t_data *data, char *to_clean);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/

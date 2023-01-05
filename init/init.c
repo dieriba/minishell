@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 21:31:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 02:40:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	init_cmd(t_data *data, char *to_process)
 	data -> cp_to_parse = ft_strdup(to_process);
 	is_error(data, data -> cp_to_parse, MALLOC_ERR, 1);
 	quote_to_neg(data, data -> cp_to_parse);
+	rid_of_useless_expands(data, data -> cp_to_parse);
 	i = how_many_cmds(data, data -> cp_to_parse);
 	data -> cmds = ft_calloc(sizeof(t_cmd *), i + 1);
 	is_error(data, data -> cmds, MALLOC_ERR, 1);
