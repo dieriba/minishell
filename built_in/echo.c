@@ -6,11 +6,10 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:34:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/05 07:26:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "../includes/minishell.h"
 
 int	echo(char *msg, char **env)
