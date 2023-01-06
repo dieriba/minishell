@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 23:14:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/06 12:52:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,25 @@
 # define PIPE_INIT_ERROR "Pipe initialization  error"
 # define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
 
-typedef struct t_node	t_node;
-typedef struct t_data	t_data;
+enum type
+{
+	INT;
+};
+typedef struct t_node		t_node;
+typedef struct t_data		t_data;
+typedef struct t_collector	t_collector;
 
+typedef struct t_doc
+{
+	int		*pipes;
+	char	*limiter;
+}	t_doc;
+typedef struct t_collector
+{
+	void		*data;
+	t_collector	*next;
+	enum type	type;
+}	t_collector;
 typedef struct t_node
 {
 	char	*line;
@@ -59,7 +75,6 @@ typedef struct t_node
 	t_node	*next;
 	t_node	*prev;
 }	t_node;
-
 typedef struct t_env
 {
 	t_node	*start;
@@ -111,6 +126,7 @@ typedef struct t_data
 	int					neg_single_end;
 	int					neg_double_start;
 	int					neg_double_end;
+	int					**here_doc_fds;
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
