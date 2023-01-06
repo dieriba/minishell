@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:50:13 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 21:35:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/06 15:07:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ t_node	*create_node(t_data *data, char *line, int alloc)
 	t_node	*node;
 
 	node = ft_calloc(sizeof(t_node), 1);
-	is_error(data, node, MALLOC_ERR, 1);
+	is_error(data, node, MALLOC_ERR, 0);
 	if (!alloc || !line)
 		node -> line = line;
 	else
 	{
 		node -> line = ft_strdup(line);
-		is_error(data, node, MALLOC_ERR, 1);
+		is_error(data, node, MALLOC_ERR, 0);
 		node -> alloc = 't';
 	}
 	return (node);

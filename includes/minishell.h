@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/06 12:52:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/06 15:19:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,18 @@
 
 enum type
 {
-	INT;
+	INT
 };
 typedef struct t_node		t_node;
 typedef struct t_data		t_data;
 typedef struct t_collector	t_collector;
-
+typedef struct t_doc		t_doc;
 typedef struct t_doc
 {
 	int		*pipes;
 	char	*limiter;
+	t_doc	*next;
+	t_doc	*prev;
 }	t_doc;
 typedef struct t_collector
 {
@@ -126,7 +128,7 @@ typedef struct t_data
 	int					neg_single_end;
 	int					neg_double_start;
 	int					neg_double_end;
-	int					**here_doc_fds;
+	t_doc				*here_docs;
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
@@ -220,6 +222,7 @@ void	open_files(t_data *data, char **files, int length, int flags);
 void	close_fd(t_data *data, char *str, int fd);
 void	check_files(t_data *data, char **files, int flags);
 void	close_pipes(t_data *data);
+void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd, char *str);
 int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
 /*-----------------EXECUTION-----------------*/
