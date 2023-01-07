@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 19:20:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:41:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	open_infile(t_cmd *cmd)
 	if (cmd -> last_in == NULL)
 		return (-1);
 	check_files(cmd -> data, cmd -> in, F_OK | R_OK);
-	printf("Arrived\n");
 	if (cmd -> pos_here > cmd -> pos_in)
 		return (0);
 	fd = open(cmd -> last_in, O_RDONLY, 0666);
