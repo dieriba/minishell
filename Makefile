@@ -76,8 +76,6 @@ $(MINISHELL):	${OBJS}
 				cp ./libft/ft_printf/libprintf.a ./lib
 				make -C ./libft
 				cp ./libft/libft.a ./lib
-				make -C ./libft/get_next_line
-				cp ./libft/get_next_line/libgnl.a ./lib
 				$(CC) $(CFLAGS) ${OBJS} $(INCLUDES) -g3 -L./lib -lft -lprintf -lgnl -lreadline -o $(MINISHELL)
 
 
@@ -89,7 +87,7 @@ fclean:			clean
 				make -C ./libft/ft_printf fclean
 				make -C ./libft/get_next_line fclean
 				make -C ./libft/ fclean
-				rm -rf $(MINISHELL) ./lib/libprintf.a ./lib/libgnl.a ./lib/libft.a 
+				rm -rf $(MINISHELL) ./lib/libprintf.a ./lib/libft.a 
 				
 
 re:				fclean all
