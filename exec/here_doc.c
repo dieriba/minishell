@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 19:12:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 19:16:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	fork_docs(t_data *data, t_doc **head)
 	int		pid_ret;
 	int		status;
 
-	open_pipes(data, doc);
+	open_pipes(data, head);
 	pid_ret = fork();
 	if (pid_ret < 0)
 		print_err_and_exit(data, NULL, "Error", 1);
