@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 05:36:27 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 16:39:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:24:01 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	clean_struct(t_data *data)
 	free_cmd(data -> cmds);
 	free(data -> cp_to_parse);
 	clean_here_doc(&data -> here_docs);
+	if (data -> here_doc_opened && data -> here_doc_closed == 0)
+		close_all_pipes(data, &data -> here_docs);
 	data -> here_doc_closed = 0;
 	data -> here_doc_opened = 0;
 }

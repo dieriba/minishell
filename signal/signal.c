@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 16:34:27 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 19:55:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,20 @@ void	new_line(int signal)
 	}
 }
 
+void	exit_(int signal)
+{
+	t_data	*data;
+	
+	(void)signal;
+	data = (t_data *)g_collector -> data;
+	close_all_pipes(data, &data -> here_docs);
+	free(g_collector);
+	exit(130);	
+}
+
 void	handle_signals(t_data *data)
 {
-	data -> ctrl_c.sa_handler = new_line;
-	data -> ctrl_c.sa_flags = SA_RESTART;
+	data -> ctrl_c.sa_handler = SIG_IGN;
 	sigemptyset(&data -> ctrl_c.sa_mask);
 	sigaction(SIGINT, &data -> ctrl_c, NULL);
 }

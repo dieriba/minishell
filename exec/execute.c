@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 19:07:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:16:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void	executing(t_data *data, t_cmd **cmds)
 	char	*stop;
 
 	i = -1;
-	fork_docs(data, &data -> here_docs);
+	if (fork_docs(data, &data -> here_docs))
+		return ;
 	while (cmds[++i])
 	{
 		p_num = find_cmd_in_par(cmds, cmds[i], i);

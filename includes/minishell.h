@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 19:14:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:05:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ typedef struct t_data
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
-extern t_collector	*collector;
+extern t_collector	*g_collector;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
@@ -240,12 +240,13 @@ void	is_error(t_data *data, void *elem, char *err_msg, int type);
 /*-----------------ERROR_HANDLING-----------------*/
 
 /*-----------------HERE_DOC_UTILS-----------------*/
-int		tab_len(t_cmd **cmds);
-int		find_fd(t_doc *node, char *limiter);
+int	tab_len(t_cmd **cmds);
+int	find_fd(t_doc *node, char *limiter);
+int	fork_docs(t_data *data, t_doc **head);
+int	open_pipes(t_data *data, t_doc **head);
 void	ft_lst_add_front_(t_doc **node, t_doc *new);
 void	set_node(t_data *data, char **limiter);
 void	close_all_pipes(t_data *data, t_doc **head);
-void	open_pipes(t_data *data, t_doc **head);
-void	fork_docs(t_data *data, t_doc **head);
+void	exit_(int signal);
 /*-----------------HERE_DOC_UTILS-----------------*/
 #endif
