@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:22:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:50:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	open_here_doc(t_data *data, t_cmd **cmds)
 
 void	handle_here_doc_pipes(t_data *data, t_doc **head)
 {
-	char	*line;
-	t_doc	*node;
-	struct sigaction sig;
+	char				*line;
+	t_doc				*node;
+	struct sigaction	sig;
 
 	sigemptyset(&sig.sa_mask);
 	sig.sa_flags = 0;

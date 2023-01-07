@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:28:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:43:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:46:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	open_pipes(t_data *data, t_doc **head)
 void	close_all_pipes(t_data *data, t_doc **head)
 {
 	t_doc	*node;
-	
+
 	node = (*head);
 	while (node)
 	{

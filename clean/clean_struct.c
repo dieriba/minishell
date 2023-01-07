@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 05:36:27 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:24:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:48:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	clean_here_doc(t_doc **head)
 {
 	t_doc	*node;
 	t_doc	*next;
-	
+
 	node = *head;
 	while (node)
 	{
@@ -26,6 +26,7 @@ void	clean_here_doc(t_doc **head)
 	}
 	(*head) = NULL;
 }
+
 void	clean_struct(t_data *data)
 {
 	data -> prev_pipes = -1;

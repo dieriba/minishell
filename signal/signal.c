@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:31:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:45:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	new_line(int signal)
 void	exit_(int signal)
 {
 	t_data	*data;
-	
+
 	(void)signal;
 	data = (t_data *)g_collector -> data;
 	close_all_pipes(data, &data -> here_docs);
 	free(g_collector);
-	exit(130);	
+	exit(130);
 }
 
 void	handle_signals(t_data *data)

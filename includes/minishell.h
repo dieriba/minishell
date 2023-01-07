@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:05:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:57:37 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define PIPE_INIT_ERROR "Pipe initialization  error"
 # define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
 
-enum type
+enum e_type
 {
 	INT
 };
@@ -68,7 +68,7 @@ typedef struct t_collector
 {
 	void		*data;
 	t_collector	*next;
-	enum type	type;
+	enum e_type	type;
 }	t_collector;
 typedef struct t_node
 {
@@ -134,7 +134,7 @@ typedef struct t_data
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
-extern t_collector	*g_collector;
+extern t_collector		*g_collector;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
@@ -176,6 +176,7 @@ int		find_end_string(t_data *data, char *to_parse, int j);
 void	create_list(t_data *data, char **envp);
 void	par_to_space(char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
+void	set_default_data(t_data *data, int len);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/
@@ -240,10 +241,10 @@ void	is_error(t_data *data, void *elem, char *err_msg, int type);
 /*-----------------ERROR_HANDLING-----------------*/
 
 /*-----------------HERE_DOC_UTILS-----------------*/
-int	tab_len(t_cmd **cmds);
-int	find_fd(t_doc *node, char *limiter);
-int	fork_docs(t_data *data, t_doc **head);
-int	open_pipes(t_data *data, t_doc **head);
+int		tab_len(t_cmd **cmds);
+int		find_fd(t_doc *node, char *limiter);
+int		fork_docs(t_data *data, t_doc **head);
+int		open_pipes(t_data *data, t_doc **head);
 void	ft_lst_add_front_(t_doc **node, t_doc *new);
 void	set_node(t_data *data, char **limiter);
 void	close_all_pipes(t_data *data, t_doc **head);

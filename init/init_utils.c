@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/06 00:08:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:54:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	count_words(t_data *data, char *to_parse)
 		if (!ft_strchr(FORMAT_TOKEN_SP, to_parse[i]))
 		{
 			length++;
-			while (to_parse[i] && to_parse[i] != ' ' && is_real_stop(data, to_parse, i, STOP_))
+			while (to_parse[i]
+				&& to_parse[i] != ' ' && is_real_stop(data, to_parse, i, STOP_))
 				i++;
 			i = skip_spaces(data, to_parse, i, 0);
 		}
@@ -62,4 +63,22 @@ int	count_words(t_data *data, char *to_parse)
 			break ;
 	}
 	return (length);
+}
+
+void	set_default_data(t_data *data, int len)
+{
+	int	j;
+
+	j = -1;
+	while (++j < len)
+	{
+		data -> cmds[j] = ft_calloc(sizeof(t_cmd), 1);
+		is_error(data, data -> cmds, MALLOC_ERR, 1);
+		data -> cmds[j]-> data = data;
+		data -> cmds[j]-> index = j + 1;
+		data -> cmds[j]-> pos_in = -1;
+		data -> cmds[j]-> pos_app = -1;
+		data -> cmds[j]-> pos_here = -1;
+		data -> cmds[j]-> pos_out = -1;
+	}
 }

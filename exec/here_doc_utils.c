@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 19:12:57 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 19:13:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 20:49:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	set_node(t_data *data, char **limiter)
 {
 	int		len;
 	t_doc	*node;
-	
+
 	len = ft_tab_len(limiter);
 	while (len--)
 	{
