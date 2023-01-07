@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 17:33:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 19:14:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,10 +227,6 @@ void	close_pipes(t_data *data);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd, char *str);
 int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
-int		find_fd(t_doc *node, char *limiter);
-void	close_all_pipes(t_data *data, t_doc **head);
-void	open_pipes(t_data *data, int **pipes);
-void	fork_docs(t_data *data, t_doc **head);
 /*-----------------EXECUTION-----------------*/
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);
@@ -243,4 +239,13 @@ void	clean_struct(t_data *data);
 void	is_error(t_data *data, void *elem, char *err_msg, int type);
 /*-----------------ERROR_HANDLING-----------------*/
 
+/*-----------------HERE_DOC_UTILS-----------------*/
+int		tab_len(t_cmd **cmds);
+int		find_fd(t_doc *node, char *limiter);
+void	ft_lst_add_front_(t_doc **node, t_doc *new);
+void	set_node(t_data *data, char **limiter);
+void	close_all_pipes(t_data *data, t_doc **head);
+void	open_pipes(t_data *data, t_doc **head);
+void	fork_docs(t_data *data, t_doc **head);
+/*-----------------HERE_DOC_UTILS-----------------*/
 #endif

@@ -30,6 +30,7 @@ SRCS_EXEC	=	./exec/fd.c \
 				./exec/command_utils.c \
 				./exec/child.c \
 				./exec/here_doc.c \
+				./exec/here_doc_utils.c \
 				./exec/pipes.c
 
 SRCS_PARSER	=	./parser/parser.c \
