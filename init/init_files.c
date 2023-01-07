@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 07:18:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 17:55:32 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ static int	find_tab_length(t_cmd *cmd, char *to_parse, char redirect)
 
 	k = 0;
 	i = -1;
-	pos = 0;
+	pos = -1;
 	while (to_parse[++i] && is_real_stop(cmd -> data, to_parse, i, STOP_))
 	{
-		if (to_parse[i] == redirect
+		if (to_parse[i] == redirect && to_parse[i + 1] == redirect)
+			i += 2;
+		else if (to_parse[i] == redirect
 			&& to_parse[i + 1] != redirect
 			&& !find_start_quotes(cmd -> data, to_parse, i))
 		{
 			pos = i;
 			k++;
 		}
-		else if (to_parse[i] == redirect && to_parse[i + 1] == redirect)
-			++i;
 	}
 	set_pos(cmd, redirect, pos);
 	if (!k)

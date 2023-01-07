@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/06 12:45:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 16:33:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ void	close_fd(t_data *data, char *str, int fd)
 void	check_files(t_data *data, char **files, int flags)
 {
 	int	i;
-
+	
 	i = -1;
+	if (files == NULL)
+		return ;
 	while (files[++i])
 	{
 		if (access(files[i], flags))

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/06 00:13:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 19:07:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	forking(t_cmd **cmds, int i)
 		prev = NULL;
 	set_redirections_files(cmd, prev);
 	run_cmd(cmd);
+	exit(EXIT_SUCCESS);
 }
 
 void	executing(t_data *data, t_cmd **cmds)
@@ -73,6 +74,7 @@ void	executing(t_data *data, t_cmd **cmds)
 	char	*stop;
 
 	i = -1;
+	fork_docs(data, &data -> here_docs);
 	while (cmds[++i])
 	{
 		p_num = find_cmd_in_par(cmds, cmds[i], i);
@@ -87,5 +89,7 @@ void	executing(t_data *data, t_cmd **cmds)
 		cmds[i]-> pid = pid_ret;
 		handle_pipes(data);
 	}
+	close_all_pipes(data, &data -> here_docs);
+	data -> here_doc_closed = 1;
 	wait_all_child(data, cmds);
 }

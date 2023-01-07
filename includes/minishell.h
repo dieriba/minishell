@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/06 15:19:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 17:33:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct t_collector	t_collector;
 typedef struct t_doc		t_doc;
 typedef struct t_doc
 {
-	int		*pipes;
+	int		pipes[2];
 	char	*limiter;
 	t_doc	*next;
 	t_doc	*prev;
@@ -128,11 +128,13 @@ typedef struct t_data
 	int					neg_single_end;
 	int					neg_double_start;
 	int					neg_double_end;
+	int					here_doc_closed;
+	int					here_doc_opened;
 	t_doc				*here_docs;
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
-extern int				g_exit_prog;
+extern t_collector	*collector;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
@@ -225,6 +227,10 @@ void	close_pipes(t_data *data);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd, char *str);
 int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
+int		find_fd(t_doc *node, char *limiter);
+void	close_all_pipes(t_data *data, t_doc **head);
+void	open_pipes(t_data *data, int **pipes);
+void	fork_docs(t_data *data, t_doc **head);
 /*-----------------EXECUTION-----------------*/
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);

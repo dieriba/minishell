@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/06 15:20:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 18:40:51 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	lets_read(t_data *data)
 			add_history(data -> cp_to_parse);
 			init_cmd(data, data -> cp_to_parse);
 			open_here_doc(data, data -> cmds);
-			//executing(data, data -> cmds);
+			executing(data, data -> cmds);
 			clean_struct(data);
 		}
 		else if (!data -> cp_to_parse)

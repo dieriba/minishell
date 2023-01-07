@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/06 00:08:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 17:55:14 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ void	init_cmd(t_data *data, char *to_process)
 		is_error(data, data -> cmds, MALLOC_ERR, 1);
 		data -> cmds[j]-> data = data;
 		data -> cmds[j]-> index = j + 1;
+		data -> cmds[j]-> pos_in = -1;
+		data -> cmds[j]-> pos_app = -1;
+		data -> cmds[j]-> pos_here = -1;
+		data -> cmds[j]-> pos_out = -1;
 	}
 	fill_cmds(data -> cmds, data -> cp_to_parse, i);
 	fill_cmds_par(data -> cmds, to_process, i);
