@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:57:37 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 21:51:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include "../libft/libft.h"
 # include "../libft/ft_printf/ft_printf.h"
-# include "../libft/get_next_line/get_next_line.h"
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <errno.h>
 # include <stdio.h>
@@ -247,7 +249,7 @@ int		fork_docs(t_data *data, t_doc **head);
 int		open_pipes(t_data *data, t_doc **head);
 void	ft_lst_add_front_(t_doc **node, t_doc *new);
 void	set_node(t_data *data, char **limiter);
-void	close_all_pipes(t_data *data, t_doc **head);
+void	close_all_pipes(t_data *data, t_doc **head, int read_, int write_);
 void	exit_(int signal);
 /*-----------------HERE_DOC_UTILS-----------------*/
 #endif

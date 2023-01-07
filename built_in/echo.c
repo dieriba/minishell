@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 07:26:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 21:08:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	echo(char *msg, char **env)
+int	echo(char *msg)
 {
 	char		**tab;
 	size_t		i;

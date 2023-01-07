@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:16:58 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 22:04:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	executing(t_data *data, t_cmd **cmds)
 	i = -1;
 	if (fork_docs(data, &data -> here_docs))
 		return ;
+	close_all_pipes(data, &data -> here_docs, 0, 1);
 	while (cmds[++i])
 	{
 		p_num = find_cmd_in_par(cmds, cmds[i], i);
@@ -90,7 +91,5 @@ void	executing(t_data *data, t_cmd **cmds)
 		cmds[i]-> pid = pid_ret;
 		handle_pipes(data);
 	}
-	close_all_pipes(data, &data -> here_docs);
-	data -> here_doc_closed = 1;
 	wait_all_child(data, cmds);
 }

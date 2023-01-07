@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:45:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 21:28:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_struct(t_data **data)
 	(*data)-> neg_single_end = '\'' * -2;
 	(*data)-> neg_double_start = '"' * -1;
 	(*data)-> neg_double_end = '"' * -2;
-	handle_signals((*data));
+	//handle_signals((*data));
 }
 
 void	lets_read(t_data *data)

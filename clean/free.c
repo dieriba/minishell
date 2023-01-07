@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:24:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/07 21:58:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	free_all(t_data *data, int status)
 	if (data -> cp_to_parse)
 		free(data -> cp_to_parse);
 	if (data -> here_doc_opened && data -> here_doc_closed == 0)
-		close_all_pipes(data, &data -> here_docs);
+		close_all_pipes(data, &data -> here_docs, 1, 0);
 	free(data);
 	exit(status);
 }
