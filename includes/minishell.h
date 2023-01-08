@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 21:51:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/08 20:12:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	check_lines(t_data *data, char *files, char *err, int flags);
 
 /*-----------------GLOBAL_UTILS-----------------*/
 t_node	*create_node(t_data *data, char *line, int alloc);
-t_node	*find_var(t_node *node, char *to_find);
+t_node	*find_var(t_node *noddadde, char *to_find);
 t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new);
 t_node	*ft_lstlast_s(t_node *lst);
 int		check_behind(char *to_parse, char *in, int j, int index);

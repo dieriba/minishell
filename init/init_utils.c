@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 20:54:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/08 20:55:02 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	count_words(t_data *data, char *to_parse)
 				&& to_parse[i] != ' ' && is_real_stop(data, to_parse, i, STOP_))
 				i++;
 			i = skip_spaces(data, to_parse, i, 0);
+			length += (ft_strlen(&to_parse[i]) == 1);
 		}
 		if (ft_strchr(R_COMBO, to_parse[i]))
 			i = skip_redirect(data, to_parse, i);
