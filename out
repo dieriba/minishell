@@ -1,0 +1,19 @@
+[?2004hminishell  : ls
+[?2004lMakefile
+built_in
+clean
+error
+exec
+ignore.txt
+includes
+init
+lib
+libft
+minishell
+minishell.c
+out
+parser
+print.c
+remake.sh
+signal
+[?2004hminishell  : [?2004l
