@@ -6,32 +6,37 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:41:48 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/03 16:29:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/08 05:14:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	create_path(t_cmd *cmds)
+void	create_path(t_cmd *cmd)
 {
 	char	**tab;
 
-	cmds -> paths = ft_split(cmds -> data -> path + 5, ':');
-	is_error(cmds -> data, cmds -> paths, MALLOC_ERR, 0);
-	tab = ft_dup_tab(cmds -> paths, cmds -> cmd);
-	is_error(cmds -> data, tab, MALLOC_ERR, 0);
-	cmds -> paths = tab;
+	cmd -> paths = ft_split(cmd -> data -> path + 5, ':');
+	is_error(cmd -> data, cmd -> paths, MALLOC_ERR, 0);
+	tab = ft_dup_tab(cmd -> paths, cmd -> cmd);
+	is_error(cmd -> data, tab, MALLOC_ERR, 0);
+	cmd -> paths = tab;
 }
 
-void	set_path(t_cmd **cmds)
+void	set_path(t_cmd **cmd)
 {
 	size_t	i;
 
 	i = -1;
-	while (cmds[++i])
+	while (cmd[++i])
 	{
-		if (cmds[i]-> no_path)
-			create_path(cmds[i]);
+		if (cmd[i]-> no_path && cmd[i]-> data -> path)
+			create_path(cmd[i]);
+		else if (cmd[i] -> no_path)
+		{
+			cmd[i] -> paths = ft_split(cmd[i]-> cmd, '\0');
+			is_error(cmd[i] -> data, cmd[i] -> paths, MALLOC_ERR, 0);
+		}
 	}
 }
 
