@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 21:58:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/08 22:50:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type)
 	if (data -> here_doc_closed == 0 && data -> here_doc_opened)
 		close_all_pipes(data, &data -> here_docs, 1, 0);
 	print_err(data, err_msg, cmd, type);
-	free_all(data, data -> status);
+	free_all(data, data -> status, 1);
 }
 
 void	is_error(t_data *data, void *elem, char *err_msg, int type)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 21:58:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/08 22:51:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,15 @@ void	free_list(t_env *env, t_node **head)
 		free(env);
 }
 
-void	free_all(t_data *data, int status)
+void	free_all(t_data *data, int status, int free_)
 {
 	free_list(data -> env, &data -> env -> start);
 	if (data -> cp_to_parse)
 		free(data -> cp_to_parse);
 	if (data -> here_doc_opened && data -> here_doc_closed == 0)
 		close_all_pipes(data, &data -> here_docs, 1, 0);
+	if (free_)
+		free_cmd(data -> cmds);
 	free(data);
 	exit(status);
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/08 21:05:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/08 21:23:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean)
 	{
 		if (to_clean[i] == '$' && !check_dollars(to_clean[i + 1]))
 		{
-			line = _expand(data, &to_clean[i]);
+			line = is_valid_expand(data, &to_clean[i]);
 			len += ft_strlen(line);
 			node = create_node(data, line, (line != NULL));
 			is_error(data, node, MALLOC_ERR, 0);
