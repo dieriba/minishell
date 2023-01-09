@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/09 15:49:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/09 16:23:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,3 +61,8 @@ int	main(int argc, char **argv, char **envp)
 	data-> envp = envp;
 	shell(data, envp);
 }
+
+/*
+ls | > "e" << here > to > to | here
+ls | > out
+*/

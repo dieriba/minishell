@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/09 15:50:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/09 18:13:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	forking(t_cmd **cmds, int i)
 		prev = NULL;
 	set_redirections_files(cmd, prev);
 	run_cmd(cmd);
-	exit(EXIT_SUCCESS);
+	free_all(cmd -> data, 0, 1);
 }
 
 void	executing(t_data *data, t_cmd **cmds)
