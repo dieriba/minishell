@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 22:04:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/09 15:50:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	run_cmd(t_cmd *cmd)
 		while (cmd -> paths[++i])
 		{
 			if (access(cmd -> paths[i], X_OK) != -1)
-				execve(cmd -> paths[i], cmd -> args, NULL);
+				execve(cmd -> paths[i], cmd -> args, cmd -> data -> envp);
 		}
 		print_err_and_exit(cmd -> data, cmd, "bash: ", 1);
 	}
 	else
 	{
 		if (access(cmd -> cmd, X_OK) != -1)
-			execve(cmd -> cmd, cmd -> args, NULL);
+			execve(cmd -> cmd, cmd -> args, cmd -> data -> envp);
 		print_err_and_exit(cmd -> data, cmd, "bash: ", 1);
 	}
 }

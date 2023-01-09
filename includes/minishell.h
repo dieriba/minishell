@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/08 22:50:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/09 15:46:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct t_data
 	struct sigaction	ctrl_c;
 	char				*path;
 	char				*cp_to_parse;
+	char				**envp;
 	t_env				*env;
 	t_node				*collector;
 	t_cmd				**cmds;
