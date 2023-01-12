@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/09 15:46:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/12 14:56:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ typedef struct t_cmd
 	char	**out_append;
 	char	*last_in;
 	char	*last_out;
-	char	*sub_commands;
 	char	**paths;
 	char	par;
 	int		pos_in;
@@ -105,7 +104,8 @@ typedef struct t_cmd
 	int		pos_app;
 	int		pos_here;
 	char	stop[2];
-	int		fd;
+	char	*prev_stop;
+	int		to_fork;
 	int		index;
 	int		no_path;
 	int		p_open;
@@ -116,6 +116,8 @@ typedef struct t_cmd
 typedef struct t_data
 {
 	int					status;
+	int					subshell;
+	int					p_num;
 	struct sigaction	ctrl_c;
 	char				*path;
 	char				*cp_to_parse;
@@ -218,20 +220,26 @@ char	*get_var_line(t_node *node);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/
-int		prepare_next_step(t_cmd **cmd, char *stop, int i);
-int		find_cmd_in_par(t_cmd **cmds, t_cmd *cmd, int i);
-char	*find_lim_par(t_cmd **cmds, int p_num, int i);
-void	executing(t_data *data, t_cmd **cmds);
+int		prepare_next_step(t_cmd **cmd, char *stop, int *i, int subshell);
+int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
+int		to_exec_or_not(char *stop, int status);
+int		get_status(t_data *data, pid_t pid_ret, char *stop);
+int		find_next_cmd(t_data *data, t_cmd **cmds);
+int 	is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell);
+void	executing(t_data *data, t_cmd **cmds, int subshell);
 void	run_cmd(t_cmd *cmd);
-void	wait_all_child(t_data *data, t_cmd **cmds);
+void	wait_all_child(t_data *data, t_cmd **cmds, int subshell);
 void	open_files(t_data *data, char **files, int length, int flags);
 void	close_fd(t_data *data, char *str, int fd);
 void	check_files(t_data *data, char **files, int flags);
 void	close_pipes(t_data *data);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd, char *str);
-int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
 /*-----------------EXECUTION-----------------*/
+
+/*-----------------PARENTHESES-----------------*/
+int		end_cmd_par(t_cmd **cmds, int subshell);
+/*-----------------PARENTHESES-----------------*/
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);
 void	free_cmd(t_cmd **cmds);
@@ -246,8 +254,8 @@ void	is_error(t_data *data, void *elem, char *err_msg, int type);
 /*-----------------HERE_DOC_UTILS-----------------*/
 int		tab_len(t_cmd **cmds);
 int		find_fd(t_doc *node, char *limiter);
-int		fork_docs(t_data *data, t_doc **head);
 int		open_pipes(t_data *data, t_doc **head);
+void	fork_docs(t_data *data, t_doc **head);
 void	ft_lst_add_front_(t_doc **node, t_doc *new);
 void	set_node(t_data *data, char **limiter);
 void	close_all_pipes(t_data *data, t_doc **head, int read_, int write_);

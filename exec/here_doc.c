@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 21:54:10 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/11 02:02:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	handle_here_doc_pipes(t_data *data, t_doc **head)
 	exit(EXIT_SUCCESS);
 }
 
-int	fork_docs(t_data *data, t_doc **head)
+void	fork_docs(t_data *data, t_doc **head)
 {
 	int		pid_ret;
 	int		status;
@@ -68,5 +68,4 @@ int	fork_docs(t_data *data, t_doc **head)
 		if (WIFEXITED(status))
 			data -> status = WEXITSTATUS(status);
 	}
-	return (status);
 }

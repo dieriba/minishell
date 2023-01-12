@@ -6,36 +6,32 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:21:14 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 22:50:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/12 14:30:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	find_cmd_in_par(t_cmd **cmds, t_cmd *cmd, int i)
+int is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell)
 {
-	int	p_open;
-	int	num;
+	int	status;
 
-	num = 1;
-	if (cmd -> p_open == 0)
-		return (0);
-	p_open = cmd -> p_open - cmd -> p_close;
-	if (p_open == 0)
-		return (1);
-	while (cmds[++i])
+	status = 0;
+	if (cmds[(*i)]-> to_fork)
 	{
-		p_open += cmd -> p_open + cmd -> p_close;
-		num++;
-		if (p_open == 0)
-			break ;
+		--cmds[(*i)]-> to_fork;
+		--cmds[(*i)]-> p_open;
+		data -> subshell = fork();
+		if (data -> subshell == -1)
+			print_err_and_exit(data, NULL, "bash", 1);
+		if (data -> subshell == 0)
+			executing(data, &cmds[(*i)], 1);
+		++cmds[(*i)]-> p_open;
+		if (subshell == 0)
+			(*i) += end_cmd_par(&cmds[(*i)], subshell);
+		else if (subshell == 1)
+			(*i) += find_next_cmd(data, &cmds[(*i)]);
+		return (1);
 	}
-	return (num);
-}
-
-char	*find_lim_par(t_cmd **cmds, int p_num, int i)
-{
-	if (p_num == 0)
-		return (cmds[i]-> stop);
-	return (cmds[i + p_num - 1]-> stop);
+	return (0);
 }

@@ -3,26 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/09 15:41:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/11 03:54:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	set_last_in_last_out(t_cmd *cmd)
+void	set_last_setup(t_cmd **cmds, int i)
 {
 	int	len_in;
 	int	len_out;
 
-	len_out = ft_tab_len(cmd -> out) - 1;
-	len_in = ft_tab_len(cmd -> in) - 1;
-	if (len_in > -1 && cmd -> pos_in >= cmd -> pos_here)
-		cmd -> last_in = cmd -> in[len_in];
-	if (len_out > -1 && cmd -> pos_out >= cmd -> pos_app)
-		cmd -> last_out = cmd -> out[len_out];
+	len_out = ft_tab_len(cmds[i] -> out) - 1;
+	len_in = ft_tab_len(cmds[i] -> in) - 1;
+	if (len_in > -1 && cmds[i] -> pos_in >= cmds[i] -> pos_here)
+		cmds[i] -> last_in = cmds[i] -> in[len_in];
+	if (len_out > -1 && cmds[i] -> pos_out >= cmds[i] -> pos_app)
+		cmds[i] -> last_out = cmds[i] -> out[len_out];
+	if (i)
+		cmds[i]-> prev_stop = cmds[i - 1]-> stop;
+	
 }
 
 void	fill_cmds_par(t_cmd **cmds, char *to_parse, int length)
@@ -82,7 +85,7 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		set_heredoc_app_redirect(cmds[i], &to_parse[j], "<<");
 		set_heredoc_app_redirect(cmds[i], &to_parse[j], ">>");
 		set_commands(cmds[i], &to_parse[j]);
-		set_last_in_last_out(cmds[i]);
+		set_last_setup(cmds, i);
 		j = skip_char_letter_str(cmds[0]-> data, j, to_parse, STOP_);
 		j = skip_char_token_str(j, to_parse, STOP_);
 		j = skip_spaces(data, to_parse, j, 0);

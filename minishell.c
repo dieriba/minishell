@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/09 16:23:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/11 04:01:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_struct(t_data **data)
 	(*data)-> neg_single_end = '\'' * -2;
 	(*data)-> neg_double_start = '"' * -1;
 	(*data)-> neg_double_end = '"' * -2;
-	handle_signals((*data));
+	//handle_signals((*data));
 }
 
 void	lets_read(t_data *data)
@@ -37,7 +37,9 @@ void	lets_read(t_data *data)
 			add_history(data -> cp_to_parse);
 			init_cmd(data, data -> cp_to_parse);
 			open_here_doc(data, data -> cmds);
-			executing(data, data -> cmds);
+			fork_docs(data, &data -> here_docs);
+			close_all_pipes(data, &data -> here_docs, 0, 1);
+			executing(data, data -> cmds, 0);
 			clean_struct(data);
 		}
 		else if (!data -> cp_to_parse)
@@ -61,8 +63,3 @@ int	main(int argc, char **argv, char **envp)
 	data-> envp = envp;
 	shell(data, envp);
 }
-
-/*
-ls | > "e" << here > to > to | here
-ls | > out
-*/

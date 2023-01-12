@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:08:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 04:58:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/11 02:42:32 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	print_struct(t_cmd **cmds)
 		printf("*************** Last Outfile *************** \n\n");
 		printf("%s\n", cmds[i]-> last_out ? cmds[i]-> last_out : "Not oufile");
 		printf("\n***************************************\n\n\n");
+		printf("*************** PREV STOP TOKEN *************** \n\n");
+		printf("%s\n", i ? cmds[i]-> prev_stop : "No stop");
 		printf("*************** STOP TOKEN *************** \n\n");
 		printf("%s\n", cmds[i]-> stop);
 		printf("*************** OPENING PARENTHESES *************** \n\n");

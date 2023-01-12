@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 01:19:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 06:00:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/11 04:34:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_parenthese(t_cmd *cmd, char *to_parse)
 	size_t	i;
 
 	i = -1;
-	while (to_parse[++i] && !ft_strchr(STOP_, to_parse[i]))
+	while (to_parse[++i] && is_real_stop(cmd -> data, to_parse, i, STOP_))
 	{
 		if (to_parse[i] == '('
 			&& !find_start_quotes(cmd -> data, to_parse, i))
@@ -37,5 +37,6 @@ void	set_parenthese(t_cmd *cmd, char *to_parse)
 		else if (to_parse[i] == ')'
 			&& !find_start_quotes(cmd -> data, to_parse, i))
 			cmd -> p_close--;
+		cmd -> to_fork = cmd -> p_open;
 	}
 }

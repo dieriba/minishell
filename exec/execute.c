@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/09 18:13:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/12 15:29:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,30 +66,31 @@ void	forking(t_cmd **cmds, int i)
 	free_all(cmd -> data, 0, 1);
 }
 
-void	executing(t_data *data, t_cmd **cmds)
+void	executing(t_data *data, t_cmd **cmds, int subshell)
 {
 	int		i;
 	pid_t	pid_ret;
-	int		p_num;
-	char	*stop;
-
+	int		res;
+	
 	i = -1;
-	if (fork_docs(data, &data -> here_docs))
-		return ;
-	close_all_pipes(data, &data -> here_docs, 0, 1);
+	cmds[0]-> p_open = cmds[0]-> to_fork + (subshell == 1);
 	while (cmds[++i])
 	{
-		p_num = find_cmd_in_par(cmds, cmds[i], i);
-		stop = find_lim_par(cmds, p_num, i);
-		if (prepare_next_step(cmds, stop, i))
-			continue ;
-		pid_ret = fork();
-		if (pid_ret < 0)
-			print_err_and_exit(data, NULL, "bash", 1);
-		if (pid_ret == 0)
-			forking(cmds, i);
-		cmds[i]-> pid = pid_ret;
-		handle_pipes(data);
+		res = prepare_next_step(cmds, cmds[i]-> stop, &i, subshell);
+		if (res == 0 && is_subshell(data, cmds, &i, subshell) == 0)
+		{
+			data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
+			pid_ret = fork();
+			if (pid_ret < 0)
+				print_err_and_exit(data, NULL, "bash", 1);
+			if (pid_ret == 0)
+				forking(cmds, i);
+			cmds[i]-> pid = pid_ret;
+			handle_pipes(data);
+			i -= (cmds[i] == NULL);
+		}
+		if (subshell && data -> p_num == 0)
+			break ;
 	}
-	wait_all_child(data, cmds);
+	wait_all_child(data, cmds, subshell);
 }

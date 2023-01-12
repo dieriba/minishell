@@ -31,7 +31,8 @@ SRCS_EXEC	=	./exec/fd.c \
 				./exec/child.c \
 				./exec/here_doc.c \
 				./exec/here_doc_utils.c \
-				./exec/pipes.c
+				./exec/pipes.c \
+				./exec/parentheses.c
 
 SRCS_PARSER	=	./parser/parser.c \
 				./parser/quote_utils.c \

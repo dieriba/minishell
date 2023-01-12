@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 21:31:10 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/12 15:22:19 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,29 @@ int	get_status(t_data *data, pid_t pid_ret, char *stop)
 	return (status);
 }
 
-int	prepare_next_step(t_cmd **cmds, char *stop, int i)
+int	prepare_next_step(t_cmd **cmds, char *stop, int *i, int subshell)
 {
 	int			status;
-	static char	*line;
 	t_data		*data;
 
 	data = cmds[0]-> data;
 	status = 0;
-	if (!line)
-		line = stop;
-	if (i > 0 && !ft_strcmp("||", line))
-		status = get_status(data, cmds[i - 1]-> pid, "||");
-	else if (i > 0 && !ft_strcmp("&&", line))
-		status = get_status(data, cmds[i - 1]-> pid, "&&");
+	if ((*i) > 0 && cmds[(*i) - 1]-> p_close)
+	{
+		status = get_status(data, data -> subshell, cmds[(*i)]-> prev_stop);
+		data -> subshell = 0;
+	}
+	else if ((*i) > 0 && !ft_strcmp("||", cmds[(*i)]-> prev_stop))
+		status = get_status(data, cmds[(*i) - 1]-> pid, "||");
+	else if ((*i) > 0 && !ft_strcmp("&&", cmds[(*i)]-> prev_stop))
+		status = get_status(data, cmds[(*i) - 1]-> pid, "&&");
 	if (!ft_strcmp("|", stop))
 	{
 		if (pipe(data -> pipes) < 0)
 			print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 0);
 		data -> inited = 1;
 	}
-	line = stop;
+	if (status && cmds[(*i)]-> p_open)
+		(*i) += end_cmd_par(&cmds[(*i)], 0);
 	return (status);
 }
