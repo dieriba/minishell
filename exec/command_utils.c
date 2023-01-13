@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/13 03:48:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/13 13:39:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	prepare_next_step(t_cmd **cmds, char *stop, int *i)
 		status = get_status(data, cmds[(*i) - 1]-> pid, "||");
 	else if ((*i) > 0 && !ft_strcmp("&&", cmds[(*i)]-> prev_stop))
 		status = get_status(data, cmds[(*i) - 1]-> pid, "&&");
-	if (!ft_strcmp("|", stop))
+	if (!ft_strcmp("|", stop) || !pipe_par(&cmds[(*i)]))
 	{
 		if (pipe(data -> pipes) < 0)
 			print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 0);

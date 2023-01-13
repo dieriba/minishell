@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/12 15:04:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/13 13:37:36 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void	wait_all_child(t_data *data, t_cmd **cmds, int subshell)
 	if (WIFEXITED(status))
 		data -> status = WEXITSTATUS(status);
 	if (subshell)
-		exit(data -> status);
+		free_all(data, data -> status, 1);
 }

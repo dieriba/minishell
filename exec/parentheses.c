@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/13 04:42:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/13 05:17:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,18 @@ int	end_cmd_par(t_cmd **cmds, int subshell)
 	return (i);
 }
 
+int	pipe_par(t_cmd **cmds)
+{
+	size_t	i;
+	int		p_num;
+
+	p_num = 0;
+	i = -1;
+	while (cmds[++i])
+	{
+		p_num += cmds[i]-> p_open + cmds[i]-> p_close;
+		if (p_num == 0 && !ft_strcmp("|", cmds[i]-> stop))
+			return (0);
+	}
+	return (1);
+}
