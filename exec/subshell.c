@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:21:14 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/12 14:30:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/13 03:47:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell)
 {
-	int	status;
-
-	status = 0;
 	if (cmds[(*i)]-> to_fork)
 	{
 		--cmds[(*i)]-> to_fork;

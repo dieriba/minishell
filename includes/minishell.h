@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/12 14:56:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/13 03:48:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ char	*get_var_line(t_node *node);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/
-int		prepare_next_step(t_cmd **cmd, char *stop, int *i, int subshell);
+int		prepare_next_step(t_cmd **cmd, char *stop, int *i);
 int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
 int		to_exec_or_not(char *stop, int status);
 int		get_status(t_data *data, pid_t pid_ret, char *stop);

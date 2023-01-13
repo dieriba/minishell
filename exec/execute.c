@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/12 15:29:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/13 03:48:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 	cmds[0]-> p_open = cmds[0]-> to_fork + (subshell == 1);
 	while (cmds[++i])
 	{
-		res = prepare_next_step(cmds, cmds[i]-> stop, &i, subshell);
+		res = prepare_next_step(cmds, cmds[i]-> stop, &i);
 		if (res == 0 && is_subshell(data, cmds, &i, subshell) == 0)
 		{
 			data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
