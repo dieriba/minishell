@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/13 13:39:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/14 17:19:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	get_status(t_data *data, pid_t pid_ret, char *stop)
 {
 	int	status;
 
+	if (ft_strcmp("|", stop) == 0)
+		return (0);
 	status = 0;
 	if (pid_ret)
 	{
@@ -55,15 +57,16 @@ int	prepare_next_step(t_cmd **cmds, char *stop, int *i)
 		status = get_status(data, data -> subshell, cmds[(*i)]-> prev_stop);
 		data -> subshell = 0;
 	}
-	else if ((*i) > 0 && !ft_strcmp("||", cmds[(*i)]-> prev_stop))
-		status = get_status(data, cmds[(*i) - 1]-> pid, "||");
-	else if ((*i) > 0 && !ft_strcmp("&&", cmds[(*i)]-> prev_stop))
-		status = get_status(data, cmds[(*i) - 1]-> pid, "&&");
-	if (!ft_strcmp("|", stop) || !pipe_par(&cmds[(*i)]))
+	else if ((*i) > 0)
+		status = get_status(data, cmds[(*i) - 1]-> pid, cmds[(*i)]-> prev_stop);
+	if (cmds[(*i)]-> to_fork == 0 && cmds[(*i)]-> p_close == 0 && !ft_strcmp("|", stop))
+		init_pipes(data, data -> pipes, NULL, &data -> inited);
+	else if (pipe_par(&cmds[(*i)]) == 0)
 	{
-		if (pipe(data -> pipes) < 0)
-			print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 0);
-		data -> inited = 1;
+		if (data -> s_pipes_inited == 0)
+			init_pipes(data, data -> sub_pipes[0], data -> p_pipes, &data -> s_pipes_inited);
+		else
+			init_pipes(data, data -> sub_pipes[1], data -> p_pipes, &data -> s_pipes_inited);
 	}
 	if (status && cmds[(*i)]-> p_open)
 		(*i) += end_cmd_par(&cmds[(*i)], 0);

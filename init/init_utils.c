@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/13 13:38:37 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/14 15:52:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,7 @@ void	set_default_data(t_data *data, int len)
 		data -> cmds[j]-> pos_app = -1;
 		data -> cmds[j]-> pos_here = -1;
 		data -> cmds[j]-> pos_out = -1;
+		if (j > 0)
+			data -> cmds[j] -> prev_cmd = data -> cmds[j - 1];
 	}
 }

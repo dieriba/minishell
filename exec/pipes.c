@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:28:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 21:51:10 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/14 17:19:11 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,23 @@ int	find_fd(t_doc *node, char *limiter)
 		node = node -> next;
 	}
 	return (node -> pipes[0]);
+}
+
+void	close_both_pipes(t_data *data, int pipes[2], int *inited)
+{
+	if ((*inited))
+	{
+		close_fd(data, "bash", pipes[0]);
+		close_fd(data, "bash", pipes[1]);
+		(*inited) -= 1;
+	}
+}
+
+void	init_pipes(t_data *data, int pipes[2], int *ptr, int *inited)
+{
+	if (pipe(pipes) < 0)
+		print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 1);
+	if (ptr)
+		ptr = pipes;
+	(*inited) += 1;
 }

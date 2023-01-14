@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/13 05:19:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/14 17:20:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ enum e_type
 };
 typedef struct t_node		t_node;
 typedef struct t_data		t_data;
+typedef struct t_cmd		t_cmd;
 typedef struct t_collector	t_collector;
 typedef struct t_doc		t_doc;
 typedef struct t_doc
@@ -97,7 +98,6 @@ typedef struct t_cmd
 	char	*last_in;
 	char	*last_out;
 	char	**paths;
-	char	par;
 	int		pos_in;
 	int		pos_out;
 	int		pid;
@@ -111,6 +111,7 @@ typedef struct t_cmd
 	int		p_open;
 	int		p_close;
 	t_data	*data;
+	t_cmd	*prev_cmd;
 }	t_cmd;
 
 typedef struct t_data
@@ -126,6 +127,9 @@ typedef struct t_data
 	t_node				*collector;
 	t_cmd				**cmds;
 	int					pipes[2];
+	int					sub_pipes[2][2];
+	int					*p_pipes;
+	int					s_pipes_inited;
 	int					inited;
 	int					prev_pipes;
 	int					last_exec_stat;
@@ -234,8 +238,10 @@ void	open_files(t_data *data, char **files, int length, int flags);
 void	close_fd(t_data *data, char *str, int fd);
 void	check_files(t_data *data, char **files, int flags);
 void	close_pipes(t_data *data);
+void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd, char *str);
+void	init_pipes(t_data *data, int pipes[2], int *ptr, int *inited);
 /*-----------------EXECUTION-----------------*/
 
 /*-----------------PARENTHESES-----------------*/

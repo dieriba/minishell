@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/13 05:17:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/14 17:26:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ int	pipe_par(t_cmd **cmds)
 
 	p_num = 0;
 	i = -1;
+	if (cmds[0]-> to_fork == 0)
+		return (1);
 	while (cmds[++i])
 	{
-		p_num += cmds[i]-> p_open + cmds[i]-> p_close;
-		if (p_num == 0 && !ft_strcmp("|", cmds[i]-> stop))
-			return (0);
+		p_num += cmds[i]-> to_fork + cmds[i]-> p_close;
+		if (p_num == 0)
+			break ;
 	}
-	return (1);
+	return (ft_strcmp("|", cmds[i]-> stop));
 }

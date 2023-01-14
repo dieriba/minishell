@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/13 03:48:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/14 17:29:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	run_cmd(t_cmd *cmd)
 {
 	size_t	i;
-
+	
 	if (cmd -> cmd == NULL)
 		return ;
 	i = -1;
@@ -36,7 +36,7 @@ void	run_cmd(t_cmd *cmd)
 	}
 }
 
-void	handle_pipes(t_data *data)
+void	handle_pipes(t_data *data, t_cmd *cmd)
 {
 	if (data -> prev_pipes > 0)
 	{
@@ -48,6 +48,13 @@ void	handle_pipes(t_data *data)
 		data -> prev_pipes = data -> pipes[0];
 		close_fd(data, "bash pipes close", data -> pipes[1]);
 	}
+	if (cmd -> prev_cmd && cmd -> prev_cmd -> p_close && data -> s_pipes_inited == 1)
+		close_both_pipes(data, data -> p_pipes, &data -> s_pipes_inited);
+	else if (cmd -> prev_cmd && cmd -> prev_cmd -> p_close && data -> s_pipes_inited > 1)
+	{
+		close_both_pipes(data, data -> p_pipes, &data -> s_pipes_inited);
+		data -> p_pipes = data -> sub_pipes[0];
+	}	
 	data -> inited = 0;
 }
 
@@ -86,7 +93,7 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 			if (pid_ret == 0)
 				forking(cmds, i);
 			cmds[i]-> pid = pid_ret;
-			handle_pipes(data);
+			handle_pipes(data, cmds[i]);
 			i -= (cmds[i] == NULL);
 		}
 		if (subshell && data -> p_num == 0)
