@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:28:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/14 17:19:11 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/15 12:28:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ void	close_both_pipes(t_data *data, int pipes[2], int *inited)
 	}
 }
 
-void	init_pipes(t_data *data, int pipes[2], int *ptr, int *inited)
+void	init_pipes(t_data *data, int pipes[2], int *inited, int s_pipes)
 {
 	if (pipe(pipes) < 0)
 		print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 1);
-	if (ptr)
-		ptr = pipes;
+	if (s_pipes)
+		data -> p_pipes = pipes;
 	(*inited) += 1;
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/14 17:19:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/15 14:39:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 void	wait_all_child(t_data *data, t_cmd **cmds, int subshell)
 {
 	size_t	i;
-	int		status;
 
 	i = -1;
-	status = 0;
+	if (data -> s_pipes_inited)
+		close_both_pipes(data, data -> sub_pipes[0], &data -> s_pipes_inited);
 	close_all_pipes(data, &data -> here_docs, 1, 0);
 	data -> here_doc_closed = 1;
 	while (cmds[++i])
 	{
-		if (cmds[i]-> pid && waitpid(cmds[i]-> pid, &status, 0) < 0 && errno != ECHILD)
+		if (cmds[i]-> pid && waitpid(cmds[i]-> pid, &data -> status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 	}
 	if (data -> subshell)
-		if (waitpid(data -> subshell, &status, 0) < 0 && errno != ECHILD)
+		if (waitpid(data -> subshell, &data -> status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
-	if (WIFEXITED(status))
-		data -> status = WEXITSTATUS(status);
+	if (WIFEXITED(data -> status))
+		data -> status = WEXITSTATUS(data -> status);
 	if (subshell)
 		free_all(data, data -> status, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/14 17:20:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/15 14:39:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,6 @@ int		prepare_next_step(t_cmd **cmd, char *stop, int *i);
 int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
 int		to_exec_or_not(char *stop, int status);
 int		pipe_par(t_cmd **cmds);
-int		get_status(t_data *data, pid_t pid_ret, char *stop);
 int		find_next_cmd(t_data *data, t_cmd **cmds);
 int 	is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell);
 void	executing(t_data *data, t_cmd **cmds, int subshell);
@@ -241,7 +240,7 @@ void	close_pipes(t_data *data);
 void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd, char *str);
-void	init_pipes(t_data *data, int pipes[2], int *ptr, int *inited);
+void	init_pipes(t_data *data, int pipes[2], int *inited, int s_pipes);
 /*-----------------EXECUTION-----------------*/
 
 /*-----------------PARENTHESES-----------------*/

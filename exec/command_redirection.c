@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/14 17:31:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/15 14:40:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	set_out_redirection(t_cmd *cmd, int fd)
 		if (dup2(cmd -> data -> pipes[1], STDOUT_FILENO) < 0)
 			print_err_and_exit(cmd -> data, NULL, "bash", 1);
 	}
-	else if (cmd -> prev_cmd && cmd -> prev_cmd -> p_close == 0 && cmd -> data -> s_pipes_inited)
+	else if (cmd -> data -> s_pipes_inited)
 	{
 		if (dup2(cmd -> data -> p_pipes[1], STDOUT_FILENO) < 0)
 			print_err_and_exit(cmd -> data, NULL, "bash", 1);
@@ -69,7 +69,7 @@ void	set_in_redirection(t_cmd *cmd, int fd, int pipes)
 			print_err_and_exit(cmd -> data, NULL, "bash", 1);
 		close_fd(cmd -> data, "bash", fd);
 	}
-	else if (cmd -> prev_cmd && cmd -> prev_cmd -> p_close)
+	else if (cmd -> prev_cmd && cmd -> prev_cmd -> p_close && cmd -> data -> s_pipes_inited)
 	{
 		if (dup2(cmd -> data -> p_pipes[0], STDIN_FILENO) < 0)
 			print_err_and_exit(cmd -> data, NULL, "bash", 1);

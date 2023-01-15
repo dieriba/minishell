@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/08 22:50:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/14 17:38:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ void	print_err(t_data *data, char *str, t_cmd *cmd, int type)
 
 void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type)
 {
-	if (data -> inited)
-	{
-		close_fd(data, "bash", data -> pipes[0]);
-		close_fd(data, "bash", data -> pipes[1]);
-	}
+	close_both_pipes(data, data -> pipes, &data -> inited);
 	if (data -> prev_pipes > 0)
 		close_fd(data, "bash", data -> prev_pipes);
 	if (data -> here_doc_closed == 0 && data -> here_doc_opened)

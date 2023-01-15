@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/14 17:19:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/15 14:38:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,33 @@ int	to_exec_or_not(char *stop, int status)
 		return (0);
 }
 
-int	get_status(t_data *data, pid_t pid_ret, char *stop)
+int	pipe_exec(t_cmd *cmd)
+{
+	if (cmd -> p_close && cmd -> pid)
+		return (0);
+	else if (cmd -> p_close && cmd -> pid == 0)
+		return (1);
+	else if (cmd -> pid)
+		return (0);
+	else
+		return (1);
+}
+
+int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 {
 	int	status;
 
 	if (ft_strcmp("|", stop) == 0)
-		return (0);
+		return (pipe_exec(cmd -> prev_cmd));
 	status = 0;
 	if (pid_ret)
 	{
 		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
-		data -> last_exec_stat = (status > 0);
-		status = to_exec_or_not(stop, status);
+			data -> status = WEXITSTATUS(status);
+		data -> last_exec_stat = (data -> status > 0);
+		status = to_exec_or_not(stop, data -> status);
 	}
 	else
 		status = to_exec_or_not(stop, data -> last_exec_stat);
@@ -54,19 +66,19 @@ int	prepare_next_step(t_cmd **cmds, char *stop, int *i)
 	status = 0;
 	if ((*i) > 0 && cmds[(*i) - 1]-> p_close)
 	{
-		status = get_status(data, data -> subshell, cmds[(*i)]-> prev_stop);
+		status = get_status(data, cmds[(*i)], data -> subshell, cmds[(*i)]-> prev_stop);
 		data -> subshell = 0;
 	}
 	else if ((*i) > 0)
-		status = get_status(data, cmds[(*i) - 1]-> pid, cmds[(*i)]-> prev_stop);
-	if (cmds[(*i)]-> to_fork == 0 && cmds[(*i)]-> p_close == 0 && !ft_strcmp("|", stop))
-		init_pipes(data, data -> pipes, NULL, &data -> inited);
-	else if (pipe_par(&cmds[(*i)]) == 0)
+		status = get_status(data, cmds[(*i)], cmds[(*i) - 1]-> pid, cmds[(*i)]-> prev_stop);
+	if (!status && cmds[(*i)]-> to_fork == 0 && cmds[(*i)]-> p_close == 0 && !ft_strcmp("|", stop))
+		init_pipes(data, data -> pipes, &data -> inited, 0);
+	else if (status == 0 && pipe_par(&cmds[(*i)]) == 0)
 	{
 		if (data -> s_pipes_inited == 0)
-			init_pipes(data, data -> sub_pipes[0], data -> p_pipes, &data -> s_pipes_inited);
+			init_pipes(data, data -> sub_pipes[0], &data -> s_pipes_inited, 1);
 		else
-			init_pipes(data, data -> sub_pipes[1], data -> p_pipes, &data -> s_pipes_inited);
+			init_pipes(data, data -> sub_pipes[1], &data -> s_pipes_inited, 1);
 	}
 	if (status && cmds[(*i)]-> p_open)
 		(*i) += end_cmd_par(&cmds[(*i)], 0);

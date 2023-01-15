@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/14 17:29:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/15 13:43:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 	int		i;
 	pid_t	pid_ret;
 	int		res;
-	
+	(void)pid_ret;
 	i = -1;
 	cmds[0]-> p_open = cmds[0]-> to_fork + (subshell == 1);
 	while (cmds[++i])
