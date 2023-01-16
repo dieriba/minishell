@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/07 21:59:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 00:58:01 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ void	exit_(int signal)
 	exit(130);
 }
 
-void	handle_signals(t_data *data)
+void	handle_signals()
 {
-	data -> ctrl_c.sa_handler = SIG_IGN;
-	sigemptyset(&data -> ctrl_c.sa_mask);
-	sigaction(SIGINT, &data -> ctrl_c, NULL);
+	struct sigaction	ctrl_c;
+	ctrl_c.sa_handler = SIG_IGN;
+	sigemptyset(&ctrl_c.sa_mask);
+	sigaction(SIGINT, &ctrl_c, NULL);
 }

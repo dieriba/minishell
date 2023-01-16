@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/15 14:39:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 00:58:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ typedef struct t_cmd
 typedef struct t_data
 {
 	int					status;
+	int					subshell_pid;
 	int					subshell;
 	int					p_num;
-	struct sigaction	ctrl_c;
 	char				*path;
 	char				*cp_to_parse;
 	char				**envp;
@@ -147,7 +147,7 @@ extern t_collector		*g_collector;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
-void	handle_signals(t_data *data);
+void	handle_signals();
 /*-----------------SIGNAL_FUNCTION-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
@@ -239,8 +239,10 @@ void	check_files(t_data *data, char **files, int flags);
 void	close_pipes(t_data *data);
 void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
-void	set_redirections_files(t_cmd *cmd, char *str);
+void	set_redirections_files(t_cmd *cmd, char *str, int subshell);
 void	init_pipes(t_data *data, int pipes[2], int *inited, int s_pipes);
+void	close_one_end(t_data *data, int fd, int *inited);
+void	close_sub_pipes(t_data *data, int subshell);
 /*-----------------EXECUTION-----------------*/
 
 /*-----------------PARENTHESES-----------------*/

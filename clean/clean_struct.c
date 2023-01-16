@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 05:36:27 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/08 22:46:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 01:25:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	clean_struct(t_data *data)
 	data -> prev_pipes = -1;
 	data -> last_exec_stat = 0;
 	data -> inited = 0;
+	data -> status = 0;
 	free_cmd(data -> cmds);
 	free(data -> cp_to_parse);
 	clean_here_doc(&data -> here_docs);

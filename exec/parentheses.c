@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/14 17:26:27 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 02:43:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ int	find_next_cmd(t_data *data, t_cmd **cmds)
 	size_t	i;
 
 	i = -1;
-	while (cmds[++i] && cmds[i]-> p_close == 0)
+	while (cmds[++i])
+	{
 		data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
+		if (cmds[i]-> p_close)
+			break ;
+	}
 	return (i);
 }
 

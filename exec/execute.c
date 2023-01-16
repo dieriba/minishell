@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/15 13:43:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 02:29:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	run_cmd(t_cmd *cmd)
 	}
 }
 
-void	handle_pipes(t_data *data, t_cmd *cmd)
+void	handle_pipes(t_data *data, t_cmd *cmd, int subshell)
 {
 	if (data -> prev_pipes > 0)
 	{
@@ -48,27 +48,26 @@ void	handle_pipes(t_data *data, t_cmd *cmd)
 		data -> prev_pipes = data -> pipes[0];
 		close_fd(data, "bash pipes close", data -> pipes[1]);
 	}
-	if (cmd -> prev_cmd && cmd -> prev_cmd -> p_close && data -> s_pipes_inited == 1)
-		close_both_pipes(data, data -> p_pipes, &data -> s_pipes_inited);
-	else if (cmd -> prev_cmd && cmd -> prev_cmd -> p_close && data -> s_pipes_inited > 1)
-	{
-		close_both_pipes(data, data -> p_pipes, &data -> s_pipes_inited);
-		data -> p_pipes = data -> sub_pipes[0];
-	}	
+	if (data -> s_pipes_inited && subshell == 0 && cmd -> prev_cmd && cmd -> prev_cmd -> p_close)
+		close_one_end(data, data -> p_pipes[0], &data -> s_pipes_inited);
+	else if (data -> s_pipes_inited && subshell && cmd -> p_close)
+		close_one_end(data, data -> p_pipes[1], &data -> s_pipes_inited);
+	else if (data -> s_pipes_inited && subshell && cmd -> prev_cmd && cmd -> prev_cmd -> p_close)
+		close_one_end(data, data -> p_pipes[0], &data -> s_pipes_inited);
 	data -> inited = 0;
 }
 
-void	forking(t_cmd **cmds, int i)
+void	forking(t_cmd **cmds, int subshell, int i)
 {
 	char	*prev;
 	t_cmd	*cmd;
-
+	
 	cmd = cmds[i];
 	if (i > 0)
 		prev = cmds[--i]-> stop;
 	else
 		prev = NULL;
-	set_redirections_files(cmd, prev);
+	set_redirections_files(cmd, prev, subshell);
 	run_cmd(cmd);
 	free_all(cmd -> data, 0, 1);
 }
@@ -78,9 +77,10 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 	int		i;
 	pid_t	pid_ret;
 	int		res;
-	(void)pid_ret;
+	
 	i = -1;
 	cmds[0]-> p_open = cmds[0]-> to_fork + (subshell == 1);
+	close_sub_pipes(data, subshell);
 	while (cmds[++i])
 	{
 		res = prepare_next_step(cmds, cmds[i]-> stop, &i);
@@ -91,9 +91,9 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 			if (pid_ret < 0)
 				print_err_and_exit(data, NULL, "bash", 1);
 			if (pid_ret == 0)
-				forking(cmds, i);
+				forking(cmds, subshell, i);
 			cmds[i]-> pid = pid_ret;
-			handle_pipes(data, cmds[i]);
+			handle_pipes(data, cmds[i], subshell);
 			i -= (cmds[i] == NULL);
 		}
 		if (subshell && data -> p_num == 0)

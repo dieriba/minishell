@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/15 14:40:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 02:35:50 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,47 +41,55 @@ int	open_outfile(t_cmd *cmd)
 	return (fd);
 }
 
-void	set_out_redirection(t_cmd *cmd, int fd)
+void	set_out_redirection(t_cmd *cmd, int fd, int subshell)
 {
+	t_data	*data;
+
+	data = cmd -> data;
 	if (fd > 0)
 	{
 		if (dup2(fd, STDOUT_FILENO) < 0)
-			print_err_and_exit(cmd -> data, NULL, "bash", 1);
-		close_fd(cmd -> data, "bash", fd);
+			print_err_and_exit(data, NULL, "bash", 1);
+		close_fd(data, "bash", fd);
 	}
-	else if (cmd -> data -> inited && cmd -> p_close == 0)
+	else if (data -> inited && cmd -> p_close == 0)
 	{
-		if (dup2(cmd -> data -> pipes[1], STDOUT_FILENO) < 0)
-			print_err_and_exit(cmd -> data, NULL, "bash", 1);
+		if (dup2(data -> pipes[1], STDOUT_FILENO) < 0)
+			print_err_and_exit(data, NULL, "bash", 1);
 	}
-	else if (cmd -> data -> s_pipes_inited)
+	else if (subshell && data -> s_pipes_inited)
 	{
-		if (dup2(cmd -> data -> p_pipes[1], STDOUT_FILENO) < 0)
-			print_err_and_exit(cmd -> data, NULL, "bash", 1);
+		if (dup2(data -> p_pipes[1], STDOUT_FILENO) < 0)
+			print_err_and_exit(data, NULL, "bash", 1);
 	}
 }
 
 void	set_in_redirection(t_cmd *cmd, int fd, int pipes)
 {
+	t_data	*data;
+	t_cmd	*prev_cmd;
+
+	prev_cmd = cmd -> prev_cmd;
+	data = cmd -> data;
 	if (fd > 0)
 	{
 		if (dup2(fd, STDIN_FILENO) < 0)
-			print_err_and_exit(cmd -> data, NULL, "bash", 1);
-		close_fd(cmd -> data, "bash", fd);
+			print_err_and_exit(data, NULL, "bash", 1);
+		close_fd(data, "bash", fd);
 	}
-	else if (cmd -> prev_cmd && cmd -> prev_cmd -> p_close && cmd -> data -> s_pipes_inited)
+	else if (prev_cmd && prev_cmd -> p_close && data -> s_pipes_inited)
 	{
-		if (dup2(cmd -> data -> p_pipes[0], STDIN_FILENO) < 0)
-			print_err_and_exit(cmd -> data, NULL, "bash", 1);
+		if (dup2(data -> p_pipes[0], STDIN_FILENO) < 0)
+			print_err_and_exit(data, NULL, "bash", 1);
 	}
 	else if (pipes == 0)
 	{
-		if (dup2(cmd -> data -> prev_pipes, STDIN_FILENO) < 0)
-			print_err_and_exit(cmd -> data, NULL, "bash", 1);
+		if (dup2(data -> prev_pipes, STDIN_FILENO) < 0)
+			print_err_and_exit(data, NULL, "bash", 1);
 	}
 }
 
-void	set_redirections_files(t_cmd *cmd, char *prev)
+void	set_redirections_files(t_cmd *cmd, char *prev, int subshell)
 {
 	int	fd_in;
 	int	fd_out;
@@ -93,12 +101,16 @@ void	set_redirections_files(t_cmd *cmd, char *prev)
 	fd_in = open_infile(cmd);
 	fd_out = open_outfile(cmd);
 	set_in_redirection(cmd, fd_in, pipes);
-	set_out_redirection(cmd, fd_out);
+	set_out_redirection(cmd, fd_out, subshell);
 	close_both_pipes(cmd -> data, cmd -> data -> pipes, &cmd -> data -> inited);
-	close_both_pipes(cmd -> data, cmd -> data -> p_pipes, &cmd -> data -> s_pipes_inited);
+	if (subshell == 0 && cmd -> data -> s_pipes_inited)
+		close_one_end(cmd -> data, cmd -> data -> p_pipes[0], &cmd -> data -> s_pipes_inited);
+	else if (subshell && cmd -> data -> s_pipes_inited)
+		close_one_end(cmd -> data, cmd -> data -> p_pipes[1], &cmd -> data -> s_pipes_inited);
 	if (cmd -> data -> prev_pipes > 0)
 		close_fd(cmd -> data, "bash", cmd -> data -> prev_pipes);
 	cmd -> data -> prev_pipes = -1;
 	close_all_pipes(cmd -> data, &cmd -> data -> here_docs, 1, 0);
 	cmd -> data -> here_doc_closed = 1;
+
 }
