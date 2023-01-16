@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 00:58:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 10:50:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd, char *str, int subshell);
 void	init_pipes(t_data *data, int pipes[2], int *inited, int s_pipes);
-void	close_one_end(t_data *data, int fd, int *inited);
+void	close_one_end(t_data *data, int *pipes, int i, int *inited);
 void	close_sub_pipes(t_data *data, int subshell);
 /*-----------------EXECUTION-----------------*/
 

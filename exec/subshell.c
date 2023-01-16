@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:21:14 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 02:52:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 11:50:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	handle_shell_pipes(t_data *data)
 {
 	if (data -> subshell == 0 && data -> s_pipes_inited)
-		close_one_end(data, data -> p_pipes[1], &data -> s_pipes_inited);
+		close_one_end(data, data -> p_pipes, 1, &data -> s_pipes_inited);
 	else if (data -> subshell == 1 && data -> s_pipes_inited)
 	{
-		close_one_end(data, data -> p_pipes[1], &data -> s_pipes_inited);
+		close_one_end(data, data -> p_pipes, 1, &data -> s_pipes_inited);
 		if (data -> s_pipes_inited == 2)
 			data -> p_pipes[1] = data -> sub_pipes[0][1];
 	}	

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 02:45:04 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 11:34:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	pipe_exec(t_cmd *cmd)
 int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 {
 	int	status;
-
-	if (ft_strcmp("|", stop) == 0)
-		return (pipe_exec(cmd -> prev_cmd));
+	
 	status = 0;
-	if (pid_ret)
+	if (ft_strcmp("|", stop) == 0)
+		status = pipe_exec(cmd -> prev_cmd);
+	if (!status && pid_ret)
 	{
 		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
@@ -52,7 +52,7 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 		data -> last_exec_stat = (data -> status > 0);
 		status = to_exec_or_not(stop, data -> status);
 	}
-	else
+	else if (!status)
 		status = to_exec_or_not(stop, data -> last_exec_stat);
 	return (status);
 }

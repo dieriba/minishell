@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 02:29:04 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 12:11:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ void	handle_pipes(t_data *data, t_cmd *cmd, int subshell)
 		close_fd(data, "bash pipes close", data -> pipes[1]);
 	}
 	if (data -> s_pipes_inited && subshell == 0 && cmd -> prev_cmd && cmd -> prev_cmd -> p_close)
-		close_one_end(data, data -> p_pipes[0], &data -> s_pipes_inited);
+		close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
 	else if (data -> s_pipes_inited && subshell && cmd -> p_close)
-		close_one_end(data, data -> p_pipes[1], &data -> s_pipes_inited);
-	else if (data -> s_pipes_inited && subshell && cmd -> prev_cmd && cmd -> prev_cmd -> p_close)
-		close_one_end(data, data -> p_pipes[0], &data -> s_pipes_inited);
+	{
+		close_one_end(data, data -> p_pipes, 1, &data -> s_pipes_inited);
+		close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
+	}
 	data -> inited = 0;
 }
 

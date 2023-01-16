@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:28:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 02:37:37 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/16 12:28:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,25 +77,28 @@ void	init_pipes(t_data *data, int pipes[2], int *inited, int s_pipes)
 	(*inited) += 2;
 }
 
-void	close_one_end(t_data *data, int fd, int *inited)
+void	close_one_end(t_data *data, int *pipes, int i, int *inited)
 {
 	if ((*inited))
 	{
-		close_fd(data, "bash", fd);
+		if (pipes[i] != -1)
+			close_fd(data, "bash", pipes[i]);
+		pipes[i] = -1;
 		(*inited) -=1;
 	}
 }
 
 void	close_sub_pipes(t_data *data, int subshell)
 {
+	static int sub = -1;
 	if (subshell == 0)
 		return ;
+	data -> subshell = subshell + (++sub);
 	if (data -> s_pipes_inited == 2)
-		close_one_end(data, data -> p_pipes[0], &data -> s_pipes_inited);
+		close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
 	else if (data -> s_pipes_inited == 3)
 	{
-		close_one_end(data, data -> sub_pipes[0][1], &data -> s_pipes_inited);
-		close_one_end(data, data -> p_pipes[0], &data -> s_pipes_inited);
+		close_one_end(data, data -> sub_pipes[0], 0, &data -> s_pipes_inited);
+		close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
 	}
-	data -> subshell = subshell;
 }
