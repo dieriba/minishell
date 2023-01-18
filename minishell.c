@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 00:47:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/18 23:37:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_struct(t_data **data)
 	(*data)-> neg_double_start = '"' * -1;
 	(*data)-> neg_double_end = '"' * -2;
 	(*data)-> prev_pipes = -1;
-	//handle_signals((*data));
+	handle_signals((*data));
 }
 
 void	lets_read(t_data *data)

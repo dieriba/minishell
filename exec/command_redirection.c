@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 12:35:17 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/19 00:42:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	set_out_redirection(t_cmd *cmd, int fd, int subshell)
 	{
 		if (dup2(data -> pipes[1], STDOUT_FILENO) < 0)
 			print_err_and_exit(data, NULL, "bash", 1);
+		printf("Blocked 1 : %s\n", cmd -> cmd);
 	}
 	else if ((cmd -> stop[0] > 0) && subshell && data -> s_pipes_inited)
 	{
@@ -118,5 +119,4 @@ void	set_redirections_files(t_cmd *cmd, char *prev, int subshell)
 	cmd -> data -> prev_pipes = -1;
 	close_all_pipes(cmd -> data, &cmd -> data -> here_docs, 1, 0);
 	cmd -> data -> here_doc_closed = 1;
-
 }

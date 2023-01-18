@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 11:34:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/19 00:50:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,13 @@ int	pipe_exec(t_cmd *cmd)
 int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 {
 	int	status;
+	int	pipes;
 	
 	status = 0;
-	if (ft_strcmp("|", stop) == 0)
+	pipes = ft_strcmp("|", stop);
+	if (pipes == 0)
 		status = pipe_exec(cmd -> prev_cmd);
-	if (!status && pid_ret)
+	if (!status && pid_ret && pipes)
 	{
 		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
