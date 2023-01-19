@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/08 20:57:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/19 01:43:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ void	set_commands(t_cmd *cmd, char *to_parse)
 	cmd -> args = ft_calloc(sizeof(char *), length + 1);
 	is_error(cmd -> data, cmd -> args, MALLOC_ERR, 1);
 	set_tabs_cmd(cmd -> data, cmd -> args, to_parse, length);
-	parser(cmd -> data, cmd -> args);
+	parser(cmd -> data, cmd -> args, 1);
 	cmd -> cmd = cmd -> args[0];
 }

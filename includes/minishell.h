@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 10:50:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/19 01:44:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
 char	*cleaner(t_data *data, char *to_clean);
 char	*parse_double_q(t_data *data, char *to_clean);
 char	*is_valid_expand(t_data *data, char *to_check);
-void	parser(t_data *data, char **tab);
+void	parser(t_data *data, char **tab, int type);
 void	quote_to_neg(t_data *data, char *to_parse);
 void	rid_of_useless_expands(t_data *data, char *to_clean);
 /*-----------------PARSER-----------------*/

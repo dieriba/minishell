@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 06:02:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/19 01:43:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	quote_to_neg(t_data *data, char *to_parse)
 	}
 }
 
-void	parser(t_data *data, char **tab)
+void	parser(t_data *data, char **tab, int type)
 {
 	size_t	i;
 	size_t	j;
