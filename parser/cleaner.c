@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 00:12:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 00:23:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,10 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean)
 			is_error(data, node, MALLOC_ERR, 0);
 			ft_lst_add_front_s(data, expands, node);
 			i += skip_next_stop(&to_clean[i]);
-			i -= (to_clean[i] == '$');
+			i--;
 		}
 		else if (to_clean[i] > 0 || ((to_clean[i] * -1) == ' '))
 			len++;
-		i -= (to_clean[i] == '\0');
 	}
 	return (len);
 }
@@ -92,11 +91,10 @@ char	*expand_and_clean(char *to_clean, char *res, t_node *expands)
 			i += skip_next_stop(&to_clean[i]);
 			if (expands -> prev)
 				expands = expands -> prev;
-			i -= (to_clean[i] == '$');
+			i--;
 		}
 		else if (to_clean[i] > 0 || ((to_clean[i] * -1) == ' '))
 			res[j++] = to_clean[i];
-		i -= (to_clean[i] == '\0');
 	}
 	return (res);
 }
