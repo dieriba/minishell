@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dollars_utils.c                                    :+:      :+:    :+:   */
+/*   ft_str_tab_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 06:03:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/22 22:30:49 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/22 20:52:39 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/22 20:54:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	check_dollars(char c, char *to_clean, int i)
+size_t  ft_str_tab_len(char **tab)
 {
-	int	valid;
+    size_t  i;
+    size_t  len;
 
-	valid = 0;
-	while (i > 0 && --i >= 0 && to_clean[i] > 0)
-		;
-	if (to_clean[i] < 0 && to_clean[i] == '\'' * -1)
-		valid = -1;
-	if (ft_strchr(VALID_COMB_EXP, c) || c == 0 || valid == -1)
-		return (1);
-	return (valid);
+    len = 0;
+    i = -1;
+    if (!tab)
+        return (0);
+    while (tab[++i])
+        len += ft_strlen(tab[i]);
+    return (len);
 }

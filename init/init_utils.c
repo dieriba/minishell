@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/14 15:52:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 00:07:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,12 @@ int	count_words(t_data *data, char *to_parse)
 		if (!ft_strchr(FORMAT_TOKEN_SP, to_parse[i]))
 		{
 			length++;
-			while (to_parse[i]
-				&& to_parse[i] != ' ' && is_real_stop(data, to_parse, i, STOP_))
-				i++;
+			if (to_parse[i] == '"' * -1 || to_parse[i] == '\'' * -1)
+				i = loop_nested_quote (to_parse, i, (to_parse[i] * 2));
+			else
+				while (to_parse[i] && to_parse[i] != ' ' 
+					&& is_real_stop(data, to_parse, i, STOP_))
+					i++;
 		}
 		if (ft_strchr(R_COMBO, to_parse[i]))
 			i = skip_redirect(data, to_parse, i);

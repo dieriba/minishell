@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/19 01:44:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/22 23:36:01 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,17 +205,20 @@ int		find_start_quotes(t_data *data, char *to_parse, int i);
 int		find_end_quotes(t_data *data, char *to_parse, int i);
 int		loop_nested_quote(char *to_parse, int j, int end);
 int		length_of_quotes(char *to_parse, char quote);
-int		check_dollars(char c);
+int		check_dollars(char c, char *to_clean, int i);
 int		char_is_quote(t_data *data, char c);
 int		char_is_end_quote(t_data *data, char c);
-int		skip_next_stop(t_data *data, char *to_clean);
+int		skip_next_stop(char *to_clean);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
 char	*cleaner(t_data *data, char *to_clean);
-char	*parse_double_q(t_data *data, char *to_clean);
+char	*clean_(t_data *data, char *to_clean);
 char	*is_valid_expand(t_data *data, char *to_check);
 void	parser(t_data *data, char **tab, int type);
 void	quote_to_neg(t_data *data, char *to_parse);
 void	rid_of_useless_expands(t_data *data, char *to_clean);
+void	clean_cmd(t_cmd *cmd);
+void    clean_files(t_cmd *cmd);
+size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/

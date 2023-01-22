@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:31:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 05:09:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/22 23:35:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*cleaner(t_data *data, char *to_clean)
 	return (res);
 }
 
-int	skip_next_stop(t_data *data, char *to_clean)
+int	skip_next_stop(char *to_clean)
 {
 	size_t	i;
 
@@ -55,10 +55,18 @@ int	skip_next_stop(t_data *data, char *to_clean)
 	{
 		if (ft_strchr(STOP_EXP, to_clean[i]))
 			break ;
-		else if (char_is_quote(data, to_clean[i]))
-			break ;
-		else if (char_is_end_quote(data, to_clean[i]))
+		else if (to_clean[i] < 0)
 			break ;
 	}
+	return (i);
+}
+
+size_t	next_quotes(t_data *data, char *to_clean, size_t *len)
+{
+	size_t	i;
+
+	i = -1;
+	while (to_clean[++i] != data -> neg_single_end)
+		(*len) += (to_clean[i] > 0);
 	return (i);
 }

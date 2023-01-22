@@ -34,11 +34,11 @@ SRCS_EXEC	=	./exec/fd.c \
 				./exec/pipes.c \
 				./exec/parentheses.c
 
-SRCS_PARSER	=	./parser/parser.c \
+SRCS_PARSER	=	./parser/cleaner.c \
+				./parser/cleaner_2.c \
 				./parser/quote_utils.c \
 				./parser/quote_utils_2.c \
-				./parser/parse_double_quote.c \
-				./parser/pre_cleaner.c \
+				./parser/quote_utils_3.c \
 				./parser/dollars_utils.c
 
 INCLUDES	= 	-I ./includes

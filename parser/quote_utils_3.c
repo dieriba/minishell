@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   quote_utils_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/19 01:43:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/22 21:44:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,31 +85,5 @@ void	quote_to_neg(t_data *data, char *to_parse)
 		}
 		if (!to_parse[i])
 			break ;
-	}
-}
-
-void	parser(t_data *data, char **tab, int type)
-{
-	size_t	i;
-	size_t	j;
-
-	i = -1;
-	while (tab[++i])
-	{
-		j = -1;
-		while (tab[i][++j])
-		{
-			if (tab[i][j] == data -> neg_double_start
-				|| tab[i][j] == '$')
-			{
-				tab[i] = parse_double_q(data, tab[i]);
-				break ;
-			}
-			else if (tab[i][j] == data -> neg_single_start)
-			{
-				tab[i] = cleaner(data, tab[i]);
-				break ;
-			}
-		}
 	}
 }

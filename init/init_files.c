@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/19 01:43:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/22 21:43:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	set_file_tabs(t_cmd *cmd, char *to_parse, char redirect, int length)
 		while (k < j)
 			redirection[i][++m] = to_parse[k++];
 	}
-	parser(cmd -> data, redirection, 0);
 }
 
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect)

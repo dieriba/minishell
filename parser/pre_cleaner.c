@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 02:13:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 06:01:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/22 23:35:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	clean_(char *to_clean, size_t stop)
+static void	clean_(char *to_clean, size_t stop)
 {
 	size_t	i;
 
@@ -40,7 +40,7 @@ void	rid_of_useless_expands(t_data *data, char *to_clean)
 		{
 			if (is_valid_expand(data, &to_clean[i]))
 				flags = 1;
-			i += skip_next_stop(data, &to_clean[i]);
+			i += skip_next_stop(&to_clean[i]);
 		}
 		if (flags == 0 && to_clean[j] == '$'
 			&& !char_is_quote(data, to_clean[j + 1]))
