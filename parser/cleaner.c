@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/22 23:39:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 00:12:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean)
 		}
 		else if (to_clean[i] > 0 || ((to_clean[i] * -1) == ' '))
 			len++;
-		printf("Index i am at : %ld\n", i);
 		i -= (to_clean[i] == '\0');
 	}
 	return (len);
