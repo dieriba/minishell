@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 00:19:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 13:42:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,21 +125,33 @@ void	clean_cmd(t_cmd *cmd)
 	cmd -> cmd = cmd -> args[0];
 }
 
+void	loop_files(t_data *data, t_files **tab)
+{
+	size_t	i;
+	size_t	j;
+	char	*to_clean;
+	
+	i = -1;
+	while (tab[++i])
+	{
+		j = -1;
+		to_clean = tab[i]-> files;
+		if (to_clean[0] == '"' * -1)
+			tab[i]-> amb++;
+		while (to_clean[++j])
+		{
+			if (to_clean[j] == '$' || to_clean[j] < 0)
+			{
+				tab[i]-> files = clean_(data, to_clean);
+				tab[i]-> amb += ft_strlen(tab[i]-> files == 0);
+				break ;
+			}
+		}
+	}
+}
+
 void    clean_files(t_cmd *cmd)
 {
-    if (cmd -> in)
-	{
-        clean_lines(cmd -> data, cmd -> in);
-		back_to_space(cmd -> in);
-	}
-	if (cmd -> out)
-	{
-        clean_lines(cmd -> data, cmd -> out);
-		back_to_space(cmd -> out);
-	}
-	if (cmd -> out_append)
-	{
-        clean_lines(cmd -> data, cmd -> out_append);
-		back_to_space(cmd -> out_append);
-	}
+    if (cmd -> files)
+        loop_files(cmd -> data, cmd -> in);
 }

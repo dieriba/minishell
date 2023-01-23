@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 08:31:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 04:02:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ void	close_fd(t_data *data, char *str, int fd)
 		print_err_and_exit(data, NULL, str, 1);
 }
 
-void	check_files(t_data *data, char **files, int flags)
+void	check_files(t_data *data, t_files **tab, int flags)
 {
 	int	i;
 
 	i = -1;
-	if (files == NULL)
+	if (tab == NULL)
 		return ;
-	while (files[++i])
+	while (tab[++i])
 	{
-		if (access(files[i], flags))
+		if (access(tab[i]-> files, flags))
 			print_err_and_exit(data, NULL, "bash", 1);
 	}
 }
 
-void	open_files(t_data *data, char **files, int length, int flags)
+void	open_files(t_data *data, t_files **tab, int length, int flags)
 {
 	int	i;
 

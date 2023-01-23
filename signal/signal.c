@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 00:58:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 01:36:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	new_line(int signal)
 {
 	if (signal == SIGINT)
 	{
+		ft_putchar_fd('\n', 0);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -36,7 +37,9 @@ void	exit_(int signal)
 void	handle_signals()
 {
 	struct sigaction	ctrl_c;
-	ctrl_c.sa_handler = SIG_IGN;
+	
+	ctrl_c.sa_flags = 0;
+	ctrl_c.sa_handler = new_line;
 	sigemptyset(&ctrl_c.sa_mask);
 	sigaction(SIGINT, &ctrl_c, NULL);
 }

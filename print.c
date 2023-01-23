@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:08:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/11 02:42:32 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 14:14:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,32 @@ void	print_tab(char **tab, char *name)
 	printf("-------------%s END -------------\n", name);
 }
 
+void	print_files_tabs(t_files **tab, char *name)
+{
+	size_t	i;
+	char	*file_type;
+	
+	i = -1;
+	if (!tab)
+	{
+		printf("Tab %s is empty\n", name);
+		return ;
+	}
+	printf("-------------%s START-------------\n", name);
+	while (tab[++i])
+	{
+		file_type = "infile";
+		if (tab[i]-> type == OUT)
+			file_type = "outfile";
+		else if (tab[i]-> type == APPEND)
+			file_type = "append";
+		else if (tab[i]-> doc == DOC)
+			file_type = "here_doc";
+		printf("index : %ld file_name : %s amb value : %d type : %d\n", i + 1, tab[i]-> files, tab[i]-> amb, file_type);
+	}
+	printf("-------------%s END -------------\n", name);
+}
+
 void	print_struct(t_cmd **cmds)
 {
 	int	i;
@@ -43,13 +69,13 @@ void	print_struct(t_cmd **cmds)
 		printf("\n");
 		print_tab(cmds[i]-> paths, "Possible commands paths");
 		printf("\n");
-		print_tab(cmds[i]-> in, "Infile Tab");
+		print_files_tabs(cmds[i]-> in, "Infile Tab");
 		printf("\n");
-		print_tab(cmds[i]-> out, "Outfile Tab");
+		print_files_tabs(cmds[i]-> out, "Outfile Tab");
 		printf("\n");
-		print_tab(cmds[i]-> in_here_doc, "Here_docs Tab");
+		print_files_tabs(cmds[i]-> in_here_doc, "Here_docs Tab");
 		printf("\n");
-		print_tab(cmds[i]-> out_append, "Out append Tab");
+		print_files_tabs(cmds[i]-> out_append, "Out append Tab");
 		printf("*************** Last Infile *************** \n\n");
 		printf("%s\n", cmds[i]-> last_in ? cmds[i]-> last_in : "No infile");
 		printf("*************** Last Outfile *************** \n\n");

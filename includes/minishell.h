@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/22 23:36:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 13:52:03 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@
 
 enum e_type
 {
-	INT
+	IN,
+	OUT,
+	DOC,
+	APPEND,
 };
 typedef struct t_node		t_node;
 typedef struct t_data		t_data;
@@ -71,7 +74,6 @@ typedef struct t_collector
 {
 	void		*data;
 	t_collector	*next;
-	enum e_type	type;
 }	t_collector;
 typedef struct t_node
 {
@@ -86,23 +88,22 @@ typedef struct t_env
 	t_node	*last;
 	t_data	*data;
 }	t_env;
+typedef struct t_files
+{
+	char		*files;
+	int			amb;
+	enum e_type	type;
+}	t_files;
 
 typedef struct t_cmd
 {
 	char	*cmd;
 	char	**args;
-	char	**in;
-	char	**out;
-	char	**in_here_doc;
-	char	**out_append;
 	char	*last_in;
 	char	*last_out;
 	char	**paths;
-	int		pos_in;
-	int		pos_out;
 	int		pid;
-	int		pos_app;
-	int		pos_here;
+	int		amb_redirect;
 	char	stop[2];
 	char	*prev_stop;
 	int		to_fork;
@@ -110,6 +111,7 @@ typedef struct t_cmd
 	int		no_path;
 	int		p_open;
 	int		p_close;
+	t_files	**files;
 	t_data	*data;
 	t_cmd	*prev_cmd;
 }	t_cmd;
@@ -186,6 +188,7 @@ void	create_list(t_data *data, char **envp);
 void	par_to_space(char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
 void	set_default_data(t_data *data, int len);
+void	set_last_setup(t_cmd *cmd);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/
@@ -196,6 +199,7 @@ void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect);
 void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect);
 void	init_path(t_cmd **cmds);
 size_t	skip_redirect(t_data *data, char *to_parse, size_t i);
+t_files	*copy_files(t_data *data, char *to_parse, int k, int j);
 /*-----------------INITIALIZATION-----------------*/
 
 /*-----------------PARSER-----------------*/

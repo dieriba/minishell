@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/08 22:51:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 02:39:43 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	free_files(t_files **tab)
+{
+	size_t	i;
+
+	i = -1;
+	while (tab[++i])
+	{
+		free(tab[i]-> files);
+		free(tab[i]);
+	}
+	free(tab);
+}
 
 void	free_cmd(t_cmd **cmds)
 {
@@ -26,13 +39,13 @@ void	free_cmd(t_cmd **cmds)
 		if (cmds[i]-> args)
 			ft_free_tab(cmds[i]-> args);
 		if (cmds[i]-> in)
-			ft_free_tab(cmds[i]-> in);
+			free_files(cmds[i]-> in);
 		if (cmds[i]-> out)
-			ft_free_tab(cmds[i]-> out);
+			free_files(cmds[i]-> out);
 		if (cmds[i]-> in_here_doc)
 			ft_free_tab(cmds[i]-> in_here_doc);
 		if (cmds[i]-> out_append)
-			ft_free_tab(cmds[i]-> out_append);
+			free_files(cmds[i]-> out_append);
 		if (cmds[i]-> paths)
 			ft_free_tab(cmds[i]-> paths);
 		free(cmds[i]);

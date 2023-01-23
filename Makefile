@@ -9,7 +9,6 @@ SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_files.c \
 				./init/init.c \
 				./init/init_utils.c \
-				./init/init_redirection.c \
 				./init/init_env.c \
 				./init/init_env_utils.c \
 				./init/init_parentheses.c \
