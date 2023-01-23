@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 14:14:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 21:59:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 void	set_last_setup(t_cmd *cmd)
 {
-	int	len_in;
-	int	len_out;
-
-	len_out = ft_tab_len(cmd -> out) - 1;
-	len_in = ft_tab_len(cmd -> in) - 1;
-	if (len_in > -1 && cmd -> pos_in >= cmd -> pos_here)
-		cmd -> last_in = cmd -> in[len_in];
-	if (len_out > -1 && cmd -> pos_out >= cmd -> pos_app)
-		cmd -> last_out = cmd -> out[len_out];
+	size_t	i;
+	t_files	**tab;
+		
+	i = -1;
+	tab = cmd -> tab;
+	while (tab[++i])
+	{
+		if (tab[i]-> type == IN || tab[i]-> type == DOC)
+			cmd -> last_in = tab[i];
+		else if (tab[i]-> type == OUT || tab[i]-> type == APPEND)
+			cmd -> last_out = tab[i];
+	}
 	if (cmd -> prev_cmd)
 		cmd-> prev_stop = cmd -> prev_cmd -> stop;
 }

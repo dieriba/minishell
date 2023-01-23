@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 13:52:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 22:13:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -30,7 +31,6 @@
 # define R_IN '<'
 # define R_OUT '>'
 # define R_COMBO "<>"
-
 # define STOP	"|& "
 # define STOP_	"|&"
 # define STOP_F "|&<> "
@@ -41,7 +41,7 @@
 # define FORMAT_TOKEN "|&<>"
 # define FORMAT_TOKEN_P "|&<>()"
 # define FORMAT_TOKEN_SP "|&<> "
-# define FORMAT_TOKEN_SP_R "|&<> \0)"
+# define FORMAT_TOKEN_SP_R "|&<> )"
 # define MAX_LEN_TOKEN 2
 # define EXCLUDE_TOKEN "{[]};"
 /*-----------------GLOBAL_CHECK-----------------*/
@@ -92,6 +92,7 @@ typedef struct t_files
 {
 	char		*files;
 	int			amb;
+	int			flags;
 	enum e_type	type;
 }	t_files;
 
@@ -99,8 +100,6 @@ typedef struct t_cmd
 {
 	char	*cmd;
 	char	**args;
-	char	*last_in;
-	char	*last_out;
 	char	**paths;
 	int		pid;
 	int		amb_redirect;
@@ -111,7 +110,9 @@ typedef struct t_cmd
 	int		no_path;
 	int		p_open;
 	int		p_close;
-	t_files	**files;
+	t_files	*last_in;
+	t_files	*last_out;
+	t_files	**tab;
 	t_data	*data;
 	t_cmd	*prev_cmd;
 }	t_cmd;
@@ -195,8 +196,7 @@ void	set_last_setup(t_cmd *cmd);
 void	init_cmd(t_data *data, char *to_process);
 void	init_env(t_data *data, char **envp);
 void	set_commands(t_cmd *cmd, char *to_parse);
-void	set_redirect_cmd(t_cmd *cmd, char *to_parse, char redirect);
-void	set_heredoc_app_redirect(t_cmd *cmd, char *to_parse, char *redirect);
+void	set_redirect_cmd(t_cmd *cmd, char *to_parse);
 void	init_path(t_cmd **cmds);
 size_t	skip_redirect(t_data *data, char *to_parse, size_t i);
 t_files	*copy_files(t_data *data, char *to_parse, int k, int j);
@@ -232,7 +232,7 @@ char	*get_var_line(t_node *node);
 
 /*-----------------EXECUTION-----------------*/
 int		prepare_next_step(t_cmd **cmd, char *stop, int *i);
-int		opener_outfile(t_cmd *cmd, int len_out, int len_out_ap);
+int		opener_outfile(t_cmd *cmd);
 int		to_exec_or_not(char *stop, int status);
 int		pipe_par(t_cmd **cmds);
 int		find_next_cmd(t_data *data, t_cmd **cmds);
@@ -240,9 +240,9 @@ int 	is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell);
 void	executing(t_data *data, t_cmd **cmds, int subshell);
 void	run_cmd(t_cmd *cmd);
 void	wait_all_child(t_data *data, t_cmd **cmds, int subshell);
-void	open_files(t_data *data, char **files, int length, int flags);
+void	open_files(t_data *data, t_cmd *cmd);
 void	close_fd(t_data *data, char *str, int fd);
-void	check_files(t_data *data, char **files, int flags);
+void	check_files(t_data *data, t_files **files,int flags);
 void	close_pipes(t_data *data);
 void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
@@ -272,7 +272,7 @@ int		find_fd(t_doc *node, char *limiter);
 int		open_pipes(t_data *data, t_doc **head);
 void	fork_docs(t_data *data, t_doc **head);
 void	ft_lst_add_front_(t_doc **node, t_doc *new);
-void	set_node(t_data *data, char **limiter);
+void	set_node(t_data *data, t_files **tab);
 void	close_all_pipes(t_data *data, t_doc **head, int read_, int write_);
 void	exit_(int signal);
 /*-----------------HERE_DOC_UTILS-----------------*/

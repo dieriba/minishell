@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 06:10:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 14:04:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 22:56:30 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	calcul_word(t_data *data, char *to_parse, int j)
 	else if (to_parse[j] == data -> neg_double_start)
 		j = loop_nested_quote(to_parse, j, data -> neg_double_end);
 	else
-		while (to_parse[j] && is_real_stop(data, to_parse, j, STOP_F_P))
+		while (to_parse[j] && is_real_stop(data, to_parse, j, STOP_F))
 			j++;
 	return (j);
 }

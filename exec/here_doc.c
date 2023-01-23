@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 01:39:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 22:16:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	open_here_doc(t_data *data, t_cmd **cmds)
 
 	len = tab_len(data -> cmds);
 	while (--len > -1)
-	{
-		if (cmds[len]-> in_here_doc)
-			set_node(data, cmds[len]-> in_here_doc);
-	}
+		set_node(data, cmds[len]-> tab);
 }
 
 void	handle_here_doc_pipes(t_data *data, t_doc **head)

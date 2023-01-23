@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 04:02:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 21:59:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,46 +27,41 @@ void	check_files(t_data *data, t_files **tab, int flags)
 		return ;
 	while (tab[++i])
 	{
-		if (access(tab[i]-> files, flags))
-			print_err_and_exit(data, NULL, "bash", 1);
+		if (tab[i]-> amb || tab[i]-> type == IN)
+		{
+			if (access(tab[i]-> files, flags))
+				print_err_and_exit(data, NULL, "bash", 1);
+		}
 	}
 }
 
-void	open_files(t_data *data, t_files **tab, int length, int flags)
+void	open_files(t_data *data, t_cmd *cmd)
 {
-	int	i;
-
+	t_files	**tab;
+	int		i;
+	
 	i = -1;
-	while (++i < length)
+	tab = cmd -> tab;
+	while (tab[++i])
 	{
-		if (open(files[i], flags, 0644) < 0)
-			print_err_and_exit(data, NULL, "bash", 1);
+		if ((tab[i]-> files != cmd -> last_out -> files) 
+			&& (tab[i]-> type == OUT || tab[i]-> type == APPEND))
+		{
+			if (open(tab[i]-> files, tab[i]-> flags, 0644) < 0)
+				print_err_and_exit(data, NULL, "bash", 1);
+		}
 	}
 }
 
-int	opener_outfile(t_cmd *cmd, int len_out, int len_out_ap)
+int	opener_outfile(t_cmd *cmd)
 {
 	t_data	*data;
+	t_files	*last;
 	int		fd;
-	int		flags;
 
 	data = cmd -> data;
-	flags = O_RDWR | O_TRUNC | O_CREAT;
-	if (cmd -> pos_out > cmd -> pos_app)
-	{
-		if (len_out > 1)
-			open_files(data, cmd -> out, len_out - 1, flags);
-		open_files(
-			data, cmd -> out_append, len_out_ap, flags);
-		fd = open(cmd -> out[len_out - 1], flags, 0666);
-	}
-	else
-	{
-		flags = O_RDWR | O_APPEND | O_CREAT;
-		if (len_out_ap > 1)
-			open_files(data, cmd -> out_append, len_out_ap - 1, flags);
-		open_files(data, cmd -> out, len_out, flags);
-		fd = open(cmd -> out_append[len_out_ap - 1], flags, 0666);
-	}
+	last = cmd -> last_out;
+	open_files(data, cmd);
+	fd = open(last -> files, last -> flags, 0666);
 	return (fd);
 }

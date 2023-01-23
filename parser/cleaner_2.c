@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 13:42:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 22:23:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,16 +135,19 @@ void	loop_files(t_data *data, t_files **tab)
 	while (tab[++i])
 	{
 		j = -1;
-		to_clean = tab[i]-> files;
-		if (to_clean[0] == '"' * -1)
-			tab[i]-> amb++;
-		while (to_clean[++j])
+		if (tab[i]-> type != DOC)
 		{
-			if (to_clean[j] == '$' || to_clean[j] < 0)
+			to_clean = tab[i]-> files;
+			if (to_clean[0] == '"' * -1)
+				tab[i]-> amb++;
+			while (to_clean[++j])
 			{
-				tab[i]-> files = clean_(data, to_clean);
-				tab[i]-> amb += ft_strlen(tab[i]-> files == 0);
-				break ;
+				if (to_clean[j] == '$' || to_clean[j] < 0)
+				{
+					tab[i]-> files = clean_(data, to_clean);
+					tab[i]-> amb += (ft_strlen(tab[i]-> files) == 0);
+					break ;
+				}
 			}
 		}
 	}
@@ -152,6 +155,6 @@ void	loop_files(t_data *data, t_files **tab)
 
 void    clean_files(t_cmd *cmd)
 {
-    if (cmd -> files)
-        loop_files(cmd -> data, cmd -> in);
+    if (cmd -> tab)
+        loop_files(cmd -> data, cmd -> tab);
 }

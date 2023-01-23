@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:08:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 14:14:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 22:46:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,13 @@ void	print_files_tabs(t_files **tab, char *name)
 			file_type = "outfile";
 		else if (tab[i]-> type == APPEND)
 			file_type = "append";
-		else if (tab[i]-> doc == DOC)
+		else if (tab[i]-> type == DOC)
 			file_type = "here_doc";
-		printf("index : %ld file_name : %s amb value : %d type : %d\n", i + 1, tab[i]-> files, tab[i]-> amb, file_type);
+		printf("-------------index : %ld-------------\n", i + 1);
+		printf("File_name : %s\n", tab[i]-> files);
+		printf("Ambiguous redirect : %d\n", tab[i]-> amb);
+		printf("File type : %s\n", file_type);
+		printf("-------------index : %ld-------------\n\n", i + 1);
 	}
 	printf("-------------%s END -------------\n", name);
 }
@@ -69,17 +73,12 @@ void	print_struct(t_cmd **cmds)
 		printf("\n");
 		print_tab(cmds[i]-> paths, "Possible commands paths");
 		printf("\n");
-		print_files_tabs(cmds[i]-> in, "Infile Tab");
+		print_files_tabs(cmds[i]-> tab, "Files Tab");
 		printf("\n");
-		print_files_tabs(cmds[i]-> out, "Outfile Tab");
-		printf("\n");
-		print_files_tabs(cmds[i]-> in_here_doc, "Here_docs Tab");
-		printf("\n");
-		print_files_tabs(cmds[i]-> out_append, "Out append Tab");
 		printf("*************** Last Infile *************** \n\n");
-		printf("%s\n", cmds[i]-> last_in ? cmds[i]-> last_in : "No infile");
+		printf("%s\n", cmds[i]-> last_in  ? cmds[i]-> last_in -> files : "No infile");
 		printf("*************** Last Outfile *************** \n\n");
-		printf("%s\n", cmds[i]-> last_out ? cmds[i]-> last_out : "Not oufile");
+		printf("%s\n", cmds[i]-> last_out ? cmds[i]-> last_out -> files : "Not oufile");
 		printf("\n***************************************\n\n\n");
 		printf("*************** PREV STOP TOKEN *************** \n\n");
 		printf("%s\n", i ? cmds[i]-> prev_stop : "No stop");

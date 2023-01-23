@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/19 01:18:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 22:02:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	open_infile(t_cmd *cmd)
 	fd = -2;
 	if (cmd -> last_in == NULL)
 		return (-1);
-	check_files(cmd -> data, cmd -> in, F_OK | R_OK);
-	if (cmd -> pos_here > cmd -> pos_in)
+	check_files(cmd -> data, cmd -> tab, F_OK | R_OK);
+	if (cmd -> last_in -> type == DOC)
 		return (0);
-	fd = open(cmd -> last_in, O_RDONLY, 0666);
+	fd = open(cmd -> last_in -> files, O_RDONLY, 0666);
 	if (fd == -1)
 		print_err_and_exit(cmd -> data, NULL, "bash", 1);
 	return (fd);
@@ -34,8 +34,7 @@ int	open_outfile(t_cmd *cmd)
 
 	if (cmd -> last_out == NULL)
 		return (-1);
-	fd = opener_outfile(
-			cmd, ft_tab_len(cmd -> out), ft_tab_len(cmd -> out_append));
+	fd = opener_outfile(cmd);
 	if (fd == -1)
 		print_err_and_exit(cmd -> data, NULL, "bash", 1);
 	return (fd);
@@ -79,7 +78,7 @@ void	set_in_redirection(t_cmd *cmd, int fd, int pipes)
 	}
 	else if (fd == 0)
 	{
-		fd = find_fd(cmd -> data -> here_docs, cmd -> last_in);
+		fd = find_fd(cmd -> data -> here_docs, cmd -> last_in -> files);
 		if (dup2(fd, STDIN_FILENO) < 0)
 			print_err_and_exit(cmd -> data, NULL, "bash", 1);
 	}

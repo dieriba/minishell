@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 00:07:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/23 22:53:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 int	find_end_string(t_data *data, char *to_parse, int j)
 {
-	if (to_parse[j] == data -> neg_single_start)
-		j = calcul_word(data, to_parse, j);
-	else if (to_parse[j] == data -> neg_double_start)
-		j = calcul_word(data, to_parse, j);
-	else
-		j = calcul_word(data, to_parse, j);
-	return (j);
+	return (calcul_word(data, to_parse, j));
 }
 
 int	skip_char_letter_str(t_data *data, size_t i, char *to_parse, char *to_skip)
@@ -78,10 +72,6 @@ void	set_default_data(t_data *data, int len)
 		is_error(data, data -> cmds, MALLOC_ERR, 1);
 		data -> cmds[j]-> data = data;
 		data -> cmds[j]-> index = j + 1;
-		data -> cmds[j]-> pos_in = -1;
-		data -> cmds[j]-> pos_app = -1;
-		data -> cmds[j]-> pos_here = -1;
-		data -> cmds[j]-> pos_out = -1;
 		if (j > 0)
 			data -> cmds[j] -> prev_cmd = data -> cmds[j - 1];
 	}
