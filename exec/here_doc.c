@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 02:30:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 04:31:30 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ void	handle_here_doc_pipes(t_data *data, t_doc **head)
 			line = readline("here_doc: ");
 			if (!line || !ft_strcmp(node -> limiter, line))
 				break ;
+			line = clean_lines(data, line, 1);
 			ft_putendl_fd(line, node -> pipes[1]);
-			free(line);
+			ft_free_elem((void **)&line);
 		}
-		if (line)
-			free(line);
+		ft_free_elem((void **)&line);
 		node = node -> next;
 	}
 	close_all_pipes(data, head, 1, 1);

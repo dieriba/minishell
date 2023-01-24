@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 02:58:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 04:20:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,6 @@ void	set_redirections_files(t_cmd *cmd, char *prev, int subshell)
 		close_one_end(cmd -> data, cmd -> data -> p_pipes, 0, &cmd -> data -> s_pipes_inited);
 	else if (subshell && cmd -> data -> s_pipes_inited)
 		close_one_end(cmd -> data, cmd -> data -> p_pipes, 1, &cmd -> data -> s_pipes_inited);
-	if (cmd -> data -> prev_pipes > 0)
-		close_fd(cmd -> data, "bash", &cmd -> data -> prev_pipes);
-	cmd -> data -> prev_pipes = -1;
+	close_fd(cmd -> data, "bash", &cmd -> data -> prev_pipes);
 	close_all_pipes(cmd -> data, &cmd -> data -> here_docs, 1, 0);
 }

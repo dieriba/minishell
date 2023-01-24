@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 03:45:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 04:46:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	check_tab(char **tab)
 	return (quotes);
 }
 
-char	*clean_lines(t_data *data, char *line)
+char	*clean_lines(t_data *data, char *line, int expand)
 {
 	size_t	i;
 
@@ -100,11 +100,10 @@ char	*clean_lines(t_data *data, char *line)
 		return (line);
 	while (line[++i])
 	{
-		if (line[i] < 0)
-		{
-			line = clean_(data, line, 0);
-			return (line);
-		}
+		if (expand && line[i] == '$')
+			return (clean_(data, line, 1));
+		if (expand == 0 && line[i] < 0)
+			return (clean_(data, line, 0));
 	}
 	return (line);
 }
@@ -124,7 +123,7 @@ void	clean_cmd(t_cmd *cmd)
 	if (to_clean < 0)
 	{
 		while (tab[++i])
-			tab[i] = clean_lines(cmd -> data, tab[i]);
+			tab[i] = clean_lines(cmd -> data, tab[i], 0);
 	}
 	else if (to_clean > 0)
 		expanded_tab(cmd, cmd -> args);
@@ -149,6 +148,7 @@ void	loop_files(t_data *data, t_files **tab)
 			{
 				if (to_clean[j] == '$' || to_clean[j] < 0)
 				{
+					tab[i]-> amb += (to_clean[j] == '$');
 					tab[i]-> files = clean_(data, to_clean, 1);
 					tab[i]-> amb += (ft_strlen(tab[i]-> files) == 0);
 					break ;
@@ -156,7 +156,7 @@ void	loop_files(t_data *data, t_files **tab)
 			}
 		}
 		else
-			tab[i]-> files = clean_lines(data, tab[i]-> files);
+			tab[i]-> files = clean_lines(data, tab[i]-> files, 0);
 	}
 }
 

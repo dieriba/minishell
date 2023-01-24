@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 02:25:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 04:51:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		j = skip_spaces(data, to_parse, j, 0);
 		if (cmds[i] -> prev_cmd)
 			cmds[i]-> prev_stop = cmds[i]-> prev_cmd -> stop;
-		clean_files(cmds[i]);
-		clean_cmd(cmds[i]);
 	}
 }
 
@@ -107,5 +105,5 @@ void	init_cmd(t_data *data, char *to_process)
 	fill_cmds(data -> cmds, data -> cp_to_parse, len);
 	fill_cmds_par(data -> cmds, to_process, len);
 	init_path(data -> cmds);
-	print_struct(data -> cmds);
+	//print_struct(data -> cmds);
 }

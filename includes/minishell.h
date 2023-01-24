@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 03:30:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 04:28:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ char	*clean_(t_data *data, char *to_clean, int skip);
 char	*is_valid_expand(t_data *data, char *to_check);
 void	parser(t_data *data, char **tab, int type);
 void	quote_to_neg(t_data *data, char *to_parse);
+char	*clean_lines(t_data *data, char *line, int expand);
 void	rid_of_useless_expands(t_data *data, char *to_clean);
 void	clean_cmd(t_cmd *cmd);
 void    clean_files(t_cmd *cmd);

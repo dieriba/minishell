@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 02:39:04 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 04:17:02 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,21 @@ void	check_files(t_data *data, t_files **tab, int flags)
 	int	i;
 
 	i = -1;
-	if (tab == NULL)
-		return ;
 	while (tab[++i])
 	{
-		if (tab[i]-> amb || tab[i]-> type == IN)
+		if (tab[i]-> type == IN)
 		{
 			if (access(tab[i]-> files, flags))
+				print_err_and_exit(data, NULL, "bash", 1);
+		}
+		else if (tab[i]-> amb == 2)
+		{
+			if (access(tab[i]-> files, F_OK))
+				print_err_and_exit(data, NULL, "bash: ambiguous redirect", 0);
+		}
+		else if (tab[i]-> amb == 3 || tab[i]-> amb == 1)
+		{
+			if (access(tab[i]-> files, F_OK))
 				print_err_and_exit(data, NULL, "bash", 1);
 		}
 	}
