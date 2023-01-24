@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_free_elem.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 07:24:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 03:09:23 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/24 02:53:08 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/24 02:53:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	exit(t_data *data)
+void	ft_free_elem(void **elem)
 {
-	free_all(data, 0);
+	if ((*elem) == NULL)
+		return ;
+	free((*elem));
+	(*elem) = NULL;
 }

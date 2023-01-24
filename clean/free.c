@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 20:43:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 03:22:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ void	free_files(t_files **tab)
 void	free_cmd(t_cmd **cmds)
 {
 	size_t	i;
+	t_data	*data;
 
-	i = -1;
 	if (!cmds)
 		return ;
+	data = cmds[0]-> data;
+	i = -1;
 	while (cmds[++i])
 	{
 		if (cmds[i]-> args && cmds[i]-> cmd != cmds[i]-> args[0])
@@ -45,6 +47,7 @@ void	free_cmd(t_cmd **cmds)
 		free(cmds[i]);
 	}
 	free(cmds);
+	data -> cmds = NULL;
 }
 
 void	free_list(t_env *env, t_node **head)
@@ -62,7 +65,7 @@ void	free_list(t_env *env, t_node **head)
 		node -> prev = NULL;
 		if (node -> alloc && node -> line)
 			free(node -> line);
-		free(node);
+		ft_free_elem((void **)&node);
 		node = next;
 	}
 	(*head) = NULL;
@@ -70,15 +73,13 @@ void	free_list(t_env *env, t_node **head)
 		free(env);
 }
 
-void	free_all(t_data *data, int status, int free_)
+void	free_all(t_data *data, int status)
 {
+	free_cmd(data -> cmds);
 	free_list(data -> env, &data -> env -> start);
-	if (data -> cp_to_parse)
-		free(data -> cp_to_parse);
-	if (data -> here_doc_opened && data -> here_doc_closed == 0)
-		close_all_pipes(data, &data -> here_docs, 1, 0);
-	if (free_)
-		free_cmd(data -> cmds);
+	ft_free_elem((void **)&data -> cp_to_parse);
+	ft_free_elem((void **)&g_collector);
+	clean_here_doc(data, &data -> here_docs);
 	free(data);
 	exit(status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 21:59:04 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 02:25:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	set_last_setup(t_cmd *cmd)
 		else if (tab[i]-> type == OUT || tab[i]-> type == APPEND)
 			cmd -> last_out = tab[i];
 	}
-	if (cmd -> prev_cmd)
-		cmd-> prev_stop = cmd -> prev_cmd -> stop;
 }
 
 void	fill_cmds_par(t_cmd **cmds, char *to_parse, int length)
@@ -87,6 +85,8 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		j = skip_char_letter_str(cmds[0]-> data, j, to_parse, STOP_);
 		j = skip_char_token_str(j, to_parse, STOP_);
 		j = skip_spaces(data, to_parse, j, 0);
+		if (cmds[i] -> prev_cmd)
+			cmds[i]-> prev_stop = cmds[i]-> prev_cmd -> stop;
 		clean_files(cmds[i]);
 		clean_cmd(cmds[i]);
 	}

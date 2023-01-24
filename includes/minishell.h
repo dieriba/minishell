@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 22:13:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 03:30:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,18 @@ typedef struct t_files
 
 typedef struct t_cmd
 {
+	char	stop[2];
 	char	*cmd;
+	char	*prev_stop;
 	char	**args;
 	char	**paths;
-	int		pid;
 	int		amb_redirect;
-	char	stop[2];
-	char	*prev_stop;
 	int		to_fork;
-	int		index;
 	int		no_path;
-	int		p_open;
 	int		p_close;
+	int		p_open;
+	int		index;
+	int		pid;
 	t_files	*last_in;
 	t_files	*last_out;
 	t_files	**tab;
@@ -119,29 +119,27 @@ typedef struct t_cmd
 
 typedef struct t_data
 {
+	int					inited;
 	int					status;
-	int					subshell_pid;
 	int					subshell;
+	int					subshell_pid;
+	int					sub_pipes[2][2];
+	int					s_pipes_inited;
 	int					p_num;
+	int					pipes[2];
+	int					prev_pipes;
+	int					*p_pipes;
+	int					neg_single_start;
+	int					neg_single_end;
+	int					neg_double_start;
+	int					neg_double_end;
+	int					last_exec_stat;
 	char				*path;
 	char				*cp_to_parse;
 	char				**envp;
 	t_env				*env;
 	t_node				*collector;
 	t_cmd				**cmds;
-	int					pipes[2];
-	int					sub_pipes[2][2];
-	int					*p_pipes;
-	int					s_pipes_inited;
-	int					inited;
-	int					prev_pipes;
-	int					last_exec_stat;
-	int					neg_single_start;
-	int					neg_single_end;
-	int					neg_double_start;
-	int					neg_double_end;
-	int					here_doc_closed;
-	int					here_doc_opened;
 	t_doc				*here_docs;
 }t_data;
 
@@ -215,7 +213,7 @@ int		char_is_end_quote(t_data *data, char c);
 int		skip_next_stop(char *to_clean);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
 char	*cleaner(t_data *data, char *to_clean);
-char	*clean_(t_data *data, char *to_clean);
+char	*clean_(t_data *data, char *to_clean, int skip);
 char	*is_valid_expand(t_data *data, char *to_check);
 void	parser(t_data *data, char **tab, int type);
 void	quote_to_neg(t_data *data, char *to_parse);
@@ -241,7 +239,7 @@ void	executing(t_data *data, t_cmd **cmds, int subshell);
 void	run_cmd(t_cmd *cmd);
 void	wait_all_child(t_data *data, t_cmd **cmds, int subshell);
 void	open_files(t_data *data, t_cmd *cmd);
-void	close_fd(t_data *data, char *str, int fd);
+void	close_fd(t_data *data, char *str, int *fd);
 void	check_files(t_data *data, t_files **files,int flags);
 void	close_pipes(t_data *data);
 void	close_both_pipes(t_data *data, int pipes[2], int *inited);
@@ -258,7 +256,7 @@ int		end_cmd_par(t_cmd **cmds, int subshell);
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);
 void	free_cmd(t_cmd **cmds);
-void	free_all(t_data *data, int status, int free);
+void	free_all(t_data *data, int status);
 void	clean_struct(t_data *data);
 /*-----------------FREE_STRUCT-----------------*/
 
@@ -275,5 +273,6 @@ void	ft_lst_add_front_(t_doc **node, t_doc *new);
 void	set_node(t_data *data, t_files **tab);
 void	close_all_pipes(t_data *data, t_doc **head, int read_, int write_);
 void	exit_(int signal);
+void	clean_here_doc(t_data *data, t_doc **head);
 /*-----------------HERE_DOC_UTILS-----------------*/
 #endif

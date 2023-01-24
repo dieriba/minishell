@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 12:11:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 03:16:50 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,11 @@ void	run_cmd(t_cmd *cmd)
 
 void	handle_pipes(t_data *data, t_cmd *cmd, int subshell)
 {
-	if (data -> prev_pipes > 0)
-	{
-		close_fd(data, "bash error", data -> prev_pipes);
-		data -> prev_pipes = -1;
-	}
+	close_fd(data, "bash error", &data -> prev_pipes);
 	if (data -> inited)
 	{
 		data -> prev_pipes = data -> pipes[0];
-		close_fd(data, "bash pipes close", data -> pipes[1]);
+		close_fd(data, "bash pipes close", &data -> pipes[1]);
 	}
 	if (data -> s_pipes_inited && subshell == 0 && cmd -> prev_cmd && cmd -> prev_cmd -> p_close)
 		close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
@@ -70,7 +66,7 @@ void	forking(t_cmd **cmds, int subshell, int i)
 		prev = NULL;
 	set_redirections_files(cmd, prev, subshell);
 	run_cmd(cmd);
-	free_all(cmd -> data, 0, 1);
+	free_all(cmd -> data, 0);
 }
 
 void	executing(t_data *data, t_cmd **cmds, int subshell)

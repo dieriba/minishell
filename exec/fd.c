@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 21:59:44 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 02:39:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	close_fd(t_data *data, char *str, int fd)
+void	close_fd(t_data *data, char *str, int *fd)
 {
-	if (close(fd) < 0)
+	if ((*fd) == -1)
+		return ;
+	if (close((*fd)) < 0)
 		print_err_and_exit(data, NULL, str, 1);
+	(*fd) = -1;
 }
 
 void	check_files(t_data *data, t_files **tab, int flags)

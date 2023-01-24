@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 05:36:27 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 01:25:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 03:15:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	clean_here_doc(t_doc **head)
+void	clean_here_doc(t_data *data, t_doc **head)
 {
 	t_doc	*node;
 	t_doc	*next;
@@ -20,8 +20,10 @@ void	clean_here_doc(t_doc **head)
 	node = *head;
 	while (node)
 	{
+		close_fd(data, "bash", &node -> pipes[0]);
+		close_fd(data, "bash", &node -> pipes[1]);
 		next = node -> next;
-		free(node);
+		ft_free_elem((void **)&node);
 		node = next;
 	}
 	(*head) = NULL;
@@ -32,12 +34,8 @@ void	clean_struct(t_data *data)
 	data -> prev_pipes = -1;
 	data -> last_exec_stat = 0;
 	data -> inited = 0;
-	data -> status = 0;
 	free_cmd(data -> cmds);
-	free(data -> cp_to_parse);
-	clean_here_doc(&data -> here_docs);
-	if (data -> here_doc_opened && data -> here_doc_closed == 0)
-		close_all_pipes(data, &data -> here_docs, 1, 0);
-	data -> here_doc_closed = 0;
-	data -> here_doc_opened = 0;
+	ft_free_elem((void **)&g_collector);
+	ft_free_elem((void **)&data -> cp_to_parse);
+	clean_here_doc(data, &data -> here_docs);
 }

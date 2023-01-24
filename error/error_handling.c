@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/16 10:53:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 03:16:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,9 @@ void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type)
 	else if (data -> subshell && data -> s_pipes_inited)
 		close_one_end(data, data -> p_pipes, 1, &data -> s_pipes_inited);
 	close_both_pipes(data, data -> pipes, &data -> inited);
-	if (data -> prev_pipes > 0)
-		close_fd(data, "bash", data -> prev_pipes);
-	if (data -> here_doc_closed == 0 && data -> here_doc_opened)
-		close_all_pipes(data, &data -> here_docs, 1, 0);
+	close_fd(data, "bash", &data -> prev_pipes);
 	print_err(data, err_msg, cmd, type);
-	free_all(data, data -> status, 1);
+	free_all(data, data -> status);
 }
 
 void	is_error(t_data *data, void *elem, char *err_msg, int type)

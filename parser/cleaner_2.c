@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 22:23:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 03:45:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ void	expanded_tab(t_cmd *cmd, char **tab)
 	is_error(cmd -> data, to_clean, MALLOC_ERR, 0);
 	copy_tab_to_str(tab, to_clean);
 	ft_free_tab(tab);
-	to_clean = clean_(cmd -> data, to_clean);
+	to_clean = clean_(cmd -> data, to_clean, 1);
 	tab = ft_split(to_clean, ' ');
 	is_error(cmd -> data, tab, MALLOC_ERR, 0);
+	ft_free_elem((void **)&to_clean);
 	back_to_space(tab);
 	cmd -> args = tab;
 }
@@ -90,36 +91,41 @@ int	check_tab(char **tab)
 	return (quotes);
 }
 
-void	clean_lines(t_data *data, char **tab)
+char	*clean_lines(t_data *data, char *line)
 {
 	size_t	i;
-	size_t	j;
 
 	i = -1;
-	while (tab[++i])
+	if (line == NULL)
+		return (line);
+	while (line[++i])
 	{
-		j = -1;
-		while (tab[i][++j])
+		if (line[i] < 0)
 		{
-			if (tab[i][j] == '$' || tab[i][j] < 0)
-			{
-				tab[i] = clean_(data, tab[i]);
-				break ;
-			}
+			line = clean_(data, line, 0);
+			return (line);
 		}
 	}
+	return (line);
 }
 
 
 void	clean_cmd(t_cmd *cmd)
 {
 	int		to_clean;
-	
+	size_t	i;
+	char	**tab;
+
+	i = -1;
 	if (cmd -> args == NULL)
 		return ;
+	tab = cmd -> args;
 	to_clean = check_tab(cmd -> args);
 	if (to_clean < 0)
-		clean_lines(cmd -> data, cmd -> args);
+	{
+		while (tab[++i])
+			tab[i] = clean_lines(cmd -> data, tab[i]);
+	}
 	else if (to_clean > 0)
 		expanded_tab(cmd, cmd -> args);
 	cmd -> cmd = cmd -> args[0];
@@ -138,23 +144,27 @@ void	loop_files(t_data *data, t_files **tab)
 		if (tab[i]-> type != DOC)
 		{
 			to_clean = tab[i]-> files;
-			if (to_clean[0] == '"' * -1)
-				tab[i]-> amb++;
+			tab[i]-> amb = (to_clean[0] == '"' * -1);
 			while (to_clean[++j])
 			{
 				if (to_clean[j] == '$' || to_clean[j] < 0)
 				{
-					tab[i]-> files = clean_(data, to_clean);
+					tab[i]-> files = clean_(data, to_clean, 1);
 					tab[i]-> amb += (ft_strlen(tab[i]-> files) == 0);
 					break ;
 				}
 			}
 		}
+		else
+			tab[i]-> files = clean_lines(data, tab[i]-> files);
 	}
 }
 
 void    clean_files(t_cmd *cmd)
 {
     if (cmd -> tab)
-        loop_files(cmd -> data, cmd -> tab);
+	{
+		loop_files(cmd -> data, cmd -> tab);
+		set_last_setup(cmd);
+	}
 }

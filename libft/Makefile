@@ -51,7 +51,8 @@ SRCS 		=	ft_atoi.c \
 				ft_free_tab.c \
 				ft_tablen.c \
 				ft_strcmp.c \
-				ft_check_empty.c
+				ft_check_empty.c \
+				ft_free_elem.c
 
 OBJS		=	$(SRCS:.c=.o)
 
