@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 04:46:59 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 00:09:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,12 +143,13 @@ void	loop_files(t_data *data, t_files **tab)
 		if (tab[i]-> type != DOC)
 		{
 			to_clean = tab[i]-> files;
-			tab[i]-> amb = (to_clean[0] == '"' * -1);
+			tab[i]-> amb = -(to_clean[0] == '"' * -1) * to_clean[0];
 			while (to_clean[++j])
 			{
-				if (to_clean[j] == '$' || to_clean[j] < 0)
+				if ((to_clean[j] == '$' 
+					&& !check_dollars(to_clean[j + 1], to_clean, j)) || to_clean[j] < 0)
 				{
-					tab[i]-> amb += (to_clean[j] == '$');
+					tab[i]-> amb += (ft_strchr(&to_clean[j], '$') != NULL) * '$';
 					tab[i]-> files = clean_(data, to_clean, 1);
 					tab[i]-> amb += (ft_strlen(tab[i]-> files) == 0);
 					break ;

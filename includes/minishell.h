@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 04:28:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 23:52:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
+# define ALL_FLAGS 71
+# define QUOTES 34
+# define QUOTES_EMPT 35
+# define DOLLARS_EMPT 37
 # define R_IN '<'
 # define R_OUT '>'
 # define R_COMBO "<>"
@@ -93,6 +97,7 @@ typedef struct t_files
 	char		*files;
 	int			amb;
 	int			flags;
+	int			fd;
 	enum e_type	type;
 }	t_files;
 
@@ -148,7 +153,7 @@ extern t_collector		*g_collector;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
-void	handle_signals();
+void	handle_signals(void);
 /*-----------------SIGNAL_FUNCTION-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
@@ -239,7 +244,7 @@ int 	is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell);
 void	executing(t_data *data, t_cmd **cmds, int subshell);
 void	run_cmd(t_cmd *cmd);
 void	wait_all_child(t_data *data, t_cmd **cmds, int subshell);
-void	open_files(t_data *data, t_cmd *cmd);
+void	open_check_files(t_cmd *cmd, t_files **tab);
 void	close_fd(t_data *data, char *str, int *fd);
 void	check_files(t_data *data, t_files **files,int flags);
 void	close_pipes(t_data *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 01:11:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 23:35:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ void file_type(t_files *redirect, char a, char b)
 		redirect -> flags = O_CREAT | O_TRUNC | O_WRONLY;
 	}
 	else if (a == b && a == R_IN)
-	{
 		redirect -> type = DOC;
-		redirect -> flags = -1;		
-	}
 	else
 	{
 		redirect -> type = APPEND;

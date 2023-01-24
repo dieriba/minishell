@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 04:17:02 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 23:53:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,58 +21,43 @@ void	close_fd(t_data *data, char *str, int *fd)
 	(*fd) = -1;
 }
 
-void	check_files(t_data *data, t_files **tab, int flags)
+void	open_files(t_data *data, t_cmd *cmd, t_files *files)
 {
-	int	i;
+	enum e_type	type;
+	t_files		*last_in;
+	t_files		*last_out;
 
-	i = -1;
-	while (tab[++i])
-	{
-		if (tab[i]-> type == IN)
-		{
-			if (access(tab[i]-> files, flags))
-				print_err_and_exit(data, NULL, "bash", 1);
-		}
-		else if (tab[i]-> amb == 2)
-		{
-			if (access(tab[i]-> files, F_OK))
-				print_err_and_exit(data, NULL, "bash: ambiguous redirect", 0);
-		}
-		else if (tab[i]-> amb == 3 || tab[i]-> amb == 1)
-		{
-			if (access(tab[i]-> files, F_OK))
-				print_err_and_exit(data, NULL, "bash", 1);
-		}
-	}
+	last_in = cmd -> last_in;
+	last_out = cmd -> last_out; 
+	type = files -> type;
+	files -> fd = open(files -> files, files -> flags, 0644);
+	if (files -> fd == -1)
+		print_err_and_exit(data, NULL, "bash", 1);
+	if (last_in && type == IN && files -> files != last_in -> files)
+		close_fd(data, "bash", &files -> fd);
+	else if (last_out && type != IN && files -> files != last_out -> files)
+		close_fd(data, "bash", &files -> fd);
 }
 
-void	open_files(t_data *data, t_cmd *cmd)
+void	open_check_files(t_cmd *cmd, t_files **tab)
 {
-	t_files	**tab;
-	int		i;
+	size_t		i;
+	enum e_type	type;
+	i = -1;
 	
-	i = -1;
-	tab = cmd -> tab;
+	if (cmd -> last_in == NULL && cmd -> last_out == NULL)
+		return ;
 	while (tab[++i])
 	{
-		if ((tab[i]-> files != cmd -> last_out -> files) 
-			&& (tab[i]-> type == OUT || tab[i]-> type == APPEND))
+		type = tab[i]-> type;
+		if (type != DOC && tab[i]-> amb == DOLLARS_EMPT)
+			print_err_and_exit(cmd -> data, NULL, "bash : ambiguous redirect", 0);
+		else if ((type == OUT || type == APPEND) && tab[i]-> amb == ALL_FLAGS)
 		{
-			if (open(tab[i]-> files, tab[i]-> flags, 0644) < 0)
-				print_err_and_exit(data, NULL, "bash", 1);
+			if (access(tab[i]-> files, F_OK))
+				print_err_and_exit(cmd -> data, NULL, "bash", 1);
 		}
+		else if (type != DOC)
+			open_files(cmd -> data, cmd, tab[i]);
 	}
-}
-
-int	opener_outfile(t_cmd *cmd)
-{
-	t_data	*data;
-	t_files	*last;
-	int		fd;
-
-	data = cmd -> data;
-	last = cmd -> last_out;
-	open_files(data, cmd);
-	fd = open(last -> files, last -> flags, 0666);
-	return (fd);
 }

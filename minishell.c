@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 04:02:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/24 23:56:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_struct(t_data **data)
 	(*data)-> neg_double_end = '"' * -2;
 	(*data)-> prev_pipes = -1;
 	(*data)-> cp_to_parse = NULL;
-	handle_signals((*data));
+	handle_signals();
 }
 
 void	lets_read(t_data *data)
@@ -40,7 +40,7 @@ void	lets_read(t_data *data)
 			open_here_doc(data, data -> cmds);
 			fork_docs(data, &data -> here_docs);
 			close_all_pipes(data, &data -> here_docs, 0, 1);
-			executing(data, data -> cmds, 0);
+			//executing(data, data -> cmds, 0);
 			clean_struct(data);
 		}
 		else if (!data -> cp_to_parse)
