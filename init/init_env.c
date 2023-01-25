@@ -6,28 +6,36 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/22 22:36:58 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 14:00:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*char	*get_path(t_node *node, char *var)
+void	set_env(t_data *data, t_env *env, char **envp)
 {
-	char	*res;
+	size_t	i;
 	
-	res = 	
-	return (res);	
-}*/
+	i = -1;
+	env -> tab = ft_calloc(env -> len + CAPACITY + 1, sizeof(char *));
+	is_error(data, env -> tab, MALLOC_ERR, 0);
+	if (env -> len == 0)
+		return ;
+	while (envp[++i])
+	{
+		env -> tab[i] = ft_strdup(envp[i]);
+		is_error(data, env -> tab[i], MALLOC_ERR, 0);
+	}
+}
 
 void	init_env(t_data *data, char **envp)
 {
-	t_node	*path;
-
 	data -> env = ft_calloc(sizeof(t_env), 1);
 	is_error(data, data -> env, MALLOC_ERR, 1);
-	create_list(data, envp);
-	path = find_var(data -> env -> start, "PATH");
-	if (path)
-		data -> path = path -> line;
+	data -> env -> len = ft_tab_len(envp);
+	data -> env -> capacity = CAPACITY;
+	set_env(data, data -> env, envp);
+	data -> path = find_var(data -> env -> tab, "PATH");
+	data -> envp = data -> env -> tab;
+	print_env(data -> env -> tab);
 }

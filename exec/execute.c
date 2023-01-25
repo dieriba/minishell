@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 19:11:45 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 15:31:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	forking(t_cmd **cmds, int subshell, int i)
 		prev = NULL;
 	set_redirections_files(cmd, prev, subshell);
 	run_cmd(cmd);
-	free_all(cmd -> data, 0);
+	free_all(cmd -> data, cmd -> data -> status);
 }
 
 void	executing(t_data *data, t_cmd **cmds, int subshell)
@@ -80,10 +80,13 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 	close_sub_pipes(data, subshell);
 	while (cmds[++i])
 	{
+		clean_files(cmds[i]);
+		clean_cmd(cmds[i]);
 		res = prepare_next_step(cmds, cmds[i]-> stop, &i);
 		if (res == 0 && is_subshell(data, cmds, &i, subshell) == 0)
 		{
 			data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
+			built_in(cmds[i]);
 			pid_ret = fork();
 			if (pid_ret < 0)
 				print_err_and_exit(data, NULL, "bash", 1);

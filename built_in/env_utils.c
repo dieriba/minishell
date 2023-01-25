@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:58:15 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/22 22:52:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 13:15:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,27 @@ int	check(char *env, char *to_check)
 	return (res);
 }
 
-char	*get_var_line(t_node *node)
+char	*get_var_line(char *line)
 {
 	size_t	i;
 
-	if (!node)
+	if (!line)
 		return (NULL);
 	i = -1;
-	while (node -> line[++i] != '=')
+	while (line[++i] != '=')
 		;
-	return (&node -> line[++i]);
+	return (&line[++i]);
 }
 
-t_node	*find_var(t_node *node, char *to_find)
+char	*find_var(char **tab, char *to_find)
 {
-	while (node)
+	size_t	i;
+
+	i = -1;
+	while (tab[++i])
 	{
-		if (!check(node -> line, to_find))
-			return (node);
-		node = node -> next;
+		if (!check(tab[i], to_find))
+			return (tab[i]);
 	}
 	return (NULL);
 }

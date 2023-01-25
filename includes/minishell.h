@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 00:36:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 14:54:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define QUOTES 34
 # define QUOTES_EMPT 35
 # define DOLLARS_EMPT 37
+# define CAPACITY 20
 # define R_IN '<'
 # define R_OUT '>'
 # define R_COMBO "<>"
@@ -67,6 +68,7 @@ typedef struct t_data		t_data;
 typedef struct t_cmd		t_cmd;
 typedef struct t_collector	t_collector;
 typedef struct t_doc		t_doc;
+
 typedef struct t_doc
 {
 	int		pipes[2];
@@ -88,9 +90,10 @@ typedef struct t_node
 }	t_node;
 typedef struct t_env
 {
-	t_node	*start;
-	t_node	*last;
 	t_data	*data;
+	int		capacity;
+	int		len;
+	char	**tab;
 }	t_env;
 typedef struct t_files
 {
@@ -143,6 +146,7 @@ typedef struct t_data
 	char				*cp_to_parse;
 	char				**envp;
 	char				**tab_;
+	struct sigaction	ctrl_c;
 	t_env				*env;
 	t_node				*collector;
 	t_cmd				**cmds;
@@ -154,7 +158,8 @@ extern t_collector		*g_collector;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
-void	handle_signals(void);
+void	handle_signals(t_data *data);
+void	new_line(int signal);
 /*-----------------SIGNAL_FUNCTION-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
@@ -167,16 +172,16 @@ void	check_lines(t_data *data, char *files, char *err, int flags);
 
 /*-----------------GLOBAL_UTILS-----------------*/
 t_node	*create_node(t_data *data, char *line, int alloc);
-t_node	*find_var(t_node *noddadde, char *to_find);
-t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new);
+t_node	*ft_lst_add_front_s(t_node **node, t_node *new);
 t_node	*ft_lstlast_s(t_node *lst);
+char	*find_var(char **tab, char *to_find);
 int		check_behind(char *to_parse, char *in, int j, int index);
 /*-----------------GLOBAL_UTILS-----------------*/
 
 /*-----------------DEBUG_UTILS-----------------*/
 void	print_tab(char **tab, char *name);
 void	print_struct(t_cmd **cmds);
-void	print_env(t_node *node);
+void	print_env(char **tab);
 /*-----------------DEBUG_UTILS-----------------*/
 
 /*-----------------INITIALIZATION_UTILS-----------------*/
@@ -189,7 +194,7 @@ int		skip_char_token_str(size_t i, char *to_parse, char *to_skip);
 int		check_quotes(char *to_parse, int i);
 int		calcul_word(t_data *data, char *to_parse, int j);
 int		find_end_string(t_data *data, char *to_parse, int j);
-void	create_list(t_data *data, char **envp);
+void	create_list(t_data *data, char **envp, int len);
 void	par_to_space(char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
 void	set_default_data(t_data *data, int len);
@@ -199,6 +204,7 @@ void	set_last_setup(t_cmd *cmd);
 /*-----------------INITIALIZATION-----------------*/
 void	init_cmd(t_data *data, char *to_process);
 void	init_env(t_data *data, char **envp);
+int		check(char *env, char *to_check);
 void	set_commands(t_cmd *cmd, char *to_parse);
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse);
 void	init_path(t_cmd **cmds);
@@ -231,8 +237,9 @@ size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/
+char	*get_var_line(char *line);
+int 	where_to_write(t_data *data, t_cmd *cmd);
 void	env(t_node *node);
-char	*get_var_line(t_node *node);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 01:27:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 15:30:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ void	set_out_redirection(t_cmd *cmd, int subshell)
 	t_data	*data;
 	data = cmd -> data;
 	if (cmd -> last_out && cmd -> last_out -> fd > 0)
-	{
 		dup_(data, cmd -> last_out -> fd, STDOUT_FILENO);
-		close_fd(data, "bash", &cmd -> last_out -> fd);
-	}
 	else if (data -> inited && cmd -> p_close == 0)
 		dup_(data, data -> pipes[1], STDOUT_FILENO);
 	else if ((cmd -> stop[0] > 0) && subshell && data -> s_pipes_inited)
@@ -41,10 +38,7 @@ void	set_in_redirection(t_cmd *cmd, int pipes)
 	prev_cmd = cmd -> prev_cmd;
 	data = cmd -> data;
 	if (cmd -> last_in && cmd -> last_in -> fd > 0)
-	{
 		dup_(data, cmd -> last_in -> fd, STDIN_FILENO);
-		close_fd(data, "bash", &cmd -> last_in -> fd);
-	}
 	else if (cmd -> last_in && cmd -> last_in -> fd == 0)
 	{
 		cmd -> last_in -> fd = find_fd(
@@ -64,11 +58,11 @@ void	set_redirections_files(t_cmd *cmd, char *prev, int subshell)
 	pipes = -1;
 	if (prev)
 		pipes = ft_strcmp("|", prev);
-	clean_files(cmd);
-	clean_cmd(cmd);
 	open_check_files(cmd, cmd -> tab);
 	set_in_redirection(cmd, pipes);
 	set_out_redirection(cmd, subshell);
+	close_fd(data, "bash", &cmd -> last_in -> fd);
+	close_fd(data, "bash", &cmd -> last_out -> fd);
 	close_both_pipes(cmd -> data, cmd -> data -> pipes, &cmd -> data -> inited);
 	if (subshell == 0 && cmd -> data -> s_pipes_inited)
 		close_one_end(cmd -> data, cmd -> data -> p_pipes, 0, &cmd -> data -> s_pipes_inited);

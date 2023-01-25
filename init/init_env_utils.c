@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:50:13 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/06 15:07:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 13:57:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,10 @@ t_node	*create_node(t_data *data, char *line, int alloc)
 	return (node);
 }
 
-t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new)
+t_node	*ft_lst_add_front_s(t_node **node, t_node *new)
 {
 	if (!(*node))
-	{
 		*(node) = new;
-		if (data)
-			data -> env -> last = new;
-	}
 	else
 	{
 		new -> next = *(node);
@@ -44,22 +40,6 @@ t_node	*ft_lst_add_front_s(t_data *data, t_node **node, t_node *new)
 		(*node) = new;
 	}
 	return (new);
-}
-
-void	create_list(t_data *data, char **envp)
-{
-	t_node	*node;
-	int		i;
-
-	i = ft_tab_len(envp);
-	i--;
-	while (i > -1)
-	{
-		node = create_node(data, envp[i], 0);
-		is_error(data, node, MALLOC_ERR, 1);
-		ft_lst_add_front_s(data, &data -> env -> start, node);
-		i--;
-	}
 }
 
 t_node	*ft_lstlast_s(t_node *lst)

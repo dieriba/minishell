@@ -6,42 +6,46 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:05:39 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 23:41:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 13:43:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	remove_node(t_env *env, t_node *node, char alloc)
+int		find_index(char **tab, char *to_find)
 {
-	if (node -> prev == NULL)
+	size_t	i;
+
+	i = -1;
+	while (tab[++i])
 	{
-		env -> start = node -> next;
-		node -> next = NULL;
+		if (!check(tab[i], to_find))
+			break ;		
 	}
-	else if (node -> next == NULL)
+	return (i);
+}
+
+void	remove_var_env(char **tab, int i)
+{
+	ft_free_elem((void **)&tab[i]);
+	while (tab[i + 1])
 	{
-		env -> last = node -> prev;
-		node -> prev = NULL;
+		tab[i] = tab[i + 1];
+		i++;
 	}
-	else
-	{
-		node -> prev -> next = node -> next;
-		node -> next -> prev = node -> prev;
-		node -> next = NULL;
-		node -> prev = NULL;
-	}
-	free(node);
-	if (alloc)
-		free(node -> line);
+	tab[i] = tab[i + 1];
+	arr -> len--;
+	arr -> capacity++;
 }
 
 void	unset(t_env *env, char *to_find)
 {
-	t_node	*var;
-
-	var = find_var(env -> data, to_find);
-	if (var == NULL)
+	int		index;
+	char	*line;
+	
+	line = find_var(env -> tab, to_find);
+	if (line == NULL)
 		return ;
-	remove_node(env, var, var -> alloc);
+	index = find_index(env -> tab, line);
+	remove_var_env(env -> tab, index);
 }

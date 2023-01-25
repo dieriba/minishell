@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 03:56:17 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 14:01:36 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*is_valid_expand(t_data *data, char *to_check)
 	i = skip_next_stop(to_check);
 	stop = to_check[i];
 	to_check[i] = 0;
-	line = get_var_line(find_var(data -> env -> start, &to_check[j]));
+	line = get_var_line(find_var(data -> env -> tab, &to_check[j]));
 	to_check[i] = stop;
 	return (line);
 }
@@ -45,7 +45,7 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean, int skip)
 			len += ft_strlen(line);
 			node = create_node(data, line, (line != NULL));
 			is_error(data, node, MALLOC_ERR, 0);
-			ft_lst_add_front_s(data, expands, node);
+			ft_lst_add_front_s(expands, node);
 			i += skip_next_stop(&to_clean[i]);
 			i--;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 01:10:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 14:16:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_struct(t_data **data)
 	(*data)-> neg_double_end = '"' * -2;
 	(*data)-> prev_pipes = -1;
 	(*data)-> cp_to_parse = NULL;
-	handle_signals();
+	handle_signals((*data));
 }
 
 char	**clean_nl_str(t_data *data, char *line)
@@ -93,9 +93,6 @@ void	shell_routine(t_data *data)
 
 void	lets_read(t_data *data)
 {
-	size_t	i;
-	
-	i = -1;
 	while (1)
 	{
 		data -> cp_to_parse = readline("minishell  : ");
@@ -137,6 +134,5 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_struct(&data);
-	data -> envp = envp;
 	shell(data, envp, argv[1]);
 }

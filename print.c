@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:08:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 22:46:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 13:18:32 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void	print_struct(t_cmd **cmds)
 	}
 }
 
-void	print_env(t_node *node)
+void	print_env(char **tab)
 {
+	size_t	i;
+
+	i = -1;
 	printf("*************** ENV ***************\n\n");
-	while (node)
-	{
-		printf("%s\n", node -> line);
-		node = node -> next;
-	}
+	while (tab[++i])
+		printf("%s\n", tab[i]);
 }
