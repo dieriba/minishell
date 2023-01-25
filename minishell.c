@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 23:56:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 01:10:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,87 @@ void	init_struct(t_data **data)
 	handle_signals();
 }
 
+char	**clean_nl_str(t_data *data, char *line)
+{
+	size_t	i;
+	size_t	j;
+	int		seen;
+	
+	j = -1;
+	i = -1;
+	seen = 0;
+	while (line[++i])
+	{
+		if (line[i] == '\n' && !find_end_quotes(data, &line[i], i))
+		{
+			j = i;
+			while (line[++j] && line[j] != '\n')
+				if (line[j] != ' ' || line[j] != '\t')
+					seen = 1;
+			if (seen == 0)
+				line[i] = ' ';
+		}
+		else if (line[i] == '\n' && find_end_quotes(data, &line[i], i))
+			line[i] *= -1;
+	}
+	return (ft_split(line, '\n'));
+}
+
+void	back_to_normal(char **line)
+{
+	size_t	i;
+	size_t	j;
+
+	i = -1;
+	while (line[++i])
+	{
+		j = -1;
+		while (line[i][++j])
+		{
+			if (line[i][j] == '\n' * -1)
+				line[i][j] = '\n';
+		}
+	}
+}
+
+void	shell_routine(t_data *data)
+{
+	size_t	i;
+
+	i = -1;
+	ft_free_elem((void **)&data -> cp_to_parse);
+	back_to_normal(data -> tab_);
+	while (data -> tab_[++i])
+	{
+		data -> cp_to_parse = data -> tab_[i];
+		init_cmd(data, data -> cp_to_parse);
+		open_here_doc(data, data -> cmds);
+		fork_docs(data, &data -> here_docs);
+		close_all_pipes(data, &data -> here_docs, 0, 1);
+		executing(data, data -> cmds, 0);
+		clean_struct(data);
+	}
+	ft_free_tab(data -> tab_);
+	data -> tab_ = NULL;
+}
+
 void	lets_read(t_data *data)
 {
+	size_t	i;
+	
+	i = -1;
 	while (1)
 	{
 		data -> cp_to_parse = readline("minishell  : ");
-		//quoted_str(data, data -> cp_to_parse);
-		if (ft_strlen(data -> cp_to_parse))
+		if (data -> cp_to_parse)
 		{
 			add_history(data -> cp_to_parse);
-			init_cmd(data, data -> cp_to_parse);
-			open_here_doc(data, data -> cmds);
-			fork_docs(data, &data -> here_docs);
-			close_all_pipes(data, &data -> here_docs, 0, 1);
-			//executing(data, data -> cmds, 0);
-			clean_struct(data);
+			quote_to_neg(data, data -> cp_to_parse);
+			data -> tab_ = clean_nl_str(data, data -> cp_to_parse);
+			is_error(data, data -> tab_, MALLOC_ERR, 0);
+			shell_routine(data);
 		}
-		else if (!data -> cp_to_parse)
+		else
 			free_all(data, 130);
 	}
 }

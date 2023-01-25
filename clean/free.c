@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 03:22:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 01:09:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,12 @@ void	free_list(t_env *env, t_node **head)
 
 void	free_all(t_data *data, int status)
 {
+	ft_free_tab(data -> tab_);
+	data -> tab_ = NULL;
 	free_cmd(data -> cmds);
 	free_list(data -> env, &data -> env -> start);
-	ft_free_elem((void **)&data -> cp_to_parse);
 	ft_free_elem((void **)&g_collector);
+	ft_free_elem((void **)&data -> cp_to_parse);
 	clean_here_doc(data, &data -> here_docs);
 	free(data);
 	exit(status);

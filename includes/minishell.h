@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 23:52:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 00:36:50 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ typedef struct t_data
 	char				*path;
 	char				*cp_to_parse;
 	char				**envp;
+	char				**tab_;
 	t_env				*env;
 	t_node				*collector;
 	t_cmd				**cmds;

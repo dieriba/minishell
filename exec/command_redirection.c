@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 23:53:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 01:27:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	set_out_redirection(t_cmd *cmd, int subshell)
 {
 	t_data	*data;
 	data = cmd -> data;
-	if (cmd -> last_out -> fd > 0)
+	if (cmd -> last_out && cmd -> last_out -> fd > 0)
 	{
 		dup_(data, cmd -> last_out -> fd, STDOUT_FILENO);
 		close_fd(data, "bash", &cmd -> last_out -> fd);
@@ -64,6 +64,8 @@ void	set_redirections_files(t_cmd *cmd, char *prev, int subshell)
 	pipes = -1;
 	if (prev)
 		pipes = ft_strcmp("|", prev);
+	clean_files(cmd);
+	clean_cmd(cmd);
 	open_check_files(cmd, cmd -> tab);
 	set_in_redirection(cmd, pipes);
 	set_out_redirection(cmd, subshell);

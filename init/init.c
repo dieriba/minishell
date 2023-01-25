@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 19:13:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 01:25:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		j = skip_spaces(data, to_parse, j, 0);
 		if (cmds[i] -> prev_cmd)
 			cmds[i]-> prev_stop = cmds[i]-> prev_cmd -> stop;
-		clean_files(cmds[i]);
-		clean_cmd(cmds[i]);
 	}
 }
 
@@ -98,7 +96,6 @@ void	init_cmd(t_data *data, char *to_process)
 
 	data -> cp_to_parse = ft_strdup(to_process);
 	is_error(data, data -> cp_to_parse, MALLOC_ERR, 1);
-	quote_to_neg(data, data -> cp_to_parse);
 	len = how_many_cmds(data, data -> cp_to_parse);
 	data -> cmds = ft_calloc(sizeof(t_cmd *), len + 1);
 	is_error(data, data -> cmds, MALLOC_ERR, 1);
@@ -107,5 +104,5 @@ void	init_cmd(t_data *data, char *to_process)
 	fill_cmds(data -> cmds, data -> cp_to_parse, len);
 	fill_cmds_par(data -> cmds, to_process, len);
 	init_path(data -> cmds);
-	print_struct(data -> cmds);
+	//print_struct(data -> cmds);
 }
