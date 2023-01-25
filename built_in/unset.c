@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:05:39 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 13:43:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 19:46:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		find_index(char **tab, char *to_find)
 	return (i);
 }
 
-void	remove_var_env(char **tab, int i)
+void	remove_var_env(t_env *env, char **tab, int i)
 {
 	ft_free_elem((void **)&tab[i]);
 	while (tab[i + 1])
@@ -33,19 +33,25 @@ void	remove_var_env(char **tab, int i)
 		tab[i] = tab[i + 1];
 		i++;
 	}
-	tab[i] = tab[i + 1];
-	arr -> len--;
-	arr -> capacity++;
+	if (i > 0 && tab[i] == tab[i - 1])
+		tab[i] = tab[i + 1];
+	env -> len--;
+	env -> capacity++;
 }
 
-void	unset(t_env *env, char *to_find)
+void	unset(t_cmd *cmd, t_env *env)
 {
 	int		index;
 	char	*line;
-	
-	line = find_var(env -> tab, to_find);
-	if (line == NULL)
-		return ;
-	index = find_index(env -> tab, line);
-	remove_var_env(env -> tab, index);
+	size_t	i;
+
+	i = 0;
+	while (cmd -> args[++i])
+	{
+		line = find_var(env -> tab, cmd -> args[i]);
+		if (line == NULL)
+			continue ;
+		index = find_index(env -> tab, line);
+		remove_var_env(env, env -> tab, index);	
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:41:48 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/08 22:20:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 20:41:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	set_path_type(t_cmd **cmds)
 	{
 		if (cmds[i]-> cmd && !ft_strchr(cmds[i]-> cmd, '/'))
 		{
-			if (cmds[i]-> cmd)
-				cmd = cmds[i]-> cmd;
+			cmd = cmds[i]-> cmd;
 			cmds[i]-> no_path = 1;
 			cmds[i]-> cmd = ft_strjoin("/", cmd);
 			is_error(cmds[0]-> data, cmds[i]-> cmd, MALLOC_ERR, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 15:31:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 20:29:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	forking(t_cmd **cmds, int subshell, int i)
 	else
 		prev = NULL;
 	set_redirections_files(cmd, prev, subshell);
-	run_cmd(cmd);
+	if (is_not_built_in(cmd -> cmd))
+		run_cmd(cmd);
 	free_all(cmd -> data, cmd -> data -> status);
 }
 
@@ -86,7 +87,7 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 		if (res == 0 && is_subshell(data, cmds, &i, subshell) == 0)
 		{
 			data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
-			built_in(cmds[i]);
+			built_in(data, cmds[i], subshell, 0);
 			pid_ret = fork();
 			if (pid_ret < 0)
 				print_err_and_exit(data, NULL, "bash", 1);

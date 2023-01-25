@@ -3,7 +3,13 @@ SRCS		= 	minishell.c \
 
 SRCS_SIGNAL =	./signal/signal.c
 
-SRCS_BUILT	=	./built_in/env_utils.c
+SRCS_BUILT	=	./built_in/env_utils.c \
+				./built_in/built_in.c \
+				./built_in/built_in_utils.c \
+				./built_in/echo.c \
+				./built_in/env.c \
+				./built_in/export.c \
+				./built_in/unset.c
 
 SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_files.c \

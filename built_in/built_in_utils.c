@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:52:56 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 14:54:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 18:24:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int where_to_write(t_data *data, t_cmd *cmd)
+int where_to_write(t_data *data, t_cmd *cmd, int subshell)
 {
 	int		fd;
 
@@ -21,7 +21,7 @@ int where_to_write(t_data *data, t_cmd *cmd)
 		fd = cmd -> last_out -> fd;
 	else if (data -> inited && cmd -> p_close == 0)
 		fd = data -> pipes[1];
-	else if ((cmd -> stop[0] > 0) && data -> subshell && data -> s_pipes_inited)
+	else if ((cmd -> stop[0] > 0) && subshell && data -> s_pipes_inited)
 		fd = data -> p_pipes[1];
     return (fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 14:02:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 20:15:01 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_cmd(t_cmd **cmds)
 		free(cmds[i]);
 	}
 	free(cmds);
-	data -> cmds = NULL;
+	data -> cmds = NULL;;
 }
 
 void	free_list(t_env *env, t_node **head)
