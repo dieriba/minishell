@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 00:58:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 02:40:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**clean_nl_str(t_data *data, char *line)
 	seen = 0;
 	while (line[++i])
 	{
-		if (line[i] == '\n' && !find_end_quotes(data, &line[i], i))
+		if (line[i] == '\n' && !find_end_quotes(data, line, i))
 		{
 			j = i;
 			while (line[++j] && line[j] != '\n')
