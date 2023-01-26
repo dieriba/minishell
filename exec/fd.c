@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 23:53:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 03:54:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	open_files(t_data *data, t_cmd *cmd, t_files *files)
 	if (files -> fd == -1)
 		print_err_and_exit(data, NULL, "bash", 1);
 	if (last_in && type == IN && files -> files != last_in -> files)
-		close_fd(data, "bash", &files -> fd);
+		close_fd(data, "bash7", &files -> fd);
 	else if (last_out && type != IN && files -> files != last_out -> files)
-		close_fd(data, "bash", &files -> fd);
+		close_fd(data, "bash8", &files -> fd);
 }
 
 void	open_check_files(t_cmd *cmd, t_files **tab)

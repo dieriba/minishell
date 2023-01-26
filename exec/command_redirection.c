@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 20:36:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 03:59:14 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,18 @@ void	set_redirections_files(t_cmd *cmd, char *prev, int subshell)
 	if (prev)
 		pipes = ft_strcmp("|", prev);
 	open_check_files(cmd, cmd -> tab);
-	if (is_not_built_in(cmd -> cmd))
-	{
-		set_in_redirection(cmd, pipes);
-		set_out_redirection(cmd, subshell);
-	}
+	set_in_redirection(cmd, pipes);
+	set_out_redirection(cmd, subshell);
 	built_in(cmd -> data, cmd, subshell, 1);
-	if (cmd -> last_in)
-		close_fd(cmd -> data, "bash", &cmd -> last_in -> fd);
+	if (cmd -> last_in && cmd -> last_in -> type == IN)
+		close_fd(cmd -> data, "bash4", &cmd -> last_in -> fd);
 	if (cmd -> last_out)
-		close_fd(cmd -> data, "bash", &cmd -> last_out -> fd);
+		close_fd(cmd -> data, "bash5", &cmd -> last_out -> fd);
 	close_both_pipes(cmd -> data, cmd -> data -> pipes, &cmd -> data -> inited);
 	if (subshell == 0 && cmd -> data -> s_pipes_inited)
 		close_one_end(cmd -> data, cmd -> data -> p_pipes, 0, &cmd -> data -> s_pipes_inited);
 	else if (subshell && cmd -> data -> s_pipes_inited)
 		close_one_end(cmd -> data, cmd -> data -> p_pipes, 1, &cmd -> data -> s_pipes_inited);
-	close_fd(cmd -> data, "bash", &cmd -> data -> prev_pipes);
+	close_fd(cmd -> data, "bash6", &cmd -> data -> prev_pipes);
 	close_all_pipes(cmd -> data, &cmd -> data -> here_docs, 1, 0);
 }

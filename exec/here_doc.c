@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 04:31:30 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 03:35:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	handle_here_doc_pipes(t_data *data, t_doc **head)
 		node = node -> next;
 	}
 	close_all_pipes(data, head, 1, 1);
-	free(g_collector);
-	exit(EXIT_SUCCESS);
+	free_all(data, 0);
 }
 
 void	fork_docs(t_data *data, t_doc **head)

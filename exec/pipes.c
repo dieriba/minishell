@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:28:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 02:56:59 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 03:54:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	close_all_pipes(t_data *data, t_doc **head, int read_, int write_)
 	while (node)
 	{
 		if (read_)
-			close_fd(data, "bash", &node -> pipes[0]);
+			close_fd(data, "bash9", &node -> pipes[0]);
 		if (write_)
-			close_fd(data, "bash", &node -> pipes[1]);
+			close_fd(data, "bash10", &node -> pipes[1]);
 		node = node -> next;
 	}
 }
@@ -61,8 +61,8 @@ void	close_both_pipes(t_data *data, int pipes[2], int *inited)
 {
 	if ((*inited))
 	{
-		close_fd(data, "bash", &pipes[0]);
-		close_fd(data, "bash", &pipes[1]);
+		close_fd(data, "bash11", &pipes[0]);
+		close_fd(data, "bash12", &pipes[1]);
 		(*inited) -= 2;
 	}
 }
@@ -81,7 +81,7 @@ void	close_one_end(t_data *data, int *pipes, int i, int *inited)
 	if ((*inited))
 	{
 		if (pipes[i] != -1)
-			close_fd(data, "bash", &pipes[i]);
+			close_fd(data, "bash13", &pipes[i]);
 		(*inited) -=1;
 	}
 }

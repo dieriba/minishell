@@ -95,7 +95,7 @@ fclean:			clean
 				rm -rf $(MINISHELL) ./lib/libprintf.a ./lib/libft.a 
 				
 leaks:
-				valgrind --suppressions=ignore.txt -s  --leak-check=full --show-leak-kinds=all ./minishell
+				valgrind --suppressions=ignore.txt -s  --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
 re:				fclean all
 
 -include : 		$(DEPS)
