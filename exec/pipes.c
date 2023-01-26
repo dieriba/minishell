@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:28:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 03:54:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 00:10:43 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,9 @@ void	init_pipes(t_data *data, int pipes[2], int *inited, int s_pipes)
 
 void	close_one_end(t_data *data, int *pipes, int i, int *inited)
 {
-	if ((*inited))
+	if ((*inited) && (pipes[i] != -1))
 	{
-		if (pipes[i] != -1)
-			close_fd(data, "bash13", &pipes[i]);
+		close_fd(data, "bash13", &pipes[i]);
 		(*inited) -=1;
 	}
 }

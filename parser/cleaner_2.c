@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 21:38:04 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 22:32:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,15 @@ void	clean_cmd(t_cmd *cmd)
 	tab = cmd -> args;
 	to_clean = check_tab(cmd -> args);
 	if (to_clean < 0)
-	{
 		while (tab[++i])
 			tab[i] = clean_lines(cmd -> data, tab[i], 0);
-	}
 	else if (to_clean > 0)
 		expanded_tab(cmd, cmd -> args);
-	if (cmd -> cmd && cmd -> args[0] != cmd -> cmd)
+	if (to_clean > 0 && cmd -> cmd && cmd -> args[0] != cmd -> cmd)
 		ft_free_elem((void **)&cmd -> cmd);
 	cmd -> cmd = cmd -> args[0];
 	init_path(cmd);
+	cmd -> to_not_calloc = 1;
 }
 
 void	loop_files(t_data *data, t_files **tab)
@@ -169,5 +168,6 @@ void    clean_files(t_cmd *cmd)
 	{
 		loop_files(cmd -> data, cmd -> tab);
 		set_last_setup(cmd);
+		cmd -> to_not_calloc = 1;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 16:35:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 00:12:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,11 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 	close_sub_pipes(data, subshell);
 	while (cmds[++i])
 	{
-		clean_files(cmds[i]);
-		clean_cmd(cmds[i]);
+		if (cmds[i]-> to_not_calloc == 0)
+		{
+			clean_files(cmds[i]);
+			clean_cmd(cmds[i]);
+		}
 		res = prepare_next_step(cmds, cmds[i]-> stop, &i);
 		if (res == 0 && is_subshell(data, cmds, &i, subshell) == 0)
 			execute_routine(data, cmds, i, subshell);

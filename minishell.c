@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 03:38:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 00:13:36 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	lets_read(t_data *data)
 {
 	while (1)
 	{
-		data -> cp_to_parse = readline("minishell  : ");
+		data -> cp_to_parse = readline("bash  : ");
 		if (data -> cp_to_parse)
 		{
 			add_history(data -> cp_to_parse);

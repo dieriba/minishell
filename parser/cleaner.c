@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 21:51:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 22:14:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ char	*clean_(t_data *data, char *to_clean, int skip)
 	is_error(data, res, MALLOC_ERR, 0);
 	expand_and_clean(to_clean, res, ft_lstlast_s(expands), skip);
 	free_list(NULL, &expands);
-	free(to_clean);
+	ft_free_elem((void**)&to_clean);
 	return (res);
 }

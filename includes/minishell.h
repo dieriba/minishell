@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 21:20:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 22:32:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct t_cmd
 	int		p_open;
 	int		index;
 	int		pid;
+	int		to_not_calloc;
 	t_files	*last_in;
 	t_files	*last_out;
 	t_files	**tab;
