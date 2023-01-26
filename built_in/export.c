@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 02:25:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 04:31:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,6 @@ void	print_export(t_data *data, t_cmd *cmd, char **tab, int subshell)
 		ft_putendl_fd(tab[i], fd);
 	}
 	data -> status = 0;
-}
-
-void	make_export(t_env *env, char *line)
-{
-	size_t	i;
-	char	**tmp_tab;
-	
-	i = -1;
-	if (env -> capacity)
-	{
-		env -> tab[env -> len] = ft_strdup(line);
-		is_error(env -> data, env -> tab[env -> len], MALLOC_ERR, 0);
-		env -> len++;
-		env -> capacity--;
-	}
-	else
-	{
-		tmp_tab = ft_calloc(env -> len + CAPACITY + 1, sizeof(char *));
-		is_error(env -> data, tmp_tab, MALLOC_ERR, 0);
-		while (env -> tab[++i])
-		{
-			tmp_tab[i] = ft_strdup(env -> tab[i]);
-			if (!tmp_tab[i])
-				tmp_tab = ft_free_tab(tmp_tab);
-			is_error(env -> data, tmp_tab[i], MALLOC_ERR, 0);
-		}
-		env -> tab = ft_free_tab(env -> tab);
-		env -> capacity = CAPACITY;
-		env -> tab = tmp_tab;
-	}
-	env -> data -> status = 0;
 }
 
 int		check_line(char *line)

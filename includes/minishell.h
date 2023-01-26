@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 20:32:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 04:49:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,13 +238,14 @@ size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 
 /*-----------------BUILT_IN-----------------*/
 char	*get_var_line(char *line);
-int where_to_write(t_data *data, t_cmd *cmd, int subshell);
+int 	where_to_write(t_data *data, t_cmd *cmd, int subshell);
+int     is_not_built_in(char *cmd);
 void	export(t_cmd *cmd, t_env *env, int fork, int subshell);
 void	env(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	unset(t_cmd *cmd, t_env *env);
 void	echo(t_data *data, t_cmd *cmd, int subshell, int fork);
 void    built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
-int     is_not_built_in(char *cmd);
+void	make_export(t_env *env, char *line);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:58:15 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 02:13:37 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 04:43:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	check(char *env, char *to_check)
 	int		res;
 	
 	i = -1;
+	if (to_check[0] == 0)
+		return (1);
 	while (env[++i] && env[i] != '=')
 		;
 	env[i] = 0;
@@ -45,7 +47,7 @@ char	*find_var(char **tab, char *to_find)
 	i = -1;
 	while (tab[++i])
 	{
-		if (!check(tab[i], to_find))
+		if (tab[i][0] == to_find[0] && !check(tab[i], to_find))
 			return (tab[i]);
 	}
 	return (NULL);
