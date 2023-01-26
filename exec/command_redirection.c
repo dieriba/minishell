@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 03:59:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 20:47:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	dup_(t_data *data, int fd, int old_fd)
 {
 	if (dup2(fd, old_fd) < 0)
+	{
+		data -> status = -1;
 		print_err_and_exit(data, NULL, "bash", 1);
+	}
 }
 
 void	set_out_redirection(t_cmd *cmd, int subshell)

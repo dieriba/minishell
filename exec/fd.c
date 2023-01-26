@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 03:54:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 20:48:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	open_check_files(t_cmd *cmd, t_files **tab)
 	
 	if (cmd -> last_in == NULL && cmd -> last_out == NULL)
 		return ;
+	cmd -> data -> status = 1;
 	while (tab[++i])
 	{
 		type = tab[i]-> type;
@@ -60,4 +61,5 @@ void	open_check_files(t_cmd *cmd, t_files **tab)
 		else if (type != DOC)
 			open_files(cmd -> data, cmd, tab[i]);
 	}
+	cmd -> data -> status = 0;
 }

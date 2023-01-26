@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 03:32:19 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 21:16:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,5 @@ void	init_cmd(t_data *data, char *to_process)
 	set_default_data(data, len);
 	fill_cmds(data -> cmds, data -> cp_to_parse, len);
 	fill_cmds_par(data -> cmds, to_process, len);
-	init_path(data -> cmds);
 	//print_struct(data -> cmds);
 }

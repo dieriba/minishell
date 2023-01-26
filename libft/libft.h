@@ -26,7 +26,6 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_itoa(int n);
-void	ft_malloc_less_itoa(char **res, int n);
 
 char	**ft_free_tab(char **tab);
 char	**ft_dup_tab(char **to_copy, char *to_join);
@@ -53,6 +52,7 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 
+void	ft_malloc_less_itoa(char **res, int n);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));

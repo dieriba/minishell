@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:05:39 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 04:52:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 20:55:02 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	remove_var_env(t_env *env, char **tab, int i)
 		tab[i] = tab[i + 1];
 	env -> len--;
 	env -> capacity++;
+	env -> data -> status = 0;
 }
 
 void	unset(t_cmd *cmd, t_env *env)

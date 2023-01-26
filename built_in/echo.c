@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 21:04:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 20:50:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	write_to_fd(t_data *data, char *line, int fd)
 {
 	if (ft_putstr_fd(line, fd) < 0)
+	{
+		data -> status = 1;
 		print_err_and_exit(data, NULL, "syscall", 1);
+	}
 }
 
 void	echo(t_data *data, t_cmd *cmd, int subshell, int fork)
@@ -43,4 +46,5 @@ void	echo(t_data *data, t_cmd *cmd, int subshell, int fork)
 	}
 	if (nl)
 		write_to_fd(data, "\n", fd);
+	data -> status = 0;
 }

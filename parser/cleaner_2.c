@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 01:09:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 21:38:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,14 @@ void	expanded_tab(t_cmd *cmd, char **tab)
 	to_clean = ft_calloc(sizeof(char), len + 1);
 	is_error(cmd -> data, to_clean, MALLOC_ERR, 0);
 	copy_tab_to_str(tab, to_clean);
-	ft_free_tab(tab);
+	cmd -> args = ft_free_tab(tab);
 	to_clean = clean_(cmd -> data, to_clean, 1);
 	tab = ft_split(to_clean, ' ');
 	is_error(cmd -> data, tab, MALLOC_ERR, 0);
 	ft_free_elem((void **)&to_clean);
 	back_to_space(tab);
 	cmd -> args = tab;
+	cmd -> cmd = tab[0];
 }
 
 int	check_tab(char **tab)
@@ -128,6 +129,7 @@ void	clean_cmd(t_cmd *cmd)
 	if (cmd -> cmd && cmd -> args[0] != cmd -> cmd)
 		ft_free_elem((void **)&cmd -> cmd);
 	cmd -> cmd = cmd -> args[0];
+	init_path(cmd);
 }
 
 void	loop_files(t_data *data, t_files **tab)

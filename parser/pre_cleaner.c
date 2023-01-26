@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_cleaner.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 02:13:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/22 23:35:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 20:31:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,4 @@ static void	clean_(char *to_clean, size_t stop)
 	i = -1;
 	while (++i < stop)
 		to_clean[i] = ' ';
-}
-
-void	rid_of_useless_expands(t_data *data, char *to_clean)
-{
-	size_t	i;
-	size_t	j;
-	int		flags;
-
-	i = -1;
-	while (to_clean[++i])
-	{
-		j = i;
-		flags = 0;
-		while (to_clean[i] == '$'
-			&& !find_end_quotes(data, to_clean, i)
-			&& !char_is_quote(data, to_clean[i + 1]))
-		{
-			if (is_valid_expand(data, &to_clean[i]))
-				flags = 1;
-			i += skip_next_stop(&to_clean[i]);
-		}
-		if (flags == 0 && to_clean[j] == '$'
-			&& !char_is_quote(data, to_clean[j + 1]))
-			clean_(&to_clean[j], i - j);
-		if (to_clean[i] == 0)
-			break ;
-	}
 }

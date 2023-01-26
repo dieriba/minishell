@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:41:48 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 00:57:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 21:21:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,43 +23,29 @@ void	create_path(t_cmd *cmd)
 	cmd -> paths = tab;
 }
 
-void	set_path(t_cmd **cmd)
+void	set_path(t_cmd *cmd)
 {
-	size_t	i;
-
-	i = -1;
-	while (cmd[++i])
+	if (cmd -> no_path && cmd -> data -> path)
+		create_path(cmd);
+	else if (cmd -> no_path)
 	{
-		if (cmd[i]-> no_path && cmd[i]-> data -> path)
-			create_path(cmd[i]);
-		else if (cmd[i] -> no_path)
-		{
-			cmd[i] -> paths = ft_split(cmd[i]-> cmd, '\0');
-			is_error(cmd[i] -> data, cmd[i] -> paths, MALLOC_ERR, 0);
-		}
+		cmd -> paths = ft_split(cmd -> cmd, '\0');
+		is_error(cmd -> data, cmd -> paths, MALLOC_ERR, 0);
 	}
 }
 
-void	set_path_type(t_cmd **cmds)
+void	set_path_type(t_cmd *cmd)
 {
-	size_t	i;
-	char	*cmd;
-
-	i = -1;
-	while (cmds[++i])
+	if (cmd -> cmd && !ft_strchr(cmd -> cmd, '/'))
 	{
-		if (cmds[i]-> cmd && !ft_strchr(cmds[i]-> cmd, '/'))
-		{
-			cmd = cmds[i]-> cmd;
-			cmds[i]-> no_path = 1;
-			cmds[i]-> cmd = ft_strjoin("/", cmd);
-			is_error(cmds[0]-> data, cmds[i]-> cmd, MALLOC_ERR, 0);
-		}
-	}		
+		cmd -> no_path = 1;
+		cmd -> cmd = ft_strjoin("/", cmd -> cmd);
+		is_error(cmd -> data, cmd -> cmd, MALLOC_ERR, 0);
+	}
 }
 
-void	init_path(t_cmd **cmds)
+void	init_path(t_cmd *cmd)
 {
-	set_path_type(cmds);
-	set_path(cmds);
+	set_path_type(cmd);
+	set_path(cmd);
 }

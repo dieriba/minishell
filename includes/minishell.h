@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 18:24:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 21:20:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ void	init_env(t_data *data, char **envp);
 int		check(char *env, char *to_check);
 void	set_commands(t_cmd *cmd, char *to_parse);
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse);
-void	init_path(t_cmd **cmds);
+void	init_path(t_cmd *cmd);
 size_t	skip_redirect(t_data *data, char *to_parse, size_t i);
 t_files	*copy_files(t_data *data, char *to_parse, int k, int j);
 /*-----------------INITIALIZATION-----------------*/
