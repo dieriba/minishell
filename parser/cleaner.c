@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 14:01:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 18:26:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	*is_valid_expand(t_data *data, char *to_check)
 	stop = to_check[i];
 	to_check[i] = 0;
 	line = get_var_line(find_var(data -> env -> tab, &to_check[j]));
+	if (line == NULL)
+		line = is_shell_variable(data, &to_check[j]);
 	to_check[i] = stop;
 	return (line);
 }

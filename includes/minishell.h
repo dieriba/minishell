@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 04:49:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 18:24:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ int		char_is_quote(t_data *data, char c);
 int		char_is_end_quote(t_data *data, char c);
 int		skip_next_stop(char *to_clean);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
+char	*is_shell_variable(t_data *data, char *line);
 char	*cleaner(t_data *data, char *to_clean);
 char	*clean_(t_data *data, char *to_clean, int skip);
 char	*is_valid_expand(t_data *data, char *to_check);

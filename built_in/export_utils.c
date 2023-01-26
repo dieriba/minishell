@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 04:30:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 04:53:37 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 16:53:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void    make_some_space(t_env *env)
+void    make_some_space(t_env *env, char *line)
 {
 	char	**tmp_tab;
     size_t	i;
@@ -28,8 +28,12 @@ void    make_some_space(t_env *env)
 		is_error(env -> data, tmp_tab[i], MALLOC_ERR, 0);
 	}
 	env -> tab = ft_free_tab(env -> tab);
+	tmp_tab[i] = ft_strdup(line);
+	is_error(env -> data, tmp_tab[i], MALLOC_ERR, 0);
 	env -> capacity = CAPACITY;
 	env -> tab = tmp_tab;
+	env -> data -> envp = env -> tab;
+	env -> data -> path = find_var(env -> tab, "PATH");
 }
 
 int		find_var_index(char **tab, char *to_find, int len)
@@ -70,6 +74,6 @@ void	make_export(t_env *env, char *line)
 		env -> capacity--;
 	}
 	else
-        make_some_space(env);
+        make_some_space(env, line);
 	env -> data -> status = 0;
 }

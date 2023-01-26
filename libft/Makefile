@@ -52,7 +52,8 @@ SRCS 		=	ft_atoi.c \
 				ft_tablen.c \
 				ft_strcmp.c \
 				ft_check_empty.c \
-				ft_free_elem.c
+				ft_malloc_less_itoa.c \
+				ft_free_elem.c \
 
 OBJS		=	$(SRCS:.c=.o)
 

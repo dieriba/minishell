@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 00:21:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 16:35:50 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,24 @@ void	forking(t_cmd **cmds, int subshell, int i)
 	free_all(cmd -> data, cmd -> data -> status);
 }
 
+void	execute_routine(t_data *data, t_cmd **cmds, int i, int subshell)
+{
+	pid_t	pid_ret;
+	
+	data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
+	built_in(data, cmds[i], subshell, 0);
+	pid_ret = fork();
+	if (pid_ret < 0)
+		print_err_and_exit(data, NULL, "bash", 1);
+	if (pid_ret == 0)
+		forking(cmds, subshell, i);
+	cmds[i]-> pid = pid_ret;
+	handle_pipes(data, cmds[i], subshell);
+}
+
 void	executing(t_data *data, t_cmd **cmds, int subshell)
 {
 	int		i;
-	pid_t	pid_ret;
 	int		res;
 	
 	i = -1;
@@ -85,19 +99,8 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 		clean_cmd(cmds[i]);
 		res = prepare_next_step(cmds, cmds[i]-> stop, &i);
 		if (res == 0 && is_subshell(data, cmds, &i, subshell) == 0)
-		{
-			data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
-			built_in(data, cmds[i], subshell, 0);
-			pid_ret = fork();
-			if (pid_ret < 0)
-				print_err_and_exit(data, NULL, "bash", 1);
-			if (pid_ret == 0)
-				forking(cmds, subshell, i);
-			cmds[i]-> pid = pid_ret;
-			handle_pipes(data, cmds[i], subshell);
-			i -= (cmds[i] == NULL);
-		}
-		if (subshell && data -> p_num == 0)
+			execute_routine(data, cmds, i, subshell);
+		if ((subshell && data -> p_num == 0) || cmds[i] == NULL)
 			break ;
 	}
 	wait_all_child(data, cmds, subshell);
