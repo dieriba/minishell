@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 19:55:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 01:14:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void	init_env(t_data *data, char **envp)
 	set_env(data, data -> env, envp);
 	data -> path = find_var(data -> env -> tab, "PATH");
 	data -> envp = data -> env -> tab;
+	data -> env-> data = data;
 	//print_env(data -> env -> tab);
 }

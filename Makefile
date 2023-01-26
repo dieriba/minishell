@@ -94,7 +94,8 @@ fclean:			clean
 				make -C ./libft/ fclean
 				rm -rf $(MINISHELL) ./lib/libprintf.a ./lib/libft.a 
 				
-
+leaks:
+				valgrind --suppressions=ignore.txt -s  --leak-check=full --show-leak-kinds=all ./minishell
 re:				fclean all
 
 -include : 		$(DEPS)

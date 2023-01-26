@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 20:49:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 02:25:14 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,28 @@ int		check_line(char *line)
 	return (0);
 }
 
-char	*is_valid_export(char *line)
+char	*is_valid_export(char **tab, char *line)
 {
 	size_t	i;
 	size_t	j;
-
-	j = -1;
+	
 	i = -1;
+	j = -1;
+	while (tab[++j])
+		if (tab[j][0] == line[0] && !ft_strcmp(tab[j], line))
+			return (NULL);
 	while (line[++i] && line[i] != '=')
 		;
 	if (line[i] == 0 && check_line(line) == 0)
-		return (&line[i]);
+		return (NULL);
 	line[i] = 0;
 	if (ft_strlen(line) == 0 || check_line(line))
 	{
 		line[i] = '=';
 		return (line);
 	}
-	return (&line[++i]);
+	line[i] = '=';
+	return (&line[i]);
 }
 
 void	export_error(t_data *data, char *line)
@@ -109,14 +113,14 @@ void	export(t_cmd *cmd, t_env *env, int fork, int subshell)
 	len = ft_tab_len(cmd -> args);
 	if (len == 1 && fork)
 		print_export(cmd -> data, cmd, env -> tab, subshell);
-	else if (len > 1)
+	else if (len > 1 && fork == 0 && ft_strcmp(cmd -> stop, "|"))
 	{
-		while (env -> tab[++i])
+		while (cmd ->args[++i])
 		{
-			line = is_valid_export(env -> tab[i]);
-			if (line && line != env -> tab[i])
-				make_export(env, line);
-			else if (line && line == env -> tab[i])
+			line = is_valid_export(env -> tab, cmd ->args[i]);
+			if (line && line != cmd ->args[i])
+				make_export(env, cmd -> args[i]);
+			else if (line && line == cmd ->args[i])
 				export_error(cmd -> data, line);	
 		}
 	}

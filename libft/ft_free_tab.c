@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:13:26 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/31 23:55:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 23:59:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ft_free_tab(char **tab)
 		return (NULL);
 	i = -1;
 	while (tab[++i])
-		free(tab[i]);
+		ft_free_elem((void **)&tab[i]);
 	free(tab);
 	tab = NULL;
 	return (NULL);

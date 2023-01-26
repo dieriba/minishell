@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 14:16:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 00:58:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	**clean_nl_str(t_data *data, char *line)
 	size_t	j;
 	int		seen;
 	
-	j = -1;
 	i = -1;
 	seen = 0;
 	while (line[++i])

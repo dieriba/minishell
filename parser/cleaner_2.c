@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 00:09:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/26 01:09:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	back_to_space(char **tab)
 	size_t	j;
 
 	i = -1;
-	j = -1;
 	while (tab[++i])
 	{
 		j = -1;
@@ -108,7 +107,6 @@ char	*clean_lines(t_data *data, char *line, int expand)
 	return (line);
 }
 
-
 void	clean_cmd(t_cmd *cmd)
 {
 	int		to_clean;
@@ -127,6 +125,8 @@ void	clean_cmd(t_cmd *cmd)
 	}
 	else if (to_clean > 0)
 		expanded_tab(cmd, cmd -> args);
+	if (cmd -> cmd && cmd -> args[0] != cmd -> cmd)
+		ft_free_elem((void **)&cmd -> cmd);
 	cmd -> cmd = cmd -> args[0];
 }
 

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 17:52:36 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 20:31:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/25 21:39:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int     is_not_built_in(char *cmd)
 {
-    if (ft_strcmp(cmd, "echo") == 0)
+    if (cmd == NULL)
+        return (1);
+    else if (ft_strcmp(cmd, "echo") == 0)
         return (0);
     else if (ft_strcmp(cmd, "export") == 0)
         return (0);
@@ -27,6 +29,8 @@ int     is_not_built_in(char *cmd)
 
 void    built_in(t_data *data, t_cmd *cmd, int subshell, int fork)
 {
+    if (cmd -> cmd == NULL)
+        return ;
     if (ft_strcmp(cmd -> cmd, "echo") == 0)
         echo(data, cmd, subshell, fork);
     else if (ft_strcmp(cmd -> cmd, "export") == 0)
