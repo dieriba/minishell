@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:49:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:59:11 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ void	lets_read(t_data *data)
 		data -> cp_to_parse = readline("bash  : ");
 		if (data -> cp_to_parse)
 		{
-			add_history(data -> cp_to_parse);
 			if (unvalid_line(&data -> cp_to_parse))
 				break ;
+			add_history(data -> cp_to_parse);
 			quote_to_neg(data, data -> cp_to_parse);
 			data -> tab_ = clean_nl_str(data, data -> cp_to_parse);
 			is_error(data, data -> tab_, MALLOC_ERR, 0);

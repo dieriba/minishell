@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:49:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 05:43:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define R_OUT '>'
 # define R_COMBO "<>"
 # define STOP	"|& "
+# define BASE_STOP	"|&"
 # define STOP_	"|&;"
 # define STOP_F "|&<>; "
 # define STOP_F_P "|&<> )\"'"
@@ -46,6 +47,7 @@
 # define FORMAT_TOKEN_P "|&<>()"
 # define FORMAT_TOKEN_SP "|&<>; "
 # define FORMAT_TOKEN_SP_R "|&<> )"
+# define DELIM_TOKEN "|&<>();"
 # define MAX_LEN_TOKEN 2
 # define EXCLUDE_TOKEN "{[]};"
 /*-----------------GLOBAL_CHECK-----------------*/

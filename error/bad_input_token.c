@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:49:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 05:49:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,27 +106,34 @@ int	valid_format_token(char *to_parse)
 	return (0);
 }
 
-int	is_str_valid(t_data *data, char *to_parse)
+int	missing_right_commands(t_data *data, char *to_parse)
 {
-	int	err;
-
-	err = valid_format_token(to_parse);
-	if (err)
-		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
-	err = check_double(to_parse);
-	if (err)
-		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
-	err = check_token_length(to_parse);
-	if (err)
-		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
-	err = check_parenthese(to_parse);
-	if (err)
-		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
+	size_t	i;
+	int		seen;
+	
+	i = -1;
+	while (to_parse[++i])
+	{
+		while (to_parse[i] && !is_real_stop(data, to_parse, i, BASE_STOP))
+			i++;
+		seen = 0;
+		if (to_parse[i] && ft_strchr(BASE_FORMAT, to_parse[i]))
+		{
+			i += (to_parse[i] == to_parse[i + 1]);
+			while (to_parse[++i] && ft_isspace(to_parse[i]))
+				;
+			if (to_parse[i])
+				seen = 1;
+			if (to_parse[i] == 0 && seen = 0)
+				return (1);
+		}
+		i -= (to_parse[i] == 0);
+	}
 	return (0);
 }
 
 int	unvalid_line(char **line)
 {
-	(void)line;	
+	
 	return (0);
 }
