@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 02:24:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:40:17 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,48 +38,15 @@ int	skip_char_token_str(size_t i, char *to_parse, char *to_skip)
 	return (i);
 }
 
-int	count_words(t_data *data, char *to_parse)
+int	add_command(t_data *data, char *to_process, int i)
 {
-	int		i;
-	int		length;
-
-	length = 0;
-	i = -1;
-	while (to_parse[++i])
+	while (--i >= 0)
 	{
-		i = skip_spaces(data, to_parse, i, 0);
-		if (!ft_strchr(FORMAT_TOKEN_SP, to_parse[i]))
-		{
-			length++;
-			if (to_parse[i] == '"' * -1 || to_parse[i] == '\'' * -1)
-				i = loop_nested_quote (to_parse, i, (to_parse[i] * 2));
-			else
-				while (to_parse[i] && !ft_isspace(to_parse[i]) 
-					&& is_real_stop(data, to_parse, i, STOP_))
-					i++;
-		}
-		if (ft_strchr(R_COMBO, to_parse[i]))
-			i = skip_redirect(data, to_parse, i);
-		if (i == -1)
-			return (length);
-		if (!is_real_stop(data, to_parse, i, STOP_) || !to_parse[i])
+		if (!is_real_stop(data, to_process, i, STOP_))
 			break ;
+		if (is_real_stop(data, to_process, i, STOP_)
+			&& !ft_isspace(to_process[i]))
+			return (1);
 	}
-	return (length);
-}
-
-void	set_default_data(t_data *data, int len)
-{
-	int	j;
-
-	j = -1;
-	while (++j < len)
-	{
-		data -> cmds[j] = ft_calloc(sizeof(t_cmd), 1);
-		is_error(data, data -> cmds, MALLOC_ERR, 1);
-		data -> cmds[j]-> data = data;
-		data -> cmds[j]-> index = j + 1;
-		if (j > 0)
-			data -> cmds[j] -> prev_cmd = data -> cmds[j - 1];
-	}
+	return (0);
 }

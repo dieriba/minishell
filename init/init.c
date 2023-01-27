@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 02:18:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:14:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	set_last_setup(t_cmd *cmd)
 {
 	size_t	i;
 	t_files	**tab;
-		
+
 	i = -1;
 	tab = cmd -> tab;
 	while (tab[++i])
@@ -45,19 +45,6 @@ void	fill_cmds_par(t_cmd **cmds, char *to_parse, int length)
 		j = skip_char_token_str(j, to_parse, STOP_);
 		j = skip_spaces(data, to_parse, j, 0);
 	}
-}
-
-int	add_command(t_data *data, char *to_process, int i)
-{
-	while (--i >= 0)
-	{
-		if (!is_real_stop(data, to_process, i, STOP_))
-			break ;
-		if (is_real_stop(data, to_process, i, STOP_) 
-			&& !ft_isspace(to_process[i]))
-		return (1);
-	}
-	return (0);
 }
 
 int	how_many_cmds(t_data *data, char *to_process)
@@ -98,7 +85,7 @@ void	fill_cmds(t_cmd **cmds, char *to_parse, int length)
 		j = skip_char_letter_str(cmds[0]-> data, j, to_parse, STOP_);
 		j = skip_char_token_str(j, to_parse, STOP_);
 		j = skip_spaces(data, to_parse, j, 0);
-		if (cmds[i] -> prev_cmd)
+		if (cmds[i]-> prev_cmd)
 			cmds[i]-> prev_stop = cmds[i]-> prev_cmd -> stop;
 	}
 }

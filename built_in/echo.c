@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 20:50:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 03:44:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	echo(t_data *data, t_cmd *cmd, int subshell, int fork)
 	int	nl;
 
 	if (fork == 0)
-		return ;	
+		return ;
 	fd = where_to_write(data, cmd, subshell);
 	if (ft_tab_len(cmd -> args) == 1)
 	{

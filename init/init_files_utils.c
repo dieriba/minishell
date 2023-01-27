@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in_utils.c                                   :+:      :+:    :+:   */
+/*   init_files_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/25 14:52:56 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:42:30 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/27 04:18:31 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/27 04:19:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	where_to_write(t_data *data, t_cmd *cmd, int subshell)
+void	file_type(t_files *redirect, char a, char b)
 {
-	int		fd;
-
-	fd = 1;
-	if (cmd -> last_out && cmd -> last_out -> fd > 0)
-		fd = cmd -> last_out -> fd;
-	else if (data -> inited && cmd -> p_close == 0)
-		fd = data -> pipes[1];
-	else if ((cmd -> stop[0] > 0) && subshell && data -> s_pipes_inited)
-		fd = data -> p_pipes[1];
-	return (fd);
+	if (a != b && a == R_IN)
+	{
+		redirect -> type = IN;
+		redirect -> flags = O_RDONLY;
+	}
+	else if (a != b && a == R_OUT)
+	{
+		redirect -> type = OUT;
+		redirect -> flags = O_CREAT | O_TRUNC | O_WRONLY;
+	}
+	else if (a == b && a == R_IN)
+		redirect -> type = DOC;
+	else
+	{
+		redirect -> type = APPEND;
+		redirect -> flags = O_CREAT | O_APPEND | O_WRONLY;
+	}
 }

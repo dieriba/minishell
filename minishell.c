@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 02:21:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:49:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,12 @@
 
 t_collector	*g_collector = NULL;
 
-void	init_struct(t_data **data)
-{
-	(*data) = ft_calloc(sizeof(t_data), 1);
-	is_error((*data), (*data), MALLOC_ERR, 1);
-	(*data)-> neg_single_start = '\'' * -1;
-	(*data)-> neg_single_end = '\'' * -2;
-	(*data)-> neg_double_start = '"' * -1;
-	(*data)-> neg_double_end = '"' * -2;
-	(*data)-> prev_pipes = -1;
-	(*data)-> cp_to_parse = NULL;
-	handle_signals((*data));
-}
-
 char	**clean_nl_str(t_data *data, char *line)
 {
 	size_t	i;
 	size_t	j;
 	int		seen;
-	
+
 	i = -1;
 	seen = 0;
 	while (line[++i])
@@ -98,6 +85,8 @@ void	lets_read(t_data *data)
 		if (data -> cp_to_parse)
 		{
 			add_history(data -> cp_to_parse);
+			if (unvalid_line(&data -> cp_to_parse))
+				break ;
 			quote_to_neg(data, data -> cp_to_parse);
 			data -> tab_ = clean_nl_str(data, data -> cp_to_parse);
 			is_error(data, data -> tab_, MALLOC_ERR, 0);
@@ -108,24 +97,6 @@ void	lets_read(t_data *data)
 	}
 }
 
-/*void	test_free(t_data *data, char *line)
-{
-	init_cmd(data, line);
-	open_here_doc(data, data -> cmds);
-	fork_docs(data, &data -> here_docs);
-	close_all_pipes(data, &data -> here_docs, 0, 1);
-	clean_struct(data);
-	free_all(data, 0);
-}*/
-
-void	shell(t_data *data, char **envp, char *line)
-{
-	(void)line;
-	init_env(data, envp);
-	//test_free(data, line);
-	lets_read(data);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
@@ -133,5 +104,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_struct(&data);
-	shell(data, envp, argv[1]);
+	init_env(data, envp);
+	lets_read(data);
 }

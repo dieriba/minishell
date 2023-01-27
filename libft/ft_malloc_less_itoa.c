@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_malloc_less_itoa.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:34:52 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 21:56:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:43:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_nblen(int n)
 	return (len);
 }
 
-void ft_malloc_less_itoa(char **res, int n)
+void	ft_malloc_less_itoa(char **res, int n)
 {
 	int				i;
 	int				j;

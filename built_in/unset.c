@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:05:39 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 20:55:02 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 03:46:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		find_index(char **tab, char *to_find)
+int	find_index(char **tab, char *to_find)
 {
 	size_t	i;
 
@@ -20,7 +20,7 @@ int		find_index(char **tab, char *to_find)
 	while (tab[++i])
 	{
 		if (!check(tab[i], to_find))
-			break ;		
+			break ;
 	}
 	return (i);
 }
@@ -53,6 +53,6 @@ void	unset(t_cmd *cmd, t_env *env)
 		if (line == NULL)
 			continue ;
 		index = find_index(env -> tab, line);
-		remove_var_env(env, env -> tab, index);	
+		remove_var_env(env, env -> tab, index);
 	}
 }

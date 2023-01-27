@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:58:15 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 04:43:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 03:44:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check(char *env, char *to_check)
 {
 	size_t	i;
 	int		res;
-	
+
 	i = -1;
 	if (to_check[0] == 0)
 		return (1);

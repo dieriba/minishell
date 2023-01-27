@@ -20,7 +20,9 @@ SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_env_utils.c \
 				./init/init_parentheses.c \
 				./init/init_path_cmd.c \
-				./init/string_utils.c
+				./init/string_utils.c \
+				./init/init_files_utils.c \
+				./init/init_struct.c
 
 SRCS_ERROR	=	./error/error_handling.c \
 				./error/bad_input_token.c \
@@ -41,7 +43,9 @@ SRCS_EXEC	=	./exec/fd.c \
 				./exec/parentheses.c
 
 SRCS_PARSER	=	./parser/cleaner.c \
-				./parser/cleaner_2.c \
+				./parser/clean_cmd.c \
+				./parser/clean_files.c \
+				./parser/clean_utils.c \
 				./parser/quote_utils.c \
 				./parser/quote_utils_2.c \
 				./parser/quote_utils_3.c \

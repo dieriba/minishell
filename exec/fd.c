@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 20:48:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:01:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	open_files(t_data *data, t_cmd *cmd, t_files *files)
 	t_files		*last_out;
 
 	last_in = cmd -> last_in;
-	last_out = cmd -> last_out; 
+	last_out = cmd -> last_out;
 	type = files -> type;
 	files -> fd = open(files -> files, files -> flags, 0644);
 	if (files -> fd == -1)
@@ -43,8 +43,8 @@ void	open_check_files(t_cmd *cmd, t_files **tab)
 {
 	size_t		i;
 	enum e_type	type;
+
 	i = -1;
-	
 	if (cmd -> last_in == NULL && cmd -> last_out == NULL)
 		return ;
 	cmd -> data -> status = 1;
@@ -52,7 +52,7 @@ void	open_check_files(t_cmd *cmd, t_files **tab)
 	{
 		type = tab[i]-> type;
 		if (type != DOC && tab[i]-> amb == DOLLARS_EMPT)
-			print_err_and_exit(cmd -> data, NULL, "bash : ambiguous redirect", 0);
+			print_err_and_exit(cmd -> data, NULL, AMB_REDIRECT, 0);
 		else if ((type == OUT || type == APPEND) && tab[i]-> amb == ALL_FLAGS)
 		{
 			if (access(tab[i]-> files, F_OK))
@@ -62,4 +62,15 @@ void	open_check_files(t_cmd *cmd, t_files **tab)
 			open_files(cmd -> data, cmd, tab[i]);
 	}
 	cmd -> data -> status = 0;
+}
+
+int	find_fd(t_doc *node, char *limiter)
+{
+	while (node)
+	{
+		if (node -> limiter == limiter)
+			break ;
+		node = node -> next;
+	}
+	return (node -> pipes[0]);
 }

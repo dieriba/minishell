@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 04:31:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 03:46:37 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_export(t_data *data, t_cmd *cmd, char **tab, int subshell)
 	data -> status = 0;
 }
 
-int		check_line(char *line)
+int	check_line(char *line)
 {
 	size_t	i;
 
@@ -44,7 +44,7 @@ char	*is_valid_export(char **tab, char *line)
 {
 	size_t	i;
 	size_t	j;
-	
+
 	i = -1;
 	j = -1;
 	while (tab[++j])
@@ -77,7 +77,7 @@ void	export(t_cmd *cmd, t_env *env, int fork, int subshell)
 	int		len;
 	char	*line;
 	size_t	i;
-	
+
 	i = 0;
 	len = ft_tab_len(cmd -> args);
 	if (len == 1 && fork)
@@ -90,7 +90,7 @@ void	export(t_cmd *cmd, t_env *env, int fork, int subshell)
 			if (line && line != cmd ->args[i])
 				make_export(env, cmd -> args[i]);
 			else if (line && line == cmd ->args[i])
-				export_error(cmd -> data, line);	
+				export_error(cmd -> data, line);
 		}
 	}
 }

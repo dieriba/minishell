@@ -3,55 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   init_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/24 23:35:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:21:32 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void file_type(t_files *redirect, char a, char b)
-{
-	if (a != b && a == R_IN)
-	{
-		redirect -> type = IN;
-		redirect -> flags = O_RDONLY;		
-	}
-	else if (a != b && a == R_OUT)
-	{
-		redirect -> type = OUT;
-		redirect -> flags = O_CREAT | O_TRUNC | O_WRONLY;
-	}
-	else if (a == b && a == R_IN)
-		redirect -> type = DOC;
-	else
-	{
-		redirect -> type = APPEND;
-		redirect -> flags = O_CREAT | O_APPEND | O_WRONLY;
-	}
-}
 
 t_files	*copy_files(t_data *data, char *to_parse, int k, int j)
 {
 	t_files	*redirect;
 	int		i;
 	int		m;
-	
+
 	i = -1;
 	m = k;
 	while (to_parse[++k] && to_parse[k] == to_parse[k - 1])
 		;
 	while (to_parse[k] && (to_parse[k] == ' ' || to_parse[k] == '\t'))
-		k++;	
+		k++;
 	redirect = ft_calloc(sizeof(t_files), 1);
 	is_error(data, redirect, MALLOC_ERR, 0);
 	redirect -> files = ft_calloc(sizeof(char), (j - k + 1));
 	is_error(data, redirect -> files, MALLOC_ERR, 0);
 	file_type(redirect, to_parse[m], to_parse[m + 1]);
 	while (k < j)
-		redirect-> files[++i] = to_parse[k++];
+		redirect -> files[++i] = to_parse[k++];
 	return (redirect);
 }
 
@@ -59,7 +38,8 @@ int	skip_to_redirect(t_cmd *cmd, char *to_parse, size_t i)
 {
 	while (to_parse[i])
 	{
-		if (ft_strchr(R_COMBO, to_parse[i]) && !find_start_quotes(cmd -> data, to_parse, i))
+		if (ft_strchr(R_COMBO, to_parse[i])
+			&& !find_start_quotes(cmd -> data, to_parse, i))
 			return (i);
 		if (!is_real_stop(cmd -> data, to_parse, i, STOP_))
 			return (-1);
@@ -77,7 +57,8 @@ int	find_tab_length(t_cmd *cmd, char *to_parse)
 	i = -1;
 	while (to_parse[++i] && is_real_stop(cmd -> data, to_parse, i, STOP_))
 	{
-		if (ft_strchr(R_COMBO, to_parse[i]) && !find_start_quotes(cmd -> data, to_parse, i))
+		if (ft_strchr(R_COMBO, to_parse[i])
+			&& !find_start_quotes(cmd -> data, to_parse, i))
 		{
 			k++;
 			i += (ft_strchr(R_COMBO, to_parse[i + 1]) != 0);

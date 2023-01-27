@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleaner_2.c                                        :+:      :+:    :+:   */
+/*   clean_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 22:32:42 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/05 02:13:18 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/27 04:37:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	copy_tab_to_str(char **tab, char *to_clean)
 			to_clean[++k] = ' ';
 	}
 }
+
 void	back_to_space(char **tab)
 {
 	size_t	i;
@@ -50,6 +51,7 @@ void	back_to_space(char **tab)
 		}
 	}
 }
+
 void	expanded_tab(t_cmd *cmd, char **tab)
 {
 	size_t	len;
@@ -91,23 +93,6 @@ int	check_tab(char **tab)
 	return (quotes);
 }
 
-char	*clean_lines(t_data *data, char *line, int expand)
-{
-	size_t	i;
-
-	i = -1;
-	if (line == NULL)
-		return (line);
-	while (line[++i])
-	{
-		if (expand && line[i] == '$')
-			return (clean_(data, line, 1));
-		if (expand == 0 && line[i] < 0)
-			return (clean_(data, line, 0));
-	}
-	return (line);
-}
-
 void	clean_cmd(t_cmd *cmd)
 {
 	int		to_clean;
@@ -129,45 +114,4 @@ void	clean_cmd(t_cmd *cmd)
 	cmd -> cmd = cmd -> args[0];
 	init_path(cmd);
 	cmd -> to_not_calloc = 1;
-}
-
-void	loop_files(t_data *data, t_files **tab)
-{
-	size_t	i;
-	size_t	j;
-	char	*to_clean;
-	
-	i = -1;
-	while (tab[++i])
-	{
-		j = -1;
-		if (tab[i]-> type != DOC)
-		{
-			to_clean = tab[i]-> files;
-			tab[i]-> amb = -(to_clean[0] == '"' * -1) * to_clean[0];
-			while (to_clean[++j])
-			{
-				if ((to_clean[j] == '$' 
-					&& !check_dollars(to_clean[j + 1], to_clean, j)) || to_clean[j] < 0)
-				{
-					tab[i]-> amb += (ft_strchr(&to_clean[j], '$') != NULL) * '$';
-					tab[i]-> files = clean_(data, to_clean, 1);
-					tab[i]-> amb += (ft_strlen(tab[i]-> files) == 0);
-					break ;
-				}
-			}
-		}
-		else
-			tab[i]-> files = clean_lines(data, tab[i]-> files, 0);
-	}
-}
-
-void    clean_files(t_cmd *cmd)
-{
-    if (cmd -> tab)
-	{
-		loop_files(cmd -> data, cmd -> tab);
-		set_last_setup(cmd);
-		cmd -> to_not_calloc = 1;
-	}
 }

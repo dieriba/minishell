@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 03:35:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 03:52:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	fork_docs(t_data *data, t_doc **head)
 {
 	int		pid_ret;
 	int		status;
-	
+
 	status = 0;
 	if (open_pipes(data, head) == 0)
 	{

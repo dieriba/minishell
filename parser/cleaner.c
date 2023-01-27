@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 22:14:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:27:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean, int skip)
 	i = -1;
 	while (to_clean[++i])
 	{
-		if (skip && to_clean[i] == '$' && !check_dollars(to_clean[i + 1], to_clean, i))
+		if (skip && to_clean[i] == '$'
+			&& !check_dollars(to_clean[i + 1], to_clean, i))
 		{
 			line = is_valid_expand(data, &to_clean[i]);
 			len += ft_strlen(line);
@@ -82,12 +83,13 @@ char	*expand_and_clean(char *to_clean, char *res, t_node *expands, int skip)
 {
 	size_t	i;
 	size_t	j;
-	
+
 	j = 0;
 	i = -1;
 	while (to_clean[++i])
 	{
-		if (skip && to_clean[i] == '$' && !check_dollars(to_clean[i + 1], to_clean, i))
+		if (skip && to_clean[i] == '$'
+			&& !check_dollars(to_clean[i + 1], to_clean, i))
 		{
 			j += copy_expands_in_str(&res[j], &to_clean[i], expands);
 			i += skip_next_stop(&to_clean[i]);
@@ -113,6 +115,6 @@ char	*clean_(t_data *data, char *to_clean, int skip)
 	is_error(data, res, MALLOC_ERR, 0);
 	expand_and_clean(to_clean, res, ft_lstlast_s(expands), skip);
 	free_list(NULL, &expands);
-	ft_free_elem((void**)&to_clean);
+	ft_free_elem((void **)&to_clean);
 	return (res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 01:25:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 03:52:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 {
 	int	status;
 	int	pipes;
-	
+
 	status = 0;
 	pipes = ft_strcmp("|", stop);
 	if (pipes == 0)
@@ -67,21 +67,23 @@ void	init_s_pipes(t_data *data)
 		init_pipes(data, data -> sub_pipes[1], &data -> s_pipes_inited, 1);
 }
 
-int	prepare_next_step(t_cmd **cmds, char *stop, int *i)
+int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
 {
 	int			status;
-	t_data		*data;
-	
-	data = cmds[0]-> data;
+
 	status = 0;
-	if ((*i) > 0 && cmds[(*i) - 1]-> p_close && ft_strcmp(cmds[(*i)]-> prev_stop, "|"))
+	if ((*i) > 0
+		&& cmds[(*i) - 1]-> p_close && ft_strcmp(cmds[(*i)]-> prev_stop, "|"))
 	{
-		status = get_status(data, cmds[(*i)], data -> subshell_pid, cmds[(*i)]-> prev_stop);
+		status = get_status(
+				data, cmds[(*i)], data -> subshell_pid, cmds[(*i)]-> prev_stop);
 		data -> subshell_pid = 0;
 	}
 	else if ((*i) > 0)
-		status = get_status(data, cmds[(*i)], cmds[(*i) - 1]-> pid, cmds[(*i)]-> prev_stop);
-	if (!status && cmds[(*i)]-> to_fork == 0 && cmds[(*i)]-> p_close == 0 && !ft_strcmp("|", stop))
+		status = get_status(
+				data, cmds[(*i)], cmds[(*i) - 1]-> pid, cmds[(*i)]-> prev_stop);
+	if (!status && cmds[(*i)]-> to_fork == 0
+		&& cmds[(*i)]-> p_close == 0 && !ft_strcmp("|", stop))
 		init_pipes(data, data -> pipes, &data -> inited, 0);
 	else if (status == 0 && pipe_par(&cmds[(*i)]) == 0)
 		init_s_pipes(data);

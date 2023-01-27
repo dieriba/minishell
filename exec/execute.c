@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 01:38:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 03:53:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	run_cmd(t_cmd *cmd)
 {
 	size_t	i;
-	
+
 	if (cmd -> cmd == NULL)
 		return ;
 	i = -1;
@@ -44,7 +44,8 @@ void	handle_pipes(t_data *data, t_cmd *cmd, int subshell)
 		data -> prev_pipes = data -> pipes[0];
 		close_fd(data, "bash pipes close", &data -> pipes[1]);
 	}
-	if (data -> s_pipes_inited && subshell == 0 && cmd -> prev_cmd && cmd -> prev_cmd -> p_close)
+	if (data -> s_pipes_inited
+		&& subshell == 0 && cmd -> prev_cmd && cmd -> prev_cmd -> p_close)
 		close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
 	else if (data -> s_pipes_inited && subshell && cmd -> p_close)
 	{
@@ -58,7 +59,7 @@ void	forking(t_cmd **cmds, int subshell, int i)
 {
 	char	*prev;
 	t_cmd	*cmd;
-	
+
 	cmd = cmds[i];
 	if (i > 0)
 		prev = cmds[--i]-> stop;
@@ -73,7 +74,7 @@ void	forking(t_cmd **cmds, int subshell, int i)
 void	execute_routine(t_data *data, t_cmd **cmds, int i, int subshell)
 {
 	pid_t	pid_ret;
-	
+
 	data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
 	built_in(data, cmds[i], subshell, 0);
 	pid_ret = fork();
@@ -89,7 +90,7 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 {
 	int		i;
 	int		res;
-	
+
 	i = -1;
 	cmds[0]-> p_open = cmds[0]-> to_fork + (subshell == 1);
 	close_sub_pipes(data, subshell);
@@ -100,7 +101,7 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 			clean_files(cmds[i]);
 			clean_cmd(cmds[i]);
 		}
-		res = prepare_next_step(cmds, cmds[i]-> stop, &i);
+		res = prepare_next_step(data, cmds, cmds[i]-> stop, &i);
 		if (res == 0 && is_subshell(data, cmds, &i, subshell) == 0)
 			execute_routine(data, cmds, i, subshell);
 		if ((subshell && data -> p_num == 0) || cmds[i] == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 01:14:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:15:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	set_env(t_data *data, t_env *env, char **envp)
 {
 	size_t	i;
-	
+
 	i = -1;
 	env -> tab = ft_calloc(env -> len + CAPACITY + 1, sizeof(char *));
 	is_error(data, env -> tab, MALLOC_ERR, 0);
@@ -38,5 +38,4 @@ void	init_env(t_data *data, char **envp)
 	data -> path = find_var(data -> env -> tab, "PATH");
 	data -> envp = data -> env -> tab;
 	data -> env-> data = data;
-	//print_env(data -> env -> tab);
 }

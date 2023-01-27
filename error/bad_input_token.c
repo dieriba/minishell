@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bad_input_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/04 21:27:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:49:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,11 @@ int	is_str_valid(t_data *data, char *to_parse)
 	err = check_parenthese(to_parse);
 	if (err)
 		return (print_bad_syntax(data, TOKEN_SYNTAX_ERR, err));
+	return (0);
+}
+
+int	unvalid_line(char **line)
+{
+	(void)line;	
 	return (0);
 }

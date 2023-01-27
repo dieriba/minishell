@@ -3,14 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 02:22:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:48:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	move_to_next_word(t_data *data, char *to_parse, int i, int *len)
+{
+	if (to_parse[i] == '"' * -1 || to_parse[i] == '\'' * -1)
+		i = loop_nested_quote (to_parse, i, (to_parse[i] * 2));
+	else
+		while (to_parse[i] && !ft_isspace(to_parse[i])
+			&& is_real_stop(data, to_parse, i, STOP_))
+		i++;
+	(*len) += 1;
+	return (i);
+}
+
+int	count_words(t_data *data, char *to_parse)
+{
+	int		i;
+	int		length;
+
+	length = 0;
+	i = -1;
+	while (to_parse[++i])
+	{
+		i = skip_spaces(data, to_parse, i, 0);
+		if (!ft_strchr(FORMAT_TOKEN_SP, to_parse[i]))
+			i = move_to_next_word(data, to_parse, i, &length);
+		if (ft_strchr(R_COMBO, to_parse[i]))
+			i = skip_redirect(data, to_parse, i);
+		if (i == -1)
+			return (length);
+		if (!is_real_stop(data, to_parse, i, STOP_) || !to_parse[i])
+			break ;
+	}
+	return (length);
+}
 
 size_t	skip_redirect(t_data *data, char *to_parse, size_t i)
 {

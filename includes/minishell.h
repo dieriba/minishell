@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 02:03:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:49:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -55,6 +54,7 @@
 # define ENV_ERR "Sorry, no environnement variable avaible right now."
 # define PIPE_INIT_ERROR "Pipe initialization  error"
 # define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
+# define AMB_REDIRECT "bash : ambiguous redirect"
 
 enum e_type
 {
@@ -155,7 +155,7 @@ typedef struct t_data
 }t_data;
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
-extern t_collector		*g_collector;
+extern t_collector			*g_collector;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
@@ -192,6 +192,7 @@ int		is_same_token(char c, char d);
 int		skip_char_letter_str(
 			t_data *data, size_t i, char *to_parse, char *to_skip);
 int		skip_char_token_str(size_t i, char *to_parse, char *to_skip);
+int		add_command(t_data *data, char *to_process, int i);
 int		check_quotes(char *to_parse, int i);
 int		find_end_string(t_data *data, char *to_parse, int j);
 void	create_list(t_data *data, char **envp, int len);
@@ -199,6 +200,8 @@ void	par_to_space(char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
 void	set_default_data(t_data *data, int len);
 void	set_last_setup(t_cmd *cmd);
+void	file_type(t_files *redirect, char a, char b);
+void	init_struct(t_data **data);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/
@@ -224,6 +227,7 @@ int		char_is_quote(t_data *data, char c);
 int		char_is_end_quote(t_data *data, char c);
 int		skip_next_stop(char *to_clean);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
+int		unvalid_line(char **line);
 char	*is_shell_variable(t_data *data, char *line);
 char	*cleaner(t_data *data, char *to_clean);
 char	*clean_(t_data *data, char *to_clean, int skip);
@@ -231,37 +235,36 @@ char	*is_valid_expand(t_data *data, char *to_check);
 void	parser(t_data *data, char **tab, int type);
 void	quote_to_neg(t_data *data, char *to_parse);
 char	*clean_lines(t_data *data, char *line, int expand);
-void	rid_of_useless_expands(t_data *data, char *to_clean);
 void	clean_cmd(t_cmd *cmd);
-void    clean_files(t_cmd *cmd);
+void	clean_files(t_cmd *cmd);
 size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/
 char	*get_var_line(char *line);
-int 	where_to_write(t_data *data, t_cmd *cmd, int subshell);
-int     is_not_built_in(char *cmd);
+int		where_to_write(t_data *data, t_cmd *cmd, int subshell);
+int		is_not_built_in(char *cmd);
 void	export(t_cmd *cmd, t_env *env, int fork, int subshell);
 void	env(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	unset(t_cmd *cmd, t_env *env);
 void	echo(t_data *data, t_cmd *cmd, int subshell, int fork);
-void    built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
+void	built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	make_export(t_env *env, char *line);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/
-int		prepare_next_step(t_cmd **cmd, char *stop, int *i);
+int		prepare_next_step(t_data *data, t_cmd **cmd, char *stop, int *i);
 int		opener_outfile(t_cmd *cmd);
 int		to_exec_or_not(char *stop, int status);
 int		pipe_par(t_cmd **cmds);
 int		find_next_cmd(t_data *data, t_cmd **cmds);
-int 	is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell);
+int		is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell);
 void	executing(t_data *data, t_cmd **cmds, int subshell);
 void	run_cmd(t_cmd *cmd);
 void	wait_all_child(t_data *data, t_cmd **cmds, int subshell);
 void	open_check_files(t_cmd *cmd, t_files **tab);
 void	close_fd(t_data *data, char *str, int *fd);
-void	check_files(t_data *data, t_files **files,int flags);
+void	check_files(t_data *data, t_files **files, int flags);
 void	close_pipes(t_data *data);
 void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);

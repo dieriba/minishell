@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:21:14 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 23:20:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 04:02:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handle_shell_pipes(t_data *data)
 	}	
 }
 
-int is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell)
+int	is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell)
 {
 	if (cmds[(*i)]-> to_fork)
 	{

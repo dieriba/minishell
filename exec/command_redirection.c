@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 01:34:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 03:54:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	dup_(t_data *data, int fd, int old_fd)
 void	set_out_redirection(t_cmd *cmd, int subshell)
 {
 	t_data	*data;
+
 	data = cmd -> data;
 	if (cmd -> last_out && cmd -> last_out -> fd > 0)
 		dup_(data, cmd -> last_out -> fd, STDOUT_FILENO);
@@ -45,7 +46,7 @@ void	set_in_redirection(t_cmd *cmd, int pipes)
 	else if (cmd -> last_in && cmd -> last_in -> fd == 0)
 	{
 		cmd -> last_in -> fd = find_fd(
-			cmd -> data -> here_docs, cmd -> last_in -> files);
+				cmd -> data -> here_docs, cmd -> last_in -> files);
 		dup_(data, cmd -> last_in -> fd, STDIN_FILENO);
 	}
 	else if (prev_cmd && prev_cmd -> p_close && data -> s_pipes_inited)
@@ -71,9 +72,11 @@ void	set_redirections_files(t_cmd *cmd, char *prev, int subshell)
 		close_fd(cmd -> data, "bash5", &cmd -> last_out -> fd);
 	close_both_pipes(cmd -> data, cmd -> data -> pipes, &cmd -> data -> inited);
 	if (subshell == 0 && cmd -> data -> s_pipes_inited)
-		close_one_end(cmd -> data, cmd -> data -> p_pipes, 0, &cmd -> data -> s_pipes_inited);
+		close_one_end(cmd -> data,
+			cmd -> data -> p_pipes, 0, &cmd -> data -> s_pipes_inited);
 	else if (subshell && cmd -> data -> s_pipes_inited)
-		close_one_end(cmd -> data, cmd -> data -> p_pipes, 1, &cmd -> data -> s_pipes_inited);
+		close_one_end(cmd -> data,
+			cmd -> data -> p_pipes, 1, &cmd -> data -> s_pipes_inited);
 	close_fd(cmd -> data, "bash6", &cmd -> data -> prev_pipes);
 	close_all_pipes(cmd -> data, &cmd -> data -> here_docs, 1, 0);
 }

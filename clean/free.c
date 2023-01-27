@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 01:41:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 03:47:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_cmd(t_cmd **cmds)
 		free(cmds[i]);
 	}
 	free(cmds);
-	data -> cmds = NULL;;
+	data -> cmds = NULL;
 }
 
 void	free_list(t_env *env, t_node **head)
@@ -85,7 +85,7 @@ void	free_all(t_data *data, int status)
 	free_cmd(data -> cmds);
 	ft_free_elem((void **)&g_collector);
 	ft_free_elem((void **)&data -> cp_to_parse);
-	ft_free_elem((void**)&data -> env);
+	ft_free_elem((void **)&data -> env);
 	clean_here_doc(data, &data -> here_docs);
 	free(data);
 	exit(status);
