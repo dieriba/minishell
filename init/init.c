@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 21:16:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 02:16:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,19 @@ void	fill_cmds_par(t_cmd **cmds, char *to_parse, int length)
 	}
 }
 
+int	add_command(t_data *data, char *to_process, int i)
+{
+	while (--i >= 0)
+	{
+		if (!is_real_stop(data, to_process, i, STOP_))
+			break ;
+		if (is_real_stop(data, to_process, i, STOP_) 
+			&& !ft_isspace(to_process[i]))
+		return (1);
+	}
+	return (0);
+}
+
 int	how_many_cmds(t_data *data, char *to_process)
 {
 	size_t	i;
@@ -65,7 +78,7 @@ int	how_many_cmds(t_data *data, char *to_process)
 		else if (!is_real_stop(data, to_process, i, STOP_))
 			count++;
 	}
-	count++;
+	count += add_command(data, to_process, i);
 	return (count);
 }
 
@@ -103,5 +116,5 @@ void	init_cmd(t_data *data, char *to_process)
 	set_default_data(data, len);
 	fill_cmds(data -> cmds, data -> cp_to_parse, len);
 	fill_cmds_par(data -> cmds, to_process, len);
-	//print_struct(data -> cmds);
+	print_struct(data -> cmds);
 }

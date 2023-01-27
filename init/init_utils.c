@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/23 22:53:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 01:50:30 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 int	find_end_string(t_data *data, char *to_parse, int j)
 {
-	return (calcul_word(data, to_parse, j));
+	if (to_parse[j] == data -> neg_single_start)
+		j = loop_nested_quote(to_parse, j, data -> neg_single_end);
+	else if (to_parse[j] == data -> neg_double_start)
+		j = loop_nested_quote(to_parse, j, data -> neg_double_end);
+	else
+		while (to_parse[j] && is_real_stop(data, to_parse, j, STOP_F))
+			j++;
+	return (j);
 }
 
 int	skip_char_letter_str(t_data *data, size_t i, char *to_parse, char *to_skip)

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/26 22:32:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 02:03:43 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@
 # define R_OUT '>'
 # define R_COMBO "<>"
 # define STOP	"|& "
-# define STOP_	"|&"
-# define STOP_F "|&<> "
+# define STOP_	"|&;"
+# define STOP_F "|&<>; "
 # define STOP_F_P "|&<> )\"'"
 # define STOP_EXP "\\ '\"$&|<> "
 # define VALID_COMB_EXP "$ "
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"
 # define FORMAT_TOKEN_P "|&<>()"
-# define FORMAT_TOKEN_SP "|&<> "
+# define FORMAT_TOKEN_SP "|&<>; "
 # define FORMAT_TOKEN_SP_R "|&<> )"
 # define MAX_LEN_TOKEN 2
 # define EXCLUDE_TOKEN "{[]};"
@@ -193,7 +193,6 @@ int		skip_char_letter_str(
 			t_data *data, size_t i, char *to_parse, char *to_skip);
 int		skip_char_token_str(size_t i, char *to_parse, char *to_skip);
 int		check_quotes(char *to_parse, int i);
-int		calcul_word(t_data *data, char *to_parse, int j);
 int		find_end_string(t_data *data, char *to_parse, int j);
 void	create_list(t_data *data, char **envp, int len);
 void	par_to_space(char *str);
