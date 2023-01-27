@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 05:43:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 13:33:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define FORMAT_TOKEN_SP "|&<>; "
 # define FORMAT_TOKEN_SP_R "|&<> )"
 # define DELIM_TOKEN "|&<>();"
+# define DELIM_TOKEN_SP "|&<>;"
 # define MAX_LEN_TOKEN 2
 # define EXCLUDE_TOKEN "{[]};"
 /*-----------------GLOBAL_CHECK-----------------*/
