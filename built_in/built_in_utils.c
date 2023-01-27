@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:52:56 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 15:40:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 20:44:11 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ int	check_line(char *line)
 	i = -1;
 	while (line[++i])
 	{
-		if (line[i] != '_' && !ft_isalpha(line[i]))
+		if (line[i] == '$' 
+			&& (line[i + 1] == '=' || !line[i]))
+			return (1);
+		if (line[i] != '$' 
+			&& line[i] != '_' && !ft_isalpha(line[i]))
 			return (1);
 	}
 	return (0);

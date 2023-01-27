@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alias.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:11:03 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 15:46:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 21:31:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,30 @@ void	print_alias(t_data *data, t_cmd *cmd, int subshell)
 	data -> status = 0;
 }
 
-char	*is_valid_alias(char **tab, char *line)
+
+int	check_alias(t_node *alias, char *line)
+{
+	while (alias)
+	{
+		if (alias -> line[0] == line[0] 
+			&& !ft_strcmp(alias -> line, line))
+			return (1);
+		alias = alias -> next;
+	}
+	return (0);
+}
+
+void	*is_valid_alias(t_node *alias, char *line)
 {
 	size_t	i;
-	size_t	j;
 
 	i = -1;
-	j = -1;
-	while (tab[++j])
-		if (tab[j][0] == line[0] && !ft_strcmp(tab[j], line))
-			return (NULL);
 	while (line[++i] && line[i] != '=')
 		;
-	if (line[i] == 0 && check_line(line) == 0)
+	if (line[i] == 0)
 		return (line);
 	line[i] = 0;
-	if (ft_strlen(line) == 0 || check_line(line))
+	if (check_line(line))
 	{
 		line[i] = '=';
 		return (line);
@@ -72,9 +80,10 @@ void	alias(t_data *data, t_cmd *cmd, int fork, int subshell)
 		print_alias(cmd -> data, cmd, subshell);
 	else if (len > 1 && fork == 0 && ft_strcmp(cmd -> stop, "|"))
 	{
-		while (cmd ->args[++i])
+		while (cmd -> args[++i]
+			&& !check_alias(data -> alias, cmd -> args[i]))
 		{
-			line = is_valid_alias(env -> tab, cmd ->args[i]);
+			line = is_valid_alias(data -> alias -> head, cmd -> args[i]);
 			if (line && line != cmd ->args[i])
 				export_alias(env, cmd -> args[i]);
 			else if (line && line == cmd -> args[i])
