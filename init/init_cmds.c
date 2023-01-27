@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 02:02:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 02:22:36 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	skip_redirect(t_data *data, char *to_parse, size_t i)
 		if (to_parse[i] == '"' * -1 || to_parse[i] == '\'' * -1)
 				i = loop_nested_quote (to_parse, i, (to_parse[i] * 2));
 		else
-			while (to_parse[i] && to_parse[i] != ' ')
+			while (to_parse[i] && !ft_isspace(to_parse[i]))
 				i++;
 		i += (to_parse[i] != 0);
 		if (!to_parse[i] || !is_real_stop(data, to_parse, i, STOP_))

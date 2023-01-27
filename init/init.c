@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 02:16:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 02:18:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ void	init_cmd(t_data *data, char *to_process)
 	set_default_data(data, len);
 	fill_cmds(data -> cmds, data -> cp_to_parse, len);
 	fill_cmds_par(data -> cmds, to_process, len);
-	print_struct(data -> cmds);
+	//print_struct(data -> cmds);
 }

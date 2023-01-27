@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 00:13:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 02:21:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**clean_nl_str(t_data *data, char *line)
 		{
 			j = i;
 			while (line[++j] && line[j] != '\n')
-				if (line[j] != ' ' || line[j] != '\t')
+				if (!ft_isspace(line[j]))
 					seen = 1;
 			if (seen == 0)
 				line[i] = ' ';

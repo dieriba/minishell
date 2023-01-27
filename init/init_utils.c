@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 01:50:30 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 02:24:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	count_words(t_data *data, char *to_parse)
 			if (to_parse[i] == '"' * -1 || to_parse[i] == '\'' * -1)
 				i = loop_nested_quote (to_parse, i, (to_parse[i] * 2));
 			else
-				while (to_parse[i] && to_parse[i] != ' ' 
+				while (to_parse[i] && !ft_isspace(to_parse[i]) 
 					&& is_real_stop(data, to_parse, i, STOP_))
 					i++;
 		}
