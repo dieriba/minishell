@@ -10,7 +10,10 @@ SRCS_BUILT	=	./built_in/env_utils.c \
 				./built_in/env.c \
 				./built_in/export.c \
 				./built_in/export_utils.c \
-				./built_in/unset.c
+				./built_in/unset.c \
+				./built_in/alias.c \
+				./built_in/alias_utils.c \
+				./built_in/unalias.c \
 
 SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_files.c \

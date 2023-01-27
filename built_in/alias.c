@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   alias.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 15:40:50 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/27 15:11:03 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/27 15:46:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_export(t_data *data, t_cmd *cmd, char **tab, int subshell)
+void	print_alias(t_data *data, t_cmd *cmd, int subshell)
 {
-	size_t	i;
+	t_node	*node;
 	int		fd;
 
+	node = data -> alias -> head;
 	fd = where_to_write(data, cmd, subshell);
-	i = -1;
-	while (tab[++i])
+	while (node)
 	{
-		ft_putstr_fd("export ", fd);
-		ft_putendl_fd(tab[i], fd);
+		ft_putendl_fd(node -> line, fd);
+		node = node -> next;
 	}
 	data -> status = 0;
 }
 
-char	*is_valid_export(char **tab, char *line)
+char	*is_valid_alias(char **tab, char *line)
 {
 	size_t	i;
 	size_t	j;
@@ -40,7 +40,7 @@ char	*is_valid_export(char **tab, char *line)
 	while (line[++i] && line[i] != '=')
 		;
 	if (line[i] == 0 && check_line(line) == 0)
-		return (NULL);
+		return (line);
 	line[i] = 0;
 	if (ft_strlen(line) == 0 || check_line(line))
 	{
@@ -51,7 +51,7 @@ char	*is_valid_export(char **tab, char *line)
 	return (&line[i]);
 }
 
-void	export_error(t_data *data, char *line)
+void	alias_error(t_data *data, char *line)
 {
 	ft_putstr_fd("bash: export: `", 2);
 	ft_putstr_fd(line, 2);
@@ -59,7 +59,8 @@ void	export_error(t_data *data, char *line)
 	data -> status = 1;
 }
 
-void	export(t_cmd *cmd, t_env *env, int fork, int subshell)
+
+void	alias(t_data *data, t_cmd *cmd, int fork, int subshell)
 {
 	int		len;
 	char	*line;
@@ -68,16 +69,16 @@ void	export(t_cmd *cmd, t_env *env, int fork, int subshell)
 	i = 0;
 	len = ft_tab_len(cmd -> args);
 	if (len == 1 && fork)
-		print_export(cmd -> data, cmd, env -> tab, subshell);
+		print_alias(cmd -> data, cmd, subshell);
 	else if (len > 1 && fork == 0 && ft_strcmp(cmd -> stop, "|"))
 	{
 		while (cmd ->args[++i])
 		{
-			line = is_valid_export(env -> tab, cmd ->args[i]);
+			line = is_valid_alias(env -> tab, cmd ->args[i]);
 			if (line && line != cmd ->args[i])
-				make_export(env, cmd -> args[i]);
-			else if (line && line == cmd ->args[i])
-				export_error(cmd -> data, line);
+				export_alias(env, cmd -> args[i]);
+			else if (line && line == cmd -> args[i])
+				alias_error(cmd -> data, line);
 		}
 	}
 }

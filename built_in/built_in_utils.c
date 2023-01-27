@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:52:56 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:42:30 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 15:40:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,17 @@ int	where_to_write(t_data *data, t_cmd *cmd, int subshell)
 	else if ((cmd -> stop[0] > 0) && subshell && data -> s_pipes_inited)
 		fd = data -> p_pipes[1];
 	return (fd);
+}
+
+int	check_line(char *line)
+{
+	size_t	i;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] != '_' && !ft_isalpha(line[i]))
+			return (1);
+	}
+	return (0);
 }

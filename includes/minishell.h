@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 13:33:59 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 15:41:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ typedef struct t_data		t_data;
 typedef struct t_cmd		t_cmd;
 typedef struct t_collector	t_collector;
 typedef struct t_doc		t_doc;
+typedef struct t_alias		t_alias;
+
+typedef struct t_alias
+{
+	t_node	*head;
+	t_node	*last;
+}	t_alias; 
 
 typedef struct t_doc
 {
@@ -152,6 +159,7 @@ typedef struct t_data
 	char				**tab_;
 	struct sigaction	ctrl_c;
 	t_env				*env;
+	t_alias				*alias;
 	t_node				*collector;
 	t_cmd				**cmds;
 	t_doc				*here_docs;
@@ -253,6 +261,9 @@ void	unset(t_cmd *cmd, t_env *env);
 void	echo(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	make_export(t_env *env, char *line);
+void	alias(t_data *data, t_cmd *cmd, int subshell, int fork);
+void	unalias(t_cmd *cmd, t_alias *alias);
+int		check_line(char *line);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/

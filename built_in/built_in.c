@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 17:52:36 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:41:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 15:27:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	is_not_built_in(char *cmd)
 		return (0);
 	else if (ft_strcmp(cmd, "/env") == 0)
 		return (0);
+	else if (ft_strcmp(cmd, "/alias") == 0)
+		return (0);
 	return (1);
 }
 
@@ -39,4 +41,6 @@ void	built_in(t_data *data, t_cmd *cmd, int subshell, int fork)
 		unset(cmd, data -> env);
 	else if (ft_strcmp(cmd -> cmd, "/env") == 0)
 		env(data, cmd, subshell, fork);
+	else if (ft_strcmp(cmd -> cmd, "/alias") == 0)
+		alias(data, cmd, subshell, fork);
 }
