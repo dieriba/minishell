@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 14:06:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/27 14:41:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	check_behind(t_data *data, char *to_parse, char *in, int j, int index)
 {
 	int	seen;
 
+	if (!ft_strchr(STOP_), to_parse[j])
+		return (0);
 	seen = 1;
 	while (--j > index)
 	{
@@ -53,35 +55,27 @@ int	check_token_length(t_data *data, char *to_parse)
 	int		len;
 
 	i = -1;
-	while (to_parse[++i])
-	{
-		len = 0;
-		while (to_parse[i] && ft_isspace(to_parse[i]))
-			i++;
-		if (to_parse[i] && !is_real_stop(data, to_parse, i, DELIM_TOKEN_SP))
-		{
-			while (!is_real_stop(data, to_parse, ++i, DELIM_TOKEN_SP) && to_parse[i])
-				len++;
-			if (len > 0 && to_parse[i - 1] == ';')
-				return (to_parse[i]);
-			else if (len > 1)
-				return (to_parse[i]);
-		}
-		if (to_parse[i] == 0)
-			break ;
-	}
+	len = 0;
+	while (!is_real_stop(data, to_parse, ++i, DELIM_TOKEN_SP) && to_parse[i])
+		len++;
+	if (len > 0 && to_parse[i - 1] == ';')
+		return (1);
+	else if (len > 1)
+		return (1);
 	return (0);
 }
 
-int	check_validity(t_data *data, char *to_parse, size_t i, int both)
+int	check_validity(t_data *data, char *to_parse, size_t i)
 {
 	int	flags;
 	int	am_i_alone;
 
 	flags = -1;
-	am_i_alone = both;
-	if (both)
-		am_i_alone = check_behind(to_parse, DELIM_TOKEN_SP, i, -1);
+	if (check_token_length(data, &to_parse[i]))
+		return (-1);
+	if (ft_strchr(R_COMBO, to_parse[i]) && check_double(&to_parse[i]))
+		return (-1);
+	am_i_alone = check_behind(to_parse, DELIM_TOKEN_SP, i, -1);
 	while (to_parse[++i] && ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
 		;
 	while (to_parse[i])
@@ -113,11 +107,11 @@ int	valid_format_token(t_data *data, char *to_parse)
 		while (to_parse[i] && is_real_stop(data, to_parse, i, DELIM_TOKEN))
 			i++;
 		if (to_parse[i] && ft_strchr(STOP_, to_parse[i]))
-			flags = check_validity(data, to_parse, i, 1);
+			flags = check_validity(data, to_parse, i);
 		else if (to_parse[i] && ft_strchr(R_COMBO, to_parse[i]))
-			flags = check_validity(to_parse, i, 0);
+			flags = check_validity(to_parse, i);
 		if (to_parse[i] == 0 || flags == -1)
-			break ;
+			return (to_parse[i]) ;
 		if (flags > 0)
 			i = flags;
 	}
