@@ -25,11 +25,10 @@ SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_path_cmd.c \
 				./init/string_utils.c \
 				./init/init_files_utils.c \
+				./init/init_aliases.c \
 				./init/init_struct.c
 
 SRCS_ERROR	=	./error/error_handling.c \
-				./error/bad_input_token.c \
-				./error/check_parentheses.c
 
 SRCS_CLEAN	=	./clean/free.c \
 				./clean/clean_struct.c
@@ -86,11 +85,13 @@ all:			$(MINISHELL)
 				$(CC) -g3 $(CFLAGS) -c $< -o $@
 
 $(MINISHELL):	${OBJS}
+				make -C ./libft/get_next_line
+				cp ./libft/get_next_line/libgnl.a ./lib
 				make -C ./libft/ft_printf
 				cp ./libft/ft_printf/libprintf.a ./lib
 				make -C ./libft
 				cp ./libft/libft.a ./lib
-				$(CC) $(CFLAGS) ${OBJS} $(INCLUDES) -g3 -L./lib -lft -lprintf -lreadline -o $(MINISHELL)
+				$(CC) $(CFLAGS) ${OBJS} $(INCLUDES) -g3 -L./lib -lft -lprintf -lgnl -lreadline -o $(MINISHELL)
 
 
 clean:
@@ -100,10 +101,11 @@ clean:
 fclean:			clean
 				make -C ./libft/ft_printf fclean
 				make -C ./libft/ fclean
-				rm -rf $(MINISHELL) ./lib/libprintf.a ./lib/libft.a 
+				rm -rf $(MINISHELL) ./lib/libprintf.a ./lib/libft.a ./lib/libgnl.a
 				
 leaks:
-				valgrind --suppressions=ignore.txt -s  --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
+				make && valgrind --suppressions=ignore.txt -s  --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
+
 re:				fclean all
 
 -include : 		$(DEPS)

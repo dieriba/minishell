@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:47:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 05:24:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	free_list(t_env *env, t_node **head)
 	}
 	(*head) = NULL;
 	if (env)
-		free(env);
+		ft_free_elem((void **)env);
 }
 
 void	free_all(t_data *data, int status)
@@ -83,6 +83,8 @@ void	free_all(t_data *data, int status)
 		close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
 	}
 	free_cmd(data -> cmds);
+	free_list(NULL, &data -> alias -> head);
+	ft_free_elem(((void **)&data -> alias));
 	ft_free_elem((void **)&g_collector);
 	ft_free_elem((void **)&data -> cp_to_parse);
 	ft_free_elem((void **)&data -> env);

@@ -1,1 +1,3 @@
-# POPULATE ALIASES
+ga=git add
+l=ls -la
+dieriba=echo dieriba

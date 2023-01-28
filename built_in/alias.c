@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alias.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:11:03 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 21:31:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 06:31:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	print_alias(t_data *data, t_cmd *cmd, int subshell)
 	fd = where_to_write(data, cmd, subshell);
 	while (node)
 	{
-		ft_putendl_fd(node -> line, fd);
+		if (ft_putendl_fd(node -> line, fd) < 0)
+			print_err_and_exit(data, NULL, "syscall", 1);
 		node = node -> next;
 	}
 	data -> status = 0;
@@ -40,7 +41,7 @@ int	check_alias(t_node *alias, char *line)
 	return (0);
 }
 
-void	*is_valid_alias(t_node *alias, char *line)
+char	*is_valid_alias(char *line)
 {
 	size_t	i;
 
@@ -59,16 +60,66 @@ void	*is_valid_alias(t_node *alias, char *line)
 	return (&line[i]);
 }
 
-void	alias_error(t_data *data, char *line)
+void	set_alias(t_data *data, t_node *node, t_node *alias)
 {
-	ft_putstr_fd("bash: export: `", 2);
-	ft_putstr_fd(line, 2);
-	ft_putendl_fd("' : not a valid identifier", 2);
-	data -> status = 1;
+	if (alias && alias -> prev == NULL)
+	{
+		alias -> next -> prev = node;
+		node -> next = alias -> next;
+		data -> alias -> head = node;
+	}
+	else if (alias && alias -> next == NULL)
+	{
+		alias -> prev -> next = node;
+		node -> prev = alias -> prev;
+		data -> alias -> last = node;
+	}
+	else if (alias)
+	{
+		alias -> prev -> next = node;
+		alias -> next -> prev = node;
+		node -> next = alias -> next;
+		node -> prev = alias -> prev;
+	}
+	else
+	{
+		data -> alias -> last -> next = node;
+		node -> prev = data -> alias -> last;
+		data -> alias -> last = node;
+	}
 }
 
+void	export_alias(t_data *data, char *line)
+{
+	t_node	*node;
+	size_t	i;
+	t_node	*alias;
 
-void	alias(t_data *data, t_cmd *cmd, int fork, int subshell)
+	i = -1;
+	alias = NULL;
+	node = create_node(data, line, 1);
+	is_error(data, node, MALLOC_ERR, 0);
+	if (data -> alias -> head == NULL)
+	{
+		data -> alias -> head = node;
+		data -> alias -> last = node;
+		return ;
+	}
+	while (line[++i] && line[i] != '=')
+		;
+	line[i] = 0;
+	alias = find_(data, line);
+	line[i] = '=';
+	set_alias(data, node, alias);
+	if (alias)
+	{
+		ft_free_elem((void **)&alias -> line);
+		ft_free_elem((void **)&alias);
+	}
+	data -> status = 0;
+}
+
+void	alias(t_data *data, t_cmd *cmd, int subshell, int fork)
 {
 	int		len;
 	char	*line;
@@ -81,13 +132,13 @@ void	alias(t_data *data, t_cmd *cmd, int fork, int subshell)
 	else if (len > 1 && fork == 0 && ft_strcmp(cmd -> stop, "|"))
 	{
 		while (cmd -> args[++i]
-			&& !check_alias(data -> alias, cmd -> args[i]))
+			&& !check_alias(data -> alias -> head, cmd -> args[i]))
 		{
-			line = is_valid_alias(data -> alias -> head, cmd -> args[i]);
+			line = is_valid_alias(cmd -> args[i]);
 			if (line && line != cmd ->args[i])
-				export_alias(env, cmd -> args[i]);
+				export_alias(data, cmd -> args[i]);
 			else if (line && line == cmd -> args[i])
-				alias_error(cmd -> data, line);
+				alias_(data, cmd, line, subshell);
 		}
 	}
 }

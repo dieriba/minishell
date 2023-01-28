@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 15:41:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 05:54:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include "../libft/ft_printf/ft_printf.h"
+# include "../libft/get_next_line/get_next_line.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
@@ -262,8 +263,11 @@ void	echo(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	make_export(t_env *env, char *line);
 void	alias(t_data *data, t_cmd *cmd, int subshell, int fork);
-void	unalias(t_cmd *cmd, t_alias *alias);
 int		check_line(char *line);
+void	alias_(t_data *data, t_cmd *cmd, char *line, int subshell);
+void	unalias(t_cmd *cmd);
+void	populate(t_data *data, char *file);
+t_node    *find_(t_data *data, char *line);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/
