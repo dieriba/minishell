@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 04:28:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 05:38:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 17:45:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	read_file(t_data *data, int fd)
 			;
 		line[i] = 0;
 		node = create_node(data, line, 1);
+		node -> i = ft_char_index(line, '=') + 1;
 		is_error(data, node, MALLOC_ERR, 0);
 		ft_lst_add_front_s(&data -> alias -> head, node);
 		ft_free_elem((void **)&line);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 05:54:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 17:10:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct t_node
 {
 	char	*line;
 	char	alloc;
+	int		i;
 	t_node	*next;
 	t_node	*prev;
 }	t_node;
@@ -254,8 +255,10 @@ size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 
 /*-----------------BUILT_IN-----------------*/
 char	*get_var_line(char *line);
+char    *find_alias_node(t_data *data, char *line);
 int		where_to_write(t_data *data, t_cmd *cmd, int subshell);
 int		is_not_built_in(char *cmd);
+int		check_line(char *line);
 void	export(t_cmd *cmd, t_env *env, int fork, int subshell);
 void	env(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	unset(t_cmd *cmd, t_env *env);
@@ -263,11 +266,13 @@ void	echo(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	make_export(t_env *env, char *line);
 void	alias(t_data *data, t_cmd *cmd, int subshell, int fork);
-int		check_line(char *line);
 void	alias_(t_data *data, t_cmd *cmd, char *line, int subshell);
 void	unalias(t_cmd *cmd);
+void	back_to_space(char **tab);
 void	populate(t_data *data, char *file);
-t_node    *find_(t_data *data, char *line);
+void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab);
+char	*from_tab_to_line(t_cmd *cmd, char **tab);
+t_node	*find_(t_data *data, char *line);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/

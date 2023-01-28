@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 02:13:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 07:11:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 17:13:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,24 @@ void	copy_tab_to_str(char **tab, char *to_clean)
 	}
 }
 
-void	back_to_space(char **tab)
-{
-	size_t	i;
-	size_t	j;
-
-	i = -1;
-	while (tab[++i])
-	{
-		j = -1;
-		while (tab[i][++j])
-		{
-			if (tab[i][j] < 0)
-				tab[i][j] *= -1;
-		}
-	}
-}
-
-void	expanded_tab(t_cmd *cmd, char **tab)
+char	*from_tab_to_line(t_cmd *cmd, char **tab)
 {
 	size_t	len;
 	char	*to_clean;
-
+	
 	len = ft_str_tab_len(tab) + ft_tab_len(tab);
 	to_clean = ft_calloc(sizeof(char), len + 1);
 	is_error(cmd -> data, to_clean, MALLOC_ERR, 0);
 	copy_tab_to_str(tab, to_clean);
 	cmd -> args = ft_free_tab(tab);
+	return (to_clean);
+}
+
+void	expanded_tab(t_cmd *cmd, char **tab)
+{
+	char	*to_clean;
+
+	to_clean = from_tab_to_line(cmd, tab);
 	to_clean = clean_(cmd -> data, to_clean, 1);
 	tab = ft_split(to_clean, ' ');
 	is_error(cmd -> data, tab, MALLOC_ERR, 0);
@@ -103,6 +94,7 @@ void	clean_cmd(t_cmd *cmd)
 	if (cmd -> args == NULL)
 		return ;
 	tab = cmd -> args;
+	from_alias_to_hero(cmd -> data, cmd, tab);
 	to_clean = check_tab(cmd -> args);
 	if (to_clean < 0)
 		while (tab[++i])

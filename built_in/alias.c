@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:11:03 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 06:31:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 16:23:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	export_alias(t_data *data, char *line)
 	line[i] = 0;
 	alias = find_(data, line);
 	line[i] = '=';
+	node -> i = ++i;
 	set_alias(data, node, alias);
 	if (alias)
 	{

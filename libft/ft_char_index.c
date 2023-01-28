@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dup_tab.c                                       :+:      :+:    :+:   */
+/*   ft_char_index.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 14:16:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 17:23:57 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/28 16:25:45 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/28 16:28:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-char	**ft_dup_tab(char **to_copy, char *to_join)
+int	ft_char_index(char *line, char to_find)
 {
 	size_t	i;
-	char	**tab;
 
-	if (!to_copy || !to_join)
-		return (NULL);
-	i = ft_tab_len(to_copy);
-	tab = malloc(sizeof(char *) * (i + 1));
-	if (!tab)
-		return (NULL);
-	tab[i] = 0;
 	i = -1;
-	while (to_copy[++i])
-	{
-		tab[i] = ft_strjoin(to_copy[i], to_join);
-		if (!tab[i])
-			return (ft_free_tab(tab));
-	}
-	ft_free_tab(to_copy);
-	return (tab);
+	while (line[++i] && line[i] != to_find)
+		;
+	if (line[i])
+		return (i);
+	return (-1);
 }

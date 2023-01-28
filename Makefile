@@ -46,6 +46,7 @@ SRCS_EXEC	=	./exec/fd.c \
 
 SRCS_PARSER	=	./parser/cleaner.c \
 				./parser/clean_cmd.c \
+				./parser/alias_cmd.c \
 				./parser/clean_files.c \
 				./parser/clean_utils.c \
 				./parser/quote_utils.c \
