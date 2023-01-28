@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 02:13:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 17:13:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 17:51:03 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*from_tab_to_line(t_cmd *cmd, char **tab)
 {
 	size_t	len;
 	char	*to_clean;
-	
+
 	len = ft_str_tab_len(tab) + ft_tab_len(tab);
 	to_clean = ft_calloc(sizeof(char), len + 1);
 	is_error(cmd -> data, to_clean, MALLOC_ERR, 0);

@@ -6,34 +6,17 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:11:03 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 16:23:44 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 17:54:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_alias(t_data *data, t_cmd *cmd, int subshell)
-{
-	t_node	*node;
-	int		fd;
-
-	node = data -> alias -> head;
-	fd = where_to_write(data, cmd, subshell);
-	while (node)
-	{
-		if (ft_putendl_fd(node -> line, fd) < 0)
-			print_err_and_exit(data, NULL, "syscall", 1);
-		node = node -> next;
-	}
-	data -> status = 0;
-}
-
-
 int	check_alias(t_node *alias, char *line)
 {
 	while (alias)
 	{
-		if (alias -> line[0] == line[0] 
+		if (alias -> line[0] == line[0]
 			&& !ft_strcmp(alias -> line, line))
 			return (1);
 		alias = alias -> next;
@@ -95,7 +78,6 @@ void	export_alias(t_data *data, char *line)
 	size_t	i;
 	t_node	*alias;
 
-	i = -1;
 	alias = NULL;
 	node = create_node(data, line, 1);
 	is_error(data, node, MALLOC_ERR, 0);
@@ -105,8 +87,7 @@ void	export_alias(t_data *data, char *line)
 		data -> alias -> last = node;
 		return ;
 	}
-	while (line[++i] && line[i] != '=')
-		;
+	i = ft_char_index(line, '=');
 	line[i] = 0;
 	alias = find_(data, line);
 	line[i] = '=';

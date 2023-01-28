@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:50:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 17:45:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 17:50:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	back_to_space(char **tab)
 void	join_line(t_data *data, char **tmp, char *line)
 {
 	t_node	*alias;
-	
+
 	alias = find_(data, line);
 	if (alias)
 		(*tmp) = ft_strjoin((*tmp), &alias -> line[alias -> i]);
@@ -46,7 +46,7 @@ void	from_line_to_hero(t_data *data, char *line, char **tmp)
 	size_t	i;
 	size_t	j;
 	char	stop;
-	
+
 	i = -1;
 	while (line[++i])
 	{
@@ -73,7 +73,7 @@ void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab)
 	size_t	i;
 	char	*line;
 	char	*tmp;
-	
+
 	i = -1;
 	tmp = NULL;
 	while (tab[++i])

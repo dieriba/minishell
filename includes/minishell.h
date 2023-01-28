@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 17:10:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/28 17:56:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct t_alias
 {
 	t_node	*head;
 	t_node	*last;
-}	t_alias; 
+}	t_alias;
 
 typedef struct t_doc
 {
@@ -255,7 +255,7 @@ size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 
 /*-----------------BUILT_IN-----------------*/
 char	*get_var_line(char *line);
-char    *find_alias_node(t_data *data, char *line);
+char	*find_alias_node(t_data *data, char *line);
 int		where_to_write(t_data *data, t_cmd *cmd, int subshell);
 int		is_not_built_in(char *cmd);
 int		check_line(char *line);
@@ -273,6 +273,7 @@ void	populate(t_data *data, char *file);
 void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab);
 char	*from_tab_to_line(t_cmd *cmd, char **tab);
 t_node	*find_(t_data *data, char *line);
+void	print_alias(t_data *data, t_cmd *cmd, int subshell);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/
