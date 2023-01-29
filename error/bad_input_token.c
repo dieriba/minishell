@@ -6,146 +6,121 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 14:41:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 02:22:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_behind(t_data *data, char *to_parse, char *in, int j, int index)
-{
-	int	seen;
-
-	if (!ft_strchr(STOP_), to_parse[j])
-		return (0);
-	seen = 1;
-	while (--j > index)
-	{
-		while (j > index && ft_isspace(to_parse[j]))
-			j--;
-		if (!is_real_stop(data, to_parse, j, in))
-			break ;
-		else if (is_real_stop(data, to_parse, j, in))
-		{
-			seen = 0;
-			break ;
-		}
-	}
-	return (seen);
-}
-
-int	check_double(char *to_parse)
-{
-	size_t	i;
-
-	i = -1;
-	while (to_parse[++i])
-	{
-		if (to_parse[i] == R_IN && to_parse[i + 1] == R_OUT)
-			return (to_parse[i]);
-		else if (to_parse[i] == R_OUT && to_parse[i + 1] == R_IN)
-			return (to_parse[i]);
-	}
-	return (0);
-}
-
-int	check_token_length(t_data *data, char *to_parse)
+int	check_token_length(char *to_parse)
 {
 	size_t	i;
 	int		len;
 
 	i = -1;
 	len = 0;
-	while (!is_real_stop(data, to_parse, ++i, DELIM_TOKEN_SP) && to_parse[i])
+	while (to_parse[++i] && ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
 		len++;
-	if (len > 0 && to_parse[i - 1] == ';')
+	if (len > 1 && to_parse[i - 1] == ';')
 		return (1);
-	else if (len > 1)
+	else if (len > 2)
 		return (1);
 	return (0);
 }
 
-int	check_validity(t_data *data, char *to_parse, size_t i)
+int	check_function(char *to_parse, size_t i)
+{
+	int	err;
+
+	err = 0;
+	if (to_parse[i] == R_IN && to_parse[i + 1] == R_OUT)
+		err = 1;
+	else if (to_parse[i] == R_OUT && to_parse[i + 1] == R_IN)
+		err = 1;
+	if (check_token_length(&to_parse[i]))
+		return (-1);
+	if (ft_strchr(R_COMBO, to_parse[i]) && err)
+		return (-1);
+	return (0);
+}
+
+int	check_validity(char *to_parse, size_t i)
 {
 	int	flags;
 	int	am_i_alone;
+	int	token;
 
+	token = to_parse[i];
 	flags = -1;
-	if (check_token_length(data, &to_parse[i]))
+	if (check_function(to_parse, i))
 		return (-1);
-	if (ft_strchr(R_COMBO, to_parse[i]) && check_double(&to_parse[i]))
+	am_i_alone = check_behind(to_parse, i);
+	if (am_i_alone && (token != '<' && token != '>'))
 		return (-1);
-	am_i_alone = check_behind(to_parse, DELIM_TOKEN_SP, i, -1);
 	while (to_parse[++i] && ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
 		;
-	while (to_parse[i])
-	{
-		if (!ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
-		{
-			flags = 1;
-			break ;
-		}
-		else if (!is_real_stop(data, to_parse, i, DELIM_TOKEN_SP))
-			break ;
+	if (to_parse[i - 1] == ';')
+		return (i);
+	while (to_parse[i] && ft_isspace(to_parse[i]))
 		i++;
-	}
-	if (flags == -1 || am_i_alone || !to_parse[i])
+	if (to_parse[i] && !ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
+		flags = 1;
+	if ((to_parse[i] && flags == -1)
+		|| (ft_strchr(R_COMBO, token) && flags == -1))
 		return (-1);
+	else if (to_parse[i] == 0 && !ft_strchr(R_COMBO, token))
+		return (2);
 	return (i);
 }
 
-int	valid_format_token(t_data *data, char *to_parse)
+int	valid_format_token(char *to_parse)
 {
 	size_t	i;
 	int		flags;
 
+	if (to_parse == NULL)
+		return (2);
 	i = -1;
 	flags = 0;
 	while (to_parse[++i])
 	{
 		flags = 0;
-		while (to_parse[i] && is_real_stop(data, to_parse, i, DELIM_TOKEN))
-			i++;
-		if (to_parse[i] && ft_strchr(STOP_, to_parse[i]))
-			flags = check_validity(data, to_parse, i);
-		else if (to_parse[i] && ft_strchr(R_COMBO, to_parse[i]))
+		if (to_parse[i] == '"' || to_parse[i] == '\'')
+			skip_(to_parse, &i, to_parse[i]);
+		if (to_parse[i] && ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
 			flags = check_validity(to_parse, i);
-		if (to_parse[i] == 0 || flags == -1)
-			return (to_parse[i]) ;
+		if (flags == -1)
+			return (to_parse[i]);
+		else if (flags == 2)
+			return (flags);
 		if (flags > 0)
-			i = flags;
+			i = flags - 1;
+		if (to_parse[i] == 0)
+			break ;
 	}
-	return (flags);
+	return (0);
 }
 
-int	missing_right_commands(t_data *data, char *to_parse)
+int	unvalid_line(t_data *data, char *line, char **rescue_cmd)
 {
-	size_t	i;
-	int		seen;
-	
-	i = -1;
-	while (to_parse[++i])
+	int		err;
+	char	*tmp;
+
+	err = valid_format_token(line);
+	if (err > 2)
+		print_bad_syntax(data, TOKEN_SYNTAX_ERR, err);
+	else if (err == 2)
+		rescue_command(data, rescue_cmd, err);
+	if ((*rescue_cmd))
 	{
-		while (to_parse[i] && !is_real_stop(data, to_parse, i, BASE_STOP))
-			i++;
-		seen = 0;
-		if (to_parse[i] && ft_strchr(BASE_FORMAT, to_parse[i]))
-		{
-			i += (to_parse[i] == to_parse[i + 1]);
-			while (to_parse[++i] && ft_isspace(to_parse[i]))
-				;
-			if (to_parse[i])
-				seen = 1;
-			if (to_parse[i] == 0 && seen = 0)
-				return (1);
-		}
-		i -= (to_parse[i] == 0);
+		tmp = (*rescue_cmd);
+		(*rescue_cmd) = ft_strjoin(data -> cp_to_parse, (*rescue_cmd));
+		is_error(data, (*rescue_cmd), MALLOC_ERR, 0);
+		ft_free_elem((void **)&data -> cp_to_parse);
+		ft_free_elem((void **)&tmp);
+		data -> cp_to_parse = (*rescue_cmd);
+		(*rescue_cmd) = NULL;
+		return (0);
 	}
-	return (0);
-}
-
-int	unvalid_line(char **line)
-{
-	
-	return (0);
+	return (err);
 }

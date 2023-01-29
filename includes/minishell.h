@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 17:56:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 02:18:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@
 # define ENV_ERR "Sorry, no environnement variable avaible right now."
 # define PIPE_INIT_ERROR "Pipe initialization  error"
 # define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
+# define TOKEN_EOF_ERR "bash: syntax error: unexpected end of file"
 # define AMB_REDIRECT "bash : ambiguous redirect"
+
+# define LOG_FILE "log_alias"
+# define ALIAS_FILENAME "populate_aliases"
 
 enum e_type
 {
@@ -167,6 +171,11 @@ typedef struct t_data
 	t_doc				*here_docs;
 }t_data;
 
+/*-----------------SYSCALL-----------------*/
+void	dup_(t_data *data, int fd, int old_fd);
+void	dup_and_close(t_data *data, int fd, int old_fd, int to_close);
+/*-----------------SYSCALL-----------------*/
+
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 extern t_collector			*g_collector;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
@@ -179,9 +188,12 @@ void	new_line(int signal);
 /*-----------------ERROR_HANDLING-----------------*/
 int		is_str_valid(t_data *data, char *to_parse);
 int		check_parenthese(char *to_parse);
-void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type);
 int		print_bad_syntax(t_data *data, char *str, char token);
+int		missing_right_commands(char *to_parse);
+void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type);
 void	check_lines(t_data *data, char *files, char *err, int flags);
+void	skip_reverse(char *to_parse, int *i, int quote);
+void	skip_(char *to_parse, size_t *i, int quote);
 /*-----------------ERROR_HANDLING-----------------*/
 
 /*-----------------GLOBAL_UTILS-----------------*/
@@ -189,7 +201,6 @@ t_node	*create_node(t_data *data, char *line, int alloc);
 t_node	*ft_lst_add_front_s(t_node **node, t_node *new);
 t_node	*ft_lstlast_s(t_node *lst);
 char	*find_var(char **tab, char *to_find);
-int		check_behind(char *to_parse, char *in, int j, int index);
 /*-----------------GLOBAL_UTILS-----------------*/
 
 /*-----------------DEBUG_UTILS-----------------*/
@@ -202,8 +213,10 @@ void	print_env(char **tab);
 int		skip_spaces(t_data *data, char *to_parse, int i, int skip);
 int		count_words(t_data *data, char *to_parse);
 int		is_same_token(char c, char d);
+int		check_condition(char *line, int j);
 int		skip_char_letter_str(
 			t_data *data, size_t i, char *to_parse, char *to_skip);
+int		check_behind(char *to_parse, int j);
 int		skip_char_token_str(size_t i, char *to_parse, char *to_skip);
 int		add_command(t_data *data, char *to_process, int i);
 int		check_quotes(char *to_parse, int i);
@@ -215,6 +228,7 @@ void	set_default_data(t_data *data, int len);
 void	set_last_setup(t_cmd *cmd);
 void	file_type(t_files *redirect, char a, char b);
 void	init_struct(t_data **data);
+void	last_node(t_data *data);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/
@@ -240,7 +254,9 @@ int		char_is_quote(t_data *data, char c);
 int		char_is_end_quote(t_data *data, char c);
 int		skip_next_stop(char *to_clean);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
-int		unvalid_line(char **line);
+int		valid_format_token(char *to_parse);
+int		unvalid_line(t_data *data, char *line, char **rescue_cmd);
+void	rescue_command(t_data *data, char **rescue_cmd, int err);
 char	*is_shell_variable(t_data *data, char *line);
 char	*cleaner(t_data *data, char *to_clean);
 char	*clean_(t_data *data, char *to_clean, int skip);
@@ -259,6 +275,7 @@ char	*find_alias_node(t_data *data, char *line);
 int		where_to_write(t_data *data, t_cmd *cmd, int subshell);
 int		is_not_built_in(char *cmd);
 int		check_line(char *line);
+int		log_files_alias(char *alias, int err_code, int line);
 void	export(t_cmd *cmd, t_env *env, int fork, int subshell);
 void	env(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	unset(t_cmd *cmd, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:52:56 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 17:48:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 00:00:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	check_line(char *line)
 		if (line[i] == '$'
 			&& (line[i + 1] == '=' || !line[i]))
 			return (1);
-		if (line[i] != '$'
-			&& line[i] != '_' && !ft_isalpha(line[i]))
+		if (line[i] != '_' && !ft_isalpha(line[i]))
 			return (1);
 	}
 	return (0);

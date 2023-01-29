@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:54:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 02:00:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ void	dup_(t_data *data, int fd, int old_fd)
 		data -> status = -1;
 		print_err_and_exit(data, NULL, "bash", 1);
 	}
+}
+
+void	dup_and_close(t_data *data, int fd, int old_fd, int to_close)
+{
+	if (dup2(fd, old_fd) < 0)
+	{
+		data -> status = -1;
+		print_err_and_exit(data, NULL, "bash", 1);
+	}
+	close_fd(data, "bash", &to_close);
 }
 
 void	set_out_redirection(t_cmd *cmd, int subshell)

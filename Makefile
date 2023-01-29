@@ -29,6 +29,9 @@ SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_struct.c
 
 SRCS_ERROR	=	./error/error_handling.c \
+				./error/bad_input_token.c \
+				./error/bad_input_token_utils.c \
+				./error/bad_syntax_alias_files.c \
 
 SRCS_CLEAN	=	./clean/free.c \
 				./clean/clean_struct.c
