@@ -33,6 +33,7 @@ SRCS_ERROR	=	./error/error_handling.c \
 				./error/bad_input_token.c \
 				./error/bad_input_token_utils.c \
 				./error/bad_syntax_alias_files.c \
+				./error/check_parentheses.c \
 
 SRCS_CLEAN	=	./clean/free.c \
 				./clean/clean_struct.c

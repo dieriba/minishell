@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 04:41:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 20:44:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define STOP_F_P "|&<> )\"'"
 # define STOP_EXP "\\ '\"$&|<> "
 # define VALID_COMB_EXP "$ "
+# define VALID_ ";()"
 /*-----------------GLOBAL_CHECK-----------------*/
 # define FORMAT_TOKEN "|&<>"
 # define FORMAT_TOKEN_P "|&<>()"
@@ -51,6 +52,7 @@
 # define FORMAT_TOKEN_SP_RR "|&<>)"
 # define DELIM_TOKEN "|&<>();"
 # define DELIM_TOKEN_SP "|&<>;"
+# define DELIM_TOKEN_SP_G "|&<>;()"
 # define MAX_LEN_TOKEN 2
 # define EXCLUDE_TOKEN "{[]};"
 /*-----------------GLOBAL_CHECK-----------------*/
@@ -219,6 +221,7 @@ int		check_condition(char *line, int j);
 int		skip_char_letter_str(
 			t_data *data, size_t i, char *to_parse, char *to_skip);
 int		check_behind(char *to_parse, int j);
+int		check_behind_par(char *to_parse, int i);
 int		skip_char_token_str(size_t i, char *to_parse, char *to_skip);
 int		add_command(t_data *data, char *to_process, int i);
 int		check_quotes(char *to_parse, int i);
@@ -246,6 +249,7 @@ t_files	*copy_files(t_data *data, char *to_parse, int k, int j);
 
 /*-----------------PARSER-----------------*/
 int		valid_quotes(t_data *data, char *to_parse);
+int		valid_parentheses(char *to_parse, size_t i);
 int		is_real_stop(t_data *data, char *to_parse, size_t i, char *in);
 int		find_start_quotes(t_data *data, char *to_parse, int i);
 int		find_end_quotes(t_data *data, char *to_parse, int i);
@@ -267,6 +271,7 @@ void	parser(t_data *data, char **tab, int type);
 void	quote_to_neg(t_data *data, char *to_parse);
 char	*clean_lines(t_data *data, char *line, int expand);
 void	clean_cmd(t_cmd *cmd);
+void	skip_reverse(char *to_parse, int *i, int quote);
 void	clean_files(t_cmd *cmd);
 size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 /*-----------------PARSER-----------------*/

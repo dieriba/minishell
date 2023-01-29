@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:50:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 07:17:30 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 19:50:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab)
 	i = -1;
 	tmp = NULL;
 	if (ft_strcmp(tab[0], "unalias") == 0)
-		return ;
+		return;
 	while (tab[++i])
 	{
 		line = find_alias_node(data, tab[i]);

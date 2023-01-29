@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 05:51:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 19:52:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,15 @@ void	lets_read(t_data *data)
 				err = unvalid_line(data, data -> cp_to_parse, &rescue_cmd);
 			add_history(data -> cp_to_parse);
 			quote_to_neg(data, data -> cp_to_parse);
-			if (err == 0)
+			/*if (err == 0)
 			{
 				data -> tab_ = clean_nl_str(data, data -> cp_to_parse);
 				is_error(data, data -> tab_, MALLOC_ERR, 0);
 				shell_routine(data);
-			}
-			else if (data -> cp_to_parse)
+			}*/
+			if (data -> cp_to_parse)
 				ft_free_elem((void **)&data -> cp_to_parse);
+			
 		}
 		else
 			free_all(data, 130);

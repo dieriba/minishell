@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 15:40:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 16:29:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,22 @@ void	print_export(t_data *data, t_cmd *cmd, char **tab, int subshell)
 {
 	size_t	i;
 	int		fd;
+	int		saved_stdout;
 
 	fd = where_to_write(data, cmd, subshell);
+	if (fd != STDOUT_FILENO)
+	{
+		saved_stdout = dup(STDOUT_FILENO);
+		if (saved_stdout < 0)
+			print_err_and_exit(data, NULL, "syscall", 1);
+		dup_and_close(data, fd, STDOUT_FILENO, fd);
+	}
 	i = -1;
 	while (tab[++i])
-	{
-		ft_putstr_fd("export ", fd);
-		ft_putendl_fd(tab[i], fd);
-	}
+		if (ft_printf("export %s\n", tab[i]) < 0)
+			print_err_and_exit(data, NULL, "syscall", 1);
+	if (fd != STDOUT_FILENO)
+		dup_and_close(data, saved_stdout, STDOUT_FILENO, saved_stdout);
 	data -> status = 0;
 }
 

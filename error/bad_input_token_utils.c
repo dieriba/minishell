@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 05:06:04 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 20:54:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	rescue_command(t_data *data, char **rescue_cmd, int err)
 			is_error(data, (*rescue_cmd), MALLOC_ERR, 0);
 		}
 		ft_free_elem((void **)&to_free);
-		if (cmd == NULL || err == 0 || err > 2)
+		if (cmd == NULL || err == 0 || err > 0)
 			break ;
 	}
 	handle_case(data, rescue_cmd, &cmd, err);
@@ -90,16 +90,21 @@ void	rescue_command(t_data *data, char **rescue_cmd, int err)
 int	check_behind(char *to_parse, int j)
 {
 	int	seen;
-
-	if (!ft_strchr(STOP_, to_parse[j]))
+	
+	if (to_parse[j] == '(' && j == 0)
+		return (j);
+	if (!ft_strchr(STOP_, to_parse[j])
+		&& (to_parse[j] != '(' && to_parse[j] != ')'))
 		return (0);
 	seen = 1;
 	if (j - 1 < 0)
 		return (seen);
+	if (to_parse[j] == '(' || to_parse[j] == ')')
+		return (check_behind_par(to_parse, j));
 	while (--j > -1 && ft_strchr(DELIM_TOKEN_SP, to_parse[j]))
 		;
-	while (--j > -1 && ft_isspace(to_parse[j]))
-		;
+	while (j > -1 && ft_isspace(to_parse[j]))
+		j--;
 	if (!ft_strchr(DELIM_TOKEN_SP, to_parse[j])
 		&& to_parse[j] != '(')
 		seen = 0;
