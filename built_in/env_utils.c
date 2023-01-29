@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:58:15 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:44:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 07:04:17 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	check(char *env, char *to_check)
 	while (env[++i] && env[i] != '=')
 		;
 	env[i] = 0;
+	printf("alias value : %s to_check : %s\n", env, to_check);
 	res = ft_strcmp(env, to_check);
 	env[i] = '=';
 	return (res);

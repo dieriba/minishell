@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:48:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 06:47:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ size_t	skip_redirect(t_data *data, char *to_parse, size_t i)
 			i++;
 		i = skip_spaces(data, to_parse, i, 0);
 		if (to_parse[i] == '"' * -1 || to_parse[i] == '\'' * -1)
-				i = loop_nested_quote (to_parse, i, (to_parse[i] * 2));
+			i = loop_nested_quote (to_parse, i, (to_parse[i] * 2));
 		else
 			while (to_parse[i] && !ft_isspace(to_parse[i]))
 				i++;
@@ -94,6 +94,7 @@ void	set_tabs_cmd(t_data *data, char **cmds, char *to_parse, int length)
 			cmds[i][++m] = to_parse[k++];
 		if (ft_strchr(R_COMBO, to_parse[j]) || to_parse[j] == '$')
 			j--;
+		j -= (to_parse[j] == 0);
 	}
 }
 

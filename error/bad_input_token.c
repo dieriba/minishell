@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 02:22:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 05:10:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	check_validity(char *to_parse, size_t i)
 		return (i);
 	while (to_parse[i] && ft_isspace(to_parse[i]))
 		i++;
-	if (to_parse[i] && !ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
+	if (to_parse[i] && to_parse[i] != ')'
+		&& !ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
 		flags = 1;
 	if ((to_parse[i] && flags == -1)
 		|| (ft_strchr(R_COMBO, token) && flags == -1))

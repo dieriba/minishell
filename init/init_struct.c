@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_struct_.c                                     :+:      :+:    :+:   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:39:54 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:40:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 05:57:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	init_struct(t_data **data)
 {
 	(*data) = ft_calloc(sizeof(t_data), 1);
 	is_error((*data), (*data), MALLOC_ERR, 1);
+	(*data) -> alias = ft_calloc(sizeof(t_alias), 1);
+	is_error((*data), (*data) -> alias, MALLOC_ERR, 1);
 	(*data)-> neg_single_start = '\'' * -1;
 	(*data)-> neg_single_end = '\'' * -2;
 	(*data)-> neg_double_start = '"' * -1;

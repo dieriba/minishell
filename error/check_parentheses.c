@@ -6,120 +6,123 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:25:28 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/05 03:50:32 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 05:40:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	count_parentheses(char *to_parse, char find)
+int	find_next_par(t_data *data, char *to_parse, int *left, int *right)
 {
+	int		seen;
 	size_t	i;
-	int		occur;
 
 	i = -1;
+	seen = 0;
 	while (1)
 	{
-		while (to_parse[++i] && to_parse[i] != find)
-			;
-		if (!to_parse[i])
+		while (to_parse[++i] && to_parse[i] != ')')
+		{
+			if (to_parse[i] == '"' || to_parse[i] == '\'')
+				i = skip_(to_parse, &i, to_parse[i]);
+			if (to_parse[i] == '(')
+				(*left) += 1;
+			if (to_parse[i] && check_behind_par(to_parse, i))
+				return (-1);
+			if (ft_strchr(DELIM_TOKEN_SP, to_parse[i])
+					&& !find_end_quotes(data, to_parse, i))
+				seen = 1;
+		}
+		if (to_parse[i] == 0 || !find_end_quotes(data, to_parse, i))
 			break ;
-		occur = 1;
-		while (to_parse[++i] && to_parse[i] == find)
-			occur++;
-		if (occur > 2)
-			return (1);
 	}
-	return (0);
+	while (to_parse[i] && to_parse[i] == ')')
+		(*right) += 1;
+	if ((*seen == 0) && (*right == 2) && (*left == 2))
+		return (-1);
+	return (i);
 }
 
-int	wrong_format(char *to_parse, size_t i, size_t j)
+int	check_behind_par(char *to_parse, int i)
 {
-	int	seen;
+	if (i == 0)
+		return (0);
+	while (--i > -1 && ft_isspace(to_parse[i]))
+		;
+	if (!ft_strchr(DELIM_TOKEN_SP, to_parse[i])
+		&& to_parse[i] =! '(')
+		return (1);
+	return (0); 
+}
 
+int	valid_num_par(t_data *data, char *to_parse, int right, int left)
+{
+	int		seen;
+	size_t	i;
+
+	i = -1;
 	seen = 0;
-	while (++i < j)
-	{
-		if (!ft_strchr(FORMAT_TOKEN_SP, to_parse[i]))
-			seen = 1;
-	}
-	if (seen == 0)
-		return ('(');
-	return (seen);
+	while (to_parse[++i] && to_parse[i] == '(')
+		left++;
+	i+ = find_next_par(data, &to_parse[i], &left, &right);
+	if (i == -1)
+		return (-1);
+	if (left == 2 && right == 2 && seen == 0)
+		return (-1);
+	if (left > 2 || right > 2)
+		return (-1);
+	return (i);
 }
 
-int	check_condition(char *to_parse, size_t i, size_t j)
-{
-	int	save;
-
-	save = i;
-	if (to_parse[i] == '(' && to_parse[i + 1] == ')')
-		return (')');
-	while (++i < j)
-	{
-		if (ft_strchr(STOP_, to_parse[i]))
-		{
-			if (check_behind(to_parse, FORMAT_TOKEN_P, i, save))
-				return (')');
-			if (to_parse[i] == to_parse[i + 1])
-			++i;
-		}
-		else if (ft_strchr(R_COMBO, to_parse[i]))
-		{
-			if (wrong_format(to_parse, i, j))
-				return (')');
-			if (to_parse[i] == to_parse[i + 1])
-			++i;
-		}
-	}
-	return (0);
-}
-
-int	check_empty_parentheses(char *to_parse)
+int	count_parentheses(t_data *data, char *to_parse, char find)
 {
 	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (1)
+	int		right;
+	
+	right = 0;
+	i = -1;
+	while (to_parse[++i])
 	{
-		while (to_parse[i] && to_parse[i] != '(' && to_parse[i] != ')')
-			i++;
+		if (to_parse[i] == '"' || to_parse[i] == '\'')
+			i += skip_(to_parse, &i, to_parse);
 		if (!to_parse[i])
 			break ;
-		j = i;
-		while (to_parse[++i] && to_parse[i] != '(' && to_parse[i] != ')')
-			;
-		if (check_condition(to_parse, j, i))
-			return (')');
+		if (to_parse[i] == '(')
+			i = valid_num_par(data, &to_parse[i], right)
 	}
 	return (0);
 }
 
-int	valid_parentheses(char *to_parse)
+int	valid_parentheses(t_data *data, char *to_parse)
 {
 	size_t	i;
 	int		p_open;
-
+	
 	i = -1;
 	p_open = 0;
 	while (to_parse[++i])
 	{
-		if (to_parse[i] == '(')
+		if (to_parse[i] == '"' || to_parse[i] == '\'')
+			i += skip_(to_parse, &i, to_parse[i]);
+		if (to_parse[i] == '(' && to_parse[i + 1] == ')')
+			return (')');
+		else if (to_parse[i] == '(')
 			p_open++;
 		else if (to_parse [i] == ')')
-		{
+		{			
 			p_open--;
 			if (p_open < 0)
 				return (')');
 		}
+		if (to_parse[i] == 0)
+			break ;
 	}
 	if (p_open)
 		return (')');
 	return (0);
 }
 
-int	check_parenthese(char *to_parse)
+int	check_parenthese(t_data *data, char *to_parse)
 {
 	int	err;
 
@@ -130,9 +133,6 @@ int	check_parenthese(char *to_parse)
 	if (err)
 		return (err);
 	err = count_parentheses(to_parse, ')');
-	if (err)
-		return (err);
-	err = check_empty_parentheses(to_parse);
 	if (err)
 		return (err);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 04:28:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 02:12:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 05:56:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ void	populate(t_data *data, char *file)
 			return ;
 		}
 		dup_and_close(data, log_fd, STDOUT_FILENO, log_fd);
-		data -> alias = ft_calloc(sizeof(t_alias), 1);
-		is_error(data, data -> alias, MALLOC_ERR, 1);
 		read_file(data, fd);
 		dup_and_close(data, saved_stdout, STDOUT_FILENO, saved_stdout);
 		last_node(data);

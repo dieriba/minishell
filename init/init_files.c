@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:21:32 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 06:50:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,14 @@ void	set_file_tabs(t_cmd *cmd, char *to_parse, int length)
 	while (++i < length)
 	{
 		j = skip_to_redirect(cmd, to_parse, j);
-		if (j == -1)
+		if (j == -1 || to_parse[j] == 0)
 			return ;
 		k = j;
 		j += (ft_strchr(R_COMBO, to_parse[j + 1]) != NULL) + 1;
 		j = skip_spaces(cmd -> data, to_parse, j, 1);
 		j = find_end_string(cmd -> data, to_parse, j);
 		cmd -> tab[i] = copy_files(cmd -> data, to_parse, k, j);
+		j -= (to_parse[j] == 0);
 	}
 }
 

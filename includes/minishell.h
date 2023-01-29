@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 02:18:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 04:41:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define FORMAT_TOKEN_P "|&<>()"
 # define FORMAT_TOKEN_SP "|&<>; "
 # define FORMAT_TOKEN_SP_R "|&<> )"
+# define FORMAT_TOKEN_SP_RR "|&<>)"
 # define DELIM_TOKEN "|&<>();"
 # define DELIM_TOKEN_SP "|&<>;"
 # define MAX_LEN_TOKEN 2
@@ -60,6 +61,7 @@
 # define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
 # define TOKEN_EOF_ERR "bash: syntax error: unexpected end of file"
 # define AMB_REDIRECT "bash : ambiguous redirect"
+# define MISSING_QUOTES "bash : missing end quotes"
 
 # define LOG_FILE "log_alias"
 # define ALIAS_FILENAME "populate_aliases"
@@ -187,7 +189,7 @@ void	new_line(int signal);
 
 /*-----------------ERROR_HANDLING-----------------*/
 int		is_str_valid(t_data *data, char *to_parse);
-int		check_parenthese(char *to_parse);
+int		check_parenthese(t_data *data, char *to_parse);
 int		print_bad_syntax(t_data *data, char *str, char token);
 int		missing_right_commands(char *to_parse);
 void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type);
@@ -243,7 +245,7 @@ t_files	*copy_files(t_data *data, char *to_parse, int k, int j);
 /*-----------------INITIALIZATION-----------------*/
 
 /*-----------------PARSER-----------------*/
-int		valid_quotes(char *to_parse);
+int		valid_quotes(t_data *data, char *to_parse);
 int		is_real_stop(t_data *data, char *to_parse, size_t i, char *in);
 int		find_start_quotes(t_data *data, char *to_parse, int i);
 int		find_end_quotes(t_data *data, char *to_parse, int i);
@@ -287,10 +289,12 @@ void	alias_(t_data *data, t_cmd *cmd, char *line, int subshell);
 void	unalias(t_cmd *cmd);
 void	back_to_space(char **tab);
 void	populate(t_data *data, char *file);
+int		populate_alias(char *line);
 void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab);
 char	*from_tab_to_line(t_cmd *cmd, char **tab);
 t_node	*find_(t_data *data, char *line);
 void	print_alias(t_data *data, t_cmd *cmd, int subshell);
+void	skip_(char *to_parse, size_t *i, int quote);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/

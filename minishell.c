@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 22:14:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 05:51:50 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,16 @@ void	lets_read(t_data *data)
 		data -> cp_to_parse = readline("bash  : ");
 		if (data -> cp_to_parse)
 		{
-			err = unvalid_line(data, data -> cp_to_parse, &rescue_cmd);
+			err = valid_quotes(data, data -> cp_to_parse);
+			if (err == 0)
+				err = unvalid_line(data, data -> cp_to_parse, &rescue_cmd);
 			add_history(data -> cp_to_parse);
+			quote_to_neg(data, data -> cp_to_parse);
 			if (err == 0)
 			{
-				/*quote_to_neg(data, data -> cp_to_parse);
 				data -> tab_ = clean_nl_str(data, data -> cp_to_parse);
 				is_error(data, data -> tab_, MALLOC_ERR, 0);
-				shell_routine(data);*/
+				shell_routine(data);
 			}
 			else if (data -> cp_to_parse)
 				ft_free_elem((void **)&data -> cp_to_parse);

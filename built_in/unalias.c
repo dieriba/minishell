@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:36:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 17:49:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 07:06:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_node	*find_(t_data *data, char *line)
 {
 	t_node	*node;
-
+	
 	node = data -> alias -> head;
 	while (node)
 	{
@@ -28,24 +28,16 @@ t_node	*find_(t_data *data, char *line)
 
 void	remove_alias(t_data *data, t_node *node)
 {
-	if (node -> prev == NULL)
-	{
-		node -> next -> prev = NULL;
-		data -> alias -> head = node -> next;
-		ft_free_elem((void **)node);
-	}
-	else if (node -> next == NULL)
-	{
+	if (node -> prev)
 		node -> prev -> next = NULL;
+	if (node -> next)
+		node -> next -> prev = NULL;
+	if (node == data -> alias -> head)
+		data -> alias -> head = node -> next;
+	if (node == data -> alias -> last)
 		data -> alias -> last = node -> prev;
-		ft_free_elem((void **)node);
-	}
-	else
-	{
-		node -> prev -> next = node -> next;
-		node -> next -> prev = node -> prev;
-		ft_free_elem((void **)node);
-	}
+	ft_free_elem((void **)&node -> line);
+	ft_free_elem((void **)&node);
 	data -> status = 0;
 }
 
@@ -57,6 +49,7 @@ void	unalias(t_cmd *cmd)
 	i = 0;
 	while (cmd -> args[++i])
 	{
+		printf("args : %s\n", cmd -> args[i]);
 		node = find_(cmd -> data, cmd -> args[i]);
 		if (node == NULL)
 			continue ;

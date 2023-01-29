@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 02:22:10 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 05:06:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,8 @@ int	check_behind(char *to_parse, int j)
 		;
 	while (--j > -1 && ft_isspace(to_parse[j]))
 		;
-	if (to_parse[j] == '"' || to_parse[j] == '\'')
-		skip_reverse(to_parse, &j, to_parse[j]);
-	if (!ft_strchr(DELIM_TOKEN_SP, to_parse[j]))
+	if (!ft_strchr(DELIM_TOKEN_SP, to_parse[j])
+		&& to_parse[j] != '(')
 		seen = 0;
 	return (seen);
 }
