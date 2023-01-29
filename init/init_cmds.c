@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 06:47:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 22:57:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	move_to_next_word(t_data *data, char *to_parse, int i, int *len)
 		while (to_parse[i] && !ft_isspace(to_parse[i])
 			&& is_real_stop(data, to_parse, i, STOP_))
 		i++;
-	(*len) += 1;
+	i = skip_spaces(data, to_parse, i, 0);
+	(*len) += 1;	
 	return (i);
 }
 
@@ -105,6 +106,7 @@ void	set_commands(t_cmd *cmd, char *to_parse)
 	length = count_words(cmd -> data, to_parse);
 	if (length <= 0)
 		return ;
+	printf("Length : %d\n", length);
 	cmd -> args = ft_calloc(sizeof(char *), length + 1);
 	is_error(cmd -> data, cmd -> args, MALLOC_ERR, 1);
 	set_tabs_cmd(cmd -> data, cmd -> args, to_parse, length);

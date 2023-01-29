@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:08:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/25 13:18:32 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 22:50:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,12 @@ void	print_struct(t_cmd **cmds)
 		printf("%d\n", cmds[i]-> p_open);
 		printf("*************** CLOSING PARENTHESES *************** \n\n");
 		printf("%d\n", cmds[i]-> p_close);
+		printf("*************** FOLLOWING OPENED PARENTHESES *************** \n\n");
+		printf("%d\n", cmds[i]-> _open);
+		printf("*************** FOLLOWINF CLOSING PARENTHESES *************** \n\n");
+		printf("%d\n", cmds[i]-> _close);
+		printf("*************** NO EXEC_PAR *************** \n\n");
+		printf("%d\n", cmds[i]-> to_not_exec);
 	}
 }
 

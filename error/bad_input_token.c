@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 20:50:27 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 22:48:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,17 @@ int	valid_format_token(char *to_parse)
 {
 	size_t	i;
 	int		flags;
-
+	int		_open;
+	
 	i = -1;
+	_open = 0;
 	while (to_parse[++i])
 	{
 		flags = 0;
 		if (to_parse[i] == '"' || to_parse[i] == '\'')
 			skip_(to_parse, &i, to_parse[i]);
 		if ((to_parse[i] == '(' || to_parse[i] == ')')
-			&& valid_parentheses(to_parse, i) < 0)
+			&& valid_parentheses(to_parse, &_open, i) < 0)
 			return (')');
 		if (to_parse[i] && ft_strchr(DELIM_TOKEN_SP_G, to_parse[i]))
 			flags = check_validity(to_parse, i);
@@ -108,6 +110,8 @@ int	valid_format_token(char *to_parse)
 		if (to_parse[i] == 0)
 			break ;
 	}
+	if (_open)
+		return (')');
 	return (0);
 }
 

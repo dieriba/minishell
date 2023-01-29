@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 16:29:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 21:43:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,14 @@ void	print_export(t_data *data, t_cmd *cmd, char **tab, int subshell)
 {
 	size_t	i;
 	int		fd;
-	int		saved_stdout;
 
 	fd = where_to_write(data, cmd, subshell);
 	if (fd != STDOUT_FILENO)
-	{
-		saved_stdout = dup(STDOUT_FILENO);
-		if (saved_stdout < 0)
-			print_err_and_exit(data, NULL, "syscall", 1);
 		dup_and_close(data, fd, STDOUT_FILENO, fd);
-	}
 	i = -1;
 	while (tab[++i])
 		if (ft_printf("export %s\n", tab[i]) < 0)
 			print_err_and_exit(data, NULL, "syscall", 1);
-	if (fd != STDOUT_FILENO)
-		dup_and_close(data, saved_stdout, STDOUT_FILENO, saved_stdout);
 	data -> status = 0;
 }
 
@@ -61,9 +53,18 @@ char	*is_valid_export(char **tab, char *line)
 
 void	export_error(t_data *data, char *line)
 {
-	ft_putstr_fd("bash: export: `", 2);
-	ft_putstr_fd(line, 2);
-	ft_putendl_fd("' : not a valid identifier", 2);
+	int	saved_stdout;
+	int	saved_stderr;
+
+	saved_stderr = dup(STDERR_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (saved_stdout < 0 || saved_stderr < 0)
+		print_err_and_exit(data, NULL, "syscall", 1);
+	dup_and_close(data, STDERR_FILENO, STDOUT_FILENO, STDERR_FILENO);
+	if (ft_printf("bash : export: %s : not a valid identifier\n", line) < 0)
+		print_err_and_exit(data, NULL, "syscall", 0);
+	dup_and_close(data, saved_stdout, STDOUT_FILENO, saved_stdout);
+	dup_and_close(data, saved_stderr, STDERR_FILENO, saved_stderr);
 	data -> status = 1;
 }
 

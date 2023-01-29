@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 20:54:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 21:22:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	skip_reverse(char *to_parse, int *i, int quote)
 	{
 		while (--j > -1 && to_parse[j] != quote)
 			;
-		if (to_parse[j - 1] == '\'' || to_parse[j - 1] == '"')
+		if (j >= 0 && (to_parse[j - 1] == '\'' || to_parse[j - 1] == '"'))
 			quote = to_parse[--j];
 		else
 			break ;

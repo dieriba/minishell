@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 20:44:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 22:47:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,9 @@ typedef struct t_cmd
 	int		index;
 	int		pid;
 	int		to_not_calloc;
+	int		_close;
+	int		_open;
+	int		to_not_exec;
 	t_files	*last_in;
 	t_files	*last_out;
 	t_files	**tab;
@@ -243,13 +246,14 @@ int		check(char *env, char *to_check);
 void	set_commands(t_cmd *cmd, char *to_parse);
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse);
 void	init_path(t_cmd *cmd);
+void	real_subshell_or_not(t_cmd **cmds);
 size_t	skip_redirect(t_data *data, char *to_parse, size_t i);
 t_files	*copy_files(t_data *data, char *to_parse, int k, int j);
 /*-----------------INITIALIZATION-----------------*/
 
 /*-----------------PARSER-----------------*/
 int		valid_quotes(t_data *data, char *to_parse);
-int		valid_parentheses(char *to_parse, size_t i);
+int		valid_parentheses(char *to_parse, int *open, size_t i);
 int		is_real_stop(t_data *data, char *to_parse, size_t i, char *in);
 int		find_start_quotes(t_data *data, char *to_parse, int i);
 int		find_end_quotes(t_data *data, char *to_parse, int i);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:25:28 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 21:02:02 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/29 22:47:11 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_right_par(char *to_parse, int i, int j)
 		return (1);
 	else if (to_parse[i] != ';' && to_parse[i] != ')')
 	{
-		while (--i > -1)
+		while (i > -1)
 		{
 			if (to_parse[i] == '"' || to_parse[i] == '\'')
 				skip_reverse(to_parse, &i, to_parse[i]);
@@ -39,6 +39,7 @@ int	check_right_par(char *to_parse, int i, int j)
 			else if (ft_strchr(DELIM_TOKEN_SP, to_parse[i])
 				|| to_parse[i] == '(')
 				break ;
+			i--;
 		}
 	}
 	return (0);
@@ -52,7 +53,7 @@ int	check_behind_par(char *to_parse, int i)
 	while (--i > -1 && ft_isspace(to_parse[i]))
 		;
 	if ((i >= 0 && to_parse[j] == '(')
-		&& (!ft_strchr(DELIM_TOKEN_SP, to_parse[i])
+		&& (ft_strchr(DELIM_TOKEN_SP, to_parse[i])
 		&& to_parse[i] != '('))
 		return (')');
 	else if (to_parse[j] == ')')
@@ -60,17 +61,15 @@ int	check_behind_par(char *to_parse, int i)
 	return (0); 
 }
 
-int	valid_parentheses(char *to_parse, size_t i)
+int	valid_parentheses(char *to_parse, int *_open, size_t i)
 {
-	static int	p_open;
-	
 	if (to_parse[i] == '(')
-		p_open++;
+		(*_open) += 1;
 	else if (to_parse[i] == ')')
 	{			
-		p_open--;
-		if (p_open < 0)
+		(*_open) -= 1;
+		if ((*_open) < 0)
 			return (-1);
 	}
-	return (p_open);
+	return (*_open);
 }
