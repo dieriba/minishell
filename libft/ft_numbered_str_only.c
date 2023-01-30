@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_numbered_str_only.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/25 20:29:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 17:05:20 by dtoure           ###   ########.fr       */
+/*   Created: 2023/01/30 15:13:51 by dtoure            #+#    #+#             */
+/*   Updated: 2023/01/30 15:16:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_numbered_str_only(char *line)
 {
 	size_t	i;
-	
-	if (s1 == NULL || s2 == NULL)
-		return (STRCMP_NULL_END);
+
 	i = -1;
-	while ((s1[++i] && s2[i]) && s1[i] == s2[i])
-		;
-	return (s1[i] - s2[i]);
+	while (line[++i])
+	{
+		if (!ft_isdigit(line[i]))
+			return (1);
+	}
+	return (0);
 }

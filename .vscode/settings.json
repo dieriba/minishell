@@ -2,7 +2,8 @@
     "files.associations": {
         "minishell.h": "c",
         "unistd.h": "c",
-        "history.h": "c"
+        "history.h": "c",
+        "libft.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

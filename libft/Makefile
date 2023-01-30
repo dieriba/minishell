@@ -54,7 +54,8 @@ SRCS 		=	ft_atoi.c \
 				ft_check_empty.c \
 				ft_malloc_less_itoa.c \
 				ft_free_elem.c \
-				ft_char_index.c
+				ft_char_index.c \
+				ft_numbered_str_only.c
 
 OBJS		=	$(SRCS:.c=.o)
 

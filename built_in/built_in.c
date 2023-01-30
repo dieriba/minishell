@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 17:52:36 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 06:13:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 15:54:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	is_not_built_in(char *cmd)
 		return (0);
 	else if (ft_strcmp(cmd, "/pwd") == 0)
 		return (0);
+	else if (ft_strcmp(cmd, "/exit") == 0)
+		return (0);
 	return (1);
 }
 
@@ -51,4 +53,6 @@ void	built_in(t_data *data, t_cmd *cmd, int subshell, int fork)
 		unalias(cmd);
 	else if (ft_strcmp(cmd -> cmd, "/pwd") == 0)
 		pwd(data, cmd, subshell, fork);
+	else if (ft_strcmp(cmd -> cmd, "/exit") == 0)
+		exit_process(data, cmd, subshell, fork);
 }

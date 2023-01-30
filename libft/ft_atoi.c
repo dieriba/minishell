@@ -19,11 +19,11 @@ static int	ft_isspace(const char c)
 	return (0);
 }
 
-long	ft_atoi(const char *nptr)
+long long	ft_atoi(const char *nptr)
 {
 	int		i;
-	long	sign;
-	long	res;
+	long long	sign;
+	long long	res;
 
 	i = 0;
 	sign = 1;

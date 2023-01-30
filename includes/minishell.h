@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 06:12:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 16:02:17 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,9 @@ void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab);
 char	*from_tab_to_line(t_cmd *cmd, char **tab);
 t_node	*find_(t_data *data, char *line);
 void	print_alias(t_data *data, t_cmd *cmd, int subshell);
+void	close_all(t_data *data, t_cmd *cmd, int subshell);
 void	skip_(char *to_parse, size_t *i, int quote);
+void	exit_process(t_data *data, t_cmd *cmd, int subshell, int fork);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/
@@ -321,6 +323,7 @@ void	open_check_files(t_cmd *cmd, t_files **tab);
 void	close_fd(t_data *data, char *str, int *fd);
 void	check_files(t_data *data, t_files **files, int flags);
 void	close_pipes(t_data *data);
+void	handle_pipes(t_data *data, t_cmd *cmd, int subshell);
 void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd, char *str, int subshell);

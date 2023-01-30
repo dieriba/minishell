@@ -6,11 +6,28 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 02:39:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 16:54:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	close_all(t_data *data, t_cmd *cmd, int subshell)
+{
+	if (cmd -> last_in && cmd -> last_in -> type == IN)
+		close_fd(cmd -> data, "bash4", &cmd -> last_in -> fd);
+	if (cmd -> last_out)
+		close_fd(data, "bash5", &cmd -> last_out -> fd);
+	close_both_pipes(data, data -> pipes, &data -> inited);
+	if (subshell == 0 && data -> s_pipes_inited)
+		close_one_end(data,
+			data -> p_pipes, 0, &data -> s_pipes_inited);
+	else if (subshell && data -> s_pipes_inited)
+		close_one_end(data,
+			data -> p_pipes, 1, &data -> s_pipes_inited);
+	close_fd(data, "bash6", &data -> prev_pipes);
+	close_all_pipes(data, &data -> here_docs, 1, 0);
+}
 
 void	close_fd(t_data *data, char *str, int *fd)
 {

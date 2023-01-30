@@ -15,6 +15,7 @@ SRCS_BUILT	=	./built_in/env_utils.c \
 				./built_in/alias_utils.c \
 				./built_in/unalias.c \
 				./built_in/pwd.c \
+				./built_in/exit.c \
 
 SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_files.c \
@@ -100,6 +101,10 @@ $(MINISHELL):	${OBJS}
 				cp ./libft/libft.a ./lib
 				$(CC) $(CFLAGS) ${OBJS} $(INCLUDES) -g3 -L./lib -lft -lprintf -lgnl -lreadline -o $(MINISHELL)
 
+leaks		:	run
+				
+run			:	$(MINISHELL)
+				make && valgrind --suppressions=ignore.txt -s  --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell $(arg)
 
 clean:
 				rm -rf $(OBJS)
@@ -109,9 +114,6 @@ fclean:			clean
 				make -C ./libft/ft_printf fclean
 				make -C ./libft/ fclean
 				rm -rf $(MINISHELL) ./lib/libprintf.a ./lib/libft.a ./lib/libgnl.a
-				
-leaks:
-				make && valgrind --suppressions=ignore.txt -s  --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
 
 re:				fclean all
 
