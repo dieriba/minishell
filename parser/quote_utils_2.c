@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:31:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:28:11 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 06:20:01 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	skip_next_stop(char *to_clean)
 		i = 0;
 	while (to_clean[++i])
 	{
-		if (ft_strchr(STOP_EXP, to_clean[i]))
+		if (!ft_isalnum(to_clean[i]) && to_clean[i] != '_'
+			&& to_clean[i] != '?')
 			break ;
 		else if (to_clean[i] < 0)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:01:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 02:39:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	open_files(t_data *data, t_cmd *cmd, t_files *files)
 	type = files -> type;
 	files -> fd = open(files -> files, files -> flags, 0644);
 	if (files -> fd == -1)
-		print_err_and_exit(data, NULL, "bash", 1);
+		print_err_and_exit(data, NULL, "bash79", 1);
 	if (last_in && type == IN && files -> files != last_in -> files)
 		close_fd(data, "bash7", &files -> fd);
 	else if (last_out && type != IN && files -> files != last_out -> files)
@@ -56,7 +56,7 @@ void	open_check_files(t_cmd *cmd, t_files **tab)
 		else if ((type == OUT || type == APPEND) && tab[i]-> amb == ALL_FLAGS)
 		{
 			if (access(tab[i]-> files, F_OK))
-				print_err_and_exit(cmd -> data, NULL, "bash", 1);
+				print_err_and_exit(cmd -> data, NULL, "bash12", 1);
 		}
 		else if (type != DOC)
 			open_files(cmd -> data, cmd, tab[i]);

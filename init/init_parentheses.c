@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 01:19:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 22:38:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 02:23:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,20 @@ void	par_to_space(char *to_clean)
 	}
 }
 
-void	set_followed_par(t_cmd *cmd, char *to_parse, int *flags, size_t i)
+void	set_followed_par(t_cmd *cmd, char *to_parse, int *left)
 {
-	printf("Flags value : %d and char : %c\n", *flags, to_parse[i]);
-	if (*flags == 2 && to_parse[i] == '(')
-	{
+	size_t	i;
+
+	i = 0;
+	if ((*left) > 0 && to_parse[0] == '(')
 		while (to_parse[i++] == '(')
 			cmd -> _open++;
-		(*flags) -= 1;
-	}
-	else if (*flags == 1 && to_parse[i] == ')')
-	{	
+	else if (to_parse[0] == ')')
 		while (to_parse[i++] == ')')
 			cmd -> _close++;
-		(*flags) -= 1;
-	}
 }
 
-int	check_end_par(t_cmd **cmds, int _open)
+int	check_end_par(t_cmd **cmds)
 {
 	int	i;
 	int	j;
@@ -56,9 +52,9 @@ int	check_end_par(t_cmd **cmds, int _open)
 		if (p_num == 0)
 			break ;
 	}
-	if (_open == cmds[i]-> _close)
-		while (++j < i)
-			cmds[i]-> to_not_exec = 1;
+	if (cmds[i]-> _close > 1)
+		while (++j <= i)
+			cmds[j]-> to_not_exec = 1;
 	return (i);
 }
 
@@ -73,17 +69,41 @@ void	real_subshell_or_not(t_cmd **cmds)
 			&& cmds[i]-> _close == cmds[i]-> _open)
 			cmds[i]-> to_not_exec = 1;
 		else if (cmds[i]-> _open > 1)
-			i += check_end_par(&cmds[i], cmds[i]-> _open);
+			i += check_end_par(&cmds[i]);
 	}
+}
+
+int	last_par(t_data *data, char *to_parse)
+{
+	int	i;
+	int	last;
+
+	i = 0;
+	last = 0;
+	while (to_parse[++i]
+		&& is_real_stop(data, to_parse, i, DELIM_TOKEN_SP))
+	{
+		if (to_parse[i] == ')'
+			&& !find_end_quotes(data, to_parse, i))
+			last = i;
+	}
+	i = last;
+	if (i == 0)
+		return (last);
+	while (--i > -1 && (to_parse[i] == ')'
+		&& !find_end_quotes(data, to_parse, i)))
+		;
+	last = i;
+	return (last);
 }
 
 void	set_parenthese(t_cmd *cmd, char *to_parse)
 {
 	size_t	i;
-	int		flags;
-	
+	int		left;
+
+	left = 1;
 	i = -1;
-	flags = 2;
 	while (to_parse[++i] && is_real_stop(cmd -> data, to_parse, i, STOP_))
 	{
 		if (to_parse[i] == '('
@@ -92,8 +112,13 @@ void	set_parenthese(t_cmd *cmd, char *to_parse)
 		else if (to_parse[i] == ')'
 			&& !find_start_quotes(cmd -> data, to_parse, i))
 			cmd -> p_close--;
-		if (to_parse[i] == '(' || to_parse[i] == ')')
-			set_followed_par(cmd, to_parse, &flags, i);
+		if (to_parse[i] == '(')
+		{
+			set_followed_par(cmd, &to_parse[i], &left);
+			--left;
+		}
+		else if (to_parse[i] == ')' && last_par(cmd -> data, &to_parse[i]) < 0)
+			set_followed_par(cmd, &to_parse[i], &left);
 		cmd -> to_fork = cmd -> p_open;
 	}
 }

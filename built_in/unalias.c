@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:36:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 07:06:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 04:55:14 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ t_node	*find_(t_data *data, char *line)
 void	remove_alias(t_data *data, t_node *node)
 {
 	if (node -> prev)
-		node -> prev -> next = NULL;
+		node -> prev -> next = node -> next;
 	if (node -> next)
-		node -> next -> prev = NULL;
+		node -> next -> prev = node -> prev;
 	if (node == data -> alias -> head)
 		data -> alias -> head = node -> next;
 	if (node == data -> alias -> last)
@@ -49,7 +49,6 @@ void	unalias(t_cmd *cmd)
 	i = 0;
 	while (cmd -> args[++i])
 	{
-		printf("args : %s\n", cmd -> args[i]);
 		node = find_(cmd -> data, cmd -> args[i]);
 		if (node == NULL)
 			continue ;

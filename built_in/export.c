@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 21:43:59 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 06:01:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ void	export(t_cmd *cmd, t_env *env, int fork, int subshell)
 
 	i = 0;
 	len = ft_tab_len(cmd -> args);
-	if (len == 1 && fork)
+	if (fork && len == 1)
 		print_export(cmd -> data, cmd, env -> tab, subshell);
-	else if (len > 1 && fork == 0 && ft_strcmp(cmd -> stop, "|"))
+	else if (fork == 0 && len > 1 && ft_strcmp(cmd -> stop, "|"))
 	{
-		while (cmd ->args[++i])
+		while (cmd -> args[++i])
 		{
 			line = is_valid_export(env -> tab, cmd ->args[i]);
 			if (line && line != cmd ->args[i])

@@ -6,17 +6,24 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:18:46 by dtoure            #+#    #+#             */
-/*   Updated: 2022/12/28 22:35:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 05:47:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	pwd(void)
+void	pwd(t_data *data, t_cmd *cmd, int subshell, int fork)
 {
-	char	currend_dir[1024];
+	char	*current_dir;
+	int		fd;
 
-	getcwd(currend_dir, 1024);
-	ft_putstr_fd(currend_dir, 1);
-	ft_putchar_fd('\n', 1);
+	if (fork == 0)
+		return ;
+	fd = where_to_write(data, cmd, subshell);
+	current_dir = getcwd(NULL, 0);
+	if (current_dir == NULL)
+		perror(NULL);
+	else if (ft_putendl_fd(current_dir, fd) < 0)
+		print_err_and_exit(data, NULL, "syscall", 1);
+	ft_free_elem((void **)&current_dir);
 }

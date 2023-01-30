@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 22:48:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 05:07:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	shell_routine(t_data *data)
 		open_here_doc(data, data -> cmds);
 		fork_docs(data, &data -> here_docs);
 		close_all_pipes(data, &data -> here_docs, 0, 1);
-		//executing(data, data -> cmds, 0);
+		executing(data, data -> cmds, 0);
 		clean_struct(data);
 	}
 	ft_free_tab(data -> tab_);
@@ -111,7 +111,9 @@ void	lets_read(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-
+	
+	if (isatty(STDIN_FILENO) == 0)
+		return (1);
 	init_struct(&data);
 	if (argc == 2)
 		populate(data, argv[1]);

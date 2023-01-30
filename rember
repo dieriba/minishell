@@ -1,0 +1,1 @@
+(ls && ls) | cat | wc -l && ((ls && ls) | ls) | cat

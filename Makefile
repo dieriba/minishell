@@ -14,6 +14,7 @@ SRCS_BUILT	=	./built_in/env_utils.c \
 				./built_in/alias.c \
 				./built_in/alias_utils.c \
 				./built_in/unalias.c \
+				./built_in/pwd.c \
 
 SRCS_INIT	=	./init/init_cmds.c \
 				./init/init_files.c \

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 22:47:27 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 06:12:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define STOP_	"|&;"
 # define STOP_F "|&<>; "
 # define STOP_F_P "|&<> )\"'"
-# define STOP_EXP "\\ '\"$&|<> "
+# define STOP_EXP "\\ '\"$&|<> ="
 # define VALID_COMB_EXP "$ "
 # define VALID_ ";()"
 /*-----------------GLOBAL_CHECK-----------------*/
@@ -296,6 +296,7 @@ void	make_export(t_env *env, char *line);
 void	alias(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	alias_(t_data *data, t_cmd *cmd, char *line, int subshell);
 void	unalias(t_cmd *cmd);
+void	pwd(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	back_to_space(char **tab);
 void	populate(t_data *data, char *file);
 int		populate_alias(char *line);

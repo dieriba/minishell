@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 05:13:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 05:12:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	run_cmd(t_cmd *cmd)
 			if (access(cmd -> paths[i], X_OK) != -1)
 				execve(cmd -> paths[i], cmd -> args, cmd -> data -> envp);
 		}
-		print_err_and_exit(cmd -> data, cmd, "bash: ", 1);
+		print_err_and_exit(cmd -> data, cmd, "bash: 7", 1);
 	}
 	else
 	{
 		if (access(cmd -> cmd, X_OK) != -1)
 			execve(cmd -> cmd, cmd -> args, cmd -> data -> envp);
-		print_err_and_exit(cmd -> data, cmd, "bash: ", 1);
+		print_err_and_exit(cmd -> data, cmd, "bash: 8", 1);
 	}
 }
 
@@ -79,7 +79,7 @@ void	execute_routine(t_data *data, t_cmd **cmds, int i, int subshell)
 	built_in(data, cmds[i], subshell, 0);
 	pid_ret = fork();
 	if (pid_ret < 0)
-		print_err_and_exit(data, NULL, "bash", 1);
+		print_err_and_exit(data, NULL, "32", 1);
 	if (pid_ret == 0)
 		forking(cmds, subshell, i);
 	cmds[i]-> pid = pid_ret;
@@ -96,6 +96,12 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 	close_sub_pipes(data, subshell);
 	while (cmds[++i])
 	{
+		if (cmds[i]-> to_not_exec)
+		{
+			data -> status = 1;
+			data -> last_exec_stat = 1;
+			continue ;
+		}
 		if (cmds[i]-> to_not_calloc == 0)
 		{
 			clean_files(cmds[i]);

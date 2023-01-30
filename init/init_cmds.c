@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 22:57:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 04:03:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	count_words(t_data *data, char *to_parse)
 	{
 		i = skip_spaces(data, to_parse, i, 0);
 		if (!ft_strchr(FORMAT_TOKEN_SP, to_parse[i]))
-			i = move_to_next_word(data, to_parse, i, &length);
+			i = move_to_next_word(data, to_parse, i, &length) - 1;
 		if (ft_strchr(R_COMBO, to_parse[i]))
-			i = skip_redirect(data, to_parse, i);
-		if (i == -1)
+			i = skip_redirect(data, to_parse, i) - 1;
+		if (i < 0)
 			return (length);
 		if (!is_real_stop(data, to_parse, i, STOP_) || !to_parse[i])
 			break ;
@@ -106,7 +106,6 @@ void	set_commands(t_cmd *cmd, char *to_parse)
 	length = count_words(cmd -> data, to_parse);
 	if (length <= 0)
 		return ;
-	printf("Length : %d\n", length);
 	cmd -> args = ft_calloc(sizeof(char *), length + 1);
 	is_error(cmd -> data, cmd -> args, MALLOC_ERR, 1);
 	set_tabs_cmd(cmd -> data, cmd -> args, to_parse, length);

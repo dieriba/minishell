@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:00:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 05:15:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	wait_all_child(t_data *data, t_cmd **cmds, int subshell)
 	size_t	i;
 
 	i = -1;
+	data -> ctrl_c.sa_handler = SIG_IGN;
+	data -> ctrl_c.sa_flags = 0;
+	sigaction(SIGINT, &data -> ctrl_c, NULL);
 	close_all_pipes(data, &data -> here_docs, 1, 0);
 	while (cmds[++i])
 		if (cmds[i]-> pid && waitpid(
@@ -30,6 +33,7 @@ void	wait_all_child(t_data *data, t_cmd **cmds, int subshell)
 	}
 	if (WIFEXITED(data -> status))
 		data -> status = WEXITSTATUS(data -> status);
+	handle_signals(data);
 	if (subshell)
 		free_all(data, data -> status);
 }
