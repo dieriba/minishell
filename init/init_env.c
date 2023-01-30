@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:15:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 19:20:19 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	init_env(t_data *data, char **envp)
 	data -> env -> len = ft_tab_len(envp);
 	data -> env -> capacity = CAPACITY;
 	set_env(data, data -> env, envp);
-	data -> path = find_var(data -> env -> tab, "PATH");
 	data -> envp = data -> env -> tab;
 	data -> env-> data = data;
 }

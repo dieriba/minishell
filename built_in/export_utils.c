@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 04:30:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:43:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 19:23:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ void	make_export(t_env *env, char *line)
 	}
 	else
 		make_some_space(env, line);
+	env -> data -> path = find_var(env -> tab, "PATH");
 	env -> data -> status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:05:39 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:46:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 19:23:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ void	unset(t_cmd *cmd, t_env *env)
 		index = find_index(env -> tab, line);
 		remove_var_env(env, env -> tab, index);
 	}
+	env -> data -> path = find_var(env -> tab, "PATH");
 }

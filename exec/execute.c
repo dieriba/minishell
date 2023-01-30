@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 05:12:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 18:59:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	forking(t_cmd **cmds, int subshell, int i)
 		prev = cmds[--i]-> stop;
 	else
 		prev = NULL;
+	cmd -> data -> ctrl_c.sa_handler = SIG_DFL;
+	sigaction(SIGINT, &cmd -> data -> ctrl_c, NULL);
 	set_redirections_files(cmd, prev, subshell);
 	if (is_not_built_in(cmd -> cmd))
 		run_cmd(cmd);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 15:21:32 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 19:00:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ void	set_out_redirection(t_cmd *cmd, int subshell)
 	data = cmd -> data;
 	if (cmd -> last_out && cmd -> last_out -> fd > 0)
 	{
-		//printf("Commande : %s Entered : 1\n", cmd -> cmd);
+		//printf("FD value : %d Commande : %s Entered : 1\n", cmd -> last_out -> fd, cmd -> cmd);
 		dup_(data, cmd -> last_out -> fd, STDOUT_FILENO);
 	}
 	else if (data -> inited && cmd -> p_close == 0)
 	{
-		//printf("Commande : %s Entered : 2\n", cmd -> cmd);
+		//printf("FD value : %d Commande : %s Entered : 2\n", data -> pipes[1], cmd -> cmd);
 		dup_(data, data -> pipes[1], STDOUT_FILENO);
 	}
 	else if ((cmd -> stop[0] > 0) && subshell && data -> s_pipes_inited)
 	{
-		//printf("Commande : %s Entered : 3\n", cmd -> cmd);
+		//printf("FD value : %d Commande : %s Entered : 3\n", data -> p_pipes[1], cmd -> cmd);
 		dup_(data, data -> p_pipes[1], STDOUT_FILENO);
 	}
 }
@@ -62,24 +62,24 @@ void	set_in_redirection(t_cmd *cmd, int pipes)
 	data = cmd -> data;
 	if (cmd -> last_in && cmd -> last_in -> fd > 0)
 	{
-		//printf("Commande : %s Entered : 4\n", cmd -> cmd);
+		//printf("FD value : %d Commande : %s Entered : 4\n", cmd -> last_in -> fd, cmd -> cmd);
 		dup_(data, cmd -> last_in -> fd, STDIN_FILENO);
 	}
 	else if (cmd -> last_in && cmd -> last_in -> fd == 0)
 	{
-		//printf("Commande : %s Entered : 5\n", cmd -> cmd);
+		//printf("FD value : %d Commande : %s Entered : 5\n",cmd -> last_in -> fd,  cmd -> cmd);
 		cmd -> last_in -> fd = find_fd(
 				cmd -> data -> here_docs, cmd -> last_in -> files);
 		dup_(data, cmd -> last_in -> fd, STDIN_FILENO);
 	}
 	else if (prev_cmd && prev_cmd -> p_close && data -> s_pipes_inited)
 	{
-		//printf("Commande :%s Entered : 6\n", cmd -> cmd);
+		//printf("FD value : %d Commande :%s Entered : 6\n", data -> p_pipes[0], cmd -> cmd);
 		dup_(data, data -> p_pipes[0], STDIN_FILENO);
 	}
 	else if (pipes == 0)
 	{
-		//printf("Commande :%s Entered : 7\n", cmd -> cmd);
+		//printf("FD value : %d Commande :%s Entered : 7\n", data -> prev_pipes, cmd -> cmd);
 		dup_(data, data -> prev_pipes, STDIN_FILENO);
 	}
 }
