@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parentheses.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 01:19:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 02:23:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 22:06:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_end_par(t_cmd **cmds)
 		if (p_num == 0)
 			break ;
 	}
-	if (cmds[i]-> _close > 1)
+	if (cmds[i] && cmds[i]-> _close > 1)
 		while (++j <= i)
 			cmds[j]-> to_not_exec = 1;
 	return (i);
@@ -70,6 +70,8 @@ void	real_subshell_or_not(t_cmd **cmds)
 			cmds[i]-> to_not_exec = 1;
 		else if (cmds[i]-> _open > 1)
 			i += check_end_par(&cmds[i]);
+		if (cmds[i] == 0)
+			break ;
 	}
 }
 

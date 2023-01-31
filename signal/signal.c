@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 00:28:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 21:57:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	exit_(int signal)
 	(void)signal;
 	data = (t_data *)g_collector -> data;
 	close_all_pipes(data, &data -> here_docs, 1, 1);
-	free(g_collector);
-	exit(130);
+	free_all(data, 130);
 }
 
 void	exit_dumped(int signal)
