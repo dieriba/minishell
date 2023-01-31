@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 00:32:27 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 08:38:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,16 @@ void	execute_routine(t_data *data, t_cmd **cmds, int i, int subshell)
 	pid_t	pid_ret;
 
 	data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
-	built_in(data, cmds[i], subshell, 0);
-	pid_ret = fork();
-	if (pid_ret < 0)
-		print_err_and_exit(data, NULL, "32", 1);
-	if (pid_ret == 0)
-		forking(cmds, subshell, i);
-	cmds[i]-> pid = pid_ret;
-	handle_pipes(data, cmds[i], subshell);
+	if (!built_in(data, cmds[i], subshell, 0))
+	{
+		pid_ret = fork();
+		if (pid_ret < 0)
+			print_err_and_exit(data, NULL, "bash", 1);
+		if (pid_ret == 0)
+			forking(cmds, subshell, i);
+		cmds[i]-> pid = pid_ret;
+		handle_pipes(data, cmds[i], subshell);
+	}
 }
 
 void	executing(t_data *data, t_cmd **cmds, int subshell)

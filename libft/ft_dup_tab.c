@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 14:16:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/28 17:23:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 10:00:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**ft_dup_tab(char **to_copy, char *to_join)
 	i = -1;
 	while (to_copy[++i])
 	{
-		tab[i] = ft_strjoin(to_copy[i], to_join);
+		tab[i] = ft_strjoin(to_copy[i], to_join, 0);
 		if (!tab[i])
 			return (ft_free_tab(tab));
 	}

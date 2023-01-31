@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 03:44:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 09:18:14 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,14 +289,15 @@ int		where_to_write(t_data *data, t_cmd *cmd, int subshell);
 int		is_not_built_in(char *cmd);
 int		check_line(char *line);
 int		log_files_alias(char *alias, int err_code, int line);
+int		built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
+int		exit_process(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	export(t_cmd *cmd, t_env *env, int fork, int subshell);
 void	env(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	unset(t_cmd *cmd, t_env *env);
 void	echo(t_data *data, t_cmd *cmd, int subshell, int fork);
-void	built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	make_export(t_env *env, char *line);
 void	alias(t_data *data, t_cmd *cmd, int subshell, int fork);
-void	alias_(t_data *data, t_cmd *cmd, char *line, int subshell);
+void	alias_(t_data *data, t_cmd *cmd, char *line, int subshfell);
 void	unalias(t_cmd *cmd);
 void	pwd(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	back_to_space(char **tab);
@@ -308,7 +309,6 @@ t_node	*find_(t_data *data, char *line);
 void	print_alias(t_data *data, t_cmd *cmd, int subshell);
 void	close_all(t_data *data, t_cmd *cmd, int subshell);
 void	skip_(char *to_parse, size_t *i, int quote);
-void	exit_process(t_data *data, t_cmd *cmd, int subshell, int fork);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/

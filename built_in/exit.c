@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 07:24:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 04:00:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 08:54:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	handle_exit(t_data *data, t_cmd *cmd, int subshell, int fork)
 	}
 }
 
-void	exit_process(t_data *data, t_cmd *cmd, int subshell, int fork)
+int	exit_process(t_data *data, t_cmd *cmd, int subshell, int fork)
 {
 	int	len;
 	int	curr_stop;
@@ -83,16 +83,18 @@ void	exit_process(t_data *data, t_cmd *cmd, int subshell, int fork)
 		open_check_files(NULL, cmd, cmd -> tab);
 		if (errno == 0)
 			close_process(cmd, subshell, fork, data -> status);
+		return (1);
 	}
-	else if (fork && len == 1)
+	else if (((len == 1 && cmd -> prev_stop) && fork) && (!prev_stop || !curr_stop))
 		close_process(cmd, subshell, fork, data -> status);
 	else if ((fork == 0 && len > 1) && curr_stop && prev_stop)
 	{
-		printf("Entered\n");
 		open_check_files(NULL, cmd, cmd -> tab);
 		if (errno == 0)
 			handle_exit(data, cmd, subshell, fork);
+		return (1);
 	}
-	else if (cmd -> prev_stop && fork && (prev_stop == 0 || curr_stop == 0))
+	else if ((cmd -> prev_stop && fork) && (!prev_stop || !curr_stop))
 		handle_exit(data, cmd, subshell, fork);
+	return (0);
 }

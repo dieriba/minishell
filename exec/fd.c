@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 04:02:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 08:20:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab)
 		if (type != DOC && tab[i]-> amb == DOLLARS_EMPT)
 			print_err_and_exit(data, NULL, AMB_REDIRECT, 0);
 		else if ((type == OUT || type == APPEND) && tab[i]-> amb == ALL_FLAGS)
+		{	
 			if (access(tab[i]-> files, F_OK))
 				print_err_and_exit(data, NULL, "bash", 1);
+		}
 		else if (type != DOC)
 			open_files(data, cmd, tab[i]);
-		if (!data && errno)
+		if (!data && errno != 0)
 			break ;
 	}
 	cmd -> data -> status = (errno != 0);

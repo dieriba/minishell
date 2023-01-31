@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alias_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:50:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 02:39:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 10:00:03 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	join_line(t_data *data, char **tmp, char *line)
 	to_free = (*tmp);
 	alias = find_(data, line);
 	if (alias)
-		(*tmp) = ft_strjoin((*tmp), &alias -> line[alias -> i]);
+		(*tmp) = ft_strjoin((*tmp), &alias -> line[alias -> i], 0);
 	else
-		(*tmp) = ft_strjoin((*tmp), line);
+		(*tmp) = ft_strjoin((*tmp), line, 0);
 	ft_free_elem((void **)&to_free);
 	is_error(data, (*tmp), MALLOC_ERR, 0);
 }

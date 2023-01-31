@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 03:07:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 10:00:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ int	check_validity(char *to_parse, size_t i)
 		;
 	while (to_parse[i] && ft_isspace(to_parse[i]))
 		i++;
-	if (to_parse[i] && !ft_strchr(FORMAT_TOKEN, to_parse[i]))
+	if (to_parse[i] && ft_strchr(BASE_STOP, token) && !ft_strchr(BASE_STOP, to_parse[i]))
+		flags = 1;
+	else if (to_parse[i] && ft_strchr(R_COMBO, token) &&  !ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
 		flags = 1;
 	if ((to_parse[i] && flags == -1)
 		|| (ft_strchr(R_COMBO, token) && flags == -1))
@@ -128,7 +130,7 @@ int	unvalid_line(t_data *data, char *line, char **rescue_cmd)
 	if ((*rescue_cmd))
 	{
 		tmp = (*rescue_cmd);
-		(*rescue_cmd) = ft_strjoin(data -> cp_to_parse, (*rescue_cmd));
+		(*rescue_cmd) = ft_strjoin(data -> cp_to_parse, (*rescue_cmd), 0);
 		is_error(data, (*rescue_cmd), MALLOC_ERR, 0);
 		ft_free_elem((void **)&data -> cp_to_parse);
 		ft_free_elem((void **)&tmp);

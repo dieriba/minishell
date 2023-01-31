@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 03:55:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 08:07:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	print_bad_syntax(t_data *data, char *str, char token)
 
 void	print_err(t_data *data, char *str, t_cmd *cmd, int type)
 {
+	printf("Entered\n");
 	if (data && errno == 2 && cmd && cmd -> no_path)
 	{
 		ft_putstr_fd("bash: command not found: ", 2);

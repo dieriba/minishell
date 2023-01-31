@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:25:17 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:37:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 10:02:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*clean_lines(t_data *data, char *line, int expand)
 		return (line);
 	while (line[++i])
 	{
-		if (expand && line[i] == '$')
+		if (expand && (line[i] == '$' || line[i] == '\\'))
 			return (clean_(data, line, 1));
-		if (expand == 0 && line[i] < 0)
+		if (expand == 0 && (line[i] < 0 || line[i] == '\\'))
 			return (clean_(data, line, 0));
 	}
 	return (line);
