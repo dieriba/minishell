@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 19:12:57 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:58:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 01:37:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	set_node(t_data *data, t_files **tab)
 	{
 		if (tab[len]-> type == DOC)
 		{
+			tab[len]-> files = clean_lines(data, tab[len]-> files, 0);
 			node = ft_calloc(sizeof(t_doc), 1);
 			is_error(data, node, MALLOC_ERR, 0);
 			node -> limiter = tab[len]-> files;

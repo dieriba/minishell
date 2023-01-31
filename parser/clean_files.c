@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:50:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 01:35:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	loop_files(t_data *data, t_files **tab)
 	{
 		if (tab[i]-> type != DOC)
 			remove_dirt(data, tab, tab[i]-> files, i);
-		else
-			tab[i]-> files = clean_lines(data, tab[i]-> files, 0);
 	}
 }
 

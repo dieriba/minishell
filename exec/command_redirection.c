@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 19:00:27 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 03:39:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	set_redirections_files(t_cmd *cmd, char *prev, int subshell)
 	pipes = -1;
 	if (prev)
 		pipes = ft_strcmp("|", prev);
-	open_check_files(cmd, cmd -> tab);
+	open_check_files(cmd -> data, cmd, cmd -> tab);
 	set_in_redirection(cmd, pipes);
 	set_out_redirection(cmd, subshell);
 	built_in(cmd -> data, cmd, subshell, 1);

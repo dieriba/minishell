@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 21:38:42 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 19:20:19 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/30 22:32:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void	init_env(t_data *data, char **envp)
 	set_env(data, data -> env, envp);
 	data -> envp = data -> env -> tab;
 	data -> env-> data = data;
+	data -> path = find_var(data -> env -> tab, "PATH");
 }

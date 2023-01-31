@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:52:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 01:50:01 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	fork_docs(t_data *data, t_doc **head)
 		waitpid(pid_ret, &status, 0);
 		if (WIFEXITED(status))
 			data -> status = WEXITSTATUS(status);
+		ft_free_elem((void **)&g_collector);
 	}
 }

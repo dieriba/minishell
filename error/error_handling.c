@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 01:22:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 03:55:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ int	print_bad_syntax(t_data *data, char *str, char token)
 
 void	print_err(t_data *data, char *str, t_cmd *cmd, int type)
 {
-	if (errno == 2 && cmd && cmd -> no_path)
+	if (data && errno == 2 && cmd && cmd -> no_path)
 	{
 		ft_putstr_fd("bash: command not found: ", 2);
 		ft_putstr_fd(cmd -> args[0], 2);
 		ft_putchar_fd('\n', 2);
-		data -> status = 127;
+		cmd -> data -> status = 127;
 	}
-	else if (errno == 2 && cmd && !cmd -> no_path)
+	else if (data && errno == 2 && cmd && !cmd -> no_path)
 	{
 		ft_putstr_fd("bash: no such file or directory: ", 2);
 		ft_putstr_fd(cmd -> cmd, 2);
 		ft_putchar_fd('\n', 2);
-		data -> status = 127;
+		cmd -> data -> status = 127;
 	}
 	else if (type)
 		perror(str);
@@ -48,14 +48,19 @@ void	print_err(t_data *data, char *str, t_cmd *cmd, int type)
 
 void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type)
 {
-	if (data -> subshell == 0 && data -> s_pipes_inited)
+	int	status;
+
+	status = 1;
+	if (data)
+		status = data -> status;
+	if (data && data -> subshell == 0 && data -> s_pipes_inited)
 		close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
-	else if (data -> subshell && data -> s_pipes_inited)
+	else if (data && data -> subshell && data -> s_pipes_inited)
 		close_one_end(data, data -> p_pipes, 1, &data -> s_pipes_inited);
 	close_both_pipes(data, data -> pipes, &data -> inited);
 	close_fd(data, "bash3", &data -> prev_pipes);
 	print_err(data, err_msg, cmd, type);
-	free_all(data, data -> status);
+	free_all(data, status);
 }
 
 void	is_error(t_data *data, void *elem, char *err_msg, int type)

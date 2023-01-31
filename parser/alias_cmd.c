@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alias_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:50:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 03:44:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 02:39:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@ void	back_to_space(char **tab)
 void	join_line(t_data *data, char **tmp, char *line)
 {
 	t_node	*alias;
-
+	char	*to_free;
+	
+	to_free = (*tmp);
 	alias = find_(data, line);
 	if (alias)
 		(*tmp) = ft_strjoin((*tmp), &alias -> line[alias -> i]);
 	else
 		(*tmp) = ft_strjoin((*tmp), line);
+	ft_free_elem((void **)&to_free);
 	is_error(data, (*tmp), MALLOC_ERR, 0);
 }
 

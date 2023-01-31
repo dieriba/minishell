@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 16:54:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 04:02:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ void	close_all(t_data *data, t_cmd *cmd, int subshell)
 
 void	close_fd(t_data *data, char *str, int *fd)
 {
-	if ((*fd) == -1)
-		return ;
-	if (close((*fd)) < 0)
-		print_err_and_exit(data, NULL, str, 1);
-	(*fd) = -1;
+	if (data)
+	{
+		if ((*fd) == -1)
+			return ;
+		if (close((*fd)) < 0)
+			print_err_and_exit(data, NULL, str, 1);
+		(*fd) = -1;
+	}
 }
 
 void	open_files(t_data *data, t_cmd *cmd, t_files *files)
@@ -56,7 +59,7 @@ void	open_files(t_data *data, t_cmd *cmd, t_files *files)
 		close_fd(data, "bash8", &files -> fd);
 }
 
-void	open_check_files(t_cmd *cmd, t_files **tab)
+void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab)
 {
 	size_t		i;
 	enum e_type	type;
@@ -65,20 +68,21 @@ void	open_check_files(t_cmd *cmd, t_files **tab)
 	if (cmd -> last_in == NULL && cmd -> last_out == NULL)
 		return ;
 	cmd -> data -> status = 1;
+	errno = 0;
 	while (tab[++i])
 	{
 		type = tab[i]-> type;
 		if (type != DOC && tab[i]-> amb == DOLLARS_EMPT)
-			print_err_and_exit(cmd -> data, NULL, AMB_REDIRECT, 0);
+			print_err_and_exit(data, NULL, AMB_REDIRECT, 0);
 		else if ((type == OUT || type == APPEND) && tab[i]-> amb == ALL_FLAGS)
-		{
 			if (access(tab[i]-> files, F_OK))
-				print_err_and_exit(cmd -> data, NULL, "bash12", 1);
-		}
+				print_err_and_exit(data, NULL, "bash", 1);
 		else if (type != DOC)
-			open_files(cmd -> data, cmd, tab[i]);
+			open_files(data, cmd, tab[i]);
+		if (!data && errno)
+			break ;
 	}
-	cmd -> data -> status = 0;
+	cmd -> data -> status = (errno != 0);
 }
 
 int	find_fd(t_doc *node, char *limiter)

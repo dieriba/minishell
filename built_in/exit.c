@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 07:24:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 17:19:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 04:00:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,20 @@ void	exit_process(t_data *data, t_cmd *cmd, int subshell, int fork)
 	prev_stop = ft_strcmp(cmd -> prev_stop, "|");
 	len = ft_tab_len(cmd -> args);
 	if ((fork == 0 && len == 1) && curr_stop && prev_stop)
-		close_process(cmd, subshell, fork, data -> status);
+	{
+		open_check_files(NULL, cmd, cmd -> tab);
+		if (errno == 0)
+			close_process(cmd, subshell, fork, data -> status);
+	}
 	else if (fork && len == 1)
 		close_process(cmd, subshell, fork, data -> status);
 	else if ((fork == 0 && len > 1) && curr_stop && prev_stop)
-		handle_exit(data, cmd, subshell, fork);
+	{
+		printf("Entered\n");
+		open_check_files(NULL, cmd, cmd -> tab);
+		if (errno == 0)
+			handle_exit(data, cmd, subshell, fork);
+	}
 	else if (cmd -> prev_stop && fork && (prev_stop == 0 || curr_stop == 0))
 		handle_exit(data, cmd, subshell, fork);
 }

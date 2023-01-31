@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:28:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 18:30:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 03:18:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	close_all_pipes(t_data *data, t_doc **head, int read_, int write_)
 
 void	close_both_pipes(t_data *data, int pipes[2], int *inited)
 {
-	if ((*inited))
+	if ((data && *inited))
 	{
 		close_fd(data, "bash12", &pipes[0]);
 		close_fd(data, "bash13", &pipes[1]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 18:59:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 00:32:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,15 @@ void	forking(t_cmd **cmds, int subshell, int i)
 		prev = cmds[--i]-> stop;
 	else
 		prev = NULL;
+	g_collector = ft_calloc(sizeof(t_collector), 1);
+	is_error(cmd -> data, g_collector, MALLOC_ERR, 0);
+	g_collector -> data = cmd;
 	cmd -> data -> ctrl_c.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &cmd -> data -> ctrl_c, NULL);
+	cmd -> data -> sigquit.sa_flags = SA_RESTART;
+	cmd -> data -> sigquit.sa_handler = exit_dumped;
+	sigemptyset(&cmd -> data -> sigquit.sa_mask);
+	sigaction(SIGQUIT, &cmd -> data -> sigquit, NULL);
 	set_redirections_files(cmd, prev, subshell);
 	if (is_not_built_in(cmd -> cmd))
 		run_cmd(cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 16:02:17 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/01/31 03:44:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ typedef struct t_data
 	char				**envp;
 	char				**tab_;
 	struct sigaction	ctrl_c;
+	struct sigaction	sigquit;
 	t_env				*env;
 	t_alias				*alias;
 	t_node				*collector;
@@ -201,6 +202,7 @@ void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type);
 void	check_lines(t_data *data, char *files, char *err, int flags);
 void	skip_reverse(char *to_parse, int *i, int quote);
 void	skip_(char *to_parse, size_t *i, int quote);
+void	exit_dumped(int signal);
 /*-----------------ERROR_HANDLING-----------------*/
 
 /*-----------------GLOBAL_UTILS-----------------*/
@@ -319,7 +321,7 @@ int		is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell);
 void	executing(t_data *data, t_cmd **cmds, int subshell);
 void	run_cmd(t_cmd *cmd);
 void	wait_all_child(t_data *data, t_cmd **cmds, int subshell);
-void	open_check_files(t_cmd *cmd, t_files **tab);
+void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab);
 void	close_fd(t_data *data, char *str, int *fd);
 void	check_files(t_data *data, t_files **files, int flags);
 void	close_pipes(t_data *data);
