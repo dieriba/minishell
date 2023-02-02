@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 05:36:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 05:39:36 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,8 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean, int skip)
 		else if (to_clean[i] == '\\')
 			i = slash_len(data, to_clean, i, &len);
 		if (to_clean[i] > 0 || ((to_clean[i] * -1) == ' '))
-		{
-		printf("Len value %ld: index %ld value is : %c\n", len, i, to_clean[i]);
 			len++;
-		}
 	}
-	printf("Len value : %ld end\n", len);
 	return (len);
 }
 
