@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 00:59:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/01 21:08:43 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	lets_read(t_data *data)
 	rescue_cmd = NULL;
 	while (1)
 	{
-		data -> cp_to_parse = readline("bash  : ");
+		directory(data);
+		data -> cp_to_parse = readline(data -> curr_dir.pwd);
 		if (data -> cp_to_parse)
 		{
 			err = valid_quotes(data, data -> cp_to_parse);

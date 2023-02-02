@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:41:48 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 10:00:30 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/01 20:49:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	set_path_type(t_cmd *cmd)
 	if (cmd -> cmd && !ft_strchr(cmd -> cmd, '/'))
 	{
 		cmd -> no_path = 1;
-		cmd -> cmd = ft_strjoin("/", cmd -> cmd, 0);
+		cmd -> cmd = ft_strjoin("/", cmd -> cmd, 0, 0);
 		is_error(cmd -> data, cmd -> cmd, MALLOC_ERR, 0);
 	}
 }

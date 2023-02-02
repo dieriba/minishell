@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 08:07:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/01 22:32:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	print_bad_syntax(t_data *data, char *str, char token)
 
 void	print_err(t_data *data, char *str, t_cmd *cmd, int type)
 {
-	printf("Entered\n");
 	if (data && errno == 2 && cmd && cmd -> no_path)
 	{
 		ft_putstr_fd("bash: command not found: ", 2);
@@ -52,8 +51,6 @@ void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type)
 	int	status;
 
 	status = 1;
-	if (data)
-		status = data -> status;
 	if (data && data -> subshell == 0 && data -> s_pipes_inited)
 		close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
 	else if (data && data -> subshell && data -> s_pipes_inited)
@@ -61,6 +58,8 @@ void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type)
 	close_both_pipes(data, data -> pipes, &data -> inited);
 	close_fd(data, "bash3", &data -> prev_pipes);
 	print_err(data, err_msg, cmd, type);
+	if (data)
+		status = data -> status;
 	free_all(data, status);
 }
 

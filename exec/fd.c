@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 08:20:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 00:11:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	close_all(t_data *data, t_cmd *cmd, int subshell)
 {
 	if (cmd -> last_in && cmd -> last_in -> type == IN)
-		close_fd(cmd -> data, "bash4", &cmd -> last_in -> fd);
+		close_fd(cmd -> data, "bash", &cmd -> last_in -> fd);
 	if (cmd -> last_out)
-		close_fd(data, "bash5", &cmd -> last_out -> fd);
+		close_fd(data, "bash", &cmd -> last_out -> fd);
 	close_both_pipes(data, data -> pipes, &data -> inited);
 	if (subshell == 0 && data -> s_pipes_inited)
 		close_one_end(data,
@@ -25,7 +25,7 @@ void	close_all(t_data *data, t_cmd *cmd, int subshell)
 	else if (subshell && data -> s_pipes_inited)
 		close_one_end(data,
 			data -> p_pipes, 1, &data -> s_pipes_inited);
-	close_fd(data, "bash6", &data -> prev_pipes);
+	close_fd(data, "bash", &data -> prev_pipes);
 	close_all_pipes(data, &data -> here_docs, 1, 0);
 }
 

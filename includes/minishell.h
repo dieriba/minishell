@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 09:18:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 01:12:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
+
+# define PATH_MAX 5100
+
+/*-----------------COLOR_-----------------*/
+# define CYAN "\001\033[0;36m\002"
+# define RESET_COLOR "\001\033[0m\002"
+# define RED "\001\033[0;31m\002"
+# define GREEN "\001\033[0;32m\002"
+/*-----------------COLOR_-----------------*/
 # define ALL_FLAGS 71
 # define QUOTES 34
 # define QUOTES_EMPT 35
@@ -57,13 +66,14 @@
 # define EXCLUDE_TOKEN "{[]};"
 /*-----------------GLOBAL_CHECK-----------------*/
 
-# define MALLOC_ERR "Sorry, no memory enough left for you."
+# define MALLOC_ERR "Sorry, no enough memory left for you."
 # define ENV_ERR "Sorry, no environnement variable avaible right now."
 # define PIPE_INIT_ERROR "Pipe initialization  error"
 # define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
 # define TOKEN_EOF_ERR "bash: syntax error: unexpected end of file"
 # define AMB_REDIRECT "bash : ambiguous redirect"
 # define MISSING_QUOTES "bash : missing end quotes"
+# define PWD_ERROR "pwd: error retrieving current directory: getcwd: cannot access parent directories"
 
 # define LOG_FILE "log_alias"
 # define ALIAS_FILENAME "populate_aliases"
@@ -81,6 +91,15 @@ typedef struct t_cmd		t_cmd;
 typedef struct t_collector	t_collector;
 typedef struct t_doc		t_doc;
 typedef struct t_alias		t_alias;
+
+typedef struct t_dir
+{
+	char	*path;
+	char	*dir_name;
+	char	*pwd;
+	int		new_dir;
+}	t_dir;
+
 
 typedef struct t_alias
 {
@@ -142,6 +161,7 @@ typedef struct t_cmd
 	int		_close;
 	int		_open;
 	int		to_not_exec;
+	int		built_in;
 	t_files	*last_in;
 	t_files	*last_out;
 	t_files	**tab;
@@ -172,6 +192,7 @@ typedef struct t_data
 	char				**tab_;
 	struct sigaction	ctrl_c;
 	struct sigaction	sigquit;
+	t_dir				curr_dir;
 	t_env				*env;
 	t_alias				*alias;
 	t_node				*collector;
@@ -231,6 +252,7 @@ int		skip_char_token_str(size_t i, char *to_parse, char *to_skip);
 int		add_command(t_data *data, char *to_process, int i);
 int		check_quotes(char *to_parse, int i);
 int		find_end_string(t_data *data, char *to_parse, int j);
+void	directory(t_data *data);
 void	create_list(t_data *data, char **envp, int len);
 void	par_to_space(char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
@@ -286,15 +308,16 @@ size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 char	*get_var_line(char *line);
 char	*find_alias_node(t_data *data, char *line);
 int		where_to_write(t_data *data, t_cmd *cmd, int subshell);
-int		is_not_built_in(char *cmd);
 int		check_line(char *line);
 int		log_files_alias(char *alias, int err_code, int line);
 int		built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
 int		exit_process(t_data *data, t_cmd *cmd, int subshell, int fork);
+int		cd(t_data *data, t_cmd *cmd);
+void	is_built_in(t_cmd *cmd);
+void	echo(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	export(t_cmd *cmd, t_env *env, int fork, int subshell);
 void	env(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	unset(t_cmd *cmd, t_env *env);
-void	echo(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	make_export(t_env *env, char *line);
 void	alias(t_data *data, t_cmd *cmd, int subshell, int fork);
 void	alias_(t_data *data, t_cmd *cmd, char *line, int subshfell);

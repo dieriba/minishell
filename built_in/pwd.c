@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:18:46 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 08:36:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/01 23:22:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	pwd(t_data *data, t_cmd *cmd, int subshell, int fork)
 	fd = where_to_write(data, cmd, subshell);
 	current_dir = getcwd(NULL, 0);
 	if (current_dir == NULL)
-		perror(NULL);
+		perror(PWD_ERROR);
 	else if (ft_putendl_fd(current_dir, fd) < 0)
 		print_err_and_exit(data, NULL, "syscall", 1);
 	ft_free_elem((void **)&current_dir);

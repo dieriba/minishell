@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 03:15:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/01 21:09:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	free_all(t_data *data, int status)
 		ft_free_elem((void **)&g_collector);
 		ft_free_elem((void **)&data -> cp_to_parse);
 		ft_free_elem((void **)&data -> env);
+		ft_free_elem((void **)&data -> curr_dir.dir_name);
+		ft_free_elem((void **)&data -> curr_dir.pwd);
 		clean_here_doc(data, &data -> here_docs);
 		free(data);
 		exit(status);

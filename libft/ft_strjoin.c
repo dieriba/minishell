@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2, char const *s3)
+char	*ft_strjoin(char *s1, char *s2, char *s3, int pos_s3)
 {
 	size_t	i;
 	size_t	j;
@@ -27,9 +27,17 @@ char	*ft_strjoin(char const *s1, char const *s2, char const *s3)
 	buff = calloc(sizeof(char), (i + j + k + 1));
 	if (!buff)
 		return (NULL);
+	if (pos_s3 == 0)
+	{
+		ft_memcpy(buff, s1, i);
+    	if (s3)
+			ft_memcpy(buff + i, s3, k);
+		ft_memcpy(buff + i + k, s2, j);
+		return (buff);
+	}
 	ft_memcpy(buff, s1, i);
-    if (s3)
-		ft_memcpy(buff + i, s3, k);
-	ft_memcpy(buff + i + k, s2, (j + 1));
+	ft_memcpy(buff + i, s2, j);
+	if (s3)
+		ft_memcpy(buff + i + j, s3, k + 1);
 	return (buff);
 }

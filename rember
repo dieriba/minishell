@@ -1,3 +1,2 @@
 (ls && ls) | cat | wc -l && ((ls && ls) | ls) | cat
  < a (a && b ) || a && a && b
- (ls def || ((ls parser || ls ) ) )

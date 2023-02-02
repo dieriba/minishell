@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 08:38:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 01:12:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	forking(t_cmd **cmds, int subshell, int i)
 	sigemptyset(&cmd -> data -> sigquit.sa_mask);
 	sigaction(SIGQUIT, &cmd -> data -> sigquit, NULL);
 	set_redirections_files(cmd, prev, subshell);
-	if (is_not_built_in(cmd -> cmd))
+	if (cmd -> built_in == 0)
 		run_cmd(cmd);
 	free_all(cmd -> data, cmd -> data -> status);
 }
@@ -93,8 +93,8 @@ void	execute_routine(t_data *data, t_cmd **cmds, int i, int subshell)
 		if (pid_ret == 0)
 			forking(cmds, subshell, i);
 		cmds[i]-> pid = pid_ret;
-		handle_pipes(data, cmds[i], subshell);
 	}
+	handle_pipes(data, cmds[i], subshell);
 }
 
 void	executing(t_data *data, t_cmd **cmds, int subshell)
@@ -118,6 +118,7 @@ void	executing(t_data *data, t_cmd **cmds, int subshell)
 			clean_files(cmds[i]);
 			clean_cmd(cmds[i]);
 		}
+		is_built_in(cmds[i]);
 		res = prepare_next_step(data, cmds, cmds[i]-> stop, &i);
 		if (res == 0 && is_subshell(data, cmds, &i, subshell) == 0)
 			execute_routine(data, cmds, i, subshell);

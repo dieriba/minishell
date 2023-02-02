@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 10:00:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/01 20:50:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	unvalid_line(t_data *data, char *line, char **rescue_cmd)
 	if ((*rescue_cmd))
 	{
 		tmp = (*rescue_cmd);
-		(*rescue_cmd) = ft_strjoin(data -> cp_to_parse, (*rescue_cmd), 0);
+		(*rescue_cmd) = ft_strjoin(data -> cp_to_parse, (*rescue_cmd), 0, 0);
 		is_error(data, (*rescue_cmd), MALLOC_ERR, 0);
 		ft_free_elem((void **)&data -> cp_to_parse);
 		ft_free_elem((void **)&tmp);

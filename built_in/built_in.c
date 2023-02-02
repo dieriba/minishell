@@ -6,34 +6,36 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 17:52:36 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 08:39:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 01:15:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_not_built_in(char *cmd)
+void	is_built_in(t_cmd *cmd)
 {
 	if (cmd == NULL)
-		return (1);
-	else if (ft_strcmp(cmd, "/echo") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "/export") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "/unset") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "/env") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "/alias") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "/unalias") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "/pwd") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "/exit") == 0)
-		return (0);
-	return (1);
+		return ;
+	else if (ft_strcmp(cmd -> cmd, "/echo") == 0)
+		cmd -> built_in = 1;
+	else if (ft_strcmp(cmd -> cmd, "/export") == 0)
+		cmd -> built_in = 1;
+	else if (ft_strcmp(cmd -> cmd, "/unset") == 0)
+		cmd -> built_in = 1;
+	else if (ft_strcmp(cmd -> cmd, "/env") == 0)
+		cmd -> built_in = 1;
+	else if (ft_strcmp(cmd -> cmd, "/alias") == 0)
+		cmd -> built_in = 1;
+	else if (ft_strcmp(cmd -> cmd, "/unalias") == 0)
+		cmd -> built_in = 1;
+	else if (ft_strcmp(cmd -> cmd, "/pwd") == 0)
+		cmd -> built_in = 1;
+	else if (ft_strcmp(cmd -> cmd, "/exit") == 0)
+		cmd -> built_in = 1;
+	else if (ft_strcmp(cmd -> cmd, "/cd") == 0)
+		cmd -> built_in = 1;
 }
+
 
 int	built_in(t_data *data, t_cmd *cmd, int subshell, int fork)
 {
@@ -55,5 +57,7 @@ int	built_in(t_data *data, t_cmd *cmd, int subshell, int fork)
 		pwd(data, cmd, subshell, fork);
 	else if (ft_strcmp(cmd -> cmd, "/exit") == 0)
 		return (exit_process(data, cmd, subshell, fork));
+	else if (ft_strcmp(cmd -> cmd, "/cd") == 0)
+		return (cd(data, cmd));
 	return (0);
 }
