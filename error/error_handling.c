@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/01 22:32:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:38:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type)
 	else if (data && data -> subshell && data -> s_pipes_inited)
 		close_one_end(data, data -> p_pipes, 1, &data -> s_pipes_inited);
 	close_both_pipes(data, data -> pipes, &data -> inited);
-	close_fd(data, "bash3", &data -> prev_pipes);
+	close_fd(data, "bash", &data -> prev_pipes);
 	print_err(data, err_msg, cmd, type);
 	if (data)
 		status = data -> status;

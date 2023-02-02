@@ -1,8 +1,0 @@
-Could not create the alias, because of an error occured at line : 28 gc!=git commit --verbose --amend contains invalid characters before '='
-Could not create the alias, because of an error occured at line : 30 gca!=git commit --verbose --all --amend contains invalid characters before '='
-Could not create the alias, because of an error occured at line : 32 gcan!=git commit --verbose --all --no-edit --amend contains invalid characters before '='
-Could not create the alias, because of an error occured at line : 33 gcans!=git commit --verbose --all --signoff --no-edit --amend contains invalid characters before '='
-Could not create the alias, because of an error occured at line : 43 gcn!=git commit --verbose --no-edit --amend contains invalid characters before '='
-Could not create the alias, because of an error occured at line : 75 git-svn-dcommit-push=git svn dcommit && git push github $(git_main_branch):svntrunk contains invalid characters before '='
-Could not create the alias, because of an error occured at line : 105 gpf!=git push --force contains invalid characters before '='
-Could not create the alias, because of an error occured at line : 188 which-command=whence contains invalid characters before '='

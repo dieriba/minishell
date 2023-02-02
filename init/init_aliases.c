@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 04:28:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 02:37:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:36:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	populate_alias(char *line)
 	else if (i == 0)
 		return (-2);
 	line[i] = 0;
-	check = check_line(line);
+	check = check_line_alias(line);
 	line[i] = '=';
 	if (check)
 		i = -3;

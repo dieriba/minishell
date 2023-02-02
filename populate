@@ -1,3 +1,4 @@
+..=cd ..
 g=git
 ga=git add
 gaa=git add --all

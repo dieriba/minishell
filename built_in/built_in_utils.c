@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:52:56 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 00:00:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:35:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,23 @@ int	check_line(char *line)
 			&& (line[i + 1] == '=' || !line[i]))
 			return (1);
 		if (line[i] != '_' && !ft_isalpha(line[i]))
+			return (1);
+	}
+	return (0);
+}
+
+int	check_line_alias(char *line)
+{
+	size_t	i;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] == '$'
+			&& (line[i + 1] == '=' || !line[i]))
+			return (1);
+		if (!ft_strchr(ALIAS_AUTHORIZED, line[i])
+			&& !ft_isalpha(line[i]))
 			return (1);
 	}
 	return (0);

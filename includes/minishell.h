@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 04:24:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:37:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 # define DELIM_TOKEN_SP_G "|&<>;()"
 # define MAX_LEN_TOKEN 2
 # define EXCLUDE_TOKEN "{[]};"
+# define ALIAS_AUTHORIZED "._!-"
 /*-----------------GLOBAL_CHECK-----------------*/
 
 # define MALLOC_ERR "Sorry, no enough memory left for you."
@@ -99,7 +100,6 @@ typedef struct t_dir
 	char	*pwd;
 	int		new_dir;
 }	t_dir;
-
 
 typedef struct t_alias
 {
@@ -165,6 +165,7 @@ typedef struct t_cmd
 	t_files	*last_in;
 	t_files	*last_out;
 	t_files	**tab;
+	t_files	**glob_files;
 	t_data	*data;
 	t_cmd	*prev_cmd;
 }	t_cmd;
@@ -254,7 +255,7 @@ int		check_quotes(char *to_parse, int i);
 int		find_end_string(t_data *data, char *to_parse, int j);
 void	directory(t_data *data);
 void	create_list(t_data *data, char **envp, int len);
-void	par_to_space(char *str);
+void	par_to_space(t_data *data, char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
 void	set_default_data(t_data *data, int len);
 void	set_last_setup(t_cmd *cmd);
@@ -311,6 +312,7 @@ char	*get_var_line(char *line);
 char	*find_alias_node(t_data *data, char *line);
 int		where_to_write(t_data *data, t_cmd *cmd, int subshell);
 int		check_line(char *line);
+int		check_line_alias(char *line);
 int		log_files_alias(char *alias, int err_code, int line);
 int		built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
 int		exit_process(t_data *data, t_cmd *cmd, int subshell, int fork);

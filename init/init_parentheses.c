@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   init_parentheses.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 01:19:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 22:06:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:16:50 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	par_to_space(char *to_clean)
+void	par_to_space(t_data *data, char *to_clean)
 {
 	size_t	i;
 
 	i = -1;
 	while (to_clean[++i])
 	{
-		if (to_clean[i] == '(' || to_clean[i] == ')')
+		if ((to_clean[i] == '(' || to_clean[i] == ')')
+			&& !find_end_quotes(data, to_clean, i))
 			to_clean[i] = ' ';
 	}
 }
@@ -110,17 +111,18 @@ void	set_parenthese(t_cmd *cmd, char *to_parse)
 	{
 		if (to_parse[i] == '('
 			&& !find_start_quotes(cmd -> data, to_parse, i))
-			cmd -> p_open++;
-		else if (to_parse[i] == ')'
-			&& !find_start_quotes(cmd -> data, to_parse, i))
-			cmd -> p_close--;
-		if (to_parse[i] == '(')
 		{
+			cmd -> p_open++;
 			set_followed_par(cmd, &to_parse[i], &left);
 			--left;
 		}
-		else if (to_parse[i] == ')' && last_par(cmd -> data, &to_parse[i]) < 0)
-			set_followed_par(cmd, &to_parse[i], &left);
+		else if (to_parse[i] == ')'
+			&& !find_start_quotes(cmd -> data, to_parse, i))
+		{
+			cmd -> p_close--;
+			if (last_par(cmd -> data, &to_parse[i]) < 0)
+				set_followed_par(cmd, &to_parse[i], &left);
+		}
 		cmd -> to_fork = cmd -> p_open;
 	}
 }

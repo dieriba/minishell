@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 05:40:58 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 16:21:51 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	init_cmd(t_data *data, char *to_process)
 	len = how_many_cmds(data, data -> cp_to_parse);
 	data -> cmds = ft_calloc(sizeof(t_cmd *), len + 1);
 	is_error(data, data -> cmds, MALLOC_ERR, 1);
-	par_to_space(data -> cp_to_parse);
+	par_to_space(data, data -> cp_to_parse);
 	set_default_data(data, len);
 	fill_cmds(data -> cmds, data -> cp_to_parse, len);
 	fill_cmds_par(data -> cmds, to_process, len);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 01:18:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 18:59:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	dup_(t_data *data, int fd, int old_fd)
 	if (dup2(fd, old_fd) < 0)
 	{
 		data -> status = -1;
-		print_err_and_exit(data, NULL, "bash78", 1);
+		print_err_and_exit(data, NULL, "bash 1", 1);
 	}
 }
 
@@ -26,9 +26,9 @@ void	dup_and_close(t_data *data, int fd, int old_fd, int to_close)
 	if (dup2(fd, old_fd) < 0)
 	{
 		data -> status = -1;
-		print_err_and_exit(data, NULL, "bash5", 1);
+		print_err_and_exit(data, NULL, "bash 2", 1);
 	}
-	close_fd(data, "bash6", &to_close);
+	close_fd(data, "bash 3", &to_close);
 }
 
 void	set_out_redirection(t_cmd *cmd, int subshell)
@@ -36,6 +36,7 @@ void	set_out_redirection(t_cmd *cmd, int subshell)
 	t_data	*data;
 
 	data = cmd -> data;
+	//printf("Commande : %s args[1] : %s subshell value : %d s_pipes : %d\n", cmd -> cmd, cmd -> args[1], subshell, data -> s_pipes_inited);
 	if (cmd -> last_out && cmd -> last_out -> fd > 0)
 	{
 		//printf("FD value : %d Commande : %s Entered : 1\n", cmd -> last_out -> fd, cmd -> cmd);
@@ -72,7 +73,7 @@ void	set_in_redirection(t_cmd *cmd, int pipes)
 				cmd -> data -> here_docs, cmd -> last_in -> files);
 		dup_(data, cmd -> last_in -> fd, STDIN_FILENO);
 	}
-	else if (prev_cmd && prev_cmd -> p_close && data -> s_pipes_inited)
+	else if (prev_cmd && prev_cmd -> p_close && data -> s_pipes_inited && data -> p_pipes[0] != -1)
 	{
 		//printf("FD value : %d Commande :%s Entered : 6\n", data -> p_pipes[0], cmd -> cmd);
 		dup_(data, data -> p_pipes[0], STDIN_FILENO);

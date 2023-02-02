@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:50:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 03:39:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 18:12:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab)
 
 	i = -1;
 	tmp = NULL;
-	if (!ft_strcmp(tab[0], "unalias") || !ft_strcmp(tab[0], "alias"))
+	if (!ft_strcmp(tab[0], "unalias")
+		|| !ft_strcmp(tab[0], "alias")
+			|| !ft_strcmp(tab[0], "cd"))
 		return;
 	while (tab[++i])
 	{
