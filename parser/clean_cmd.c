@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 02:13:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 19:18:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 04:41:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	check_tab(char **tab)
 	size_t	i;
 	size_t	j;
 	int		quotes;
-
+	
 	quotes = 0;
 	i = -1;
 	while (tab[++i])
@@ -77,7 +77,7 @@ int	check_tab(char **tab)
 		{
 			if (tab[i][j] == '$')
 				return (1);
-			else if (tab[i][j] < 0)
+			else if (tab[i][j] < 0 || tab[i][j] == '\\')
 				quotes = -1;
 		}
 	}
@@ -89,13 +89,14 @@ void	clean_cmd(t_cmd *cmd)
 	int		to_clean;
 	size_t	i;
 	char	**tab;
-
+	
 	i = -1;
 	if (cmd -> args == NULL)
 		return ;
 	tab = cmd -> args;
 	from_alias_to_hero(cmd -> data, cmd, tab);
 	to_clean = check_tab(cmd -> args);
+	tab = cmd -> args;
 	if (to_clean < 0)
 		while (tab[++i])
 			tab[i] = clean_lines(cmd -> data, tab[i], 0);

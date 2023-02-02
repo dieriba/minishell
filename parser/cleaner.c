@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:27:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 05:36:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,39 @@ char	*is_valid_expand(t_data *data, char *to_check)
 		line = is_shell_variable(data, &to_check[j]);
 	to_check[i] = stop;
 	return (line);
+}
+
+size_t	slash_len(t_data *data, char *to_clean, size_t i, size_t *len)
+{
+	int		quotes;
+
+	quotes = find_end_quotes(data, to_clean, i);
+	if (to_clean[i + 1] == 0 || find_single_quote(data, to_clean, i))
+		return (i);
+	if (to_clean[i + 1] != '\\' && !quotes)
+	{
+		to_clean[i] = -1 * to_clean[i];
+		i++;
+	}
+	if (to_clean[i + 1] != '\\')
+		return (i);
+	*len += 1;
+	to_clean[i] = -1 * to_clean[i];
+	i += (to_clean[i + 1] == '\\') + 1;
+	while (to_clean[i] && to_clean[i] == '\\')
+	{
+		if (to_clean[i + 1] == '\\'
+			|| to_clean[i - 2] == '\\' * -1)
+		{
+			*len += 1;
+			to_clean[i] = -1 * to_clean[i];
+			i += 2;
+		}
+		else
+			i++;
+	}
+	i -= (to_clean[i] == 0);
+	return (i);
 }
 
 size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean, int skip)
@@ -52,9 +85,15 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean, int skip)
 			i += skip_next_stop(&to_clean[i]);
 			i--;
 		}
-		else if (to_clean[i] > 0 || ((to_clean[i] * -1) == ' '))
+		else if (to_clean[i] == '\\')
+			i = slash_len(data, to_clean, i, &len);
+		if (to_clean[i] > 0 || ((to_clean[i] * -1) == ' '))
+		{
+		printf("Len value %ld: index %ld value is : %c\n", len, i, to_clean[i]);
 			len++;
+		}
 	}
+	printf("Len value : %ld end\n", len);
 	return (len);
 }
 
@@ -111,6 +150,7 @@ char	*clean_(t_data *data, char *to_clean, int skip)
 
 	expands = NULL;
 	len = get_expand_val(data, &expands, to_clean, skip);
+	printf("Len str is : %ld\n", len);
 	res = ft_calloc(sizeof(char), len + 1);
 	is_error(data, res, MALLOC_ERR, 0);
 	expand_and_clean(to_clean, res, ft_lstlast_s(expands), skip);

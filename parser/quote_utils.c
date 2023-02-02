@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 06:38:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 04:37:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,20 @@ int	find_end_quotes(t_data *data, char *to_parse, int i)
 			break ;
 		else if (to_parse[i] == data -> neg_double_end
 			|| to_parse[i] == data -> neg_single_end)
+			return (1);
+	}
+	return (0);
+}
+
+int	find_single_quote(t_data *data, char *to_parse, int i)
+{
+	if (!to_parse[i])
+		return (0);
+	while (to_parse[++i])
+	{
+		if (to_parse[i] == data -> neg_single_start)
+			break ;
+		else if (to_parse[i] == data -> neg_single_end)
 			return (1);
 	}
 	return (0);

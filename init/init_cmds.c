@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 04:03:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 02:37:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	move_to_next_word(t_data *data, char *to_parse, int i, int *len)
 	else
 		while (to_parse[i] && !ft_isspace(to_parse[i])
 			&& is_real_stop(data, to_parse, i, STOP_))
-		i++;
-	i = skip_spaces(data, to_parse, i, 0);
+			i++;
+	i = skip_spaces(data, to_parse, i + (to_parse[i] != 0), 0);
 	(*len) += 1;	
 	return (i);
 }

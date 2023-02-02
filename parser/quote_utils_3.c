@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 02:48:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 02:18:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,14 @@ void	quote_to_neg(t_data *data, char *to_parse)
 			while (to_parse[++i])
 				if (to_parse[i] == '"' && to_parse[i - 1] != '\\')
 					break ;
-			if (to_parse[i])
-				to_parse[i] = data -> neg_double_end;
+			to_parse[i] = data -> neg_double_end;
 		}
 		else if (to_parse[i] && to_parse[i] == '\'')
 		{
 			to_parse[i] = data -> neg_single_start;
 			while (to_parse[++i] && to_parse[i] != '\'')
 				;
-			if (to_parse[i])
-				to_parse[i] = data -> neg_single_end;
+			to_parse[i] = data -> neg_single_end;
 		}
 		if (!to_parse[i])
 			break ;

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 01:12:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 04:24:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,7 @@ int		valid_parentheses(char *to_parse, int *open, size_t i);
 int		is_real_stop(t_data *data, char *to_parse, size_t i, char *in);
 int		find_start_quotes(t_data *data, char *to_parse, int i);
 int		find_end_quotes(t_data *data, char *to_parse, int i);
+int		find_single_quote(t_data *data, char *to_pars, int i);
 int		loop_nested_quote(char *to_parse, int j, int end);
 int		length_of_quotes(char *to_parse, char quote);
 int		check_dollars(char c, char *to_clean, int i);
@@ -290,6 +291,7 @@ int		skip_next_stop(char *to_clean);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
 int		valid_format_token(char *to_parse);
 int		unvalid_line(t_data *data, char *line, char **rescue_cmd);
+int		valid_double(char *to_parse, size_t i);
 void	rescue_command(t_data *data, char **rescue_cmd, int err);
 char	*is_shell_variable(t_data *data, char *line);
 char	*cleaner(t_data *data, char *to_clean);

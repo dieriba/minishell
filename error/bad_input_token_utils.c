@@ -6,11 +6,20 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/01 20:50:44 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 02:06:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	valid_double(char *to_parse, size_t i)
+{
+	if (to_parse[i] != '"')
+		return (0);
+	if (i > 0 && to_parse[i - 1] == '\\')
+		return (0);
+	return (1);
+}
 
 void	skip_(char *to_parse, size_t *i, int quote)
 {
@@ -19,8 +28,14 @@ void	skip_(char *to_parse, size_t *i, int quote)
 	j = (*i);
 	while (1)
 	{
-		while (to_parse[++j] && to_parse[j] != quote)
-			;
+		while (to_parse[++j])
+		{
+			if ((to_parse[j] == quote
+				&& to_parse[j] == '"') && valid_double(to_parse, j))
+				break ;
+			else if (to_parse[j] == quote && to_parse[j] != '"')
+				break ;	
+		}
 		if (to_parse[j + 1] == '\'' || to_parse[j + 1] == '"')
 			quote = to_parse[++j];
 		else
@@ -36,9 +51,13 @@ void	skip_reverse(char *to_parse, int *i, int quote)
 	j = (*i);
 	while (1)
 	{
-		while (--j > -1 && to_parse[j] != quote)
-			;
-		if (j >= 0 && (to_parse[j - 1] == '\'' || to_parse[j - 1] == '"'))
+		while (--j > -1)
+		{
+			if (to_parse[j] == quote
+				&& (to_parse[j] == '\'' || valid_double(to_parse, j)))
+				break ;
+		}
+		if (j >= 0 && (to_parse[j - 1] == '\'' || valid_double(to_parse, j - 1)))
 			quote = to_parse[--j];
 		else
 			break ;
