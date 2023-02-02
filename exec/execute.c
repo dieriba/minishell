@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 19:27:45 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 20:01:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	execute_routine(t_data *data, t_cmd **cmds, int i, int subshell)
 		cmds[i]-> pid = pid_ret;
 	}
 	handle_pipes(data, cmds[i], subshell);
-	printf("data-> subshell value : %d Sub_pipes_value in[0][0] : %d, Sub_pipes_value out[0][1] : %d\n", data -> subshell ,data -> p_pipes[0], data -> p_pipes[1]);
 }
 
 void	executing(t_data *data, t_cmd **cmds, int subshell)

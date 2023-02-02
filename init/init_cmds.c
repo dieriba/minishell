@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 02:37:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 20:03:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int	move_to_next_word(t_data *data, char *to_parse, int i, int *len)
 		while (to_parse[i] && !ft_isspace(to_parse[i])
 			&& is_real_stop(data, to_parse, i, STOP_))
 			i++;
+	(*len) += 1;
+	if (ft_strchr(STOP_, to_parse[i]) || to_parse[i] == 0)
+		return (-1);
 	i = skip_spaces(data, to_parse, i + (to_parse[i] != 0), 0);
-	(*len) += 1;	
 	return (i);
 }
 
@@ -37,7 +39,7 @@ int	count_words(t_data *data, char *to_parse)
 		i = skip_spaces(data, to_parse, i, 0);
 		if (!ft_strchr(FORMAT_TOKEN_SP, to_parse[i]))
 			i = move_to_next_word(data, to_parse, i, &length) - 1;
-		if (ft_strchr(R_COMBO, to_parse[i]))
+		if (i >= 0 && ft_strchr(R_COMBO, to_parse[i]))
 			i = skip_redirect(data, to_parse, i) - 1;
 		if (i < 0)
 			return (length);

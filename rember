@@ -1,4 +1,3 @@
 (ls && ls) | cat | wc -l && ((ls && ls) | ls) | cat
 ../fdf
-((sleep 2; echo end;  && sleep 3 ; echo salujt) && echo lol)
 ; check for semicolon next to work
