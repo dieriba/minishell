@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 05:39:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/02 05:40:39 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ char	*clean_(t_data *data, char *to_clean, int skip)
 
 	expands = NULL;
 	len = get_expand_val(data, &expands, to_clean, skip);
-	printf("Len str is : %ld\n", len);
 	res = ft_calloc(sizeof(char), len + 1);
 	is_error(data, res, MALLOC_ERR, 0);
 	expand_and_clean(to_clean, res, ft_lstlast_s(expands), skip);
