@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/03 23:34:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 03:12:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	shell_routine(t_data *data)
 		skip = fork_docs(data, &data -> here_docs);
 		close_all_pipes(data, &data -> here_docs, 0, 1);
 		if (skip == 0)
-			executing(data, data -> cmds, 0);
+			executing(data, data -> cmds);
 		clean_struct(data);
 	}
 	ft_free_tab(data -> tab_);

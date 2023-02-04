@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 02:35:45 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 03:11:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,13 +350,13 @@ int		opener_outfile(t_cmd *cmd);
 int		to_exec_or_not(char *stop, int status);
 int		pipe_par(t_cmd **cmds);
 int		find_next_cmd(t_data *data, t_cmd **cmds);
-int		is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell);
+int		is_subshell(t_data *data, t_cmd **cmds, int *i);
 int		find_read_pipes(t_s_pipes *head, int subshell);
 int		find_write_pipes(t_s_pipes *head, int subshell);
 void    clean_s_pipes(t_data *data);
-void	executing(t_data *data, t_cmd **cmds, int subshell);
+void	executing(t_data *data, t_cmd **cmds);
 void	run_cmd(t_cmd *cmd);
-void	wait_all_child(t_data *data, t_cmd **cmds, int subshell);
+void	wait_all_child(t_data *data, t_cmd **cmds);
 void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab);
 void	close_fd(t_data *data, char *str, int *fd);
 void	check_files(t_data *data, t_files **files, int flags);

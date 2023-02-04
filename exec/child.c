@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 19:24:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 03:11:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	wait_all_child(t_data *data, t_cmd **cmds, int subshell)
+void	wait_all_child(t_data *data, t_cmd **cmds)
 {
 	size_t	i;
 
@@ -34,6 +34,6 @@ void	wait_all_child(t_data *data, t_cmd **cmds, int subshell)
 	if (WIFEXITED(data -> status))
 		data -> status = WEXITSTATUS(data -> status);
 	handle_signals(data);
-	if (subshell)
+	if (data -> subshell)
 		free_all(data, data -> status);
 }

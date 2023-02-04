@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 02:51:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 03:11:17 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,24 +86,24 @@ void	execute_routine(t_data *data, t_cmd *cmd)
 	handle_pipes(data);
 }
 
-void	executing(t_data *data, t_cmd **cmds, int subshell)
+void	executing(t_data *data, t_cmd **cmds)
 {
 	int		i;
 	int		res;
 
 	i = -1;
-	cmds[0]-> p_open = cmds[0]-> to_fork + (subshell == 1);
+	cmds[0]-> p_open = cmds[0]-> to_fork + (data -> subshell);
 	while (cmds[++i])
 	{
 		if (verify_cmd(data, cmds[i]))
 			continue ;
 		is_built_in(cmds[i]);
 		res = prepare_next_step(data, cmds, cmds[i]-> stop, &i);
-		if (res == 0 && is_subshell(data, cmds, &i, subshell) == 0)
+		if (res == 0 && is_subshell(data, cmds, &i) == 0)
 			execute_routine(data, cmds[i]);
-		if ((subshell && data -> p_num == 0) || cmds[i] == NULL)
+		if ((data -> subshell && data -> p_num == 0) || cmds[i] == NULL)
 			break ;
 	}
 	clean_s_pipes(data);
-	wait_all_child(data, cmds, subshell);
+	wait_all_child(data, cmds);
 }

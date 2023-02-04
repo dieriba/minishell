@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parentheses.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 22:48:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 03:08:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	end_cmd_par(t_cmd **cmds, int subshell)
 		cmds[0]-> data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
 		if (subshell == 0 && p_num == 0)
 			break ;
-		if (subshell == 1 && cmds[i]-> p_close)
+		if (subshell && cmds[i]-> p_close)
 			break ;
 	}
 	return (i);
