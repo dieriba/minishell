@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 02:16:45 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 03:38:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	free_all(t_data *data, int status)
 		ft_free_elem((void **)&data -> env);
 		ft_free_elem((void **)&data -> curr_dir.dir_name);
 		ft_free_elem((void **)&data -> curr_dir.pwd);
+		clean_s_pipes(data);
 		clean_here_doc(data, &data -> here_docs);
 		free(data);
 		exit(status);

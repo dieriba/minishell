@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 02:06:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 03:23:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	rescue_command(t_data *data, char **rescue_cmd, int err)
 			is_error(data, (*rescue_cmd), MALLOC_ERR, 0);
 		}
 		ft_free_elem((void **)&to_free);
-		if (cmd == NULL || err == 0 || err > 0)
+		if (cmd == NULL || (err == 0 && cmd[0]) || err > 0)
 			break ;
 	}
 	handle_case(data, rescue_cmd, &cmd, err);

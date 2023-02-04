@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:03:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 01:21:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 03:56:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,11 @@ int	cd(t_data *data, t_cmd *cmd)
 	int		len;
 	int		abs;
 	char	*path;
-	
+
 	if (close_redirection(data, cmd))
 		return (1);
+	if (!ft_strcmp(cmd -> stop, "|") || !ft_strcmp(cmd -> prev_stop, "|"))
+		return (0);
 	data -> status = 1;
 	len = ft_tab_len(cmd -> args);
 	if (len > 2)
