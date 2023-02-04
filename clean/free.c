@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/01 21:09:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:16:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,6 @@ void	free_all(t_data *data, int status)
 	{
 		data -> tab_ = ft_free_tab(data -> tab_);
 		data -> envp = ft_free_tab(data -> envp);
-		if (data -> subshell)
-		{
-			close_one_end(data, data -> p_pipes, 1, &data -> s_pipes_inited);
-			close_one_end(data, data -> p_pipes, 0, &data -> s_pipes_inited);
-		}
 		free_cmd(data -> cmds);
 		free_list(NULL, &data -> alias -> head);
 		ft_free_elem(((void **)&data -> alias));

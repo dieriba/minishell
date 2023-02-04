@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 19:12:57 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 01:37:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 00:22:14 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,6 @@ int	tab_len(t_cmd **cmds)
 	while (cmds[++i])
 		;
 	return (i);
-}
-
-void	set_node(t_data *data, t_files **tab)
-{
-	int		len;
-	t_doc	*node;
-
-	len = len_files_tab(tab);
-	while (len--)
-	{
-		if (tab[len]-> type == DOC)
-		{
-			tab[len]-> files = clean_lines(data, tab[len]-> files, 0);
-			node = ft_calloc(sizeof(t_doc), 1);
-			is_error(data, node, MALLOC_ERR, 0);
-			node -> limiter = tab[len]-> files;
-			ft_lst_add_front_(&data -> here_docs, node);
-		}
-	}
 }
 
 int	open_pipes(t_data *data, t_doc **head)

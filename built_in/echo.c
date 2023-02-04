@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 18:42:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:21:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	write_to_fd(t_data *data, char *line, int fd)
 	}
 }
 
-void	echo(t_data *data, t_cmd *cmd, int subshell, int fork)
+void	echo(t_data *data, t_cmd *cmd, int fork)
 {
 	int	fd;
 	int	i;
@@ -29,7 +29,7 @@ void	echo(t_data *data, t_cmd *cmd, int subshell, int fork)
 
 	if (fork == 0)
 		return ;
-	fd = where_to_write(data, cmd, subshell);
+	fd = where_to_write(data, cmd);
 	if (ft_tab_len(cmd -> args) == 1)
 	{
 		write_to_fd(data, "\n", fd);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 01:14:10 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:35:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,21 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 
 void	init_s_pipes(t_data *data)
 {
-	if (data -> s_pipes_inited == 0)
-		init_pipes(data, data -> sub_pipes[0], &data -> s_pipes_inited, 1);
+	t_s_pipes	*node;
+	
+	node = ft_calloc(sizeof(t_s_pipes), 1);
+	is_error(data, node, MALLOC_ERR, 0);
+	node -> subshell[0] = data -> subshell;
+	node -> subshell[1] = data -> subshell + 1;
+	if (pipe(node -> s_pipes) < 0)
+		print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 0);
+	if (data -> s_pipes == NULL)
+		data -> s_pipes = node;
 	else
-		init_pipes(data, data -> sub_pipes[1], &data -> s_pipes_inited, 1);
+	{
+		node -> next = data -> s_pipes;
+		data -> s_pipes = node;
+	}
 }
 
 int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
@@ -83,7 +94,7 @@ int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
 				data, cmds[(*i)], cmds[(*i) - 1]-> pid, cmds[(*i)]-> prev_stop);
 	if (!status && cmds[(*i)]-> to_fork == 0
 		&& cmds[(*i)]-> p_close == 0 && !ft_strcmp("|", stop))
-		init_pipes(data, data -> pipes, &data -> inited, 0);
+		init_pipes(data, data -> pipes, &data -> inited);
 	else if (status == 0 && pipe_par(&cmds[(*i)]) == 0)
 		init_s_pipes(data);
 	if (status && cmds[(*i)]-> p_open)

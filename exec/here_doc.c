@@ -3,14 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 01:50:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 01:49:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	check_quoted_doc(t_doc *node, char *limiter)
+{
+	size_t	i;
+
+	i = -1;
+	while (limiter[++i])
+	{
+		if (limiter[i] < 0)
+		{
+			node -> quoted = 1;
+			break ;
+		}
+	}
+}
+
+void	set_node(t_data *data, t_files **tab)
+{
+	int		len;
+	t_doc	*node;
+
+	len = len_files_tab(tab);
+	while (len--)
+	{
+		if (tab[len]-> type == DOC)
+		{
+			node = ft_calloc(sizeof(t_doc), 1);
+			is_error(data, node, MALLOC_ERR, 0);
+			check_quoted_doc(node,tab[len]-> files);
+			tab[len]-> files = clean_lines(data, tab[len]-> files, 0);
+			node -> limiter = tab[len]-> files;
+			ft_lst_add_front_(&data -> here_docs, node);
+		}
+	}
+}
 
 void	open_here_doc(t_data *data, t_cmd **cmds)
 {
@@ -26,7 +61,7 @@ void	handle_here_doc_pipes(t_data *data, t_doc **head)
 	char				*line;
 	t_doc				*node;
 	struct sigaction	sig;
-
+	
 	sigemptyset(&sig.sa_mask);
 	sig.sa_flags = 0;
 	sig.sa_handler = exit_;
@@ -39,7 +74,8 @@ void	handle_here_doc_pipes(t_data *data, t_doc **head)
 			line = readline("here_doc: ");
 			if (!line || !ft_strcmp(node -> limiter, line))
 				break ;
-			line = clean_lines(data, line, 1);
+			if (node -> quoted == 0)
+				line = clean_lines(data, line, 1);
 			ft_putendl_fd(line, node -> pipes[1]);
 			ft_free_elem((void **)&line);
 		}
@@ -50,7 +86,7 @@ void	handle_here_doc_pipes(t_data *data, t_doc **head)
 	free_all(data, 0);
 }
 
-void	fork_docs(t_data *data, t_doc **head)
+int	fork_docs(t_data *data, t_doc **head)
 {
 	int		pid_ret;
 	int		status;
@@ -64,8 +100,12 @@ void	fork_docs(t_data *data, t_doc **head)
 		if (pid_ret == 0)
 			handle_here_doc_pipes(data, &data -> here_docs);
 		waitpid(pid_ret, &status, 0);
-		if (WIFEXITED(status))
-			data -> status = WEXITSTATUS(status);
 		ft_free_elem((void **)&g_collector);
+		if (WIFEXITED(status))
+		{
+			data -> status = WEXITSTATUS(status);
+			return (data -> status);
+		}
 	}
+	return (0);
 }

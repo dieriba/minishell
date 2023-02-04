@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:11:03 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 04:50:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:26:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	export_alias(t_data *data, char *line)
 	data -> status = 0;
 }
 
-void	alias(t_data *data, t_cmd *cmd, int subshell, int fork)
+void	alias(t_data *data, t_cmd *cmd, int fork)
 {
 	int		len;
 	char	*line;
@@ -103,7 +103,7 @@ void	alias(t_data *data, t_cmd *cmd, int subshell, int fork)
 	i = 0;
 	len = ft_tab_len(cmd -> args);
 	if (len == 1 && fork)
-		print_alias(cmd -> data, cmd, subshell);
+		print_alias(cmd -> data, cmd);
 	else if (len > 1 && fork == 0)
 	{
 		while (cmd -> args[++i])
@@ -114,7 +114,7 @@ void	alias(t_data *data, t_cmd *cmd, int subshell, int fork)
 				if (line && line != cmd ->args[i])
 					export_alias(data, cmd -> args[i]);
 				else if (line && line == cmd -> args[i])
-					alias_(data, cmd, line, subshell);
+					alias_(data, cmd, line);
 			}
 		}
 	}

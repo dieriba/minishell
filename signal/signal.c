@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 21:57:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:30:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	exit_dumped(int signal)
 	(void)signal;
 	cmd = (t_cmd *)g_collector -> data;
 	data = cmd -> data;
-	close_all(data, cmd, data -> subshell);
+	close_all(data, cmd);
 	free_all(data, 131);
 }
 

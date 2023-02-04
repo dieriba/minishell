@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 17:37:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:35:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ typedef struct t_cmd		t_cmd;
 typedef struct t_collector	t_collector;
 typedef struct t_doc		t_doc;
 typedef struct t_alias		t_alias;
+typedef struct t_pipes		t_pipes;
+typedef struct t_s_pipes	t_s_pipes;
 
 typedef struct t_dir
 {
@@ -106,11 +108,18 @@ typedef struct t_alias
 	t_node	*head;
 	t_node	*last;
 }	t_alias;
-
+typedef struct t_s_pipes
+{
+	int			s_pipes[2];
+	int			subshell[2];
+	pid_t		pid;
+	t_s_pipes	*next;
+}	t_s_pipes;
 typedef struct t_doc
 {
 	int		pipes[2];
 	char	*limiter;
+	int		quoted;
 	t_doc	*next;
 	t_doc	*prev;
 }	t_doc;
@@ -155,7 +164,6 @@ typedef struct t_cmd
 	int		no_path;
 	int		p_close;
 	int		p_open;
-	int		index;
 	int		pid;
 	int		to_not_calloc;
 	int		_close;
@@ -176,12 +184,9 @@ typedef struct t_data
 	int					status;
 	int					subshell;
 	int					subshell_pid;
-	int					sub_pipes[2][2];
-	int					s_pipes_inited;
 	int					p_num;
 	int					pipes[2];
 	int					prev_pipes;
-	int					*p_pipes;
 	int					neg_single_start;
 	int					neg_single_end;
 	int					neg_double_start;
@@ -193,6 +198,7 @@ typedef struct t_data
 	char				**tab_;
 	struct sigaction	ctrl_c;
 	struct sigaction	sigquit;
+	t_s_pipes			*s_pipes;
 	t_dir				curr_dir;
 	t_env				*env;
 	t_alias				*alias;
@@ -310,31 +316,31 @@ size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 /*-----------------BUILT_IN-----------------*/
 char	*get_var_line(char *line);
 char	*find_alias_node(t_data *data, char *line);
-int		where_to_write(t_data *data, t_cmd *cmd, int subshell);
+int		where_to_write(t_data *data, t_cmd *cmd);
 int		check_line(char *line);
 int		check_line_alias(char *line);
 int		log_files_alias(char *alias, int err_code, int line);
-int		built_in(t_data *data, t_cmd *cmd, int subshell, int fork);
-int		exit_process(t_data *data, t_cmd *cmd, int subshell, int fork);
+int		built_in(t_data *data, t_cmd *cmd, int fork);
+int		exit_process(t_data *data, t_cmd *cmd, int fork);
 int		cd(t_data *data, t_cmd *cmd);
 void	is_built_in(t_cmd *cmd);
-void	echo(t_data *data, t_cmd *cmd, int subshell, int fork);
-void	export(t_cmd *cmd, t_env *env, int fork, int subshell);
-void	env(t_data *data, t_cmd *cmd, int subshell, int fork);
+void	echo(t_data *data, t_cmd *cmd, int fork);
+void	export(t_cmd *cmd, t_env *env, int fork);
+void	env(t_data *data, t_cmd *cmd, int fork);
 void	unset(t_cmd *cmd, t_env *env);
 void	make_export(t_env *env, char *line);
-void	alias(t_data *data, t_cmd *cmd, int subshell, int fork);
-void	alias_(t_data *data, t_cmd *cmd, char *line, int subshfell);
+void	alias(t_data *data, t_cmd *cmd, int fork);
+void	alias_(t_data *data, t_cmd *cmd, char *line);
 void	unalias(t_cmd *cmd);
-void	pwd(t_data *data, t_cmd *cmd, int subshell, int fork);
+void	pwd(t_data *data, t_cmd *cmd, int fork);
 void	back_to_space(char **tab);
 void	populate(t_data *data, char *file);
 int		populate_alias(char *line);
 void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab);
 char	*from_tab_to_line(t_cmd *cmd, char **tab);
 t_node	*find_(t_data *data, char *line);
-void	print_alias(t_data *data, t_cmd *cmd, int subshell);
-void	close_all(t_data *data, t_cmd *cmd, int subshell);
+void	print_alias(t_data *data, t_cmd *cmd);
+void	close_all(t_data *data, t_cmd *cmd);
 void	skip_(char *to_parse, size_t *i, int quote);
 /*-----------------BUILT_IN-----------------*/
 
@@ -345,6 +351,9 @@ int		to_exec_or_not(char *stop, int status);
 int		pipe_par(t_cmd **cmds);
 int		find_next_cmd(t_data *data, t_cmd **cmds);
 int		is_subshell(t_data *data, t_cmd **cmds, int *i, int subshell);
+int		find_read_pipes(t_s_pipes *head, int subshell);
+int		find_write_pipes(t_s_pipes *head, int subshell);
+void    clean_s_pipes(t_data *data);
 void	executing(t_data *data, t_cmd **cmds, int subshell);
 void	run_cmd(t_cmd *cmd);
 void	wait_all_child(t_data *data, t_cmd **cmds, int subshell);
@@ -352,13 +361,12 @@ void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab);
 void	close_fd(t_data *data, char *str, int *fd);
 void	check_files(t_data *data, t_files **files, int flags);
 void	close_pipes(t_data *data);
-void	handle_pipes(t_data *data, t_cmd *cmd, int subshell);
+void	handle_pipes(t_data *data);
 void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
-void	set_redirections_files(t_cmd *cmd, char *str, int subshell);
-void	init_pipes(t_data *data, int pipes[2], int *inited, int s_pipes);
+void	set_redirections_files(t_cmd *cmd);
+void	init_pipes(t_data *data, int pipes[2], int *inited);
 void	close_one_end(t_data *data, int *pipes, int i, int *inited);
-void	close_sub_pipes(t_data *data, int subshell);
 /*-----------------EXECUTION-----------------*/
 
 /*-----------------PARENTHESES-----------------*/
@@ -379,7 +387,8 @@ void	is_error(t_data *data, void *elem, char *err_msg, int type);
 int		tab_len(t_cmd **cmds);
 int		find_fd(t_doc *node, char *limiter);
 int		open_pipes(t_data *data, t_doc **head);
-void	fork_docs(t_data *data, t_doc **head);
+int		fork_docs(t_data *data, t_doc **head);
+int		len_files_tab(t_files **tab);
 void	ft_lst_add_front_(t_doc **node, t_doc *new);
 void	set_node(t_data *data, t_files **tab);
 void	close_all_pipes(t_data *data, t_doc **head, int read_, int write_);

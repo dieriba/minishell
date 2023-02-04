@@ -6,18 +6,18 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 06:01:59 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:21:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_export(t_data *data, t_cmd *cmd, char **tab, int subshell)
+void	print_export(t_data *data, t_cmd *cmd, char **tab)
 {
 	size_t	i;
 	int		fd;
 
-	fd = where_to_write(data, cmd, subshell);
+	fd = where_to_write(data, cmd);
 	if (fd != STDOUT_FILENO)
 		dup_and_close(data, fd, STDOUT_FILENO, fd);
 	i = -1;
@@ -68,7 +68,7 @@ void	export_error(t_data *data, char *line)
 	data -> status = 1;
 }
 
-void	export(t_cmd *cmd, t_env *env, int fork, int subshell)
+void	export(t_cmd *cmd, t_env *env, int fork)
 {
 	int		len;
 	char	*line;
@@ -77,7 +77,7 @@ void	export(t_cmd *cmd, t_env *env, int fork, int subshell)
 	i = 0;
 	len = ft_tab_len(cmd -> args);
 	if (fork && len == 1)
-		print_export(cmd -> data, cmd, env -> tab, subshell);
+		print_export(cmd -> data, cmd, env -> tab);
 	else if (fork == 0 && len > 1 && ft_strcmp(cmd -> stop, "|"))
 	{
 		while (cmd -> args[++i])

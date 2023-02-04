@@ -6,20 +6,20 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:18:46 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/01 23:22:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:20:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	pwd(t_data *data, t_cmd *cmd, int subshell, int fork)
+void	pwd(t_data *data, t_cmd *cmd, int fork)
 {
 	char	*current_dir;
 	int		fd;
 
 	if (fork == 0)
 		return ;
-	fd = where_to_write(data, cmd, subshell);
+	fd = where_to_write(data, cmd);
 	current_dir = getcwd(NULL, 0);
 	if (current_dir == NULL)
 		perror(PWD_ERROR);

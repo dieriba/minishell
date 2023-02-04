@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:02:28 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 03:44:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:21:30 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	env(t_data *data, t_cmd *cmd, int subshell, int fork)
+void	env(t_data *data, t_cmd *cmd, int fork)
 {
 	char	**tab;
 	size_t	i;
@@ -20,7 +20,7 @@ void	env(t_data *data, t_cmd *cmd, int subshell, int fork)
 
 	if (fork == 0)
 		return ;
-	fd = where_to_write(data, cmd, subshell);
+	fd = where_to_write(data, cmd);
 	i = -1;
 	tab = data -> env -> tab;
 	data -> status = 1;

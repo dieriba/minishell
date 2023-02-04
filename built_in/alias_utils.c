@@ -6,17 +6,17 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:38:58 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 04:49:45 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:22:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_alias_node(t_data *data, t_cmd *cmd, char *line, int subshell)
+void	print_alias_node(t_data *data, t_cmd *cmd, char *line)
 {
 	int	fd;
 
-	fd = where_to_write(data, cmd, subshell);
+	fd = where_to_write(data, cmd);
 	if (ft_putendl_fd(line, fd) < 0)
 		print_err_and_exit(data, NULL, "syscall", 0);
 }
@@ -53,7 +53,7 @@ void	print_err_alias(t_data *data, char *line)
 	dup_and_close(data, saved_stderr, STDERR_FILENO, saved_stderr);
 }
 
-void	alias_(t_data *data, t_cmd *cmd, char *line, int subshell)
+void	alias_(t_data *data, t_cmd *cmd, char *line)
 {
 	size_t	i;
 	char	*res;
@@ -82,17 +82,17 @@ void	alias_(t_data *data, t_cmd *cmd, char *line, int subshell)
 		dup_and_close(data, saved_stderr, STDERR_FILENO, saved_stderr);
 	}
 	else if (res)
-		print_alias_node(data, cmd, res, subshell);
+		print_alias_node(data, cmd, res);
 	data -> status = 1;
 }
 
-void	print_alias(t_data *data, t_cmd *cmd, int subshell)
+void	print_alias(t_data *data, t_cmd *cmd)
 {
 	t_node	*node;
 	int		fd;
 
 	node = data -> alias -> head;
-	fd = where_to_write(data, cmd, subshell);
+	fd = where_to_write(data, cmd);
 	while (node)
 	{
 		if (ft_putendl_fd(node -> line, fd) < 0)

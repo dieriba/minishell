@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:52:56 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 17:35:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:20:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	where_to_write(t_data *data, t_cmd *cmd, int subshell)
+int	where_to_write(t_data *data, t_cmd *cmd)
 {
 	int		fd;
 
@@ -21,8 +21,10 @@ int	where_to_write(t_data *data, t_cmd *cmd, int subshell)
 		fd = cmd -> last_out -> fd;
 	else if (data -> inited && cmd -> p_close == 0)
 		fd = data -> pipes[1];
-	else if ((cmd -> stop[0] > 0) && subshell && data -> s_pipes_inited)
-		fd = data -> p_pipes[1];
+	else
+		fd = find_write_pipes(data -> s_pipes, data -> subshell);
+	if (fd < 0)
+		return (1);
 	return (fd);
 }
 

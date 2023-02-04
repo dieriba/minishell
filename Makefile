@@ -50,7 +50,8 @@ SRCS_EXEC	=	./exec/fd.c \
 				./exec/here_doc.c \
 				./exec/here_doc_utils.c \
 				./exec/pipes.c \
-				./exec/parentheses.c
+				./exec/parentheses.c \
+				./exec/s_pipes.c
 
 SRCS_PARSER	=	./parser/cleaner.c \
 				./parser/clean_cmd.c \

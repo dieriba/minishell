@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:39:54 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 00:48:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/04 02:16:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	set_default_data(t_data *data, int len)
 		data -> cmds[j] = ft_calloc(sizeof(t_cmd), 1);
 		is_error(data, data -> cmds, MALLOC_ERR, 1);
 		data -> cmds[j]-> data = data;
-		data -> cmds[j]-> index = j + 1;
 		if (j > 0)
 			data -> cmds[j]-> prev_cmd = data -> cmds[j - 1];
 	}
