@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 03:11:52 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 06:16:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ typedef struct t_s_pipes
 {
 	int			s_pipes[2];
 	int			subshell[2];
+	int			read_end;
+	int			write_end;
 	pid_t		pid;
 	t_s_pipes	*next;
 }	t_s_pipes;
@@ -170,6 +172,7 @@ typedef struct t_cmd
 	int		_open;
 	int		to_not_exec;
 	int		built_in;
+	int		break_cmd;
 	t_files	*last_in;
 	t_files	*last_out;
 	t_files	**tab;
@@ -184,7 +187,6 @@ typedef struct t_data
 	int					status;
 	int					subshell;
 	int					subshell_pid;
-	int					p_num;
 	int					pipes[2];
 	int					prev_pipes;
 	int					neg_single_start;
@@ -352,7 +354,7 @@ int		pipe_par(t_cmd **cmds);
 int		find_next_cmd(t_data *data, t_cmd **cmds);
 int		is_subshell(t_data *data, t_cmd **cmds, int *i);
 int		find_read_pipes(t_s_pipes *head, int subshell);
-int		find_write_pipes(t_s_pipes *head, int subshell);
+int		find_write_pipes(t_s_pipes *head);
 void    clean_s_pipes(t_data *data);
 void	executing(t_data *data, t_cmd **cmds);
 void	run_cmd(t_cmd *cmd);
@@ -361,16 +363,17 @@ void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab);
 void	close_fd(t_data *data, char *str, int *fd);
 void	check_files(t_data *data, t_files **files, int flags);
 void	close_pipes(t_data *data);
-void	handle_pipes(t_data *data);
+void	handle_pipes(t_data *data, t_cmd *cmd);
 void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd);
 void	init_pipes(t_data *data, int pipes[2], int *inited);
+void    pre_clean_s_pipes(t_data *data);
 void	close_one_end(t_data *data, int *pipes, int i, int *inited);
 /*-----------------EXECUTION-----------------*/
 
 /*-----------------PARENTHESES-----------------*/
-int		end_cmd_par(t_cmd **cmds, int subshell);
+int		end_cmd_par(t_cmd **cmds);
 /*-----------------PARENTHESES-----------------*/
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);

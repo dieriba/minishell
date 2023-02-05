@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:52:56 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 02:20:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 05:53:19 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	where_to_write(t_data *data, t_cmd *cmd)
 	else if (data -> inited && cmd -> p_close == 0)
 		fd = data -> pipes[1];
 	else
-		fd = find_write_pipes(data -> s_pipes, data -> subshell);
+		fd = find_write_pipes(data -> s_pipes);
 	if (fd < 0)
 		return (1);
 	return (fd);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 03:35:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 06:20:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 	pipes = ft_strcmp("|", stop);
 	if (pipes == 0)
 		status = pipe_exec(cmd -> prev_cmd);
-	if (((!status && pid_ret) && pipes) || (cmd -> prev_cmd -> p_close && pid_ret))
+	if (((!status && pid_ret) && pipes))
 	{
 		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
@@ -69,6 +69,9 @@ void	init_s_pipes(t_data *data)
 	node -> subshell[1] = data -> subshell + 1;
 	if (pipe(node -> s_pipes) < 0)
 		print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 0);
+	node -> read_end = node -> s_pipes[0];
+	if (data -> s_pipes)
+		node -> read_end = data -> s_pipes -> s_pipes[0];
 	if (data -> s_pipes == NULL)
 		data -> s_pipes = node;
 	else
@@ -97,8 +100,6 @@ int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
 	else if (status == 0 && pipe_par(&cmds[(*i)]) == 0)
 		init_s_pipes(data);
 	if (status && cmds[(*i)]-> p_open)
-		(*i) += end_cmd_par(&cmds[(*i)], 0);
-	else if (status && cmds[(*i)]-> p_close)
-		data -> p_num += cmds[(*i)]-> p_close;
+		(*i) += end_cmd_par(&cmds[(*i)]);
 	return (status);
 }

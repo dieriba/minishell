@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 07:24:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 02:36:10 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 05:51:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	close_process(t_cmd *cmd, int fork, int status)
 {
 	if (fork == 0)
 	{
-		handle_pipes(cmd -> data);
+		handle_pipes(cmd -> data, cmd);
 		free_all(cmd -> data, status);
 	}
 	else if (cmd)

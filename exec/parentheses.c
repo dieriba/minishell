@@ -6,27 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 03:08:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 06:21:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "../includes/minishell.h"
 
-int	find_next_cmd(t_data *data, t_cmd **cmds)
-{
-	size_t	i;
-
-	i = -1;
-	while (cmds[++i])
-	{
-		data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
-		if (cmds[i]-> p_close)
-			break ;
-	}
-	return (i);
-}
-
-int	end_cmd_par(t_cmd **cmds, int subshell)
+int	end_cmd_par(t_cmd **cmds)
 {
 	int		p_num;
 	size_t	i;
@@ -36,10 +22,7 @@ int	end_cmd_par(t_cmd **cmds, int subshell)
 	while (cmds[++i])
 	{
 		p_num += cmds[i]-> p_open + cmds[i]-> p_close;
-		cmds[0]-> data -> p_num += cmds[i]-> p_open + cmds[i]-> p_close;
-		if (subshell == 0 && p_num == 0)
-			break ;
-		if (subshell && cmds[i]-> p_close)
+		if (p_num == 0)
 			break ;
 	}
 	return (i);

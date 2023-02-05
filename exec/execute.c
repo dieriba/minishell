@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 03:51:02 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 06:31:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	execute_routine(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid_ret;
 
-	data -> p_num += cmd -> p_open + cmd -> p_close;
 	if (!built_in(data, cmd , 0))
 	{
 		pid_ret = fork();
@@ -83,7 +82,7 @@ void	execute_routine(t_data *data, t_cmd *cmd)
 			forking(cmd );
 		cmd -> pid = pid_ret;
 	}
-	handle_pipes(data);
+	handle_pipes(data, cmd);
 }
 
 void	executing(t_data *data, t_cmd **cmds)
@@ -92,7 +91,11 @@ void	executing(t_data *data, t_cmd **cmds)
 	int		res;
 
 	i = -1;
-	cmds[0]-> p_open = cmds[0]-> to_fork + (data -> subshell);
+	if (cmds[0]-> p_open && !cmds[0]-> to_fork)
+		cmds[0]-> p_open = 1;
+	else if (cmds[0]-> p_open)
+		cmds[0]-> p_open = cmds[0]-> to_fork;
+	pre_clean_s_pipes(cmds[0]-> data);
 	while (cmds[++i])
 	{
 		if (verify_cmd(data, cmds[i]))
@@ -101,7 +104,7 @@ void	executing(t_data *data, t_cmd **cmds)
 		res = prepare_next_step(data, cmds, cmds[i]-> stop, &i);
 		if (res == 0 && is_subshell(data, cmds, &i) == 0)
 			execute_routine(data, cmds[i]);
-		if ((data -> subshell && data -> p_num == 0) || cmds[i] == NULL)
+		if (cmds[i] == NULL || ((data -> subshell && cmds[i + 1]) && cmds[i + 1]-> break_cmd))
 			break ;
 	}
 	clean_s_pipes(data);

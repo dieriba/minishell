@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 03:58:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 05:52:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	set_out_redirection(t_cmd *cmd)
 	int		fd;
 	
 	data = cmd -> data;
-	fd = find_write_pipes(data -> s_pipes, data -> subshell);
+	fd = find_write_pipes(data -> s_pipes);
 	if (cmd -> last_out && cmd -> last_out -> fd > 0)
 		dup_(data, cmd -> last_out -> fd, STDOUT_FILENO);
 	else if (data -> inited && cmd -> p_close == 0)
@@ -64,7 +64,7 @@ void	set_in_redirection(t_cmd *cmd)
 		dup_(data, cmd -> last_in -> fd, STDIN_FILENO);
 	}
 	else if (pipes == 0 && prev_cmd -> p_close)
-		dup_(data, find_read_pipes(data -> s_pipes, data -> subshell), STDIN_FILENO);
+		dup_(data, data -> s_pipes -> read_end, STDIN_FILENO);
 	else if (pipes == 0)
 		dup_(data, data -> prev_pipes, STDIN_FILENO);
 }
