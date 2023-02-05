@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 01:13:41 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 05:52:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 21:37:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void    pre_clean_s_pipes(t_data *data)
     node = data -> s_pipes;
     if (!node)
         return ;
-    close_fd(data, "bash", &node -> s_pipes[0]);
-    node -> subshell[0] = -1;
     node = node -> next;
     while (node)
     {
@@ -75,4 +73,19 @@ void    pre_clean_s_pipes(t_data *data)
         node -> subshell[1] = -1;
         node = node -> next;
     }
+}
+
+void    remove_s_pipe(t_data *data)
+{
+    t_s_pipes  *node;
+    t_s_pipes  *next;
+    
+    if (data -> s_pipes == NULL)
+        return;
+    node = data -> s_pipes;
+    next = node -> next;
+    close_fd(data, "bash", &node -> s_pipes[0]);
+    close_fd(data, "bash", &node -> s_pipes[1]);
+    ft_free_elem((void **)&data -> s_pipes);
+    data -> s_pipes = next;
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 06:31:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 21:38:37 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ void	forking(t_cmd *cmd)
 void	execute_routine(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid_ret;
-
+	if (data -> s_pipes && !ft_strcmp(cmd -> prev_stop, "|")
+		&& cmd -> prev_cmd -> p_close)
+			close_fd(data, "bash", &data -> s_pipes -> s_pipes[1]);
 	if (!built_in(data, cmd , 0))
 	{
 		pid_ret = fork();
@@ -105,7 +107,7 @@ void	executing(t_data *data, t_cmd **cmds)
 		if (res == 0 && is_subshell(data, cmds, &i) == 0)
 			execute_routine(data, cmds[i]);
 		if (cmds[i] == NULL || ((data -> subshell && cmds[i + 1]) && cmds[i + 1]-> break_cmd))
-			break ;
+			break ;	
 	}
 	clean_s_pipes(data);
 	wait_all_child(data, cmds);

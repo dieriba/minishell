@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 06:20:58 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 21:11:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 	return (status);
 }
 
-void	init_s_pipes(t_data *data)
+void	init_s_pipes(t_data *data, t_cmd *cmd)
 {
 	t_s_pipes	*node;
-	
+	if  (!ft_strcmp(cmd -> prev_stop, "|") && cmd -> prev_cmd -> p_close && data -> s_pipes)
+		remove_s_pipe(data);
 	node = ft_calloc(sizeof(t_s_pipes), 1);
 	is_error(data, node, MALLOC_ERR, 0);
 	node -> subshell[0] = data -> subshell;
@@ -79,6 +80,7 @@ void	init_s_pipes(t_data *data)
 		node -> next = data -> s_pipes;
 		data -> s_pipes = node;
 	}
+	//printf("AFTER Subshell : %d S_pipe inited value of in : %d out : %d read_end %d\n", data -> subshell, node -> s_pipes[0], node -> s_pipes[1], node -> read_end);
 }
 
 int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
@@ -98,8 +100,8 @@ int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
 		&& cmds[(*i)]-> p_close == 0 && !ft_strcmp("|", stop))
 		init_pipes(data, data -> pipes, &data -> inited);
 	else if (status == 0 && pipe_par(&cmds[(*i)]) == 0)
-		init_s_pipes(data);
+		init_s_pipes(data, cmds[(*i)]);
 	if (status && cmds[(*i)]-> p_open)
-		(*i) += end_cmd_par(&cmds[(*i)]);
+		(*i) = end_cmd_par(cmds, *i);
 	return (status);
 }

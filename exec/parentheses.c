@@ -6,24 +6,23 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 06:21:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 21:10:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "../includes/minishell.h"
 
-int	end_cmd_par(t_cmd **cmds)
+int	end_cmd_par(t_cmd **cmds, size_t i)
 {
 	int		p_num;
-	size_t	i;
 
-	i = -1;
 	p_num = 0;
-	while (cmds[++i])
+	while (cmds[i])
 	{
 		p_num += cmds[i]-> p_open + cmds[i]-> p_close;
 		if (p_num == 0)
 			break ;
+		i++;
 	}
 	return (i);
 }

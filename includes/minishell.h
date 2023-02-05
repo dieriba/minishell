@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 06:16:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 21:10:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,6 @@ typedef struct t_data
 }t_data;
 
 /*-----------------SYSCALL-----------------*/
-void	dup_(t_data *data, int fd, int old_fd);
 void	dup_and_close(t_data *data, int fd, int old_fd, int to_close);
 /*-----------------SYSCALL-----------------*/
 
@@ -326,7 +325,7 @@ int		built_in(t_data *data, t_cmd *cmd, int fork);
 int		exit_process(t_data *data, t_cmd *cmd, int fork);
 int		cd(t_data *data, t_cmd *cmd);
 void	is_built_in(t_cmd *cmd);
-void	echo(t_data *data, t_cmd *cmd, int fork);
+int		echo(t_data *data, t_cmd *cmd);
 void	export(t_cmd *cmd, t_env *env, int fork);
 void	env(t_data *data, t_cmd *cmd, int fork);
 void	unset(t_cmd *cmd, t_env *env);
@@ -350,6 +349,8 @@ void	skip_(char *to_parse, size_t *i, int quote);
 int		prepare_next_step(t_data *data, t_cmd **cmd, char *stop, int *i);
 int		opener_outfile(t_cmd *cmd);
 int		to_exec_or_not(char *stop, int status);
+void	set_out_redirection(t_cmd *cmd);
+void	set_in_redirection(t_cmd *cmd);
 int		pipe_par(t_cmd **cmds);
 int		find_next_cmd(t_data *data, t_cmd **cmds);
 int		is_subshell(t_data *data, t_cmd **cmds, int *i);
@@ -369,11 +370,12 @@ void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd);
 void	init_pipes(t_data *data, int pipes[2], int *inited);
 void    pre_clean_s_pipes(t_data *data);
+void    remove_s_pipe(t_data *data);
 void	close_one_end(t_data *data, int *pipes, int i, int *inited);
 /*-----------------EXECUTION-----------------*/
 
 /*-----------------PARENTHESES-----------------*/
-int		end_cmd_par(t_cmd **cmds);
+int		end_cmd_par(t_cmd **cmds, size_t i);
 /*-----------------PARENTHESES-----------------*/
 /*-----------------FREE_STRUCT-----------------*/
 void	free_list(t_env *env, t_node **head);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:28:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 05:50:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 06:47:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	handle_pipes(t_data *data, t_cmd *cmd)
 		data -> prev_pipes = data -> pipes[0];
 		close_fd(data, "bash pipes close", &data -> pipes[1]);
 	}
-	if (cmd -> p_close && data -> s_pipes)
-		clean_s_pipes(data);	
+	(void)cmd;
 	data -> inited = 0;
 }

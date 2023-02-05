@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 17:52:36 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 02:26:10 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/05 07:11:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	built_in(t_data *data, t_cmd *cmd, int fork)
 	if (cmd -> cmd == NULL)
 		return (0);
 	if (ft_strcmp(cmd -> cmd, "/echo") == 0)
-		echo(data, cmd, fork);
+		return (echo(data, cmd));
 	else if (ft_strcmp(cmd -> cmd, "/export") == 0)
 		export(cmd, data -> env, fork);
 	else if (ft_strcmp(cmd -> cmd, "/unset") == 0)
