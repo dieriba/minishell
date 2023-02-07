@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 20:03:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 02:43:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,8 @@ void	set_tabs_cmd(t_data *data, char **cmds, char *to_parse, int length)
 		m = -1;
 		while (k < j)
 			cmds[i][++m] = to_parse[k++];
-		if (ft_strchr(R_COMBO, to_parse[j]) || to_parse[j] == '$')
+		if (ft_strchr(R_COMBO_DOLLARS, to_parse[j]) || !to_parse[j])
 			j--;
-		j -= (to_parse[j] == 0);
 	}
 }
 

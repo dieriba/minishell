@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 01:50:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 00:23:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,6 @@ int	check_token_length(char *to_parse)
 	return (0);
 }
 
-int	check_function(char *to_parse, size_t i)
-{
-	int	err;
-
-	err = 0;
-	if (to_parse[i] == '(' || to_parse[i] == ')')
-		return (0);
-	if (to_parse[i] == R_IN && to_parse[i + 1] == R_OUT)
-		err = 1;
-	else if (to_parse[i] == R_OUT && to_parse[i + 1] == R_IN)
-		err = 1;
-	if (check_token_length(&to_parse[i]))
-		return (-1);
-	if (ft_strchr(R_COMBO, to_parse[i]) && err)
-		return (-1);
-	return (0);
-}
-
 int	check_validity(char *to_parse, size_t i)
 {
 	int	flags;
@@ -53,7 +35,6 @@ int	check_validity(char *to_parse, size_t i)
 	int	token;
 
 	token = to_parse[i];
-	flags = -1;
 	if (check_function(to_parse, i))
 		return (-1);
 	am_i_alone = check_behind(to_parse, i);
@@ -61,14 +42,7 @@ int	check_validity(char *to_parse, size_t i)
 		return (-1);
 	if (token == ';' || token == '(' || token == ')')
 		return (++i);
-	while (to_parse[++i] && ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
-		;
-	while (to_parse[i] && ft_isspace(to_parse[i]))
-		i++;
-	if (to_parse[i] && ft_strchr(BASE_STOP, token) && !ft_strchr(BASE_STOP, to_parse[i]))
-		flags = 1;
-	else if (to_parse[i] && ft_strchr(R_COMBO, token) &&  !ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
-		flags = 1;
+	flags = check_in_front(to_parse, token, &i);
 	if ((to_parse[i] && flags == -1)
 		|| (ft_strchr(R_COMBO, token) && flags == -1))
 		return (-1);
@@ -94,7 +68,7 @@ int	valid_format_token(char *to_parse)
 	size_t	i;
 	int		flags;
 	int		_open;
-	
+
 	i = -1;
 	_open = 0;
 	while (to_parse[++i])

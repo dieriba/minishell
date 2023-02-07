@@ -6,48 +6,81 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 07:30:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 02:24:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	write_to_fd(t_data *data, char *line, int fd)
+int	write_to_fd(t_data *data, char *line, int fd)
 {
 	if (ft_putstr_fd(line, fd) < 0)
 	{
 		data -> status = 1;
-		print_err_and_exit(data, NULL, "syscall", 1);
+		print_err_and_exit(NULL, NULL, "syscall", 1);
+		return (1);
 	}
+	return (0);
+}
+
+int	without_new_line(char *to_check)
+{
+	size_t	i;
+
+	i = 0;
+	if (to_check[0] != '-')
+		return (1);
+	while (to_check[++i])
+	{
+		if (to_check[i] != 'n')
+			return (1);
+	}
+	return (0);
+}
+
+int	write_args_(t_data *data, t_cmd *cmd, int fd)
+{
+	int	i;
+	int	nl;
+
+	nl = without_new_line(cmd -> args[1]);
+	i = (nl == 0) + 1;
+	while (cmd -> args[i])
+	{
+		if (write_to_fd(data, cmd -> args[i], fd))
+			return (1);
+		if (cmd -> args[i + 1])
+			if (write_to_fd(data, " ", fd))
+				return (1);
+		i++;
+	}
+	if (nl)
+		if (write_to_fd(data, "\n", fd) < 0)
+			return (1);
+	return (0);
 }
 
 int	echo(t_data *data, t_cmd *cmd)
 {
 	int	fd;
-	int	i;
-	int	nl;
 
+	data -> status = 1;
+	if (open_check_files_built_in(cmd, cmd -> tab))
+		return (1);
 	fd = where_to_write(data, cmd);
 	if (ft_tab_len(cmd -> args) == 1)
 	{
-		write_to_fd(data, "\n", fd);
+		if (write_to_fd(data, "\n", fd) < 0)
+			return (print_err_built_in("bash", 1));
+		data -> status = 0;
 		return (1);
 	}
-	nl = ft_strcmp(cmd -> args[1], "-n");
-	i = (nl == 0) + 1;
-	while (cmd -> args[i])
-	{
-		write_to_fd(data, cmd -> args[i], fd);
-		if (cmd -> args[i + 1])
-			write_to_fd(data, " ", fd);
-		i++;
-	}
-	if (nl)
-		write_to_fd(data, "\n", fd);
+	if (write_args_(data, cmd, fd))
+		return (1);
 	if (cmd -> last_in && cmd -> last_in -> type == IN)
-		close_fd(cmd -> data, "bash", &cmd -> last_in -> fd);
+		close_fd_built_in(&cmd -> last_in -> fd);
 	if (cmd -> last_out)
-		close_fd(data, "bash", &cmd -> last_out -> fd);
+		close_fd_built_in(&cmd -> last_out -> fd);
 	data -> status = 0;
 	return (1);
 }

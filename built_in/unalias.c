@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:36:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 04:55:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 00:40:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_node	*find_(t_data *data, char *line)
 {
 	t_node	*node;
-	
+
 	node = data -> alias -> head;
 	while (node)
 	{

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 19:12:57 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 00:22:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 21:33:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,14 @@ int	open_pipes(t_data *data, t_doc **head)
 	is_error(data, g_collector, MALLOC_ERR, 0);
 	g_collector -> data = data;
 	return (0);
+}
+
+void	set_up_signals(void)
+{
+	struct sigaction	sig;
+
+	sigemptyset(&sig.sa_mask);
+	sig.sa_flags = 0;
+	sig.sa_handler = exit_;
+	sigaction(SIGINT, &sig, NULL);
 }

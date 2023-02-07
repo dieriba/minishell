@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 01:49:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 21:33:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	set_node(t_data *data, t_files **tab)
 		{
 			node = ft_calloc(sizeof(t_doc), 1);
 			is_error(data, node, MALLOC_ERR, 0);
-			check_quoted_doc(node,tab[len]-> files);
+			check_quoted_doc(node, tab[len]-> files);
 			tab[len]-> files = clean_lines(data, tab[len]-> files, 0);
 			node -> limiter = tab[len]-> files;
 			ft_lst_add_front_(&data -> here_docs, node);
@@ -60,12 +60,8 @@ void	handle_here_doc_pipes(t_data *data, t_doc **head)
 {
 	char				*line;
 	t_doc				*node;
-	struct sigaction	sig;
-	
-	sigemptyset(&sig.sa_mask);
-	sig.sa_flags = 0;
-	sig.sa_handler = exit_;
-	sigaction(SIGINT, &sig, NULL);
+
+	set_up_signals();
 	node = (*head);
 	while (node)
 	{

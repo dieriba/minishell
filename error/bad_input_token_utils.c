@@ -6,20 +6,11 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 03:23:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 22:17:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	valid_double(char *to_parse, size_t i)
-{
-	if (to_parse[i] != '"')
-		return (0);
-	if (i > 0 && to_parse[i - 1] == '\\')
-		return (0);
-	return (1);
-}
 
 void	skip_(char *to_parse, size_t *i, int quote)
 {
@@ -30,11 +21,11 @@ void	skip_(char *to_parse, size_t *i, int quote)
 	{
 		while (to_parse[++j])
 		{
-			if ((to_parse[j] == quote
-				&& to_parse[j] == '"') && valid_double(to_parse, j))
+			if ((to_parse[j] == quote && to_parse[j] == '"')
+				&& valid_double(to_parse, j))
 				break ;
 			else if (to_parse[j] == quote && to_parse[j] != '"')
-				break ;	
+				break ;
 		}
 		if (to_parse[j + 1] == '\'' || to_parse[j + 1] == '"')
 			quote = to_parse[++j];
@@ -57,7 +48,8 @@ void	skip_reverse(char *to_parse, int *i, int quote)
 				&& (to_parse[j] == '\'' || valid_double(to_parse, j)))
 				break ;
 		}
-		if (j >= 0 && (to_parse[j - 1] == '\'' || valid_double(to_parse, j - 1)))
+		if (j >= 0 && (to_parse[j - 1] == '\''
+				|| valid_double(to_parse, j - 1)))
 			quote = to_parse[--j];
 		else
 			break ;
@@ -77,7 +69,8 @@ void	handle_case(t_data *data, char **rescue_cmd, char **cmd, int err)
 	if (err > 0)
 	{
 		to_free = data -> cp_to_parse;
-		data -> cp_to_parse = ft_strjoin(data -> cp_to_parse, (*rescue_cmd), 0, 0);
+		data -> cp_to_parse = ft_strjoin(
+				data -> cp_to_parse, (*rescue_cmd), 0, 0);
 		is_error(data, data -> cp_to_parse, MALLOC_ERR, 0);
 		ft_free_elem((void **)rescue_cmd);
 		ft_free_elem((void **)&to_free);
@@ -109,7 +102,7 @@ void	rescue_command(t_data *data, char **rescue_cmd, int err)
 int	check_behind(char *to_parse, int j)
 {
 	int	seen;
-	
+
 	if (to_parse[j] == '(' && j == 0)
 		return (j);
 	if (!ft_strchr(STOP_, to_parse[j])

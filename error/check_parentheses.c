@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:25:28 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 02:33:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 22:08:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	valid_empty_par(char *to_parse, int i, int j)
 int	check_right_par(char *to_parse, int i, int j)
 {
 	if ((ft_strchr(DELIM_TOKEN_SP, to_parse[i])
-		&& to_parse[i] != ';'))
+			&& to_parse[i] != ';'))
 		return (1);
 	else if (to_parse[i] == '(' && valid_empty_par(to_parse, i, j))
 		return (1);
@@ -47,18 +47,18 @@ int	check_right_par(char *to_parse, int i, int j)
 
 int	check_behind_par(char *to_parse, int i)
 {
-	int j;
+	int	j;
 
 	j = i;
 	while (--i > -1 && ft_isspace(to_parse[i]))
 		;
 	if ((i >= 0 && to_parse[j] == '(')
 		&& (!ft_strchr(DELIM_TOKEN_SP, to_parse[i])
-		&& to_parse[i] != '('))
+			&& to_parse[i] != '('))
 		return (')');
 	else if (to_parse[j] == ')')
 		return (check_right_par(to_parse, i, j));
-	return (0); 
+	return (0);
 }
 
 int	valid_parentheses(char *to_parse, int *_open, size_t i)

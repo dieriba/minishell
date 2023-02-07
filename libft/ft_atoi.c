@@ -21,7 +21,7 @@ static int	ft_isspace(const char c)
 
 long long	ft_atoi(const char *nptr)
 {
-	int		i;
+	int			i;
 	long long	sign;
 	long long	res;
 

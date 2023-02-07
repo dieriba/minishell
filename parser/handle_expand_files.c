@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   handle_expand_files.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/25 20:29:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 21:42:25 by dtoure           ###   ########.fr       */
+/*   Created: 2023/02/07 03:40:35 by dtoure            #+#    #+#             */
+/*   Updated: 2023/02/07 03:48:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
+void	expand_args(t_cmd *cmd)
 {
-	size_t	i;
+	DIR	*directory;
 
-	if (s1 == NULL || s2 == NULL)
-		return (STRCMP_NULL_END);
-	i = -1;
-	while ((s1[++i] && s2[i]) && s1[i] == s2[i])
-		;
-	return (s1[i] - s2[i]);
+	directory = opendir(".");
+	if (dir == NULL)
+		return ;
 }

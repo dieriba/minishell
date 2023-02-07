@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:38:58 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 02:22:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 00:40:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ void	alias_(t_data *data, t_cmd *cmd, char *line)
 {
 	size_t	i;
 	char	*res;
-	int		saved_stdout;
-	int		saved_stderr;
-	
+
 	i = -1;
 	while (line[++i] && line[i] != '=')
 		;
@@ -69,20 +67,7 @@ void	alias_(t_data *data, t_cmd *cmd, char *line)
 		return ;
 	}
 	res = find_alias_node(data, line);
-	if (res == NULL)
-	{
-		saved_stdout = dup(STDOUT_FILENO);
-		saved_stderr = dup(STDERR_FILENO);
-		if (saved_stdout < 0 || saved_stderr < 0)
-			print_err_and_exit(data, NULL, "syscall", 1);
-		dup_and_close(data, STDERR_FILENO, STDOUT_FILENO, STDERR_FILENO);
-		if (ft_printf("bash : alias: %s : not found\n", line) < 0)
-			print_err_and_exit(data, NULL, "syscall", 1);
-		dup_and_close(data, saved_stdout, STDOUT_FILENO, saved_stdout);
-		dup_and_close(data, saved_stderr, STDERR_FILENO, saved_stderr);
-	}
-	else if (res)
-		print_alias_node(data, cmd, res);
+	handle_alias_node(data, cmd, res, line);
 	data -> status = 1;
 }
 

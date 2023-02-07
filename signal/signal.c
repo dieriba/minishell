@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 02:30:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 01:42:50 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	exit_dumped(int signal)
 {
 	t_cmd	*cmd;
 	t_data	*data;
-	
+
 	(void)signal;
 	cmd = (t_cmd *)g_collector -> data;
 	data = cmd -> data;

@@ -6,24 +6,11 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 01:19:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 17:16:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 21:54:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	par_to_space(t_data *data, char *to_clean)
-{
-	size_t	i;
-
-	i = -1;
-	while (to_clean[++i])
-	{
-		if ((to_clean[i] == '(' || to_clean[i] == ')')
-			&& !find_end_quotes(data, to_clean, i))
-			to_clean[i] = ' ';
-	}
-}
 
 void	set_followed_par(t_cmd *cmd, char *to_parse, int *left)
 {
@@ -43,7 +30,7 @@ int	check_end_par(t_cmd **cmds)
 	int	i;
 	int	j;
 	int	p_num;
-	
+
 	p_num = 0;
 	i = -1;
 	j = -1;
@@ -62,7 +49,7 @@ int	check_end_par(t_cmd **cmds)
 void	real_subshell_or_not(t_cmd **cmds)
 {
 	int	i;
-	
+
 	i = -1;
 	while (cmds[++i])
 	{
@@ -94,7 +81,7 @@ int	last_par(t_data *data, char *to_parse)
 	if (i == 0)
 		return (last);
 	while (--i > -1 && (to_parse[i] == ')'
-		&& !find_end_quotes(data, to_parse, i)))
+			&& !find_end_quotes(data, to_parse, i)))
 		;
 	last = i;
 	return (last);

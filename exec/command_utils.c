@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 21:11:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 00:31:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,17 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 void	init_s_pipes(t_data *data, t_cmd *cmd)
 {
 	t_s_pipes	*node;
-	if  (!ft_strcmp(cmd -> prev_stop, "|") && cmd -> prev_cmd -> p_close && data -> s_pipes)
-		remove_s_pipe(data);
+
 	node = ft_calloc(sizeof(t_s_pipes), 1);
 	is_error(data, node, MALLOC_ERR, 0);
 	node -> subshell[0] = data -> subshell;
 	node -> subshell[1] = data -> subshell + 1;
 	if (pipe(node -> s_pipes) < 0)
 		print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 0);
-	node -> read_end = node -> s_pipes[0];
-	if (data -> s_pipes)
-		node -> read_end = data -> s_pipes -> s_pipes[0];
+	node -> read_end = node;
+	if (data -> s_pipes
+		&& !ft_strcmp(cmd -> prev_stop, "|") && cmd -> prev_cmd -> p_close)
+		node -> read_end = data -> s_pipes;
 	if (data -> s_pipes == NULL)
 		data -> s_pipes = node;
 	else
@@ -80,7 +80,6 @@ void	init_s_pipes(t_data *data, t_cmd *cmd)
 		node -> next = data -> s_pipes;
 		data -> s_pipes = node;
 	}
-	//printf("AFTER Subshell : %d S_pipe inited value of in : %d out : %d read_end %d\n", data -> subshell, node -> s_pipes[0], node -> s_pipes[1], node -> read_end);
 }
 
 int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)

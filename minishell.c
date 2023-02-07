@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 03:12:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 22:27:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	shell_routine(t_data *data)
 {
 	size_t	i;
 	int		skip;
-	
+
 	i = -1;
 	skip = 0;
 	ft_free_elem((void **)&data -> cp_to_parse);
@@ -80,41 +80,10 @@ void	shell_routine(t_data *data)
 	data -> tab_ = NULL;
 }
 
-void	lets_read(t_data *data)
-{
-	char	*rescue_cmd;
-	int		err;
-
-	rescue_cmd = NULL;
-	while (1)
-	{
-		directory(data);
-		data -> cp_to_parse = readline(data -> curr_dir.pwd);
-		if (data -> cp_to_parse)
-		{
-			err = valid_quotes(data, data -> cp_to_parse);
-			if (err == 0)
-				err = unvalid_line(data, data -> cp_to_parse, &rescue_cmd);
-			add_history(data -> cp_to_parse);
-			if (err == 0)
-			{
-				quote_to_neg(data, data -> cp_to_parse);
-				data -> tab_ = clean_nl_str(data, data -> cp_to_parse);
-				is_error(data, data -> tab_, MALLOC_ERR, 0);
-				shell_routine(data);
-			}
-			if (data -> cp_to_parse)
-				ft_free_elem((void **)&data -> cp_to_parse);
-		}
-		else
-			free_all(data, 130);
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-	
+
 	if (isatty(STDIN_FILENO) == 0)
 		return (1);
 	init_struct(&data);

@@ -3,7 +3,9 @@
         "minishell.h": "c",
         "unistd.h": "c",
         "history.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "compare": "c",
+        "type_traits": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

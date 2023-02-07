@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 05:40:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 22:06:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,39 +28,6 @@ char	*is_valid_expand(t_data *data, char *to_check)
 		line = is_shell_variable(data, &to_check[j]);
 	to_check[i] = stop;
 	return (line);
-}
-
-size_t	slash_len(t_data *data, char *to_clean, size_t i, size_t *len)
-{
-	int		quotes;
-
-	quotes = find_end_quotes(data, to_clean, i);
-	if (to_clean[i + 1] == 0 || find_single_quote(data, to_clean, i))
-		return (i);
-	if (to_clean[i + 1] != '\\' && !quotes)
-	{
-		to_clean[i] = -1 * to_clean[i];
-		i++;
-	}
-	if (to_clean[i + 1] != '\\')
-		return (i);
-	*len += 1;
-	to_clean[i] = -1 * to_clean[i];
-	i += (to_clean[i + 1] == '\\') + 1;
-	while (to_clean[i] && to_clean[i] == '\\')
-	{
-		if (to_clean[i + 1] == '\\'
-			|| to_clean[i - 2] == '\\' * -1)
-		{
-			*len += 1;
-			to_clean[i] = -1 * to_clean[i];
-			i += 2;
-		}
-		else
-			i++;
-	}
-	i -= (to_clean[i] == 0);
-	return (i);
 }
 
 size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean, int skip)
@@ -87,8 +54,7 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean, int skip)
 		}
 		else if (to_clean[i] == '\\')
 			i = slash_len(data, to_clean, i, &len);
-		if (to_clean[i] > 0 || ((to_clean[i] * -1) == ' '))
-			len++;
+		len += (to_clean[i] > 0) + (to_clean[i] == '"' * -1);
 	}
 	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 05:53:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 01:28:51 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ void	wait_all_child(t_data *data, t_cmd **cmds)
 	sigaction(SIGINT, &data -> ctrl_c, NULL);
 	close_all_pipes(data, &data -> here_docs, 1, 0);
 	while (cmds[++i])
+	{
 		if (cmds[i]-> pid && waitpid(
 				cmds[i]-> pid, &data -> status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
+	}
 	if (data -> subshell_pid)
 	{
 		if (waitpid(data -> subshell_pid,

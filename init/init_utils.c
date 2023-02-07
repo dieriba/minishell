@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 02:31:11 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 21:54:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,17 @@ int	add_command(t_data *data, char *to_process, int i)
 			return (1);
 	}
 	return (0);
+}
+
+void	par_to_space(t_data *data, char *to_clean)
+{
+	size_t	i;
+
+	i = -1;
+	while (to_clean[++i])
+	{
+		if ((to_clean[i] == '(' || to_clean[i] == ')')
+			&& !find_end_quotes(data, to_clean, i))
+			to_clean[i] = ' ';
+	}
 }

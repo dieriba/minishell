@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 04:37:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 22:04:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 int	char_is_quote(t_data *data, char c)
 {
 	if (c == data -> neg_single_start || c == data -> neg_double_start)
-		return (1);
-	return (0);
-}
-
-int	char_is_end_quote(t_data *data, char c)
-{
-	if (c == data -> neg_single_end || c == data -> neg_double_end)
 		return (1);
 	return (0);
 }

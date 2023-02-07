@@ -1,4 +1,5 @@
 SRCS		= 	minishell.c \
+				minishell_utils.c \
 				print.c
 
 SRCS_SIGNAL =	./signal/signal.c
@@ -6,6 +7,7 @@ SRCS_SIGNAL =	./signal/signal.c
 SRCS_BUILT	=	./built_in/env_utils.c \
 				./built_in/built_in.c \
 				./built_in/built_in_utils.c \
+				./built_in/built_in_utility.c \
 				./built_in/echo.c \
 				./built_in/env.c \
 				./built_in/export.c \
@@ -13,6 +15,7 @@ SRCS_BUILT	=	./built_in/env_utils.c \
 				./built_in/unset.c \
 				./built_in/alias.c \
 				./built_in/alias_utils.c \
+				./built_in/alias_utility.c \
 				./built_in/unalias.c \
 				./built_in/pwd.c \
 				./built_in/exit.c \
@@ -34,6 +37,7 @@ SRCS_INIT	=	./init/init_cmds.c \
 
 SRCS_ERROR	=	./error/error_handling.c \
 				./error/bad_input_token.c \
+				./error/bad_input_checker.c \
 				./error/bad_input_token_utils.c \
 				./error/bad_syntax_alias_files.c \
 				./error/check_parentheses.c \
@@ -61,7 +65,9 @@ SRCS_PARSER	=	./parser/cleaner.c \
 				./parser/quote_utils.c \
 				./parser/quote_utils_2.c \
 				./parser/quote_utils_3.c \
-				./parser/dollars_utils.c
+				./parser/dollars_utils.c \
+				./parser/handle_back_slash.c \
+				./parser/handle_expand_files.c \
 
 INCLUDES	= 	-I ./includes
 

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 02:18:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/06 22:02:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	valid_quotes(t_data *data, char *to_parse)
 	size_t	i;
 	int		sing_q;
 	int		double_q;
-	
+
 	i = -1;
 	sing_q = 0;
 	double_q = 0;

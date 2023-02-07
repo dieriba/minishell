@@ -6,23 +6,11 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:11:03 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 02:26:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 02:42:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	check_alias(t_node *alias, char *line)
-{
-	while (alias)
-	{
-		if (alias -> line[0] == line[0]
-			&& !ft_strcmp(alias -> line, line))
-			return (1);
-		alias = alias -> next;
-	}
-	return (0);
-}
 
 char	*is_valid_alias(char *line)
 {
@@ -34,27 +22,13 @@ char	*is_valid_alias(char *line)
 	if (line[i] == 0)
 		return (line);
 	line[i] = 0;
-	if (check_line(line))
+	if (check_line_alias(line))
 	{
 		line[i] = '=';
 		return (line);
 	}
 	line[i] = '=';
 	return (&line[i]);
-}
-
-void	set_alias(t_data *data, t_node *node, t_node *alias)
-{
-	node -> prev = alias -> prev;
-	node -> next = alias -> next;
-	if (alias -> prev)
-		alias -> prev -> next = node;
-	if (alias -> next)
-		alias -> next -> prev = node;
-	if (data -> alias -> head == alias)
-		data -> alias -> head = node;
-	if (data -> alias -> last == alias)
-		data -> alias -> last = node;
 }
 
 void	set_node_alias(t_data *data, t_node *node)
@@ -67,8 +41,8 @@ void	set_node_alias(t_data *data, t_node *node)
 void	export_alias(t_data *data, char *line)
 {
 	t_node	*node;
-	size_t	i;
 	t_node	*alias;
+	size_t	i;
 
 	node = create_node(data, line, 1);
 	is_error(data, node, MALLOC_ERR, 0);
@@ -77,20 +51,8 @@ void	export_alias(t_data *data, char *line)
 	alias = find_(data, line);
 	line[i] = '=';
 	node -> i = ++i;
-	if (data -> alias -> head == NULL)
-	{
-		data -> alias -> head = node;
-		data -> alias -> last = node;
+	if (set_up_alias(data, node, alias))
 		return ;
-	}
-	if (alias)
-	{
-		set_alias(data, node, alias);
-		ft_free_elem((void **)&alias -> line);
-		ft_free_elem((void **)&alias);
-	}
-	else
-		set_node_alias(data, node);
 	data -> status = 0;
 }
 

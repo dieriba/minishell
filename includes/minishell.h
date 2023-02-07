@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 21:10:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 03:41:02 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-
-
-# define PATH_MAX 5100
-
+# include <dirent.h>
 /*-----------------COLOR_-----------------*/
 # define CYAN "\001\033[0;36m\002"
 # define RESET_COLOR "\001\033[0m\002"
@@ -45,6 +42,7 @@
 # define R_IN '<'
 # define R_OUT '>'
 # define R_COMBO "<>"
+# define R_COMBO_DOLLARS "<>$"
 # define STOP	"|& "
 # define BASE_STOP	"|&"
 # define STOP_	"|&;"
@@ -74,10 +72,12 @@
 # define TOKEN_EOF_ERR "bash: syntax error: unexpected end of file"
 # define AMB_REDIRECT "bash : ambiguous redirect"
 # define MISSING_QUOTES "bash : missing end quotes"
-# define PWD_ERROR "pwd: error retrieving current directory: getcwd: cannot access parent directories"
-
+# define GET_CWD_ERR "getcwd: cannot access parent directories"
+# define PWD_ERROR "pwd: error retrieving current directory: "
 # define LOG_FILE "log_alias"
 # define ALIAS_FILENAME "populate_aliases"
+# define EXIT_ARGS "bash : exit: too many arguments"
+# define EXIT_NUM_ARGS "bash: exit: numeric argument required"
 
 enum e_type
 {
@@ -112,10 +112,9 @@ typedef struct t_s_pipes
 {
 	int			s_pipes[2];
 	int			subshell[2];
-	int			read_end;
-	int			write_end;
 	pid_t		pid;
 	t_s_pipes	*next;
+	t_s_pipes	*read_end;
 }	t_s_pipes;
 typedef struct t_doc
 {
@@ -211,7 +210,13 @@ typedef struct t_data
 
 /*-----------------SYSCALL-----------------*/
 void	dup_and_close(t_data *data, int fd, int old_fd, int to_close);
+int		dup_and_close_built_in(int fd, int old_fd);
 /*-----------------SYSCALL-----------------*/
+/*-----------------MINISHELL-----------------*/
+void	lets_read(t_data *data);
+void	shell_routine(t_data *data);
+char	**clean_nl_str(t_data *data, char *line);
+/*-----------------MINISHEL-----------------*/
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 extern t_collector			*g_collector;
@@ -227,6 +232,10 @@ int		is_str_valid(t_data *data, char *to_parse);
 int		check_parenthese(t_data *data, char *to_parse);
 int		print_bad_syntax(t_data *data, char *str, char token);
 int		missing_right_commands(char *to_parse);
+int		check_token_length(char *to_parse);
+int		check_in_front(char *to_parse, int token, size_t *j);
+int		valid_double(char *to_parse, size_t i);
+int		check_function(char *to_parse, size_t i);
 void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type);
 void	check_lines(t_data *data, char *files, char *err, int flags);
 void	skip_reverse(char *to_parse, int *i, int quote);
@@ -269,6 +278,7 @@ void	set_last_setup(t_cmd *cmd);
 void	file_type(t_files *redirect, char a, char b);
 void	init_struct(t_data **data);
 void	last_node(t_data *data);
+void	par_to_space(t_data *data, char *to_clean);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/
@@ -294,7 +304,6 @@ int		loop_nested_quote(char *to_parse, int j, int end);
 int		length_of_quotes(char *to_parse, char quote);
 int		check_dollars(char c, char *to_clean, int i);
 int		char_is_quote(t_data *data, char c);
-int		char_is_end_quote(t_data *data, char c);
 int		skip_next_stop(char *to_clean);
 int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
 int		valid_format_token(char *to_parse);
@@ -306,17 +315,19 @@ char	*cleaner(t_data *data, char *to_clean);
 char	*clean_(t_data *data, char *to_clean, int skip);
 char	*is_valid_expand(t_data *data, char *to_check);
 void	parser(t_data *data, char **tab, int type);
-void	quote_to_neg(t_data *data, char *to_parse);
 char	*clean_lines(t_data *data, char *line, int expand);
+void	quote_to_neg(t_data *data, char *to_parse);
 void	clean_cmd(t_cmd *cmd);
 void	skip_reverse(char *to_parse, int *i, int quote);
 void	clean_files(t_cmd *cmd);
+size_t	slash_len(t_data *data, char *to_clean, size_t i, size_t *len);
 size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/
 char	*get_var_line(char *line);
 char	*find_alias_node(t_data *data, char *line);
+char	*from_tab_to_line(t_cmd *cmd, char **tab);
 int		where_to_write(t_data *data, t_cmd *cmd);
 int		check_line(char *line);
 int		check_line_alias(char *line);
@@ -324,25 +335,34 @@ int		log_files_alias(char *alias, int err_code, int line);
 int		built_in(t_data *data, t_cmd *cmd, int fork);
 int		exit_process(t_data *data, t_cmd *cmd, int fork);
 int		cd(t_data *data, t_cmd *cmd);
-void	is_built_in(t_cmd *cmd);
 int		echo(t_data *data, t_cmd *cmd);
+int		populate_alias(char *line);
+int		open_check_files_built_in(t_cmd *cmd, t_files **tab);
+int		close_fd_built_in(int *fd);
+int		print_err_built_in(char *str, int type);
+int		check_alias(t_node *alias, char *line);
+int		set_up_alias(t_data *data, t_node *node, t_node *alias);
+int		close_redirection(t_cmd *cmd);
+int		set_in_redirection_built_in(t_cmd *cmd);
+int		pwd(t_data *data, t_cmd *cmd);
+void	is_built_in(t_cmd *cmd);
+void	set_node_alias(t_data *data, t_node *node);
+void	handle_alias_node(t_data *data, t_cmd *cmd, char *res, char *line);
 void	export(t_cmd *cmd, t_env *env, int fork);
 void	env(t_data *data, t_cmd *cmd, int fork);
+void	print_alias_node(t_data *data, t_cmd *cmd, char *line);
 void	unset(t_cmd *cmd, t_env *env);
 void	make_export(t_env *env, char *line);
 void	alias(t_data *data, t_cmd *cmd, int fork);
 void	alias_(t_data *data, t_cmd *cmd, char *line);
 void	unalias(t_cmd *cmd);
-void	pwd(t_data *data, t_cmd *cmd, int fork);
 void	back_to_space(char **tab);
 void	populate(t_data *data, char *file);
-int		populate_alias(char *line);
 void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab);
-char	*from_tab_to_line(t_cmd *cmd, char **tab);
-t_node	*find_(t_data *data, char *line);
 void	print_alias(t_data *data, t_cmd *cmd);
 void	close_all(t_data *data, t_cmd *cmd);
 void	skip_(char *to_parse, size_t *i, int quote);
+t_node	*find_(t_data *data, char *line);
 /*-----------------BUILT_IN-----------------*/
 
 /*-----------------EXECUTION-----------------*/
@@ -356,7 +376,7 @@ int		find_next_cmd(t_data *data, t_cmd **cmds);
 int		is_subshell(t_data *data, t_cmd **cmds, int *i);
 int		find_read_pipes(t_s_pipes *head, int subshell);
 int		find_write_pipes(t_s_pipes *head);
-void    clean_s_pipes(t_data *data);
+void	clean_s_pipes(t_data *data);
 void	executing(t_data *data, t_cmd **cmds);
 void	run_cmd(t_cmd *cmd);
 void	wait_all_child(t_data *data, t_cmd **cmds);
@@ -369,8 +389,9 @@ void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd);
 void	init_pipes(t_data *data, int pipes[2], int *inited);
-void    pre_clean_s_pipes(t_data *data);
-void    remove_s_pipe(t_data *data);
+void	pre_clean_s_pipes(t_data *data);
+void	remove_s_pipe(t_data *data);
+void	print_s_pipes(t_data *data, t_cmd *cmd);
 void	close_one_end(t_data *data, int *pipes, int i, int *inited);
 /*-----------------EXECUTION-----------------*/
 
@@ -399,5 +420,6 @@ void	set_node(t_data *data, t_files **tab);
 void	close_all_pipes(t_data *data, t_doc **head, int read_, int write_);
 void	exit_(int signal);
 void	clean_here_doc(t_data *data, t_doc **head);
+void	set_up_signals(void);
 /*-----------------HERE_DOC_UTILS-----------------*/
 #endif

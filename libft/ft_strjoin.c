@@ -16,21 +16,21 @@ char	*ft_strjoin(char *s1, char *s2, char *s3, int pos_s3)
 {
 	size_t	i;
 	size_t	j;
-    size_t  k;
+	size_t	k;
 	char	*buff;
 
 	if (!s2)
 		return (NULL);
 	i = ft_strlen(s1);
 	j = ft_strlen(s2);
-    k = ft_strlen(s3);
+	k = ft_strlen(s3);
 	buff = calloc(sizeof(char), (i + j + k + 1));
 	if (!buff)
 		return (NULL);
 	if (pos_s3 == 0)
 	{
 		ft_memcpy(buff, s1, i);
-    	if (s3)
+		if (s3)
 			ft_memcpy(buff + i, s3, k);
 		ft_memcpy(buff + i + k, s2, j);
 		return (buff);

@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 07:24:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/05 05:51:58 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 02:54:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		check_valid_exit(char *num, long long *number)
+int	check_valid_exit(char *num, long long *number)
 {
 	size_t	len;
 	size_t	i;
@@ -45,6 +45,19 @@ void	close_process(t_cmd *cmd, int fork, int status)
 	}
 }
 
+void	print_err_exit_built_in(t_data *data, t_cmd *cmd, char *err, int fork)
+{
+	if (fork && ft_putendl_fd(err, STDERR_FILENO) < 0)
+		print_err_and_exit(data, NULL, "syscall", 1);
+	else if (fork == 0)
+	{
+		if (ft_putendl_fd(err, STDERR_FILENO) < 0)
+			print_err_built_in("bash", 1);
+		return ;
+	}
+	close_all(data, cmd);
+	free_all(data, data -> status);
+}
 
 void	handle_exit(t_data *data, t_cmd *cmd, int fork)
 {
@@ -52,26 +65,18 @@ void	handle_exit(t_data *data, t_cmd *cmd, int fork)
 	int			not_numbered_only;
 	int			invalid_exit;
 	
+	data -> status = 1;
 	not_numbered_only = ft_numbered_str_only(cmd -> args[1]);
 	invalid_exit = check_valid_exit(cmd -> args[1], &exit_value);
 	if (!not_numbered_only && !invalid_exit && !cmd -> args[2])
 		close_process(cmd, fork, exit_value % 256);
 	else if (!not_numbered_only && !invalid_exit)
-	{
-		if (ft_putendl_fd("bash : exit: too many arguments", STDERR_FILENO) < 0)
-			print_err_and_exit(data, NULL, "syscall", 1);
-		data -> status = 1;
-		if (fork)
-		{
-			close_all(data, cmd);
-			free_all(data, data -> status);
-		}
-	}
+		print_err_exit_built_in(data, cmd, EXIT_ARGS, fork);
 	else if (not_numbered_only)
 	{
-		if (ft_printf("bash : %s: numeric argument required\n", cmd -> args[1]) < 0)
-			print_err_and_exit(data, NULL, "syscall", 1);
-		close_process(cmd, fork, STDERR_FILENO);
+		data -> status = STDERR_FILENO;
+		print_err_exit_built_in(data, cmd, EXIT_NUM_ARGS, fork);
+		close_process(cmd, fork, data -> status);
 	}
 }
 
@@ -86,21 +91,20 @@ int	exit_process(t_data *data, t_cmd *cmd, int fork)
 	len = ft_tab_len(cmd -> args);
 	if ((fork == 0 && len == 1) && curr_stop && prev_stop)
 	{
-		open_check_files(NULL, cmd, cmd -> tab);
-		if (errno == 0)
-			close_process(cmd, fork, data -> status);
-		return (1);
+		if (open_check_files_built_in(cmd, cmd -> tab))
+			return (1);
+		close_process(cmd, fork, data -> status);
 	}
-	else if (((len == 1 && cmd -> prev_stop) && fork) && (!prev_stop || !curr_stop))
+	else if (fork && (len == 1 && cmd -> prev_stop))
 		close_process(cmd, fork, data -> status);
 	else if ((fork == 0 && len > 1) && curr_stop && prev_stop)
 	{
-		open_check_files(NULL, cmd, cmd -> tab);
-		if (errno == 0)
-			handle_exit(data, cmd, fork);
+		if (open_check_files_built_in(cmd, cmd -> tab))
+			return (1);
+		handle_exit(data, cmd, fork);
 		return (1);
 	}
-	else if ((cmd -> prev_stop && fork) && (!prev_stop || !curr_stop))
+	else if (fork && len > 1)
 		handle_exit(data, cmd, fork);
 	return (0);
 }
