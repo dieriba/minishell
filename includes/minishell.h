@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 03:41:02 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 14:22:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@
 # define MISSING_QUOTES "bash : missing end quotes"
 # define GET_CWD_ERR "getcwd: cannot access parent directories"
 # define PWD_ERROR "pwd: error retrieving current directory: "
+# define CHDIR_ERROR "chdir: error retrieving current directory: "
 # define LOG_FILE "log_alias"
 # define ALIAS_FILENAME "populate_aliases"
 # define EXIT_ARGS "bash : exit: too many arguments"

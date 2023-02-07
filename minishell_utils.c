@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:23:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 22:29:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 13:58:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	lets_read(t_data *data)
 			add_history(data -> cp_to_parse);
 			lets_exec(data, err);
 		}
-		else
+		else if (data -> cp_to_parse == NULL)
 			free_all(data, 130);
 	}
 }

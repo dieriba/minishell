@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:03:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 00:40:45 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/07 13:25:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ int	is_absolute_path(char *path)
 
 int	update_prompt(t_data *data, char *path)
 {
+	char	*tmp;
+
+	tmp	= getcwd(NULL, 0);
+	if (tmp == NULL)
+		print_err_built_in(CHDIR_ERROR GET_CWD_ERR, 1);
+	ft_free_elem((void **)&tmp);
 	if (chdir(path) < 0)
 		return (print_err_built_in("bash", 1));
 	ft_free_elem((void **)&data -> curr_dir.dir_name);

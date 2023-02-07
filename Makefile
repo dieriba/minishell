@@ -67,7 +67,6 @@ SRCS_PARSER	=	./parser/cleaner.c \
 				./parser/quote_utils_3.c \
 				./parser/dollars_utils.c \
 				./parser/handle_back_slash.c \
-				./parser/handle_expand_files.c \
 
 INCLUDES	= 	-I ./includes
 
