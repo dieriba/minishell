@@ -6,75 +6,74 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 22:04:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/08 03:04:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	char_is_quote(t_data *data, char c)
+int	char_is_quote(char c)
 {
-	if (c == data -> neg_single_start || c == data -> neg_double_start)
+	if (c == '"' || c == '\'')
 		return (1);
 	return (0);
 }
 
-int	find_start_quotes(t_data *data, char *to_parse, int i)
+void	skip_(char *to_parse, size_t *i, int quote)
 {
-	while (--i > -1)
-	{
-		if (to_parse[i] == data -> neg_single_end
-			|| to_parse[i] == data -> neg_double_end)
-			break ;
-		else if (to_parse[i] == data -> neg_double_start
-			|| to_parse[i] == data -> neg_single_start)
-			return (1);
-	}
-	return (0);
-}
+	size_t	j;
 
-int	find_end_quotes(t_data *data, char *to_parse, int i)
-{
-	if (!to_parse[i])
-		return (0);
-	while (to_parse[++i])
-	{
-		if (to_parse[i] == data -> neg_single_start
-			|| to_parse[i] == data -> neg_double_start)
-			break ;
-		else if (to_parse[i] == data -> neg_double_end
-			|| to_parse[i] == data -> neg_single_end)
-			return (1);
-	}
-	return (0);
-}
-
-int	find_single_quote(t_data *data, char *to_parse, int i)
-{
-	if (!to_parse[i])
-		return (0);
-	while (to_parse[++i])
-	{
-		if (to_parse[i] == data -> neg_single_start)
-			break ;
-		else if (to_parse[i] == data -> neg_single_end)
-			return (1);
-	}
-	return (0);
-}
-
-int	loop_nested_quote(char *to_parse, int j, int end)
-{
+	j = (*i);
 	while (1)
 	{
-		while (to_parse[j])
+		while (to_parse[++j])
 		{
-			if (to_parse[j] == end && ft_strchr(STOP_F, to_parse[j + 1]))
-				return (j);
-			j++;
+			if ((to_parse[j] == quote && to_parse[j] == '"')
+				&& valid_double(to_parse, j))
+				break ;
+			else if (to_parse[j] == quote && to_parse[j] != '"')
+				break ;
 		}
-		if (to_parse[j] == 0)
+		if (to_parse[j + 1] == '\'' || to_parse[j + 1] == '"')
+			quote = to_parse[++j];
+		else
 			break ;
+	}
+	(*i) = j;
+}
+
+void	skip_reverse(char *to_parse, int *i, int quote)
+{
+	int	j;
+
+	j = (*i);
+	while (1)
+	{
+		while (--j > -1)
+		{
+			if (to_parse[j] == quote
+				&& (to_parse[j] == '\'' || valid_double(to_parse, j)))
+				break ;
+		}
+		if (j >= 0 && (to_parse[j - 1] == '\''
+				|| valid_double(to_parse, j - 1)))
+			quote = to_parse[--j];
+		else
+			break ;
+	}
+	(*i) = j;
+}
+
+int	length_word(char *to_parse, size_t j)
+{
+	while (to_parse[j])
+	{
+		if ((to_parse[j] == '"' && valid_double(to_parse, j))
+			|| to_parse[j] == '\'')
+			skip_(to_parse, &j, to_parse[j]);
+		if (ft_strchr(STOP_, to_parse[j]) || ft_isspace(to_parse[j]))
+			break ;
+		j++;
 	}
 	return (j);
 }

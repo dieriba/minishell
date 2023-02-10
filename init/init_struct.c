@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:39:54 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 21:47:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/08 03:43:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,8 @@ void	init_struct(t_data **data)
 	(*data)-> curr_dir.dir_name = getcwd(NULL, 0);
 	is_error(*data, (*data)-> curr_dir.dir_name, "bash", 1);
 	(*data)-> curr_dir.path = ft_strrchr((*data)-> curr_dir.dir_name, '/') + 1;
-	(*data)-> neg_single_start = '\'' * -1;
-	(*data)-> neg_single_end = '\'' * -2;
-	(*data)-> neg_double_start = '"' * -1;
-	(*data)-> neg_double_end = '"' * -2;
 	(*data)-> prev_pipes = -1;
-	handle_signals((*data));
+	handle_signals();
 }
 
 void	set_default_data(t_data *data, int len)

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:31:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 06:20:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/09 01:55:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,17 @@ int	skip_next_stop(char *to_clean)
 {
 	size_t	i;
 
-	i = -1;
-	if (to_clean[0] == '$')
-		i = 0;
+	i = -1 + (to_clean[0] == '$');
 	while (to_clean[++i])
 	{
-		if (!ft_isalnum(to_clean[i]) && to_clean[i] != '_'
-			&& to_clean[i] != '?')
+		if (to_clean[i] == '?')
+			return (++i);
+		if (!ft_isalnum(to_clean[i]) && to_clean[i] != '_')
 			break ;
-		else if (to_clean[i] < 0)
+		else if ((to_clean[i] == '"' && valid_double(to_clean, i))
+			|| to_clean[i] == '\'')
 			break ;
 	}
 	return (i);
 }
 
-size_t	next_quotes(t_data *data, char *to_clean, size_t *len)
-{
-	size_t	i;
-
-	i = -1;
-	while (to_clean[++i] != data -> neg_single_end)
-		(*len) += (to_clean[i] > 0);
-	return (i);
-}

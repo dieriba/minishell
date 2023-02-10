@@ -35,6 +35,7 @@ SRCS 		=	ft_atoi.c \
 				ft_putnbr_fd.c \
 				ft_putstr_fd.c \
 				ft_split.c \
+				ft_split_utils.c \
 				ft_strchr.c \
 				ft_strdup.c \
 				ft_striteri.c \
@@ -55,7 +56,7 @@ SRCS 		=	ft_atoi.c \
 				ft_malloc_less_itoa.c \
 				ft_free_elem.c \
 				ft_char_index.c \
-				ft_numbered_str_only.c
+				ft_numbered_str_only.c \
 
 OBJS		=	$(SRCS:.c=.o)
 

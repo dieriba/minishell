@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/29 06:50:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/10 04:15:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ t_files	*copy_files(t_data *data, char *to_parse, int k, int j)
 	return (redirect);
 }
 
-int	skip_to_redirect(t_cmd *cmd, char *to_parse, size_t i)
+int	skip_to_redirect(char *to_parse, size_t i)
 {
 	while (to_parse[i])
 	{
-		if (ft_strchr(R_COMBO, to_parse[i])
-			&& !find_start_quotes(cmd -> data, to_parse, i))
+		if ((to_parse[i] == '"' && valid_double(to_parse, i)) || to_parse[i] == '\'')
+			skip_(to_parse, &i, to_parse[i]);
+		if (ft_strchr(R_COMBO, to_parse[i]))
 			return (i);
-		if (!is_real_stop(cmd -> data, to_parse, i, STOP_))
+		if (ft_strchr(STOP_, to_parse[i]))
 			return (-1);
 		i++;
 	}
@@ -55,14 +56,17 @@ int	find_tab_length(t_cmd *cmd, char *to_parse)
 
 	k = 0;
 	i = -1;
-	while (to_parse[++i] && is_real_stop(cmd -> data, to_parse, i, STOP_))
+	while (to_parse[++i])
 	{
-		if (ft_strchr(R_COMBO, to_parse[i])
-			&& !find_start_quotes(cmd -> data, to_parse, i))
+		if ((to_parse[i] == '"' && valid_double(to_parse, i)) || to_parse[i] == '\'')
+			skip_(to_parse, &i, to_parse[i]);
+		else if (ft_strchr(R_COMBO, to_parse[i]))
 		{
 			k++;
 			i += (ft_strchr(R_COMBO, to_parse[i + 1]) != 0);
 		}
+		else if (ft_strchr(STOP_, to_parse[i]))
+			break ;
 	}
 	if (to_parse[i] && is_same_token(to_parse[i], to_parse[i + 1]))
 		ft_memcpy(cmd-> stop, &to_parse[i], 2);
@@ -82,13 +86,13 @@ void	set_file_tabs(t_cmd *cmd, char *to_parse, int length)
 	j = 0;
 	while (++i < length)
 	{
-		j = skip_to_redirect(cmd, to_parse, j);
+		j = skip_to_redirect(to_parse, j);
 		if (j == -1 || to_parse[j] == 0)
 			return ;
 		k = j;
 		j += (ft_strchr(R_COMBO, to_parse[j + 1]) != NULL) + 1;
-		j = skip_spaces(cmd -> data, to_parse, j, 1);
-		j = find_end_string(cmd -> data, to_parse, j);
+		j = skip_spaces(to_parse, j, 1);
+		j = length_word(to_parse, j);
 		cmd -> tab[i] = copy_files(cmd -> data, to_parse, k, j);
 		j -= (to_parse[j] == 0);
 	}

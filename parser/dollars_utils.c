@@ -6,24 +6,17 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 06:03:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/04 00:09:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/09 01:48:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_dollars(char c, char *to_clean, int i)
+int	check_dollars(char c)
 {
-	int	valid;
-
-	valid = 0;
-	while (i > 0 && --i >= 0 && to_clean[i] > 0)
-		;
-	if (to_clean[i] < 0 && to_clean[i] == '\'' * -1)
-		valid = -1;
-	if (c == ' ' || c == 0 || valid == -1)
+	if (c == ' ' || c == 0)
 		return (1);
-	return (valid);
+	return (0);
 }
 
 char	*is_shell_variable(t_data *data, char *line)

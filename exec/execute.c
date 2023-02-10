@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 02:35:27 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/10 04:09:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,20 @@ int	verify_cmd(t_data *data, t_cmd *cmd)
 
 void	forking(t_cmd *cmd)
 {
-	signal(SIGPIPE, SIG_IGN);
+	struct sigaction	ctrl_c;
+	struct sigaction	sigquit;
+	
 	g_collector = ft_calloc(sizeof(t_collector), 1);
 	is_error(cmd -> data, g_collector, MALLOC_ERR, 0);
 	g_collector -> data = cmd;
-	cmd -> data -> ctrl_c.sa_handler = SIG_DFL;
-	sigaction(SIGINT, &cmd -> data -> ctrl_c, NULL);
-	cmd -> data -> sigquit.sa_flags = SA_RESTART;
-	cmd -> data -> sigquit.sa_handler = exit_dumped;
-	sigemptyset(&cmd -> data -> sigquit.sa_mask);
-	sigaction(SIGQUIT, &cmd -> data -> sigquit, NULL);
+	ctrl_c.sa_flags = 0;
+	ctrl_c.sa_handler = SIG_DFL;
+	sigemptyset(&ctrl_c.sa_mask);
+	sigaction(SIGINT, &ctrl_c, NULL);
+	sigquit.sa_flags = SA_RESTART;
+	sigquit.sa_handler = exit_dumped;
+	sigemptyset(&sigquit.sa_mask);
+	sigaction(SIGQUIT, &sigquit, NULL);
 	set_redirections_files(cmd);
 	if (cmd -> built_in == 0)
 		run_cmd(cmd);

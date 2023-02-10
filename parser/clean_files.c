@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:24:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/31 01:35:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/09 01:16:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@ void	remove_dirt(t_data *data, t_files **tab, char *to_clean, size_t i)
 	size_t	j;
 
 	j = -1;
-	tab[i]-> amb = -(to_clean[0] == '"' * -1) * to_clean[0];
+	tab[i]-> amb = (to_clean[0] == '"') * to_clean[0];
 	while (to_clean[++j])
 	{
-		if ((to_clean[j] == '$'
-				&& !check_dollars(
-					to_clean[j + 1], to_clean, j)) || to_clean[j] < 0)
+		if ((to_clean[j] == '$' && !check_dollars(to_clean[j + 1])) ||
+			((to_clean[j] == '"' && valid_double(to_clean, j)) || to_clean[j] == '\''))
 		{
 			tab[i]-> amb += (ft_strchr(&to_clean[j], '$') != NULL) * '$';
 			tab[i]-> files = clean_(data, to_clean, 1);

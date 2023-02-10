@@ -6,56 +6,11 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 22:17:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/08 03:04:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	skip_(char *to_parse, size_t *i, int quote)
-{
-	size_t	j;
-
-	j = (*i);
-	while (1)
-	{
-		while (to_parse[++j])
-		{
-			if ((to_parse[j] == quote && to_parse[j] == '"')
-				&& valid_double(to_parse, j))
-				break ;
-			else if (to_parse[j] == quote && to_parse[j] != '"')
-				break ;
-		}
-		if (to_parse[j + 1] == '\'' || to_parse[j + 1] == '"')
-			quote = to_parse[++j];
-		else
-			break ;
-	}
-	(*i) = j;
-}
-
-void	skip_reverse(char *to_parse, int *i, int quote)
-{
-	int	j;
-
-	j = (*i);
-	while (1)
-	{
-		while (--j > -1)
-		{
-			if (to_parse[j] == quote
-				&& (to_parse[j] == '\'' || valid_double(to_parse, j)))
-				break ;
-		}
-		if (j >= 0 && (to_parse[j - 1] == '\''
-				|| valid_double(to_parse, j - 1)))
-			quote = to_parse[--j];
-		else
-			break ;
-	}
-	(*i) = j;
-}
 
 void	handle_case(t_data *data, char **rescue_cmd, char **cmd, int err)
 {

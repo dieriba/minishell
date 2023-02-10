@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 22:02:13 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/08 02:58:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,31 +62,4 @@ int	valid_quotes(t_data *data, char *to_parse)
 		return (1);
 	}
 	return (0);
-}
-
-void	quote_to_neg(t_data *data, char *to_parse)
-{
-	size_t	i;
-
-	i = -1;
-	while (to_parse[++i])
-	{
-		if (to_parse[i] && to_parse[i] == '"')
-		{
-			to_parse[i] = data -> neg_double_start;
-			while (to_parse[++i])
-				if (to_parse[i] == '"' && to_parse[i - 1] != '\\')
-					break ;
-			to_parse[i] = data -> neg_double_end;
-		}
-		else if (to_parse[i] && to_parse[i] == '\'')
-		{
-			to_parse[i] = data -> neg_single_start;
-			while (to_parse[++i] && to_parse[i] != '\'')
-				;
-			to_parse[i] = data -> neg_single_end;
-		}
-		if (!to_parse[i])
-			break ;
-	}
 }

@@ -6,28 +6,11 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:50:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 22:03:32 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/09 14:08:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	back_to_space(char **tab)
-{
-	size_t	i;
-	size_t	j;
-
-	i = -1;
-	while (tab[++i])
-	{
-		j = -1;
-		while (tab[i][++j])
-		{
-			if (tab[i][j] * -1 == ' ')
-				tab[i][j] = ' ';
-		}
-	}
-}
 
 void	join_line(t_data *data, char **tmp, char *line)
 {
@@ -92,7 +75,6 @@ void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab)
 			cmd -> args = ft_split(tmp, ' ');
 			is_error(data, cmd -> args, MALLOC_ERR, 0);
 			ft_free_elem((void **)&tmp);
-			back_to_space(cmd -> args);
 			return ;
 		}
 	}	

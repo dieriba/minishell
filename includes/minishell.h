@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 14:22:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/10 05:38:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ typedef struct t_cmd
 	t_files	*last_in;
 	t_files	*last_out;
 	t_files	**tab;
-	t_files	**glob_files;
 	t_data	*data;
 	t_cmd	*prev_cmd;
 }	t_cmd;
@@ -189,17 +188,11 @@ typedef struct t_data
 	int					subshell_pid;
 	int					pipes[2];
 	int					prev_pipes;
-	int					neg_single_start;
-	int					neg_single_end;
-	int					neg_double_start;
-	int					neg_double_end;
 	int					last_exec_stat;
 	char				*path;
 	char				*cp_to_parse;
 	char				**envp;
 	char				**tab_;
-	struct sigaction	ctrl_c;
-	struct sigaction	sigquit;
 	t_s_pipes			*s_pipes;
 	t_dir				curr_dir;
 	t_env				*env;
@@ -216,7 +209,6 @@ int		dup_and_close_built_in(int fd, int old_fd);
 /*-----------------MINISHELL-----------------*/
 void	lets_read(t_data *data);
 void	shell_routine(t_data *data);
-char	**clean_nl_str(t_data *data, char *line);
 /*-----------------MINISHEL-----------------*/
 
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
@@ -224,21 +216,18 @@ extern t_collector			*g_collector;
 /*-----------------GLOBAL_VARIABLE_SET-----------------*/
 
 /*-----------------SIGNAL_FUNCTION-----------------*/
-void	handle_signals(t_data *data);
+void	handle_signals(void);
+void	ignore_signals(void);
 void	new_line(int signal);
 /*-----------------SIGNAL_FUNCTION-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
-int		is_str_valid(t_data *data, char *to_parse);
-int		check_parenthese(t_data *data, char *to_parse);
 int		print_bad_syntax(t_data *data, char *str, char token);
-int		missing_right_commands(char *to_parse);
 int		check_token_length(char *to_parse);
 int		check_in_front(char *to_parse, int token, size_t *j);
 int		valid_double(char *to_parse, size_t i);
 int		check_function(char *to_parse, size_t i);
 void	print_err_and_exit(t_data *data, t_cmd *cmd, char *err_msg, int type);
-void	check_lines(t_data *data, char *files, char *err, int flags);
 void	skip_reverse(char *to_parse, int *i, int quote);
 void	skip_(char *to_parse, size_t *i, int quote);
 void	exit_dumped(int signal);
@@ -258,28 +247,24 @@ void	print_env(char **tab);
 /*-----------------DEBUG_UTILS-----------------*/
 
 /*-----------------INITIALIZATION_UTILS-----------------*/
-int		skip_spaces(t_data *data, char *to_parse, int i, int skip);
-int		count_words(t_data *data, char *to_parse);
+int		skip_spaces(char *to_parse, int i, int skip);
+int		count_words(char *to_parse);
 int		is_same_token(char c, char d);
 int		check_condition(char *line, int j);
-int		skip_char_letter_str(
-			t_data *data, size_t i, char *to_parse, char *to_skip);
+int		skip_char_letter_str(char *to_parse, size_t i);
 int		check_behind(char *to_parse, int j);
 int		check_behind_par(char *to_parse, int i);
-int		skip_char_token_str(size_t i, char *to_parse, char *to_skip);
-int		add_command(t_data *data, char *to_process, int i);
+int		skip_char_token_str(char *to_parse, char *to_skip, size_t i);
+int		add_command(char *to_process, int i);
 int		check_quotes(char *to_parse, int i);
-int		find_end_string(t_data *data, char *to_parse, int j);
 void	directory(t_data *data);
-void	create_list(t_data *data, char **envp, int len);
-void	par_to_space(t_data *data, char *str);
 void	set_parenthese(t_cmd *cmd, char *to_parse);
 void	set_default_data(t_data *data, int len);
 void	set_last_setup(t_cmd *cmd);
 void	file_type(t_files *redirect, char a, char b);
 void	init_struct(t_data **data);
 void	last_node(t_data *data);
-void	par_to_space(t_data *data, char *to_clean);
+void	par_to_space(char *to_clean);
 /*-----------------INITIALIZATION_UTILS-----------------*/
 
 /*-----------------INITIALIZATION-----------------*/
@@ -290,23 +275,17 @@ void	set_commands(t_cmd *cmd, char *to_parse);
 void	set_redirect_cmd(t_cmd *cmd, char *to_parse);
 void	init_path(t_cmd *cmd);
 void	real_subshell_or_not(t_cmd **cmds);
-size_t	skip_redirect(t_data *data, char *to_parse, size_t i);
+size_t	skip_redirect(char *to_parse, size_t i);
 t_files	*copy_files(t_data *data, char *to_parse, int k, int j);
 /*-----------------INITIALIZATION-----------------*/
 
 /*-----------------PARSER-----------------*/
 int		valid_quotes(t_data *data, char *to_parse);
 int		valid_parentheses(char *to_parse, int *open, size_t i);
-int		is_real_stop(t_data *data, char *to_parse, size_t i, char *in);
-int		find_start_quotes(t_data *data, char *to_parse, int i);
-int		find_end_quotes(t_data *data, char *to_parse, int i);
-int		find_single_quote(t_data *data, char *to_pars, int i);
-int		loop_nested_quote(char *to_parse, int j, int end);
-int		length_of_quotes(char *to_parse, char quote);
-int		check_dollars(char c, char *to_clean, int i);
-int		char_is_quote(t_data *data, char c);
+int		length_word(char *to_parse, size_t j);
+int		check_dollars(char c);
+int		char_is_quote(char c);
 int		skip_next_stop(char *to_clean);
-int		skip_invalid_dollars(t_data *data, char *to_parse, int j);
 int		valid_format_token(char *to_parse);
 int		unvalid_line(t_data *data, char *line, char **rescue_cmd);
 int		valid_double(char *to_parse, size_t i);
@@ -315,14 +294,18 @@ char	*is_shell_variable(t_data *data, char *line);
 char	*cleaner(t_data *data, char *to_clean);
 char	*clean_(t_data *data, char *to_clean, int skip);
 char	*is_valid_expand(t_data *data, char *to_check);
-void	parser(t_data *data, char **tab, int type);
 char	*clean_lines(t_data *data, char *line, int expand);
-void	quote_to_neg(t_data *data, char *to_parse);
 void	clean_cmd(t_cmd *cmd);
 void	skip_reverse(char *to_parse, int *i, int quote);
 void	clean_files(t_cmd *cmd);
-size_t	slash_len(t_data *data, char *to_clean, size_t i, size_t *len);
-size_t	next_quotes(t_data *data, char *to_clean, size_t *len);
+size_t	copy_slash(char *to_clean, char *res, size_t *v);
+size_t	copy_expands_in_str(char *res, char quote, t_node **node);
+size_t	slash_len(char *to_clean, size_t i, size_t *len);
+size_t  copy(char *line, char *res, int quoted);
+size_t	copy_expands_quote(char *to_clean, char *res, size_t *v, t_node **expands);
+size_t	copy_single_quote(char *to_clean, char *res, size_t *i);
+size_t	handle_expands(t_data *data, t_node **expands, char *to_clean, size_t *len);
+size_t	handle_quote_expands(t_data *data, t_node **expands, char *to_clean, size_t *len);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/
@@ -357,7 +340,6 @@ void	make_export(t_env *env, char *line);
 void	alias(t_data *data, t_cmd *cmd, int fork);
 void	alias_(t_data *data, t_cmd *cmd, char *line);
 void	unalias(t_cmd *cmd);
-void	back_to_space(char **tab);
 void	populate(t_data *data, char *file);
 void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab);
 void	print_alias(t_data *data, t_cmd *cmd);
@@ -368,12 +350,10 @@ t_node	*find_(t_data *data, char *line);
 
 /*-----------------EXECUTION-----------------*/
 int		prepare_next_step(t_data *data, t_cmd **cmd, char *stop, int *i);
-int		opener_outfile(t_cmd *cmd);
 int		to_exec_or_not(char *stop, int status);
 void	set_out_redirection(t_cmd *cmd);
 void	set_in_redirection(t_cmd *cmd);
 int		pipe_par(t_cmd **cmds);
-int		find_next_cmd(t_data *data, t_cmd **cmds);
 int		is_subshell(t_data *data, t_cmd **cmds, int *i);
 int		find_read_pipes(t_s_pipes *head, int subshell);
 int		find_write_pipes(t_s_pipes *head);
@@ -383,16 +363,11 @@ void	run_cmd(t_cmd *cmd);
 void	wait_all_child(t_data *data, t_cmd **cmds);
 void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab);
 void	close_fd(t_data *data, char *str, int *fd);
-void	check_files(t_data *data, t_files **files, int flags);
-void	close_pipes(t_data *data);
 void	handle_pipes(t_data *data, t_cmd *cmd);
 void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd);
 void	init_pipes(t_data *data, int pipes[2], int *inited);
-void	pre_clean_s_pipes(t_data *data);
-void	remove_s_pipe(t_data *data);
-void	print_s_pipes(t_data *data, t_cmd *cmd);
 void	close_one_end(t_data *data, int *pipes, int i, int *inited);
 /*-----------------EXECUTION-----------------*/
 

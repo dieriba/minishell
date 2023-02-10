@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 02:13:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 22:02:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/10 05:19:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,7 @@ void	copy_tab_to_str(char **tab, char *to_clean)
 	{
 		j = -1;
 		while (tab[i][++j])
-		{
-			if (tab[i][j] == ' ')
-				to_clean[++k] = tab[i][j] * -1;
-			else
-				to_clean[++k] = tab[i][j];
-		}
+			to_clean[++k] = tab[i][j];
 		if (tab[i + 1])
 			to_clean[++k] = ' ';
 	}
@@ -57,7 +52,6 @@ void	expanded_tab(t_cmd *cmd, char **tab)
 	tab = ft_split(to_clean, ' ');
 	is_error(cmd -> data, tab, MALLOC_ERR, 0);
 	ft_free_elem((void **)&to_clean);
-	back_to_space(tab);
 	cmd -> args = tab;
 	cmd -> cmd = tab[0];
 }
@@ -77,7 +71,8 @@ int	check_tab(char **tab)
 		{
 			if (tab[i][j] == '$')
 				return (1);
-			else if (tab[i][j] < 0 || tab[i][j] == '\\')
+			else if ((tab[i][j] == '"' && valid_double(tab[i], i))
+				|| (tab[i][j] == '\'' || tab[i][j] == '\\'))
 				quotes = -1;
 		}
 	}

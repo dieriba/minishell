@@ -6,60 +6,55 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 21:54:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/08 02:46:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	find_end_string(t_data *data, char *to_parse, int j)
+int	skip_char_letter_str(char *to_parse, size_t i)
 {
-	if (to_parse[j] == data -> neg_single_start)
-		j = loop_nested_quote(to_parse, j, data -> neg_single_end);
-	else if (to_parse[j] == data -> neg_double_start)
-		j = loop_nested_quote(to_parse, j, data -> neg_double_end);
-	else
-		while (to_parse[j] && is_real_stop(data, to_parse, j, STOP_F))
-			j++;
-	return (j);
-}
-
-int	skip_char_letter_str(t_data *data, size_t i, char *to_parse, char *to_skip)
-{
-	while (to_parse[i] && is_real_stop(data, to_parse, i, to_skip))
+	while (to_parse[i])
+	{
+		if ((to_parse[i] == '"' && valid_double(to_parse, i)) || to_parse[i] == '\'')
+			skip_(to_parse, &i, to_parse[i]);
+		else if (ft_strchr(STOP_, to_parse[i]))
+			break ;
 		i++;
+	}
 	return (i);
 }
 
-int	skip_char_token_str(size_t i, char *to_parse, char *to_skip)
+int	skip_char_token_str(char *to_parse, char *to_skip, size_t i)
 {
 	while (to_parse[i] && ft_strchr(to_skip, to_parse[i]))
 		i++;
 	return (i);
 }
 
-int	add_command(t_data *data, char *to_process, int i)
+int	add_command(char *to_process, int i)
 {
 	while (--i >= 0)
 	{
-		if (!is_real_stop(data, to_process, i, STOP_))
+		if (!ft_isspace(to_process[i]))
 			break ;
-		if (is_real_stop(data, to_process, i, STOP_)
-			&& !ft_isspace(to_process[i]))
-			return (1);
 	}
-	return (0);
+	if (ft_strchr(STOP_, to_process[i]))
+		return (0);
+	return (1);
 }
 
-void	par_to_space(t_data *data, char *to_clean)
+void	par_to_space(char *to_clean)
 {
 	size_t	i;
 
 	i = -1;
 	while (to_clean[++i])
 	{
-		if ((to_clean[i] == '(' || to_clean[i] == ')')
-			&& !find_end_quotes(data, to_clean, i))
+		if ((to_clean[i] == '"' && valid_double(to_clean, i))
+			|| to_clean[i] == '\'')
+			skip_(to_clean, &i, to_clean[i]);
+		else if ((to_clean[i] == '(' || to_clean[i] == ')'))
 			to_clean[i] = ' ';
 	}
 }

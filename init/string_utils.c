@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 06:10:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 02:19:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/08 02:52:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	is_real_stop(t_data *data, char *to_parse, size_t i, char *in)
-{
-	if (!to_parse[i])
-		return (0);
-	if (ft_strchr(in, to_parse[i]) && !find_end_quotes(data, to_parse, i))
-		return (0);
-	return (1);
-}
 
 int	is_same_token(char c, char d)
 {
@@ -31,11 +22,11 @@ int	is_same_token(char c, char d)
 	return (0);
 }
 
-int	skip_spaces(t_data *data, char *to_parse, int i, int skip)
+int	skip_spaces(char *to_parse, int i, int skip)
 {
 	while (to_parse[i] && ft_isspace(to_parse[i]))
 		i++;
-	if (skip && to_parse[i] == '$' && char_is_quote(data, to_parse[i + 1]))
+	if (skip && (to_parse[i] == '$' && char_is_quote(to_parse[i + 1])))
 		i++;
 	return (i);
 }

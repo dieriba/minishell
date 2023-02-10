@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 02:24:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/08 03:34:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	write_to_fd(t_data *data, char *line, int fd)
 	if (ft_putstr_fd(line, fd) < 0)
 	{
 		data -> status = 1;
-		print_err_and_exit(NULL, NULL, "syscall", 1);
-		return (1);
+		return (print_err_built_in("syscall", 1));
 	}
 	return (0);
 }
@@ -71,12 +70,10 @@ int	echo(t_data *data, t_cmd *cmd)
 	if (ft_tab_len(cmd -> args) == 1)
 	{
 		if (write_to_fd(data, "\n", fd) < 0)
-			return (print_err_built_in("bash", 1));
-		data -> status = 0;
+			print_err_built_in("bash", 1);
 		return (1);
 	}
-	if (write_args_(data, cmd, fd))
-		return (1);
+	write_args_(data, cmd, fd);
 	if (cmd -> last_in && cmd -> last_in -> type == IN)
 		close_fd_built_in(&cmd -> last_in -> fd);
 	if (cmd -> last_out)

@@ -6,55 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 14:23:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/09 14:02:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
 t_collector	*g_collector = NULL;
-
-char	**clean_nl_str(t_data *data, char *line)
-{
-	size_t	i;
-	size_t	j;
-	int		seen;
-
-	i = -1;
-	seen = 0;
-	while (line[++i])
-	{
-		if (line[i] == '\n' && !find_end_quotes(data, line, i))
-		{
-			j = i;
-			while (line[++j] && line[j] != '\n')
-				if (!ft_isspace(line[j]))
-					seen = 1;
-			if (seen == 0)
-				line[i] = ' ';
-		}
-		else if (line[i] == '\n' && find_end_quotes(data, &line[i], i))
-			line[i] *= -1;
-	}
-	return (ft_split(line, '\n'));
-}
-
-void	back_to_normal(char **line)
-{
-	size_t	i;
-	size_t	j;
-
-	i = -1;
-	while (line[++i])
-	{
-		j = -1;
-		while (line[i][++j])
-		{
-			if (line[i][j] == '\n' * -1)
-				line[i][j] = '\n';
-		}
-	}
-}
 
 void	shell_routine(t_data *data)
 {
@@ -63,8 +21,6 @@ void	shell_routine(t_data *data)
 
 	i = -1;
 	skip = 0;
-	ft_free_elem((void **)&data -> cp_to_parse);
-	back_to_normal(data -> tab_);
 	while (data -> tab_[++i])
 	{
 		data -> cp_to_parse = data -> tab_[i];

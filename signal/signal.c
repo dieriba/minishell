@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 01:42:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/09 01:23:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,27 @@ void	exit_dumped(int signal)
 	free_all(data, 131);
 }
 
-void	handle_signals(t_data *data)
+void	ignore_signals(void)
 {
-	data -> ctrl_c.sa_flags = SA_RESTART;
-	data -> ctrl_c.sa_handler = new_line;
-	sigemptyset(&data -> ctrl_c.sa_mask);
-	sigaction(SIGINT, &data -> ctrl_c, NULL);
-	data -> sigquit.sa_flags = 0;
-	data -> sigquit.sa_handler = SIG_IGN;
-	sigemptyset(&data -> sigquit.sa_mask);
-	sigaction(SIGQUIT, &data -> sigquit, NULL);
+	struct sigaction	ctrl_c;
+	
+	ctrl_c.sa_handler = SIG_IGN;
+	ctrl_c.sa_flags = 0;
+	sigemptyset(&ctrl_c.sa_mask);
+	sigaction(SIGINT, &ctrl_c, NULL);
+}
+
+void	handle_signals(void)
+{
+	struct sigaction	ctrl_c;
+	struct sigaction	sigquit;
+	
+	ctrl_c.sa_flags = SA_RESTART;
+	ctrl_c.sa_handler = new_line;
+	sigemptyset(&ctrl_c.sa_mask);
+	sigaction(SIGINT, &ctrl_c, NULL);
+	sigquit.sa_flags = 0;
+	sigquit.sa_handler = SIG_IGN;
+	sigemptyset(&sigquit.sa_mask);
+	sigaction(SIGQUIT, &sigquit, NULL);
 }

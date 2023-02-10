@@ -6,18 +6,44 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:23:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 13:58:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/10 02:56:43 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
+char	**clean_nl_str(char *line)
+{
+	size_t	i;
+	size_t	j;
+	int		seen;
+
+	i = -1;
+	seen = 0;
+	while (line[++i])
+	{
+		if ((line[i] == '"' && valid_double(line, i))
+			|| line[i] == '\'')
+			skip_(line, &i, line[i]);
+		else if (line[i] == '\n')
+		{
+			j = i;
+			while (line[++j] && line[j] != '\n')
+				if (!ft_isspace(line[j]))
+					seen = 1;
+			if (seen == 0)
+				line[i] = ' ';
+		}
+	}
+	return (ft_split(line, '\n'));
+}
+
 void	lets_exec(t_data *data, int err)
 {
 	if (err == 0)
 	{
-		quote_to_neg(data, data -> cp_to_parse);
-		data -> tab_ = clean_nl_str(data, data -> cp_to_parse);
+		data -> tab_ = clean_nl_str(data -> cp_to_parse);
+		ft_free_elem((void **)&data -> cp_to_parse);
 		is_error(data, data -> tab_, MALLOC_ERR, 0);
 		shell_routine(data);
 	}
