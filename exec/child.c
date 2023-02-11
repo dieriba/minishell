@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 18:42:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 21:05:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int	loop_through_child(t_data *data, t_cmd **cmds)
 	nl = 1;
 	while (cmds[++i])
 	{
-		if (cmds[i]-> pid && waitpid(
+		if (cmds[i]-> waited)
+			data -> status = cmds[i]-> exit_status;
+		else if (cmds[i]-> pid && waitpid(
 				cmds[i]-> pid, &data -> status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 		else if (cmds[i]-> built_in && cmds[i]-> executed)

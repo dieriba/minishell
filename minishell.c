@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/09 14:02:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 20:00:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_collector	*g_collector = NULL;
 
 void	shell_routine(t_data *data)
 {
-	size_t	i;
-	int		skip;
+	int	i;
+	int	skip;
 
 	i = -1;
 	skip = 0;
@@ -32,6 +32,8 @@ void	shell_routine(t_data *data)
 			executing(data, data -> cmds);
 		clean_struct(data);
 	}
+	while (--i > -1)
+		add_history(data -> tab_[i]);
 	ft_free_tab(data -> tab_);
 	data -> tab_ = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 18:44:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 21:22:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ typedef struct t_cmd
 	int			break_cmd;
 	int			executed;
 	int			exit_status;
+	int			waited;
 	t_s_pipes	*write_end;
 	t_s_pipes	*read_end;
 	t_files		*last_in;
@@ -357,11 +358,12 @@ t_node	*find_(t_data *data, char *line);
 
 /*-----------------EXECUTION-----------------*/
 int		prepare_next_step(t_data *data, t_cmd **cmd, char *stop, int *i);
-void	set_out_redirection(t_cmd *cmd);
-void	set_in_redirection(t_cmd *cmd);
 int		pipe_par(t_cmd **cmds);
 int		is_subshell(t_data *data, t_cmd **cmds, int *i);
+int		pipe_exec(t_cmd *cmd);
+void	set_out_redirection(t_cmd *cmd);
 void	clean_s_pipes(t_data *data);
+void	set_in_redirection(t_cmd *cmd);
 void	executing(t_data *data, t_cmd **cmds);
 void	run_cmd(t_cmd *cmd);
 void	wait_all_child(t_data *data, t_cmd **cmds);

@@ -6,14 +6,19 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 18:22:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 21:35:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	to_exec_or_not(t_cmd *cmd, char *stop, int status)
+int	to_exec_or_not(t_cmd *cmd, char *stop, int status, int opt)
 {
+	if (opt && (cmd -> prev_cmd -> built_in && cmd -> prev_cmd -> executed))
+	{	
+		data -> last_exec_stat = cmd -> prev_cmd -> exit_status;
+		status = cmd -> data -> last_exec_stat;
+	}
 	if (status == 128 + SIGINT)
 		return (-1);
 	if (!ft_strcmp("&&", stop) && status == 0)
@@ -32,16 +37,27 @@ int	to_exec_or_not(t_cmd *cmd, char *stop, int status)
 	}
 }
 
-int	pipe_exec(t_cmd *cmd)
+void	wait_command_before(t_cmd **cmds, t_cmd *cmd)
 {
-	if (cmd -> p_close && cmd -> data -> subshell_pid)
-		return (0);
-	else if (cmd -> p_close && cmd -> data -> subshell_pid == 0)
-		return (1);
-	else if (cmd -> pid || (cmd -> built_in && cmd -> executed))
-		return (0);
-	else
-		return (1);
+	int	i;
+	int	j;
+
+	i = -1;
+	while (cmds[++i])
+	{
+		if (cmds[i] == cmd)
+			break ;
+		if (ft_strcmp(cmds[i]-> prev_stop, "|"))
+			j = i;
+	}
+	while (j < i)
+	{
+		if (waitpid(cmds[j]-> pid, &cmds[j]-> exit_status, 0) < 0
+			&& errno != ECHILD)
+			print_err_and_exit(cmd -> data, NULL, "Error with waitpid", 1);
+		cmds[j]-> waited = 1;
+		j++;
+	}
 }
 
 int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
@@ -53,6 +69,8 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 	pipes = ft_strcmp("|", stop);
 	if (pipes == 0)
 		status = pipe_exec(cmd -> prev_cmd);
+	else if (pipes)
+		wait_command_before(data -> cmds, cmd);
 	if (((!status && pid_ret) && pipes))
 	{
 		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
@@ -62,14 +80,10 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 		else if (WIFSIGNALED(status))
 			data -> status = status;
 		data -> last_exec_stat = (data -> status > 0);
-		status = to_exec_or_not(cmd, stop, data -> status);
+		status = to_exec_or_not(cmd, stop, data -> status, 0);
 	}
 	else if (!status)
-	{
-		if (cmd -> prev_cmd -> built_in && cmd -> prev_cmd -> executed)
-			data -> last_exec_stat = cmd -> prev_cmd -> exit_status;
-		status = to_exec_or_not(cmd, stop, data -> last_exec_stat);
-	}
+		status = to_exec_or_not(cmd, stop, data -> last_exec_stat, 1);
 	return (status);
 }
 

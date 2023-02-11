@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 20:32:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 14:23:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 20:08:03 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	free_list(t_env *env, t_node **head)
 
 void	free_all(t_data *data, int status)
 {
+	rl_clear_history();
 	data -> tab_ = ft_free_tab(data -> tab_);
 	data -> envp = ft_free_tab(data -> envp);
 	free_cmd(data -> cmds);
