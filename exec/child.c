@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:45:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:00:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	wait_all_child(t_data *data, t_cmd **cmds)
 	ignore_signals();
 	close_all_pipes(data, &data -> here_docs, 1, 0);
 	loop_through_child(data, cmds, &status);
-	if (WIFEXITED(status))
+	if (WIFEXITED(status) && data -> status == 0)
 		data -> status = WEXITSTATUS(status);
 	handle_signals();
 	if (data -> subshell)
