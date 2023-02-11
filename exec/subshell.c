@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:21:14 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 18:46:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 18:49:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	cmd_base_setup(t_cmd *cmd)
 {
-	if (cmd-> p_open && !cmd-> to_fork)
-		cmd-> p_open = 1;
+	if (cmd -> p_open && !cmd -> to_fork)
+		cmd -> p_open = 1;
 	else if (cmd-> p_open)
-		cmd-> p_open = cmd-> to_fork;
-	cmd-> executed = 1;
+		cmd -> p_open = cmd -> to_fork;
+	cmd -> executed = 1;
 }
 
 int	is_subshell(t_data *data, t_cmd **cmds, int *i)
