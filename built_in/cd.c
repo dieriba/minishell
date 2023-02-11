@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:03:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:44:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:47:52 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	cd(t_data *data, t_cmd *cmd)
 		return (1);
 	if (!ft_strcmp(cmd -> stop, "|") || !ft_strcmp(cmd -> prev_stop, "|"))
 		return (1);
-	data -> status = 1;
+	cmd -> exit_status = 1;
 	len = ft_tab_len(cmd -> args);
 	if (len > 2)
 		cd_error(data, "bash : cd : too many arguments");
@@ -81,6 +81,6 @@ int	cd(t_data *data, t_cmd *cmd)
 		return (1);
 	if (update_prompt(data, path))
 		return (1);
-	data -> status = 0;
+	cmd -> exit_status = 0;
 	return (1);
 }

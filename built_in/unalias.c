@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:36:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 14:53:19 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:42:43 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	unalias(t_cmd *cmd)
 	t_node	*node;
 
 	i = 0;
-	cmd -> data -> status = 0;
+	cmd -> exit_status = 0;
 	if (close_redirection(cmd))
 		return (1);
 	if (!ft_strcmp(cmd -> stop, "|") || !ft_strcmp(cmd -> prev_stop, "|"))

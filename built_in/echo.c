@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 15:26:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:48:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	write_to_fd(t_cmd *cmd, char *line, int fd)
 {
 	if (ft_putstr_fd(line, fd) < 0)
 	{
-		cmd -> data -> status = 1;
+		cmd -> exit_status = 1;
 		return (print_err_built_in(cmd, "syscall", 1));
 	}
 	return (0);
@@ -63,7 +63,7 @@ int	echo(t_data *data, t_cmd *cmd)
 {
 	int	fd;
 
-	data -> status = 0;
+	cmd -> exit_status = 0;
 	if (open_check_files_built_in(cmd, cmd -> tab))
 		return (1);
 	fd = where_to_write(data, cmd);

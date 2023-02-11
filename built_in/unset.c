@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:05:39 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 14:54:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:41:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	unset(t_cmd *cmd, t_env *env)
 	size_t	i;
 
 	i = 0;
-	cmd -> data -> status = 0;
+	cmd -> exit_status = 0;
 	if (close_redirection(cmd))
 		return (1);
 	if (!ft_strcmp(cmd -> stop, "|") || !ft_strcmp(cmd -> prev_stop, "|"))

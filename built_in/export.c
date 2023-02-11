@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:46:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:51:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	print_export(t_data *data, t_cmd *cmd, char **tab)
 
 	fd = where_to_write(data, cmd);
 	i = -1;
-	data -> status = 1;
+	cmd -> exit_status = 1;
 	while (tab[++i])
 	{
 		if (ft_putstr_fd("export ", fd) < 0)
@@ -31,7 +31,7 @@ int	print_export(t_data *data, t_cmd *cmd, char **tab)
 		close_fd_built_in(&cmd -> last_in -> fd);
 	if (cmd && cmd -> last_out)
 		close_fd_built_in(&cmd -> last_out -> fd);
-	data -> status = 0;
+	cmd -> exit_status = 0;
 	return (0);
 }
 
@@ -98,7 +98,7 @@ int	export(t_cmd *cmd, t_env *env)
 
 	if (open_check_files_built_in(cmd, cmd -> tab))
 		return (1);
-	cmd -> data -> status = 0;
+	cmd -> exit_status = 0;
 	len = ft_tab_len(cmd -> args);
 	if (len > 1 && (!ft_strcmp(cmd -> stop, "|")
 			|| !ft_strcmp(cmd -> prev_stop, "|")))

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:47:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 18:22:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	to_exec_or_not(t_cmd *cmd, char *stop, int status)
 {
+	if (status == 128 + SIGINT)
+		return (-1);
 	if (!ft_strcmp("&&", stop) && status == 0)
 	{
 		cmd -> executed = 1;
@@ -57,13 +59,15 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 		if (WIFEXITED(status))
 			data -> status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			data -> status = status;
 		data -> last_exec_stat = (data -> status > 0);
 		status = to_exec_or_not(cmd, stop, data -> status);
 	}
 	else if (!status)
 	{
-		if (cmd -> prev_cmd -> built_in)
-			data -> last_exec_stat = data -> status;
+		if (cmd -> prev_cmd -> built_in && cmd -> prev_cmd -> executed)
+			data -> last_exec_stat = cmd -> prev_cmd -> exit_status;
 		status = to_exec_or_not(cmd, stop, data -> last_exec_stat);
 	}
 	return (status);
@@ -115,7 +119,7 @@ int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
 		init_pipes(data, data -> pipes, &data -> inited);
 	else if (status == 0 && pipe_par(&cmds[(*i)]) == 0)
 		init_s_pipes(data, cmds, (*i));
-	if (status && cmds[(*i)]-> p_open)
+	if (status > 0 && cmds[(*i)]-> p_open)
 		(*i) = end_cmd_par(cmds, *i);
 	return (status);
 }

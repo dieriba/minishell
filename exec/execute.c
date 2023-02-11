@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:58:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 18:44:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	forking(t_cmd *cmd)
 	g_collector = ft_calloc(sizeof(t_collector), 1);
 	is_error(cmd -> data, g_collector, MALLOC_ERR, 0);
 	g_collector -> data = cmd;
-	ctrl_c.sa_flags = 0;
-	ctrl_c.sa_handler = SIG_DFL;
+	ctrl_c.sa_flags = SA_RESTART;
+	ctrl_c.sa_handler = sig_int_fork;
 	sigemptyset(&ctrl_c.sa_mask);
 	sigaction(SIGINT, &ctrl_c, NULL);
 	sigquit.sa_flags = SA_RESTART;
@@ -99,17 +99,16 @@ void	executing(t_data *data, t_cmd **cmds)
 	int		res;
 
 	i = -1;
-	if (cmds[0]-> p_open && !cmds[0]-> to_fork)
-		cmds[0]-> p_open = 1;
-	else if (cmds[0]-> p_open)
-		cmds[0]-> p_open = cmds[0]-> to_fork;
-	cmds[0]-> executed = 1;
+	ignore_signals();
+	cmd_base_setup(cmds[0]);
 	while (cmds[++i])
 	{
 		if (verify_cmd(data, cmds[i]))
 			continue ;
 		is_built_in(cmds[i]);
 		res = prepare_next_step(data, cmds, cmds[i]-> stop, &i);
+		if (res == -1)
+			break ;
 		if (res == 0 && is_subshell(data, cmds, &i) == 0)
 			execute_routine(data, cmds[i]);
 		if (cmds[i] == NULL

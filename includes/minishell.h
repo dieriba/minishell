@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:51:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 18:44:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ typedef struct t_cmd
 	int			built_in;
 	int			break_cmd;
 	int			executed;
+	int			exit_status;
 	t_s_pipes	*write_end;
 	t_s_pipes	*read_end;
 	t_files		*last_in;
@@ -220,6 +221,7 @@ extern t_collector			*g_collector;
 void	handle_signals(void);
 void	ignore_signals(void);
 void	new_line(int signal);
+void	sig_int_fork(int signal);
 /*-----------------SIGNAL_FUNCTION-----------------*/
 
 /*-----------------ERROR_HANDLING-----------------*/
@@ -370,7 +372,7 @@ void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd);
 void	init_pipes(t_data *data, int pipes[2], int *inited);
-void	close_write_s_piptes(t_data *data, t_cmd **cmds, t_s_pipes *node);
+void	cmd_base_setup(t_cmd *cmd);
 /*-----------------EXECUTION-----------------*/
 
 /*-----------------PARENTHESES-----------------*/

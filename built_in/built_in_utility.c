@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:06:45 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 13:44:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:43:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	open_check_files_built_in(t_cmd *cmd, t_files **tab)
 	i = -1;
 	if (cmd -> last_in == NULL && cmd -> last_out == NULL)
 		return (0);
-	cmd -> data -> status = 1;
+	cmd -> exit_status = 1;
 	while (tab[++i])
 	{
 		type = tab[i]-> type;
@@ -73,6 +73,6 @@ int	open_check_files_built_in(t_cmd *cmd, t_files **tab)
 		else if (type != DOC && open_files_built_in(cmd, tab[i]))
 			return (print_err_built_in(NULL, "bash", 1));
 	}
-	cmd -> data -> status = 0;
+	cmd -> exit_status = 1;
 	return (0);
 }

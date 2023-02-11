@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:52:56 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 14:45:44 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:42:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	close_redirection(t_cmd *cmd)
 {
 	if (open_check_files_built_in(cmd, cmd -> tab))
 	{	
-		cmd -> data -> status = 1;
+		cmd -> exit_status = 1;
 		return (1);
 	}
 	if (cmd -> last_in && cmd -> last_in -> type == IN)

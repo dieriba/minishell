@@ -2,7 +2,8 @@ SRCS		= 	minishell.c \
 				minishell_utils.c \
 				print.c
 
-SRCS_SIGNAL =	./signal/signal.c
+SRCS_SIGNAL =	./signal/signal.c \
+				./signal/signal_sig_int.c
 
 SRCS_BUILT	=	./built_in/env_utils.c \
 				./built_in/built_in.c \
