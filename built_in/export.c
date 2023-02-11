@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 15:29:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:46:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	print_export(t_data *data, t_cmd *cmd, char **tab)
 		if (ft_putstr_fd("export ", fd) < 0)
 			return (print_err_built_in(cmd, "syscall", 1));
 		if (ft_putendl_fd(tab[i], fd) < 0)
-			return (print_err_built_in(cmd, "syscall", 1)); 
+			return (print_err_built_in(cmd, "syscall", 1));
 	}
 	if (cmd && cmd -> last_in && cmd -> last_in -> type == IN)
 		close_fd_built_in(&cmd -> last_in -> fd);
@@ -100,7 +100,8 @@ int	export(t_cmd *cmd, t_env *env)
 		return (1);
 	cmd -> data -> status = 0;
 	len = ft_tab_len(cmd -> args);
-	if (len > 1 && (!ft_strcmp(cmd -> stop, "|") || !ft_strcmp(cmd -> prev_stop, "|")))
+	if (len > 1 && (!ft_strcmp(cmd -> stop, "|")
+			|| !ft_strcmp(cmd -> prev_stop, "|")))
 		return (print_err_built_in(cmd, "bash", -1));
 	if (len == 1 && print_export(cmd -> data, cmd, env -> tab) == 0)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 15:55:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:47:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	init_s_pipes(t_data *data, t_cmd **cmds, int i)
 {
 	t_s_pipes	*node;
 	int			p_num;
-	
+
 	p_num = 0;
 	node = ft_calloc(sizeof(t_s_pipes), 1);
 	is_error(data, node, MALLOC_ERR, 0);

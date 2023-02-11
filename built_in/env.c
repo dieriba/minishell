@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:02:28 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 15:01:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:44:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	env(t_data *data, t_cmd *cmd)
 	char	**tab;
 	size_t	i;
 	int		fd;
-	
+
 	data -> status = 0;
 	if (open_check_files_built_in(cmd, cmd -> tab))
 		return (1);

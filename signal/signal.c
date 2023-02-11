@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/09 01:23:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:49:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	exit_dumped(int signal)
 void	ignore_signals(void)
 {
 	struct sigaction	ctrl_c;
-	
+
 	ctrl_c.sa_handler = SIG_IGN;
 	ctrl_c.sa_flags = 0;
 	sigemptyset(&ctrl_c.sa_mask);
@@ -59,7 +59,7 @@ void	handle_signals(void)
 {
 	struct sigaction	ctrl_c;
 	struct sigaction	sigquit;
-	
+
 	ctrl_c.sa_flags = SA_RESTART;
 	ctrl_c.sa_handler = new_line;
 	sigemptyset(&ctrl_c.sa_mask);

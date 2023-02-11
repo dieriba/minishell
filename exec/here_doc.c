@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:46:00 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 16:36:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:47:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	check_quoted_doc(t_doc *node, char *limiter)
 	i = -1;
 	while (limiter[++i])
 	{
-		if ((limiter[i] == '"' && valid_double(limiter, i)) || limiter[i] == '\'')
+		if ((limiter[i] == '"' && valid_double(limiter, i))
+			|| limiter[i] == '\'')
 		{
 			node -> quoted = 1;
 			break ;

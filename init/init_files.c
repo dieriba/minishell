@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 01:59:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 04:15:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:39:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	skip_to_redirect(char *to_parse, size_t i)
 {
 	while (to_parse[i])
 	{
-		if ((to_parse[i] == '"' && valid_double(to_parse, i)) || to_parse[i] == '\'')
+		if ((to_parse[i] == '"' && valid_double(to_parse, i))
+			|| to_parse[i] == '\'')
 			skip_(to_parse, &i, to_parse[i]);
 		if (ft_strchr(R_COMBO, to_parse[i]))
 			return (i);
@@ -58,7 +59,8 @@ int	find_tab_length(t_cmd *cmd, char *to_parse)
 	i = -1;
 	while (to_parse[++i])
 	{
-		if ((to_parse[i] == '"' && valid_double(to_parse, i)) || to_parse[i] == '\'')
+		if ((to_parse[i] == '"' && valid_double(to_parse, i))
+			|| to_parse[i] == '\'')
 			skip_(to_parse, &i, to_parse[i]);
 		else if (ft_strchr(R_COMBO, to_parse[i]))
 		{

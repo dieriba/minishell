@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 01:19:53 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 04:36:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:55:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ void	set_followed_par(t_cmd *cmd, char *to_parse, int *left)
 	size_t	i;
 
 	i = 0;
+	if (to_parse[0] == '(')
+			cmd -> p_open++;
 	if ((*left) > 0 && to_parse[0] == '(')
 		while (to_parse[i++] == '(')
 			cmd -> _open++;
 	else if (to_parse[0] == ')')
 		while (to_parse[i++] == ')')
 			cmd -> _close++;
+	if (to_parse[0] == '(')
+		(*left) -= 1;
 }
 
 int	check_end_par(t_cmd **cmds)
@@ -66,13 +70,14 @@ void	real_subshell_or_not(t_cmd **cmds)
 int	last_par(char *to_parse)
 {
 	size_t	i;
-	int	last;
+	int		last;
 
 	i = 0;
 	last = 0;
 	while (to_parse[++i])
 	{
-		if ((to_parse[i] == '"' && valid_double(to_parse, i)) || to_parse[i] == '\'')
+		if ((to_parse[i] == '"' && valid_double(to_parse, i))
+			|| to_parse[i] == '\'')
 			skip_(to_parse, &i, to_parse[i]);
 		else if (to_parse[i] == ')')
 			last = i;
@@ -95,14 +100,11 @@ void	set_parenthese(t_cmd *cmd, char *to_parse)
 	i = -1;
 	while (to_parse[++i])
 	{
-		if ((to_parse[i] == '"' && valid_double(to_parse, i)) || to_parse[i] == '\'')
+		if ((to_parse[i] == '"' && valid_double(to_parse, i))
+			|| to_parse[i] == '\'')
 			skip_(to_parse, &i, to_parse[i]);
 		else if (to_parse[i] == '(')
-		{
-			cmd -> p_open++;
 			set_followed_par(cmd, &to_parse[i], &left);
-			--left;
-		}
 		else if (to_parse[i] == ')')
 		{
 			cmd -> p_close--;

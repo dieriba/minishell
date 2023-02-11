@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/08 02:46:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:42:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	skip_char_letter_str(char *to_parse, size_t i)
 {
 	while (to_parse[i])
 	{
-		if ((to_parse[i] == '"' && valid_double(to_parse, i)) || to_parse[i] == '\'')
+		if ((to_parse[i] == '"' && valid_double(to_parse, i))
+			|| to_parse[i] == '\'')
 			skip_(to_parse, &i, to_parse[i]);
 		else if (ft_strchr(STOP_, to_parse[i]))
 			break ;

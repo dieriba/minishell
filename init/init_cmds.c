@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 02:00:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/08 03:24:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:40:31 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	move_to_next_word(char *to_parse, size_t i, int *len)
 {
 	while (to_parse[i])
 	{
-		if (((to_parse[i] == '"' && valid_double (to_parse, i))) || to_parse[i] == '\'')
+		if (((to_parse[i] == '"' && valid_double (to_parse, i)))
+			|| to_parse[i] == '\'')
 			skip_(to_parse, &i, to_parse[i]);
 		else if (ft_strchr(STOP_, to_parse[i]) || ft_isspace(to_parse[i]))
 			break ;
@@ -60,7 +61,8 @@ size_t	skip_redirect(char *to_parse, size_t i)
 		i = skip_spaces(to_parse, i, 0);
 		while (to_parse[i])
 		{
-			if ((to_parse[i] == '"' && valid_double(to_parse, i)) || to_parse[i] == '\'')
+			if ((to_parse[i] == '"' && valid_double(to_parse, i))
+				|| to_parse[i] == '\'')
 				skip_(to_parse, &i, to_parse[i]);
 			else if (ft_strchr(STOP_F, to_parse[i]) || ft_isspace(to_parse[i]))
 				break ;

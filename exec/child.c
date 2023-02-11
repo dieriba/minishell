@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:21:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:45:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	loop_through_child(t_data *data, t_cmd **cmds, int *status)
 void	wait_all_child(t_data *data, t_cmd **cmds)
 {
 	int	status;
-	
+
 	status = 0;
 	ignore_signals();
 	close_all_pipes(data, &data -> here_docs, 1, 0);

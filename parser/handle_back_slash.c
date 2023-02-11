@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 21:57:27 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 04:03:37 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:39:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ size_t	copy_slash(char *to_clean, char *res, size_t *v)
 {
 	size_t	i;
 	size_t	j;
-	
+
 	i = (*v);
 	j = 0;
 	while (to_clean[i] && to_clean[i] == '\\')

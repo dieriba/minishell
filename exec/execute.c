@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:04:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:47:18 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	forking(t_cmd *cmd)
 {
 	struct sigaction	ctrl_c;
 	struct sigaction	sigquit;
-	
+
 	g_collector = ft_calloc(sizeof(t_collector), 1);
 	is_error(cmd -> data, g_collector, MALLOC_ERR, 0);
 	g_collector -> data = cmd;
@@ -77,9 +77,10 @@ void	forking(t_cmd *cmd)
 void	execute_routine(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid_ret;
+
 	if (data -> s_pipes && !ft_strcmp(cmd -> prev_stop, "|")
 		&& cmd -> prev_cmd -> p_close)
-		close_fd(data, "bash", &cmd -> read_end -> s_pipes[1]);	
+		close_fd(data, "bash", &cmd -> read_end -> s_pipes[1]);
 	if (!built_in(data, cmd, 0))
 	{
 		pid_ret = fork();

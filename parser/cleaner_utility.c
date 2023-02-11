@@ -6,21 +6,21 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 01:47:46 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 23:33:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:34:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-size_t    copy(char *line, char *res, int quoted)
+size_t	copy(char *line, char *res, int quoted)
 {
-    size_t  i;
-    size_t  j;
-    char    quote;
-    
-    j = 0;
-    i = -1;
-    while (line[++i])
+	size_t	i;
+	size_t	j;
+	char	quote;
+
+	j = 0;
+	i = -1;
+	while (line[++i])
 	{
 		if ((line[i] == '"' && valid_double(line, i)) || line[i] == '\'')
 		{
@@ -36,7 +36,7 @@ size_t    copy(char *line, char *res, int quoted)
 			res[j++] = line[i];
 		i -= (line[i] == 0);
 	}
-    return (j);
+	return (j);
 }
 
 void	back_to_space(char **tab)
@@ -44,7 +44,7 @@ void	back_to_space(char **tab)
 	int		i;
 	char	space;
 	size_t	j;
-	
+
 	i = -1;
 	while (tab[++i])
 	{

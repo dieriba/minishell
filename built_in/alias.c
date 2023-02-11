@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:11:03 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 15:29:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:46:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	handle_alias(t_data *data, t_cmd *cmd)
 {
 	int		i;
 	char	*line;
-	
+
 	i = 0;
 	while (cmd -> args[++i])
 	{
@@ -83,7 +83,8 @@ int	alias(t_data *data, t_cmd *cmd)
 	if (open_check_files_built_in(cmd, cmd -> tab))
 		return (1);
 	len = ft_tab_len(cmd -> args);
-	if (len > 1 && ((!ft_strcmp(cmd -> stop, "|") || !ft_strcmp(cmd -> prev_stop, "|"))))
+	if (len > 1 && ((!ft_strcmp(cmd -> stop, "|")
+				|| !ft_strcmp(cmd -> prev_stop, "|"))))
 		return (print_err_built_in(cmd, "bash", -1));
 	if (len == 1)
 		return (print_alias(data, cmd));

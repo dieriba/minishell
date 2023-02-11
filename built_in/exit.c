@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 07:24:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 13:48:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:45:28 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	handle_exit(t_data *data, t_cmd *cmd, int fork)
 	long long	exit_value;
 	int			not_numbered_only;
 	int			invalid_exit;
-	
+
 	data -> status = 1;
 	not_numbered_only = ft_numbered_str_only(cmd -> args[1]);
 	invalid_exit = check_valid_exit(cmd -> args[1], &exit_value);

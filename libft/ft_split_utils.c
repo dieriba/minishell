@@ -6,12 +6,11 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:42:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 02:56:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:49:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include "stdio.h"
+#include "libft.h"
 
 void	skip_split(char *to_parse, size_t *i, int quote)
 {

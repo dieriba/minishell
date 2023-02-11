@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 15:55:59 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:51:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,31 +154,31 @@ typedef struct t_files
 
 typedef struct t_cmd
 {
-	char	stop[2];
-	char	*cmd;
-	char	*prev_stop;
-	char	**args;
-	char	**paths;
-	int		amb_redirect;
-	int		to_fork;
-	int		no_path;
-	int		p_close;
-	int		p_open;
-	int		pid;
-	int		to_not_calloc;
-	int		_close;
-	int		_open;
-	int		to_not_exec;
-	int		built_in;
-	int		break_cmd;
-	int		executed;
+	char		stop[2];
+	char		*cmd;
+	char		*prev_stop;
+	char		**args;
+	char		**paths;
+	int			amb_redirect;
+	int			to_fork;
+	int			no_path;
+	int			p_close;
+	int			p_open;
+	int			pid;
+	int			to_not_calloc;
+	int			_close;
+	int			_open;
+	int			to_not_exec;
+	int			built_in;
+	int			break_cmd;
+	int			executed;
 	t_s_pipes	*write_end;
 	t_s_pipes	*read_end;
-	t_files	*last_in;
-	t_files	*last_out;
-	t_files	**tab;
-	t_data	*data;
-	t_cmd	*prev_cmd;
+	t_files		*last_in;
+	t_files		*last_out;
+	t_files		**tab;
+	t_data		*data;
+	t_cmd		*prev_cmd;
 }	t_cmd;
 
 typedef struct t_data
@@ -303,11 +303,14 @@ void	back_to_space(char **tab);
 size_t	copy_slash(char *to_clean, char *res, size_t *v);
 size_t	copy_expands_in_str(char *res, char quote, t_node **node);
 size_t	slash_len(char *to_clean, size_t i, size_t *len);
-size_t  copy(char *line, char *res, int quoted);
-size_t	copy_expands_quote(char *to_clean, char *res, size_t *v, t_node **expands);
+size_t	copy(char *line, char *res, int quoted);
+size_t	copy_expands_quote(
+			char *to_clean, char *res, size_t *v, t_node **expands);
 size_t	copy_single_quote(char *to_clean, char *res, size_t *i);
-size_t	handle_expands(t_data *data, t_node **expands, char *to_clean, size_t *len);
-size_t	handle_quote_expands(t_data *data, t_node **expands, char *to_clean, size_t *len);
+size_t	handle_expands(
+			t_data *data, t_node **expands, char *to_clean, size_t *len);
+size_t	handle_quote_expands(
+			t_data *data, t_node **expands, char *to_clean, size_t *len);
 /*-----------------PARSER-----------------*/
 
 /*-----------------BUILT_IN-----------------*/

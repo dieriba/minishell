@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 04:25:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:41:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	how_many_cmds(char *to_process)
 			|| to_process[i] == '\'')
 			skip_(to_process, &i, to_process[i]);
 		if (ft_strchr(STOP_, to_process[i])
-			&& to_process[i +  1] == to_process[i])
+			&& to_process[i + 1] == to_process[i])
 		{
 			++i;
 			count++;
