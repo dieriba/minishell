@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 02:13:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 05:19:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/10 23:31:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	clean_cmd(t_cmd *cmd)
 			tab[i] = clean_lines(cmd -> data, tab[i], 0);
 	else if (to_clean > 0)
 		expanded_tab(cmd, cmd -> args);
+	back_to_space(cmd -> args);
 	if (to_clean > 0 && cmd -> cmd && cmd -> args[0] != cmd -> cmd)
 		ft_free_elem((void **)&cmd -> cmd);
 	cmd -> cmd = cmd -> args[0];

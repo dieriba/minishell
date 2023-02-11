@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:38:58 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 00:40:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 14:50:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,24 @@ void	alias_(t_data *data, t_cmd *cmd, char *line)
 	data -> status = 1;
 }
 
-void	print_alias(t_data *data, t_cmd *cmd)
+int	print_alias(t_data *data, t_cmd *cmd)
 {
 	t_node	*node;
 	int		fd;
 
+	data -> status = 1;
 	node = data -> alias -> head;
 	fd = where_to_write(data, cmd);
 	while (node)
 	{
 		if (ft_putendl_fd(node -> line, fd) < 0)
-			print_err_and_exit(data, NULL, "syscall", 1);
+			return (print_err_built_in(cmd, "syscall", 1));
 		node = node -> next;
 	}
+	if (cmd && cmd -> last_in && cmd -> last_in -> type == IN)
+		close_fd_built_in(&cmd -> last_in -> fd);
+	if (cmd && cmd -> last_out)
+		close_fd_built_in(&cmd -> last_out -> fd);
 	data -> status = 0;
+	return (1);
 }

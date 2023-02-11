@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 04:09:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:04:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,9 @@ void	forking(t_cmd *cmd)
 void	execute_routine(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid_ret;
-
 	if (data -> s_pipes && !ft_strcmp(cmd -> prev_stop, "|")
 		&& cmd -> prev_cmd -> p_close)
-		close_fd(data, "bash", &data -> s_pipes -> s_pipes[1]);
+		close_fd(data, "bash", &cmd -> read_end -> s_pipes[1]);	
 	if (!built_in(data, cmd, 0))
 	{
 		pid_ret = fork();
@@ -103,6 +102,7 @@ void	executing(t_data *data, t_cmd **cmds)
 		cmds[0]-> p_open = 1;
 	else if (cmds[0]-> p_open)
 		cmds[0]-> p_open = cmds[0]-> to_fork;
+	cmds[0]-> executed = 1;
 	while (cmds[++i])
 	{
 		if (verify_cmd(data, cmds[i]))

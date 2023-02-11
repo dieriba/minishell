@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:36:50 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 00:40:58 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 14:53:19 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,17 @@ void	remove_alias(t_data *data, t_node *node)
 	data -> status = 0;
 }
 
-void	unalias(t_cmd *cmd)
+int	unalias(t_cmd *cmd)
 {
 	size_t	i;
 	t_node	*node;
 
 	i = 0;
+	cmd -> data -> status = 0;
+	if (close_redirection(cmd))
+		return (1);
+	if (!ft_strcmp(cmd -> stop, "|") || !ft_strcmp(cmd -> prev_stop, "|"))
+		return (1);
 	while (cmd -> args[++i])
 	{
 		node = find_(cmd -> data, cmd -> args[i]);
@@ -54,4 +59,5 @@ void	unalias(t_cmd *cmd)
 			continue ;
 		remove_alias(cmd -> data, node);
 	}
+	return (1);
 }

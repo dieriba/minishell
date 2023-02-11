@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:05:39 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/30 19:23:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 14:54:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,18 @@ void	remove_var_env(t_env *env, char **tab, int i)
 	env -> data -> status = 0;
 }
 
-void	unset(t_cmd *cmd, t_env *env)
+int	unset(t_cmd *cmd, t_env *env)
 {
 	int		index;
 	char	*line;
 	size_t	i;
 
 	i = 0;
+	cmd -> data -> status = 0;
+	if (close_redirection(cmd))
+		return (1);
+	if (!ft_strcmp(cmd -> stop, "|") || !ft_strcmp(cmd -> prev_stop, "|"))
+		return (1);
 	while (cmd -> args[++i])
 	{
 		line = find_var(env -> tab, cmd -> args[i]);
@@ -56,4 +61,5 @@ void	unset(t_cmd *cmd, t_env *env)
 		remove_var_env(env, env -> tab, index);
 	}
 	env -> data -> path = find_var(env -> tab, "PATH");
+	return (1);
 }

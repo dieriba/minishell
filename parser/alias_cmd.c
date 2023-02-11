@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:50:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/09 14:08:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/10 23:44:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,21 @@ void	from_line_to_hero(t_data *data, char *line, char **tmp)
 
 void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab)
 {
-	size_t	i;
 	char	*line;
 	char	*tmp;
 
-	i = -1;
 	tmp = NULL;
 	if (!ft_strcmp(tab[0], "unalias") || !ft_strcmp(tab[0], "alias")
 		|| !ft_strcmp(tab[0], "cd"))
 		return ;
-	while (tab[++i])
+	line = find_alias_node(data, tab[0]);
+	if (line)
 	{
-		line = find_alias_node(data, tab[i]);
-		if (line)
-		{
-			line = from_tab_to_line(cmd, tab);
-			from_line_to_hero(data, line, &tmp);
-			cmd -> args = ft_split(tmp, ' ');
-			is_error(data, cmd -> args, MALLOC_ERR, 0);
-			ft_free_elem((void **)&tmp);
-			return ;
-		}
-	}	
+		line = from_tab_to_line(cmd, tab);
+		from_line_to_hero(data, line, &tmp);
+		cmd -> args = ft_split(tmp, ' ');
+		is_error(data, cmd -> args, MALLOC_ERR, 0);
+		ft_free_elem((void **)&tmp);
+		return ;
+	}
 }

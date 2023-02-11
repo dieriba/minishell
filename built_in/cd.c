@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:03:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 13:25:23 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 14:03:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int	update_prompt(t_data *data, char *path)
 
 	tmp	= getcwd(NULL, 0);
 	if (tmp == NULL)
-		print_err_built_in(CHDIR_ERROR GET_CWD_ERR, 1);
+		print_err_built_in(NULL, CHDIR_ERROR GET_CWD_ERR, 1);
 	ft_free_elem((void **)&tmp);
 	if (chdir(path) < 0)
-		return (print_err_built_in("bash", 1));
+		return (print_err_built_in(NULL, "bash", 1));
 	ft_free_elem((void **)&data -> curr_dir.dir_name);
 	data -> curr_dir.dir_name = getcwd(NULL, 0);
 	is_error(data, data -> curr_dir.dir_name, "bash", 1);
@@ -63,11 +63,11 @@ int	cd(t_data *data, t_cmd *cmd)
 	int		len;
 	char	*path;
 
+	if (close_redirection(cmd))
+		return (1);
 	if (!ft_strcmp(cmd -> stop, "|") || !ft_strcmp(cmd -> prev_stop, "|"))
 		return (1);
 	data -> status = 1;
-	if (close_redirection(cmd))
-		return (1);
 	len = ft_tab_len(cmd -> args);
 	if (len > 2)
 		cd_error(data, "bash : cd : too many arguments");

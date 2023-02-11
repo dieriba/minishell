@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 04:42:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 13:05:58 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@ void	dup_and_close(t_data *data, int fd, int old_fd, int to_close)
 void	set_out_redirection(t_cmd *cmd)
 {
 	t_data	*data;
-	int		fd;
 
 	data = cmd -> data;
-	fd = find_write_pipes(data -> s_pipes);
 	if (cmd -> last_out && cmd -> last_out -> fd > 0)
 		dup_(data, cmd -> last_out -> fd, STDOUT_FILENO);
 	else if (data -> inited && cmd -> p_close == 0)
 		dup_(data, data -> pipes[1], STDOUT_FILENO);
-	else if (fd > 0)
-		dup_(data, fd, STDOUT_FILENO);
+	else if (cmd -> write_end && cmd -> write_end -> s_pipes[1] > 0)
+		dup_(data, cmd -> write_end -> s_pipes[1], STDOUT_FILENO);
 }
 
 void	set_in_redirection(t_cmd *cmd)
@@ -58,7 +56,7 @@ void	set_in_redirection(t_cmd *cmd)
 		dup_(data, cmd -> last_in -> fd, STDIN_FILENO);
 	}
 	else if (pipes == 0 && prev_cmd -> p_close)
-		dup_(data, data -> s_pipes -> read_end -> s_pipes[0], STDIN_FILENO);
+		dup_(data, cmd -> read_end -> s_pipes[0], STDIN_FILENO);
 	else if (pipes == 0)
 		dup_(data, data -> prev_pipes, STDIN_FILENO);
 }	

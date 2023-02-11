@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:25:17 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 05:42:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/10 23:29:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ size_t	copy_expands_quote(char *to_clean, char *res, size_t *v, t_node **expands
 			j += copy_expands_in_str(&res[j], to_clean[(*v)], expands);
 			i += skip_next_stop(&to_clean[i]) - 1;
 		}
-		else if (to_clean[i] != '"')
+		else
 			res[j++] = to_clean[i];
 	}
 	(*v) = i;

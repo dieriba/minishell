@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 01:47:46 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 05:41:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/10 23:33:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,23 @@ size_t    copy(char *line, char *res, int quoted)
 		i -= (line[i] == 0);
 	}
     return (j);
+}
+
+void	back_to_space(char **tab)
+{
+	int		i;
+	char	space;
+	size_t	j;
+	
+	i = -1;
+	while (tab[++i])
+	{
+		j = -1;
+		while (tab[i][++j])
+		{
+			space = tab[i][j] * -1;
+			if (ft_isspace(space))
+				tab[i][j] *= -1;
+		}
+	}
 }

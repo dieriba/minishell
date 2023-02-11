@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 17:52:36 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 02:39:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 16:01:17 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ int	built_in(t_data *data, t_cmd *cmd, int fork)
 {
 	if (cmd -> cmd == NULL)
 		return (0);
-	if (fork == 0 && ft_strcmp(cmd -> cmd, "/echo") == 0)
+	if (ft_strcmp(cmd -> cmd, "/echo") == 0)
 		return (echo(data, cmd));
 	else if (ft_strcmp(cmd -> cmd, "/export") == 0)
-		export(cmd, data -> env, fork);
+		return (export(cmd, data -> env));
 	else if (ft_strcmp(cmd -> cmd, "/unset") == 0)
-		unset(cmd, data -> env);
+		return (unset(cmd, data -> env));
 	else if (ft_strcmp(cmd -> cmd, "/env") == 0)
-		env(data, cmd, fork);
+		return (env(data, cmd));
 	else if (ft_strcmp(cmd -> cmd, "/alias") == 0)
-		alias(data, cmd, fork);
+		return (alias(data, cmd));
 	else if (ft_strcmp(cmd -> cmd, "/unalias") == 0)
 		unalias(cmd);
 	else if (ft_strcmp(cmd -> cmd, "/pwd") == 0)

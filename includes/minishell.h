@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 05:38:57 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 15:55:59 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,8 @@ typedef struct t_alias
 typedef struct t_s_pipes
 {
 	int			s_pipes[2];
-	int			subshell[2];
 	pid_t		pid;
 	t_s_pipes	*next;
-	t_s_pipes	*read_end;
 }	t_s_pipes;
 typedef struct t_doc
 {
@@ -173,6 +171,9 @@ typedef struct t_cmd
 	int		to_not_exec;
 	int		built_in;
 	int		break_cmd;
+	int		executed;
+	t_s_pipes	*write_end;
+	t_s_pipes	*read_end;
 	t_files	*last_in;
 	t_files	*last_out;
 	t_files	**tab;
@@ -298,6 +299,7 @@ char	*clean_lines(t_data *data, char *line, int expand);
 void	clean_cmd(t_cmd *cmd);
 void	skip_reverse(char *to_parse, int *i, int quote);
 void	clean_files(t_cmd *cmd);
+void	back_to_space(char **tab);
 size_t	copy_slash(char *to_clean, char *res, size_t *v);
 size_t	copy_expands_in_str(char *res, char quote, t_node **node);
 size_t	slash_len(char *to_clean, size_t i, size_t *len);
@@ -323,26 +325,26 @@ int		echo(t_data *data, t_cmd *cmd);
 int		populate_alias(char *line);
 int		open_check_files_built_in(t_cmd *cmd, t_files **tab);
 int		close_fd_built_in(int *fd);
-int		print_err_built_in(char *str, int type);
+int		print_err_built_in(t_cmd *cmd, char *str, int type);
 int		check_alias(t_node *alias, char *line);
 int		set_up_alias(t_data *data, t_node *node, t_node *alias);
 int		close_redirection(t_cmd *cmd);
 int		set_in_redirection_built_in(t_cmd *cmd);
 int		pwd(t_data *data, t_cmd *cmd);
+int		env(t_data *data, t_cmd *cmd);
+int		unset(t_cmd *cmd, t_env *env);
+int		alias(t_data *data, t_cmd *cmd);
+int		print_alias(t_data *data, t_cmd *cmd);
+int		export(t_cmd *cmd, t_env *env);
+int		unalias(t_cmd *cmd);
 void	is_built_in(t_cmd *cmd);
 void	set_node_alias(t_data *data, t_node *node);
 void	handle_alias_node(t_data *data, t_cmd *cmd, char *res, char *line);
-void	export(t_cmd *cmd, t_env *env, int fork);
-void	env(t_data *data, t_cmd *cmd, int fork);
 void	print_alias_node(t_data *data, t_cmd *cmd, char *line);
-void	unset(t_cmd *cmd, t_env *env);
 void	make_export(t_env *env, char *line);
-void	alias(t_data *data, t_cmd *cmd, int fork);
 void	alias_(t_data *data, t_cmd *cmd, char *line);
-void	unalias(t_cmd *cmd);
 void	populate(t_data *data, char *file);
 void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab);
-void	print_alias(t_data *data, t_cmd *cmd);
 void	close_all(t_data *data, t_cmd *cmd);
 void	skip_(char *to_parse, size_t *i, int quote);
 t_node	*find_(t_data *data, char *line);
@@ -350,13 +352,10 @@ t_node	*find_(t_data *data, char *line);
 
 /*-----------------EXECUTION-----------------*/
 int		prepare_next_step(t_data *data, t_cmd **cmd, char *stop, int *i);
-int		to_exec_or_not(char *stop, int status);
 void	set_out_redirection(t_cmd *cmd);
 void	set_in_redirection(t_cmd *cmd);
 int		pipe_par(t_cmd **cmds);
 int		is_subshell(t_data *data, t_cmd **cmds, int *i);
-int		find_read_pipes(t_s_pipes *head, int subshell);
-int		find_write_pipes(t_s_pipes *head);
 void	clean_s_pipes(t_data *data);
 void	executing(t_data *data, t_cmd **cmds);
 void	run_cmd(t_cmd *cmd);
@@ -368,7 +367,7 @@ void	close_both_pipes(t_data *data, int pipes[2], int *inited);
 void	open_here_doc(t_data *data, t_cmd **cmds);
 void	set_redirections_files(t_cmd *cmd);
 void	init_pipes(t_data *data, int pipes[2], int *inited);
-void	close_one_end(t_data *data, int *pipes, int i, int *inited);
+void	close_write_s_piptes(t_data *data, t_cmd **cmds, t_s_pipes *node);
 /*-----------------EXECUTION-----------------*/
 
 /*-----------------PARENTHESES-----------------*/

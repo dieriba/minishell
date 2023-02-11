@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 07:24:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 02:54:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 13:48:06 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	print_err_exit_built_in(t_data *data, t_cmd *cmd, char *err, int fork)
 	else if (fork == 0)
 	{
 		if (ft_putendl_fd(err, STDERR_FILENO) < 0)
-			print_err_built_in("bash", 1);
+			print_err_built_in(cmd, "bash", 1);
 		return ;
 	}
 	close_all(data, cmd);
 	free_all(data, data -> status);
 }
 
-void	handle_exit(t_data *data, t_cmd *cmd, int fork)
+int	handle_exit(t_data *data, t_cmd *cmd, int fork)
 {
 	long long	exit_value;
 	int			not_numbered_only;
@@ -78,6 +78,7 @@ void	handle_exit(t_data *data, t_cmd *cmd, int fork)
 		print_err_exit_built_in(data, cmd, EXIT_NUM_ARGS, fork);
 		close_process(cmd, fork, data -> status);
 	}
+	return (1);
 }
 
 int	exit_process(t_data *data, t_cmd *cmd, int fork)
@@ -89,21 +90,14 @@ int	exit_process(t_data *data, t_cmd *cmd, int fork)
 	curr_stop = ft_strcmp(cmd -> stop, "|");
 	prev_stop = ft_strcmp(cmd -> prev_stop, "|");
 	len = ft_tab_len(cmd -> args);
+	if (fork == 0 && open_check_files_built_in(cmd, cmd -> tab))
+		return (1);
 	if ((fork == 0 && len == 1) && curr_stop && prev_stop)
-	{
-		if (open_check_files_built_in(cmd, cmd -> tab))
-			return (1);
 		close_process(cmd, fork, data -> status);
-	}
 	else if (fork && (len == 1 && cmd -> prev_stop))
 		close_process(cmd, fork, data -> status);
 	else if ((fork == 0 && len > 1) && curr_stop && prev_stop)
-	{
-		if (open_check_files_built_in(cmd, cmd -> tab))
-			return (1);
-		handle_exit(data, cmd, fork);
-		return (1);
-	}
+		return (handle_exit(data, cmd, fork));
 	else if (fork && len > 1)
 		handle_exit(data, cmd, fork);
 	return (0);

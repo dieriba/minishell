@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/08 02:58:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 00:04:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	how_many_quotes(char *to_parse, char quote, int *count)
 	i = 0;
 	while (to_parse[++i])
 	{
-		if (to_parse[i] == '"' && to_parse[i - 1] != '\\')
+		if (to_parse[i] == quote && (to_parse[i] == '"' && to_parse[i - 1] != '\\'))
 			break ;
 		else if (to_parse[i] == quote && quote == '\'')
 			break ;

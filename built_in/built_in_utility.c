@@ -6,17 +6,21 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:06:45 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 01:59:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 13:44:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	print_err_built_in(char *str, int type)
+int	print_err_built_in(t_cmd *cmd, char *str, int type)
 {
-	if (type)
+	if (cmd && cmd -> last_in && cmd -> last_in -> type == IN)
+		close_fd_built_in(&cmd -> last_in -> fd);
+	if (cmd && cmd -> last_out)
+		close_fd_built_in(&cmd -> last_out -> fd);
+	if (type > 0)
 		perror(str);
-	else if (ft_putstr_fd(str, 2) < 0)
+	else if (type == 0 && ft_putstr_fd(str, 2) < 0)
 		return (-1);
 	return (1);
 }
@@ -60,14 +64,14 @@ int	open_check_files_built_in(t_cmd *cmd, t_files **tab)
 	{
 		type = tab[i]-> type;
 		if (type != DOC && tab[i]-> amb == DOLLARS_EMPT)
-			return (print_err_built_in(AMB_REDIRECT, 0));
+			return (print_err_built_in(NULL, AMB_REDIRECT, 0));
 		else if ((type == OUT || type == APPEND) && tab[i]-> amb == ALL_FLAGS)
 		{	
 			if (access(tab[i]-> files, F_OK))
-				return (print_err_built_in("bash", 1));
+				return (print_err_built_in(NULL, "bash", 1));
 		}
 		else if (type != DOC && open_files_built_in(cmd, tab[i]))
-			return (print_err_built_in("bash", 1));
+			return (print_err_built_in(NULL, "bash", 1));
 	}
 	cmd -> data -> status = 0;
 	return (0);
