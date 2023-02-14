@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/13 17:24:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/15 00:33:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
 	{
 		status = get_status(
 				data, cmds[(*i)], data -> subshell_pid, cmds[(*i)]-> prev_stop);
+		data -> subshell_pid = 0;
 	}
 	else if ((*i) > 0)
 		status = get_status(

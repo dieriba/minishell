@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 13:05:58 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/15 00:34:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void	set_in_redirection(t_cmd *cmd)
 				cmd -> data -> here_docs, cmd -> last_in -> files);
 		dup_(data, cmd -> last_in -> fd, STDIN_FILENO);
 	}
-	else if (pipes == 0 && prev_cmd -> p_close)
+	else if (cmd -> read_end && pipes == 0 && prev_cmd -> p_close)
 		dup_(data, cmd -> read_end -> s_pipes[0], STDIN_FILENO);
-	else if (pipes == 0)
+	else if (pipes == 0 && data -> prev_pipes > 0)
 		dup_(data, data -> prev_pipes, STDIN_FILENO);
 }	
 
