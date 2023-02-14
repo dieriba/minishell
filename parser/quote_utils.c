@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/08 03:04:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 13:48:14 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	length_word(char *to_parse, size_t j)
 		if ((to_parse[j] == '"' && valid_double(to_parse, j))
 			|| to_parse[j] == '\'')
 			skip_(to_parse, &j, to_parse[j]);
-		if (ft_strchr(STOP_, to_parse[j]) || ft_isspace(to_parse[j]))
+		if (ft_strchr(STOP_F, to_parse[j]) || ft_isspace(to_parse[j]))
 			break ;
 		j++;
 	}

@@ -14,30 +14,28 @@
 
 char	*ft_strjoin(char *s1, char *s2, char *s3, int pos_s3)
 {
-	size_t	i;
-	size_t	j;
-	size_t	k;
+	size_t	tab[3];
 	char	*buff;
 
 	if (!s2)
 		return (NULL);
-	i = ft_strlen(s1);
-	j = ft_strlen(s2);
-	k = ft_strlen(s3);
-	buff = calloc(sizeof(char), (i + j + k + 1));
+	tab[0] = ft_strlen(s1);
+	tab[1] = ft_strlen(s2);
+	tab[2] = ft_strlen(s3);
+	buff = calloc(sizeof(char), (tab[0] + tab[1] + tab[2] + 1));
 	if (!buff)
 		return (NULL);
 	if (pos_s3 == 0)
 	{
-		ft_memcpy(buff, s1, i);
+		ft_memcpy(buff, s1, tab[0]);
 		if (s3)
-			ft_memcpy(buff + i, s3, k);
-		ft_memcpy(buff + i + k, s2, j);
+			ft_memcpy(buff + tab[0], s3, tab[2]);
+		ft_memcpy(buff + tab[0] + tab[2], s2, tab[1]);
 		return (buff);
 	}
-	ft_memcpy(buff, s1, i);
-	ft_memcpy(buff + i, s2, j);
+	ft_memcpy(buff, s1, tab[0]);
+	ft_memcpy(buff + tab[0], s2, tab[1]);
 	if (s3)
-		ft_memcpy(buff + i + j, s3, k + 1);
+		ft_memcpy(buff + tab[0] + tab[1], s3, tab[2] + 1);
 	return (buff);
 }
