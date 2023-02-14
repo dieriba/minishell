@@ -26,8 +26,9 @@ static int	ft_tablen(char *s, char c)
 			i++;
 		if (s[i])
 			len++;
-		printf("I index : %ld\n", i);
+		printf("IN I index : %ld\n", i);
 		i = find_next_separator(s, i, c);
+		printf("OUT I index : %ld\n", i);
 		i++;
 	}
 	return (len);
