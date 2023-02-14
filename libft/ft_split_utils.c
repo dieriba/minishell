@@ -6,18 +6,18 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:42:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 03:53:48 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 03:54:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+#include "stdio.h"
 void	skip_split(char *to_parse, size_t *i, int quote)
 {
 	size_t	j;
 
 	j = (*i);
-  //  printf("Entered at index : %ld string is : %s\n", j, &to_parse[j]);
+   	printf("Entered at index : %ld string is : %s\n", j, &to_parse[j]);
 	while (1)
 	{
 		while (to_parse[++j])
@@ -26,7 +26,10 @@ void	skip_split(char *to_parse, size_t *i, int quote)
 				&& valid_double_split(to_parse, j))
 				break ;
 			else if (to_parse[j] == quote && to_parse[j] == '\'')
+			{
+                printf("Out at index : %ld string is : %s\n", j, to_parse);
 				break ;
+			}
 		}
 		if (to_parse[j] == 0)
 			break ;
