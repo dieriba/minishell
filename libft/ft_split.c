@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "stdio.h"
 
 static int	ft_tablen(char *s, char c)
 {
@@ -25,6 +26,7 @@ static int	ft_tablen(char *s, char c)
 			i++;
 		if (s[i])
 			len++;
+		printf("I index : %ld\n", i);
 		i = find_next_separator(s, i, c);
 		i++;
 	}
