@@ -6,12 +6,12 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:42:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 04:17:35 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 13:29:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "stdio.h"
+
 void	skip_split(char *to_parse, size_t *i, int quote)
 {
 	size_t	j;
@@ -35,7 +35,6 @@ void	skip_split(char *to_parse, size_t *i, int quote)
 	(*i) = j;
 }
 
-
 int	valid_double_split(char const *s, size_t i)
 {
 	if ((i > 0 && s[i - 1] != '\\') || i == 0)
@@ -56,6 +55,7 @@ size_t	find_next_separator(char *to_parse, size_t i, char c)
 	}
 	return (--i);
 }
+
 int	find_end_word(char *s, char c, size_t k)
 {
 	while (s[k] && s[k] != c)

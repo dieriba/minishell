@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 01:36:13 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 03:27:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 13:27:21 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	glob_character_(char **tab)
 	return (0);
 }
 
-void	update_list_args(t_data *data, t_node **args_expands, char *args, int *len)
+void	update_list_args(
+	t_data *data, t_node **args_expands, char *args, int *len)
 {
 	t_node	*node;
 

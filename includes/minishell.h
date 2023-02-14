@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 02:19:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 13:28:43 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ typedef struct t_doc		t_doc;
 typedef struct t_alias		t_alias;
 typedef struct t_pipes		t_pipes;
 typedef struct t_s_pipes	t_s_pipes;
-
 
 typedef struct t_star
 {
@@ -329,7 +328,8 @@ void	clean_cmd(t_cmd *cmd);
 void	skip_reverse(char *to_parse, int *i, int quote);
 void	clean_files(t_cmd *cmd);
 void	back_to_space(char **tab);
-void	update_list_args(t_data *data, t_node **args_expands, char *args, int *len);
+void	update_list_args(
+			t_data *data, t_node **args_expands, char *args, int *len);
 void	free_tabs_args(t_star **tabs);
 void	expand_args(t_data *data, t_cmd *cmd);
 size_t	copy_slash(char *to_clean, char *res, size_t *v);

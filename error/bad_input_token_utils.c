@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 03:23:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 13:28:02 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	rescue_command(t_data *data, char **rescue_cmd, int err)
 {
 	char	*cmd;
 	char	*to_free;
-	
+
 	to_free = NULL;
 	while (1)
 	{

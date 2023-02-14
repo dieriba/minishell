@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:01:34 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 02:54:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 13:27:32 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	valid_occurence(t_star *args, char *line, char c)
 {
-	if (line[0] == '.' && args -> st_bfore == 0)
-		return (1);
+	if ((line[0] == '.' && args -> pattern[0] == '.'))
+		return (args -> st_bfore);
 	else if ((args -> st_after == 0 && c == 0) || (args -> st_after))
 		return (0);
 	return (1);
@@ -33,12 +33,13 @@ int	find_occurence(char	*line, int k, size_t *m, t_star *args)
 	int		len;
 	int		res;
 	int		stop;
-	
+
 	j = (*m);
 	while (line[j])
 	{
-		while (line[j] && line[j] != args -> pattern[0])
-			j++;
+		if (args -> st_bfore)
+			while (line[j] && line[j] != args -> pattern[0])
+				j++;
 		len = ft_strlen(&line[j]);
 		if (line[j] == 0 || len - k < 0)
 			return (1);
@@ -46,10 +47,10 @@ int	find_occurence(char	*line, int k, size_t *m, t_star *args)
 		line[j + k] = 0;
 		res = ft_strcmp(&line[j], args -> pattern);
 		line[j + k] = stop;
-		if (!res && !valid_occurence(args, line, line[j + k]))
-			return (set_new_val(m, j, k));
-		else if (args -> st_bfore == 0 && res)
+		if (args -> st_bfore == 0 && res)
 			return (1);
+		else if (!res && !valid_occurence(args, line, line[j + k]))
+			return (set_new_val(m, j, k));
 		j++;
 	}
 	return (1);
@@ -60,7 +61,7 @@ int	valid_regex(char *line, t_star **tabs)
 	int		i;
 	size_t	j;
 	size_t	k;
-	
+
 	i = -1;
 	k = 0;
 	if (tabs[0] == NULL)
@@ -79,7 +80,7 @@ int	valid_regex(char *line, t_star **tabs)
 void	fill_node_args(int *len, t_data *data, t_args *args)
 {
 	struct dirent	*object;
-	DIR		*directory;
+	DIR				*directory;
 
 	directory = opendir(".");
 	object = readdir(directory);
@@ -89,7 +90,8 @@ void	fill_node_args(int *len, t_data *data, t_args *args)
 	{
 		if ((args -> args[0] == 0 && object -> d_name[0] != '.')
 			|| valid_regex(object -> d_name, args -> args) == 0)
-			update_list_args(data, &args -> args_expands, object -> d_name, len);
+			update_list_args(
+				data, &args -> args_expands, object -> d_name, len);
 		object = readdir(directory);
 	}
 	if (closedir(directory) < 0)

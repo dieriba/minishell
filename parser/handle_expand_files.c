@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 03:40:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 02:25:02 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 13:26:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	set_pos_tab_star(t_star *tab, char *args)
 	{
 		if ((args[i] == '"' && valid_double(args, i))
 			|| args[i] == '\'')
-		skip_(args, &i, args[i]);
+			skip_(args, &i, args[i]);
 		else if (args[i] == '*')
 			break ;
 		i++;
@@ -62,28 +62,12 @@ t_star	**find_pattern(t_data *data, char *args, char ***tab_arg)
 	return (star_tabs);
 }
 
-void	print_tab_args_(t_star **tabs)
-{
-	int	i;
-	
-	i = -1;
-	while (tabs[++i])
-	{
-		printf("Tabs [%d]-> before: %d\n", i, tabs[i]-> st_bfore);
-		printf("Tabs [%d]-> after: %d\n", i, tabs[i]-> st_after);
-		printf("Tabs [%d]-> first: %d\n", i, tabs[i]-> first);
-		printf("Tabs [%d]-> last: %d\n", i, tabs[i]-> last);
-		printf("Tabs [%d]-> pattern: %s\n", i, tabs[i]-> pattern);
-		printf("---------------------------------------\n");
-	}
-}
-
 int	set_args_(t_data *data, t_args *args, char **cmd_args)
 {
 	int		i;
 	char	**tabs_arg;
 	int		len;
-	
+
 	i = -1;
 	len = 0;
 	while (cmd_args[++i])
@@ -103,7 +87,7 @@ int	set_args_(t_data *data, t_args *args, char **cmd_args)
 	return (len);
 }
 
-void new_expanded_tab(t_cmd *cmd, t_node **args_expands, int len)
+void	new_expanded_tab(t_cmd *cmd, t_node **args_expands, int len)
 {
 	char	**tab;
 	int		i;
