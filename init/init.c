@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:33 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 13:49:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 13:52:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,5 @@ void	init_cmd(t_data *data, char *to_process)
 	fill_cmds(data -> cmds, data -> cp_to_parse, len);
 	fill_cmds_par(data -> cmds, to_process, len);
 	real_subshell_or_not(data -> cmds);
-	//print_struct(data -> cmds);
+	/*print_struct(data -> cmds);*/
 }

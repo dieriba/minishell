@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 13:28:43 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 14:18:04 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ enum e_type
 	OUT,
 	DOC,
 	APPEND,
+	PROCESS_SUB_IN,
+	PROCESS_SUB_OUT,
 };
 typedef struct t_node		t_node;
 typedef struct t_data		t_data;
@@ -171,6 +173,7 @@ typedef struct t_files
 	int			amb;
 	int			flags;
 	int			fd;
+	int			glob;
 	enum e_type	type;
 }	t_files;
 
@@ -229,7 +232,6 @@ typedef struct t_data
 
 /*-----------------SYSCALL-----------------*/
 void	dup_and_close(t_data *data, int fd, int old_fd, int to_close);
-int		dup_and_close_built_in(int fd, int old_fd);
 /*-----------------SYSCALL-----------------*/
 /*-----------------MINISHELL-----------------*/
 void	lets_read(t_data *data);
