@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:25:17 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:37:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 04:26:15 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ size_t	handle_expands(
 
 	j = -1;
 	line = is_valid_expand(data, to_clean);
-	while (line[++j])
+	while (line && line[++j])
 	{
 		if ((line[j] == '"' && valid_double(line, j)) || line[j] == '\'')
 		{
