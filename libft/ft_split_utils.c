@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:42:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 03:47:02 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 03:53:48 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	skip_split(char *to_parse, size_t *i, int quote)
 	size_t	j;
 
 	j = (*i);
+  //  printf("Entered at index : %ld string is : %s\n", j, &to_parse[j]);
 	while (1)
 	{
 		while (to_parse[++j])
@@ -29,7 +30,7 @@ void	skip_split(char *to_parse, size_t *i, int quote)
 		}
 		if (to_parse[j] == 0)
 			break ;
-		if (to_parse[j + 1] == '\'' || to_parse[j + 1] == '"')
+		else if (to_parse[j + 1] == '\'' || to_parse[j + 1] == '"')
 			quote = to_parse[++j];
 	}
 	(*i) = j;
