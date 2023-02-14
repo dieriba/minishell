@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 01:36:13 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 02:58:28 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 03:27:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	glob_character_(char **tab)
 	int		i;
 
 	i = -1;
+	if (tab == NULL)
+		return (0);
 	while (tab[++i])
 	{
 		if (glob_args(tab[i]))

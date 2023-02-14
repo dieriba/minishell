@@ -56,7 +56,7 @@ static int	fill_tab(char **tab, char *s, char c, int len)
 	}
 	return (0);
 }
-#include "stdio.h"
+
 char	**ft_split(char *s, char c)
 {
 	char	**tab;

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/08 03:04:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 03:23:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	handle_case(t_data *data, char **rescue_cmd, char **cmd, int err)
 		to_free = data -> cp_to_parse;
 		data -> cp_to_parse = ft_strjoin(
 				data -> cp_to_parse, (*rescue_cmd), 0, 0);
+		add_history(data -> cp_to_parse);
 		is_error(data, data -> cp_to_parse, MALLOC_ERR, 0);
 		ft_free_elem((void **)rescue_cmd);
 		ft_free_elem((void **)&to_free);
@@ -36,12 +37,16 @@ void	rescue_command(t_data *data, char **rescue_cmd, int err)
 {
 	char	*cmd;
 	char	*to_free;
-
+	
+	to_free = NULL;
 	while (1)
 	{
 		cmd = readline("cmd: ");
-		err = valid_format_token(cmd);
 		if (cmd)
+			err = valid_format_token(cmd);
+		else
+			err = 0;
+		if (ft_strlen(cmd) > 0)
 		{
 			to_free = (*rescue_cmd);
 			(*rescue_cmd) = ft_strjoin((*rescue_cmd), cmd, " ", 0);

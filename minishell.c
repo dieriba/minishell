@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 20:00:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 03:03:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	shell_routine(t_data *data)
 	}
 	while (--i > -1)
 		add_history(data -> tab_[i]);
-	ft_free_tab(data -> tab_);
-	data -> tab_ = NULL;
+	data -> tab_ = ft_free_tab(data -> tab_);
 }
 
 int	main(int argc, char **argv, char **envp)
