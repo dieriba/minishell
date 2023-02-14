@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 13:28:02 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 18:23:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,13 @@ void	rescue_command(t_data *data, char **rescue_cmd, int err)
 
 int	check_behind(char *to_parse, int j)
 {
-	int	seen;
+	char	token;
+	int		seen;
 
+	token = to_parse[j];
 	if (to_parse[j] == '(' && j == 0)
 		return (j);
-	if (!ft_strchr(STOP_, to_parse[j])
+	if ((!ft_strchr(STOP_, to_parse[j]) && to_parse[j] != '$')
 		&& (to_parse[j] != '(' && to_parse[j] != ')'))
 		return (0);
 	seen = 1;
@@ -77,7 +79,9 @@ int	check_behind(char *to_parse, int j)
 		;
 	while (j > -1 && ft_isspace(to_parse[j]))
 		j--;
-	if (!ft_strchr(DELIM_TOKEN_SP, to_parse[j])
+	if (token == '$' && to_parse[j] == ')')
+		return (seen);
+	else if (!ft_strchr(DELIM_TOKEN_SP, to_parse[j])
 		&& to_parse[j] != '(')
 		seen = 0;
 	return (seen);

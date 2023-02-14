@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:24:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 00:23:03 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 18:24:36 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	print_bad_syntax(t_data *data, char *str, char token)
 {
+	add_history(data -> cp_to_parse);
 	ft_putstr_fd(str, 2);
 	ft_putchar_fd(token, 2);
 	ft_putchar_fd('\n', 2);

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 03:21:01 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 18:20:01 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_validity(char *to_parse, size_t i)
 	am_i_alone = check_behind(to_parse, i);
 	if (am_i_alone && (token != '<' && token != '>'))
 		return (-1);
-	if (token == ';' || token == '(' || token == ')')
+	if (token == ';' || token == '(' || token == ')' || token == '$')
 		return (++i);
 	flags = check_in_front(to_parse, token, &i);
 	if ((to_parse[i] && flags == -1)
