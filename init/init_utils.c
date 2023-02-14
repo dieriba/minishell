@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 15:52:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:42:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 17:52:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	add_command(char *to_process, int i)
 		if (!ft_isspace(to_process[i]))
 			break ;
 	}
-	if (ft_strchr(STOP_, to_process[i]))
+	if (i > 0 && ft_strchr(STOP_, to_process[i]))
 		return (0);
 	return (1);
 }

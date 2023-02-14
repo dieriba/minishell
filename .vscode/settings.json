@@ -7,7 +7,8 @@
         "compare": "c",
         "type_traits": "c",
         "stat.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "ft_printf.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

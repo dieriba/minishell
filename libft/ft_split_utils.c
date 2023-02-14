@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:42:29 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 13:29:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 17:21:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	skip_split(char *to_parse, size_t *i, int quote)
 			else if (to_parse[j] == quote && to_parse[j] == '\'')
 				break ;
 		}
-		if (to_parse[j + 1] == 0)
+		if (to_parse[j] == 0 || to_parse[j + 1] == 0)
 			break ;
 		else if (to_parse[j + 1] == '\'' || to_parse[j + 1] == '"')
 			quote = to_parse[++j];
@@ -51,6 +51,8 @@ size_t	find_next_separator(char *to_parse, size_t i, char c)
 			skip_split(to_parse, &i, to_parse[i]);
 		else if (to_parse[i] == c)
 			break ;
+		if (to_parse[i] == 0)
+			break ;
 		i++;
 	}
 	return (--i);
@@ -62,6 +64,8 @@ int	find_end_word(char *s, char c, size_t k)
 	{
 		if ((s[k] == '"' && valid_double_split(s, k)) || s[k] == '\'')
 			skip_split(s, &k, s[k]);
+		if (s[k] == 0)
+			break ;
 		k++;
 	}
 	return (k);

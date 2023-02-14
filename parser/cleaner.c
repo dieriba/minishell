@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/10 05:41:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 17:37:33 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean, int skip)
 	i = -1;
 	while (to_clean[++i])
 	{
-		if (skip && (to_clean[i] == '"' && valid_double(to_clean, i)))
+		if ((to_clean[i] == '"' && valid_double(to_clean, i)))
 			i += handle_quote_expands(data, expands, &to_clean[i], &len);
 		else if (to_clean[i] == '\'')
 			while (to_clean[++i] && to_clean[i] != '\'')
@@ -51,6 +51,8 @@ size_t	get_expand_val(t_data *data, t_node **expands, char *to_clean, int skip)
 		else if ((to_clean[i] != '\'' && to_clean[i] != '"')
 			|| (to_clean[i] == '"' && !valid_double(to_clean, i)))
 			len++;
+		if (to_clean[i] == 0)
+			break ;
 	}
 	return (len);
 }
@@ -84,7 +86,7 @@ void	expand_and_clean(char *to_clean, char *res, t_node *expands, int skip)
 	j = 0;
 	while (to_clean[++i])
 	{
-		if (skip && (to_clean[i] == '"' && valid_double(to_clean, i)))
+		if ((to_clean[i] == '"' && valid_double(to_clean, i)))
 			j += copy_expands_quote(to_clean, &res[j], &i, &node);
 		else if (to_clean[i] == '\'')
 			j += copy_single_quote(to_clean, &res[j], &i);

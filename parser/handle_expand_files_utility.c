@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 01:36:13 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 13:27:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 17:16:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	glob_args(char *line)
 			skip_(line, &i, line[i]);
 		else if (line[i] == '*')
 			return (1);
+		if (line[i] == 0)
+			break ;
 	}
 	return (0);
 }

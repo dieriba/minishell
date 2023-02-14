@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 17:27:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 13:48:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 17:08:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	skip_(char *to_parse, size_t *i, int quote)
 			else if (to_parse[j] == quote && to_parse[j] != '"')
 				break ;
 		}
+		if (to_parse[j] == 0 || to_parse[j + 1] == 0)
+			break ;
 		if (to_parse[j + 1] == '\'' || to_parse[j + 1] == '"')
 			quote = to_parse[++j];
 		else

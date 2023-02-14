@@ -26,6 +26,8 @@ static int	ft_tablen(char *s, char c)
 		if (s[i])
 			len++;
 		i = find_next_separator(s, i, c);
+		if (s[i] == 0)
+			break ;
 		i++;
 	}
 	return (len);
