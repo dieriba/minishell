@@ -67,7 +67,7 @@ OBJS_BONUS	=	$(BONUS:.c=.o)
 INCLUDES	=	-I includes
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-g3 -Wall -Wextra -Werror
 
 .c.o :	
 			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
