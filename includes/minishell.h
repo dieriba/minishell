@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 21:22:58 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 02:19:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,23 @@ typedef struct t_alias		t_alias;
 typedef struct t_pipes		t_pipes;
 typedef struct t_s_pipes	t_s_pipes;
 
+
+typedef struct t_star
+{
+	char	*pattern;
+	int		start_index;
+	int		st_bfore;
+	int		st_after;
+	int		first;
+	int		last;
+}	t_star;
+
+typedef struct t_args
+{
+	t_star	**args;
+	t_node	*args_expands;
+}	t_args;
+
 typedef struct t_dir
 {
 	char	*path;
@@ -109,12 +126,14 @@ typedef struct t_alias
 	t_node	*head;
 	t_node	*last;
 }	t_alias;
+
 typedef struct t_s_pipes
 {
 	int			s_pipes[2];
 	pid_t		pid;
 	t_s_pipes	*next;
 }	t_s_pipes;
+
 typedef struct t_doc
 {
 	int		pipes[2];
@@ -123,11 +142,13 @@ typedef struct t_doc
 	t_doc	*next;
 	t_doc	*prev;
 }	t_doc;
+
 typedef struct t_collector
 {
 	void		*data;
 	t_collector	*next;
 }	t_collector;
+
 typedef struct t_node
 {
 	char	*line;
@@ -136,6 +157,7 @@ typedef struct t_node
 	t_node	*next;
 	t_node	*prev;
 }	t_node;
+
 typedef struct t_env
 {
 	t_data	*data;
@@ -143,6 +165,7 @@ typedef struct t_env
 	int		len;
 	char	**tab;
 }	t_env;
+
 typedef struct t_files
 {
 	char		*files;
@@ -293,6 +316,9 @@ int		skip_next_stop(char *to_clean);
 int		valid_format_token(char *to_parse);
 int		unvalid_line(t_data *data, char *line, char **rescue_cmd);
 int		valid_double(char *to_parse, size_t i);
+int		glob_character_(char **tab);
+int		glob_args(char *line);
+void	fill_node_args(int *len, t_data *data, t_args *args);
 void	rescue_command(t_data *data, char **rescue_cmd, int err);
 char	*is_shell_variable(t_data *data, char *line);
 char	*cleaner(t_data *data, char *to_clean);
@@ -303,6 +329,9 @@ void	clean_cmd(t_cmd *cmd);
 void	skip_reverse(char *to_parse, int *i, int quote);
 void	clean_files(t_cmd *cmd);
 void	back_to_space(char **tab);
+void	update_list_args(t_data *data, t_node **args_expands, char *args, int *len);
+void	free_tabs_args(t_star **tabs);
+void	expand_args(t_data *data, t_cmd *cmd);
 size_t	copy_slash(char *to_clean, char *res, size_t *v);
 size_t	copy_expands_in_str(char *res, char quote, t_node **node);
 size_t	slash_len(char *to_clean, size_t i, size_t *len);

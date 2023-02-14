@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 21:35:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/13 17:24:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	to_exec_or_not(t_cmd *cmd, char *stop, int status, int opt)
 {
 	if (opt && (cmd -> prev_cmd -> built_in && cmd -> prev_cmd -> executed))
 	{	
-		data -> last_exec_stat = cmd -> prev_cmd -> exit_status;
+		cmd -> data -> last_exec_stat = cmd -> prev_cmd -> exit_status;
 		status = cmd -> data -> last_exec_stat;
 	}
 	if (status == 128 + SIGINT)

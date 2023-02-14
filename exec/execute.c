@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 18:44:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/14 00:21:11 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	verify_cmd(t_data *data, t_cmd *cmd)
 		clean_files(cmd);
 		clean_cmd(cmd);
 	}
+	if (glob_character_(cmd -> args))
+		expand_args(data, cmd);
 	return (0);
 }
 

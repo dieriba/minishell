@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 21:05:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/11 21:41:32 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	print_new_line(int *num)
 	{
 		ft_putchar_fd('\n', 0);
 		rl_on_new_line();
+		*num = 0;
 	}
-	*num = 0;
 }
 
 int	loop_through_child(t_data *data, t_cmd **cmds)

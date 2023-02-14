@@ -18,23 +18,17 @@ static int	ft_tablen(char *s, char c)
 	size_t	len;
 
 	len = 0;
-	i = -1;
-	while (s[++i])
+	i = 0;
+	while (s[i])
 	{
-		if ((s[i] == '"' && valid_double_split(s, i)) || s[i] == '\'')
-			skip_split(s, &i, s[i]);
-		else if (s[i] == c)
-		{
-			while (s[i] && s[i] == c)
-				i++;
-			if (s[i])
-				len++;
-			i--;
-		}
-		if (s[i] == 0)
-			break ;
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i])
+			len++;
+		i = find_next_separator(s, i, c);
+		i++;
 	}
-	return (len + 1);
+	return (len);
 }
 
 static int	fill_tab(char **tab, char *s, char c, int len)
@@ -62,7 +56,7 @@ static int	fill_tab(char **tab, char *s, char c, int len)
 	}
 	return (0);
 }
-
+#include "stdio.h"
 char	**ft_split(char *s, char c)
 {
 	char	**tab;

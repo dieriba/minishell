@@ -54,6 +54,7 @@ int			check_empty(int argc, char **argv);
 
 size_t		ft_str_tab_len(char **tab);
 size_t		ft_strlen(const char *s);
+size_t		find_next_separator(char *to_parse, size_t i, char c);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 size_t		ft_strlcat(char *dst, const char *src, size_t size);
 
