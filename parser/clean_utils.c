@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:25:17 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 17:31:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/15 03:11:50 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ size_t	handle_quote_expands(
 			(*len) += 1;
 		else if (to_clean[i] == '"' && !valid_double(to_clean, i))
 			(*len) += 1;
-		else if ((to_clean[i] == '"'
-				&& valid_double(to_clean, i)) && to_clean[i + 1] != '"')
+		else if ((to_clean[i] == '"' && valid_double(to_clean, i))
+			&& to_clean[i + 1] != '"')
 			break ;
+		else if ((to_clean[i] == '"' && valid_double(to_clean, i)))
+			++i;
 	}
 	return (i);
 }
@@ -91,8 +93,8 @@ size_t	copy_expands_quote(
 	j = 0;
 	while (to_clean[++i])
 	{
-		if (to_clean[i] == '"'
-			&& valid_double(to_clean, i) && to_clean[i + 1] == '"')
+		if (to_clean[i] == '"' && valid_double(to_clean, i)
+			&& to_clean[i + 1] == '"')
 			i++;
 		else if (to_clean[i] == '"' && valid_double(to_clean, i))
 			break ;
