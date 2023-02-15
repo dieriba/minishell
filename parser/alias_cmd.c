@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:50:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 16:20:44 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 00:33:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	from_alias_to_hero(t_data *data, t_cmd *cmd, char **tab)
 		line = from_tab_to_line(cmd, cmd -> args);
 		tmp = ft_strjoin(&alias -> line[alias -> i], &line[i], " ", 0);
 		is_error(data, tmp, MALLOC_ERR, 0);
-		cmd -> args = ft_split(tmp, ' ');
-		is_error(data, cmd -> args, MALLOC_ERR, 0);
+		set_commands(cmd, tmp);
 		ft_free_elem((void **)&tmp);
 		ft_free_elem((void **)&line);
 		return ;

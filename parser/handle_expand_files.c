@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 03:40:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 15:52:14 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 00:45:50 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,26 @@ int	set_args_(t_data *data, t_args *args, char **cmd_args)
 	int		i;
 	char	**tabs_arg;
 	int		len;
-
+	int		found;
+	
 	i = -1;
 	len = 0;
+	found = 0;
 	while (cmd_args[++i])
 	{
 		if (i > 0 && glob_args(cmd_args[i]))
 		{
 			args -> args = find_pattern(data, cmd_args[i], &tabs_arg);
-			fill_node_args(&len, data, args);
+			found = fill_node_args(&len, data, args);
 			if (len < 0)
 				break ;
 			free_tabs_args(args -> args);
 			tabs_arg = ft_free_tab(tabs_arg);
-			continue ;
+			if (found)
+				continue ;
 		}
 		update_list_args(data, &args -> args_expands, cmd_args[i], &len);
 	}
-	printf("Len value : %d\n", len);
 	return (len);
 }
 

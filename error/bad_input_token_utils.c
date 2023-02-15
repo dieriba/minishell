@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 03:10:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 00:55:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ void	rescue_command(t_data *data, char **rescue_cmd, int err)
 	{
 		cmd = readline("cmd: ");
 		if (cmd)
-			err = valid_format_token(cmd);
-		else
-			err = 0;
+			err = valid_quotes(data, cmd);
 		if (ft_strlen(cmd) > 0)
 		{
 			to_free = (*rescue_cmd);
@@ -53,6 +51,9 @@ void	rescue_command(t_data *data, char **rescue_cmd, int err)
 			is_error(data, (*rescue_cmd), MALLOC_ERR, 0);
 		}
 		ft_free_elem((void **)&to_free);
+		if (err)
+			break ;
+		err = valid_format_token(cmd);
 		if (cmd == NULL || (err == 0 && cmd[0]) || err > 0)
 			break ;
 	}

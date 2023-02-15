@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:01:34 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 15:50:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 00:43:26 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,29 @@ int	valid_regex(char *line, t_star **tabs)
 	return (0);
 }
 
-void	fill_node_args(int *len, t_data *data, t_args *args)
+int	fill_node_args(int *len, t_data *data, t_args *args)
 {
 	struct dirent	*object;
 	DIR				*directory;
-
+	int				found;
+	
+	found = 0;
 	directory = opendir(".");
 	object = readdir(directory);
 	if (directory == NULL)
-		return ;
+		return (-1);
 	while (object)
 	{
 		if ((args -> args[0] == 0 && object -> d_name[0] != '.')
 			|| valid_regex(object -> d_name, args -> args) == 0)
+		{
 			update_list_args(
 				data, &args -> args_expands, object -> d_name, len);
+			found = 1;
+		}
 		object = readdir(directory);
 	}
 	if (closedir(directory) < 0)
-		return ;
+		return (-1);
+	return (found);
 }

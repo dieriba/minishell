@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 16:20:06 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 00:36:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	verify_cmd(t_data *data, t_cmd *cmd)
 	//print_struct(data -> cmds);
 	if (glob_character_(cmd -> args))
 		expand_args(data, cmd);
+	//print_struct(data -> cmds);
 	return (0);
 }
 

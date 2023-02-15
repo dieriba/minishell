@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 02:13:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 16:22:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 00:34:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	clean_cmd(t_cmd *cmd)
 		return ;
 	tab = cmd -> args;
 	from_alias_to_hero(cmd -> data, cmd, tab);
-	cmd -> cmd = cmd -> args[0];
 	to_clean = check_tab(cmd -> args);
 	tab = cmd -> args;
 	if (to_clean < 0)

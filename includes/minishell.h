@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 18:11:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 00:44:10 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,7 +319,7 @@ int		unvalid_line(t_data *data, char *line, char **rescue_cmd);
 int		valid_double(char *to_parse, size_t i);
 int		glob_character_(char **tab);
 int		glob_args(char *line);
-void	fill_node_args(int *len, t_data *data, t_args *args);
+int		fill_node_args(int *len, t_data *data, t_args *args);
 void	rescue_command(t_data *data, char **rescue_cmd, int err);
 char	*is_shell_variable(t_data *data, char *line);
 char	*cleaner(t_data *data, char *to_clean);
