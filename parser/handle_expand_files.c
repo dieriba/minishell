@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 03:40:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 13:26:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/15 15:52:14 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	set_args_(t_data *data, t_args *args, char **cmd_args)
 		}
 		update_list_args(data, &args -> args_expands, cmd_args[i], &len);
 	}
+	printf("Len value : %d\n", len);
 	return (len);
 }
 
