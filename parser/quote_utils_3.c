@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 13:57:51 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:39:02 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 23:34:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	valid_quotes(t_data *data, char *to_parse)
 	double_q = 0;
 	while (to_parse[++i])
 	{
-		if (to_parse[i] == '"')
+		if (to_parse[i] == '"' && valid_double(to_parse, i))
 			i += how_many_quotes(&to_parse[i], '"', &double_q);
 		else if (to_parse[i] == '\'')
 			i += how_many_quotes(&to_parse[i], '\'', &sing_q);

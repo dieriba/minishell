@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 03:40:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/16 01:00:44 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 23:43:38 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ size_t	set_pos_tab_star(t_star *tab, char *args)
 			|| args[i] == '\'')
 			skip_(args, &i, args[i]);
 		else if (args[i] == '*')
+			break ;
+		if (args[i] == 0)
 			break ;
 		i++;
 	}
@@ -74,7 +76,7 @@ int	set_args_(t_data *data, t_args *args, char **cmd_args)
 	found = 0;
 	while (cmd_args[++i])
 	{
-		if (i > 0 && glob_args(cmd_args[i]))
+		if (glob_args(cmd_args[i]))
 		{
 			args -> args = find_pattern(data, cmd_args[i], &tabs_arg);
 			found = fill_node_args(&len, data, args);
