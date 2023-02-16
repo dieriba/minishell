@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 03:40:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/16 00:45:50 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 01:00:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	set_args_(t_data *data, t_args *args, char **cmd_args)
 	char	**tabs_arg;
 	int		len;
 	int		found;
-	
+
 	i = -1;
 	len = 0;
 	found = 0;

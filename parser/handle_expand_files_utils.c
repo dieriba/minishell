@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:01:34 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/16 00:43:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/16 01:00:57 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	fill_node_args(int *len, t_data *data, t_args *args)
 	struct dirent	*object;
 	DIR				*directory;
 	int				found;
-	
+
 	found = 0;
 	directory = opendir(".");
 	object = readdir(directory);
