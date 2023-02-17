@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 00:33:33 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/17 01:25:00 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,16 @@ void	wait_command_before(t_cmd **cmds, t_cmd *cmd)
 	int	j;
 
 	i = -1;
+	j = -1;
 	while (cmds[++i])
 	{
-		if (cmds[i] == cmd)
+		if (cmds[i + 1] == cmd)
 			break ;
 		if (ft_strcmp(cmds[i]-> prev_stop, "|"))
 			j = i;
 	}
+	if (j < 0)
+		return ;
 	while (j < i)
 	{
 		if (waitpid(cmds[j]-> pid, &cmds[j]-> exit_status, 0) < 0
@@ -73,7 +76,9 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 		wait_command_before(data -> cmds, cmd);
 	if (((!status && pid_ret) && pipes))
 	{
-		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
+		if (cmd -> prev_cmd -> waited)
+			status = cmd -> prev_cmd -> exit_status;
+		else if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 		if (WIFEXITED(status))
 			data -> status = WEXITSTATUS(status);
