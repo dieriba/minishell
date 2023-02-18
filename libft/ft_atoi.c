@@ -31,7 +31,7 @@ long long	ft_atoi(const char *nptr)
 		i++;
 	if (nptr[i] == '+' || nptr[i] == '-')
 		i++;
-	sign = -(nptr[i] == '-')  + (nptr[i] != '-');
+	sign = -(nptr[i] == '-') + (nptr[i] != '-');
 	while (ft_isdigit(nptr[i]))
 		res = res * 10 + (nptr[i++] - '0');
 	return (res * sign);

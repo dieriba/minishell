@@ -6,12 +6,12 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:34:52 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 17:07:19 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 17:17:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
+
 static int	ft_nblen(long long n)
 {
 	int	len;

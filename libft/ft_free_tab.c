@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:13:26 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/17 00:17:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 19:25:53 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	**ft_free_tab(char **tab)
 {
 	size_t	i;
 
-	if (!tab || !*tab)
+	if (!tab)
 		return (NULL);
 	i = -1;
 	while (tab[++i])

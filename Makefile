@@ -73,6 +73,7 @@ SRCS_PARSER	=	./parser/cleaner.c \
 				./parser/handle_expand_files.c \
 				./parser/handle_expand_files_utils.c \
 				./parser/handle_expand_files_utility.c \
+				./parser/handle_expand_files_checker.c \
 
 INCLUDES	= 	-I ./includes
 

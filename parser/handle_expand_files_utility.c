@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 01:36:13 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 17:16:29 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 19:21:08 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,46 @@ void	free_tabs_args(t_star **tabs)
 	free(tabs);
 }
 
-int	glob_args(char *line)
+int	found_expand_(t_data *data, char *line, size_t *i)
+{
+	char	*to_check;
+
+	to_check = is_valid_expand(data, line);
+	if (to_check == NULL)
+		return (0);
+	(*i) += skip_next_stop(line) - 1;
+	if (glob_args(data, &to_check, 0, 0))
+		return (1);
+	return (0);
+}
+
+int	glob_args(t_data *data, char **line, int dollars, int quotes)
 {
 	size_t	i;
 
 	i = -1;
-	while (line[++i])
+	while ((*line)[++i])
 	{
-		if ((line[i] == '"' && valid_double(line, i))
-			|| line[i] == '\'')
-			skip_(line, &i, line[i]);
-		else if (line[i] == '*')
+		if (((*line)[i] == '"' && valid_double(*line, i)) || (*line)[i] == '\'')
+			quotes = skip_and_check_glob((*line), &i, (*line)[i], '*');
+		else if ((*line)[i] == '$' && found_expand_(data, &(*line)[i], &i))
+			dollars = 1;
+		else if ((*line)[i] == '*' && (!quotes && !dollars))
 			return (1);
-		if (line[i] == 0)
+		if (quotes == -1)
+			return (0);
+		if ((*line)[i] == '*' || (dollars || quotes))
+		{
+			(*line) = clean_(data, *line, 1);
+			return (1);
+		}
+		if ((*line)[i] == 0)
 			break ;
 	}
 	return (0);
 }
 
-int	glob_character_(char **tab)
+int	glob_character_(t_data *data, char **tab)
 {
 	int		i;
 
@@ -49,7 +70,7 @@ int	glob_character_(char **tab)
 		return (0);
 	while (tab[++i])
 	{
-		if (glob_args(tab[i]))
+		if (glob_args(data, &tab[i], 0, 0))
 			return (1);
 	}
 	return (0);
@@ -65,8 +86,3 @@ void	update_list_args(
 	is_error(data, node, MALLOC_ERR, 0);
 	ft_lst_add_front_s(args_expands, node);
 }
-
-/*void	ascii_sort_list(t_node **args_expands)
-{
-	
-}*/

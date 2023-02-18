@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 03:40:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/16 23:43:38 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 18:44:30 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	set_args_(t_data *data, t_args *args, char **cmd_args)
 	found = 0;
 	while (cmd_args[++i])
 	{
-		if (glob_args(cmd_args[i]))
+		if (glob_args(data, &cmd_args[i], 0, 0))
 		{
 			args -> args = find_pattern(data, cmd_args[i], &tabs_arg);
 			found = fill_node_args(&len, data, args);
