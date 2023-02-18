@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:02:02 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 20:07:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 20:25:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ int	check_behind(char *to_parse, int j)
 	token = to_parse[j];
 	if (to_parse[j] == '(' && j == 0)
 		return (j);
-	if ((!ft_strchr(STOP_, to_parse[j]) && to_parse[j] != '$')
-		&& (to_parse[j] != '(' && to_parse[j] != ')'))
+	if (ft_strchr(R_COMBO, to_parse[j]))
 		return (0);
 	seen = 1;
 	if (j - 1 < 0)
@@ -80,10 +79,10 @@ int	check_behind(char *to_parse, int j)
 		;
 	while (j > -1 && ft_isspace(to_parse[j]))
 		j--;
-	if (token == '$' && to_parse[j] == ')')
-		return (seen);
+	if (!ft_strchr(DELIM_TOKEN_SP, token))
+		return ((to_parse[j] == ')'));
 	else if ((!ft_strchr(DELIM_TOKEN_SP, to_parse[j])
-			&& to_parse[j] != '(') || token == '$')
+			&& to_parse[j] != '('))
 		seen = 0;
 	return (seen);
 }

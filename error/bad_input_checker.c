@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:13:47 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 15:16:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 20:15:55 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_function(char *to_parse, size_t i)
 	int	err;
 
 	err = 0;
-	if (to_parse[i] == '(' || to_parse[i] == ')' || to_parse[i] == '$')
+	if (!ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
 		return (0);
 	if (to_parse[i] == R_IN && to_parse[i + 1] == R_OUT)
 		err = 1;

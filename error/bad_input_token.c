@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 20:07:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 20:14:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	valid_format_token(char *to_parse)
 		if ((to_parse[i] == '(' || to_parse[i] == ')')
 			&& valid_parentheses(to_parse, &_open, i) < 0)
 			return (')');
-		if (to_parse[i] && ft_strchr(DELIM_TOKEN_SP_G, to_parse[i]))
+		if (to_parse[i] && !ft_isspace(to_parse[i]))
 			flags = check_validity(to_parse, i);
 		if (flags && check_token_(to_parse[i], &flags, &i) < 0)
 			return (flags);
