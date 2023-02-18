@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 03:33:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/19 00:01:17 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	shell_routine(t_data *data)
 
 	i = -1;
 	skip = 0;
-	(void)skip;
 	while (data -> tab_[++i])
 	{
 		data -> cp_to_parse = data -> tab_[i];

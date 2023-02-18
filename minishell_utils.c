@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:23:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 03:27:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 23:49:09 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	lets_exec(t_data *data, int err)
 	if (err == 0)
 	{
 		data -> tab_ = clean_nl_str(data -> cp_to_parse);
-		ft_free_elem((void **)&data -> cp_to_parse);
 		is_error(data, data -> tab_, MALLOC_ERR, 0);
+		ft_free_elem((void **)&data -> cp_to_parse);
 		shell_routine(data);
 	}
 	if (data -> cp_to_parse)

@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:39:54 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/08 03:43:31 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 23:45:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	directory(t_data *data)
 	if ((!data -> status && data -> status != status)
 		|| status == -1 || data -> curr_dir.new_dir)
 	{
-		(data -> curr_dir.pwd) = ft_strjoin(
+		data -> curr_dir.pwd = ft_strjoin(
 				GREEN"➜ "RESET_COLOR CYAN, path, " "RESET_COLOR, 1);
 		ft_free_elem((void *)&tmp);
 	}
@@ -59,7 +59,7 @@ void	set_default_data(t_data *data, int len)
 	while (++j < len)
 	{
 		data -> cmds[j] = ft_calloc(sizeof(t_cmd), 1);
-		is_error(data, data -> cmds, MALLOC_ERR, 1);
+		is_error(data, data -> cmds[j], MALLOC_ERR, 1);
 		data -> cmds[j]-> data = data;
 		if (j > 0)
 			data -> cmds[j]-> prev_cmd = data -> cmds[j - 1];
