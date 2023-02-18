@@ -6,29 +6,29 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/17 01:25:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 15:06:11 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	to_exec_or_not(t_cmd *cmd, char *stop, int status, int opt)
+int	to_exec_or_not(t_cmd *cmd, int ex_status, int status, int opt)
 {
+	if (WIFSIGNALED(ex_status))
+		return (-1);
 	if (opt && (cmd -> prev_cmd -> built_in && cmd -> prev_cmd -> executed))
 	{	
 		cmd -> data -> last_exec_stat = cmd -> prev_cmd -> exit_status;
 		status = cmd -> data -> last_exec_stat;
 	}
-	if (status == 128 + SIGINT)
-		return (-1);
-	if (!ft_strcmp("&&", stop) && status == 0)
+	if (!ft_strcmp("&&", cmd -> prev_stop) && status == 0)
 	{
 		cmd -> executed = 1;
 		return (0);
 	}
-	else if (!ft_strcmp("&&", stop))
+	else if (!ft_strcmp("&&", cmd -> prev_stop))
 		return (1);
-	else if (!ft_strcmp("||", stop) && status == 0)
+	else if (!ft_strcmp("||", cmd -> prev_stop) && status == 0)
 		return (1);
 	else
 	{
@@ -76,19 +76,17 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 		wait_command_before(data -> cmds, cmd);
 	if (((!status && pid_ret) && pipes))
 	{
-		if (cmd -> prev_cmd -> waited)
-			status = cmd -> prev_cmd -> exit_status;
-		else if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
+		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 		if (WIFEXITED(status))
 			data -> status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			data -> status = status;
 		data -> last_exec_stat = (data -> status > 0);
-		status = to_exec_or_not(cmd, stop, data -> status, 0);
+		status = to_exec_or_not(cmd, status, data -> status, 0);
 	}
 	else if (!status)
-		status = to_exec_or_not(cmd, stop, data -> last_exec_stat, 1);
+		status = to_exec_or_not(cmd, status, data -> last_exec_stat, 1);
 	return (status);
 }
 

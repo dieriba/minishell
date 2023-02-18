@@ -26,20 +26,13 @@ long long	ft_atoi(const char *nptr)
 	long long	res;
 
 	i = 0;
-	sign = 1;
 	res = 0;
 	while (ft_isspace(nptr[i]))
 		i++;
 	if (nptr[i] == '+' || nptr[i] == '-')
-	{
-		if (nptr[i] == '-')
-			sign = -1;
 		i++;
-	}
+	sign = -(nptr[i] == '-')  + (nptr[i] != '-');
 	while (ft_isdigit(nptr[i]))
-	{
-		res = res * 10 + (nptr[i] - '0');
-		i++;
-	}
+		res = res * 10 + (nptr[i++] - '0');
 	return (res * sign);
 }

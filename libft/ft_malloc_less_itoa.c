@@ -6,13 +6,13 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:34:52 by dtoure            #+#    #+#             */
-/*   Updated: 2023/01/27 04:43:45 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 17:07:19 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_nblen(int n)
+#include <stdio.h>
+static int	ft_nblen(long long n)
 {
 	int	len;
 
@@ -27,14 +27,12 @@ static int	ft_nblen(int n)
 	return (len);
 }
 
-void	ft_malloc_less_itoa(char **res, int n)
+void	ft_malloc_less_itoa(char **res, long long n)
 {
 	int				i;
 	int				j;
-	unsigned int	nb;
-	static char		str[11] = {0};
+	static char		str[21] = {0};
 
-	nb = -(n < 0) * (n) + (n > 0) * (n);
 	i = (n < 0);
 	j = ft_nblen(n);
 	if (n < 0)
@@ -42,8 +40,8 @@ void	ft_malloc_less_itoa(char **res, int n)
 	str[j] = 0;
 	while (--j >= i)
 	{
-		str[j] = (nb % 10) + '0';
-		nb /= 10;
+		str[j] = (n % 10) + '0';
+		n /= 10;
 	}
 	(*res) = str;
 }

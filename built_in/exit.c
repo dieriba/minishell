@@ -6,30 +6,11 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 07:24:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 17:50:55 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 17:11:34 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	check_valid_exit(char *num, long long *number)
-{
-	size_t	len;
-	size_t	i;
-
-	i = -1;
-	len = 0;
-	while (num[++i] && num[i] == '0')
-		;
-	if (num[i])
-		len = ft_strlen(&num[i]);
-	if (len > 19)
-		return (-1);
-	(*number) = ft_atoi(num);
-	if (*number > __LONG_LONG_MAX__)
-		return (-1);
-	return (0);
-}
 
 void	close_process(t_cmd *cmd, int fork, int status)
 {
@@ -73,7 +54,7 @@ int	handle_exit(t_data *data, t_cmd *cmd, int fork)
 		close_process(cmd, fork, exit_value % 256);
 	else if (!not_numbered_only && !invalid_exit)
 		print_err_exit_built_in(data, cmd, EXIT_ARGS, fork);
-	else if (not_numbered_only)
+	else if (not_numbered_only || invalid_exit)
 	{
 		data -> status = STDERR_FILENO;
 		print_err_exit_built_in(data, cmd, EXIT_NUM_ARGS, fork);

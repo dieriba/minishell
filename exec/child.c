@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 21:41:32 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 17:10:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	loop_through_child(t_data *data, t_cmd **cmds)
 
 	i = -1;
 	nl = 1;
+	(void)nl;
 	while (cmds[++i])
 	{
 		if (cmds[i]-> waited)
@@ -36,19 +37,15 @@ int	loop_through_child(t_data *data, t_cmd **cmds)
 		else if (cmds[i]-> pid && waitpid(
 				cmds[i]-> pid, &data -> status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
-		else if (cmds[i]-> built_in && cmds[i]-> executed)
+		else if ((!cmds[i]-> pid && cmds[i]-> built_in) && cmds[i]-> executed)
 			data -> status = cmds[i]-> exit_status;
 		if (cmds[i] && WIFSIGNALED(data -> status)
 			&& data -> status == SIGINT && nl)
 			print_new_line(&nl);
 	}
-	if (data -> subshell_pid)
-	{
-		if (waitpid(data -> subshell_pid,
-				&data -> status, 0) < 0 && errno != ECHILD)
-			print_err_and_exit(data, NULL, "Error with waitpid", 1);
-	}
-	return (cmds[--i]-> built_in);
+	if (cmds[--i]-> built_in && cmds[i]-> pid)
+		return (0);
+	return (cmds[i]-> built_in);
 }
 
 void	wait_all_child(t_data *data, t_cmd **cmds)

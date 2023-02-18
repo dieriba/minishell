@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dollars_utils.c                                    :+:      :+:    :+:   */
+/*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 06:03:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 16:18:35 by dtoure           ###   ########.fr       */
+/*   Created: 2023/02/18 16:25:31 by dtoure            #+#    #+#             */
+/*   Updated: 2023/02/18 17:10:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_dollars(char c)
+int	is_overflow(char *num, long long res)
 {
-	if (c == ' ' || c == 0)
+	char	*to_cmp;
+
+	ft_malloc_less_itoa(&to_cmp, res);
+	if (ft_strcmp(to_cmp, num))
 		return (1);
 	return (0);
 }
 
-char	*is_shell_variable(t_data *data, char *line)
+int	check_valid_exit(char *num, long long *number)
 {
-	char	*res;
+	size_t	len;
+	size_t	i;
 
-	res = NULL;
-	if (ft_strcmp(line, "?") == 0)
-		ft_malloc_less_itoa(&res, data -> status);
-	else if (ft_strcmp(line, "$") == 0)
-		return ("cantGetPid");
-	return (res);
+	i = -1;
+	len = 0;
+	while (num[++i] && num[i] == '0')
+		;
+	if (num[i])
+		len = ft_strlen(&num[i]);
+	if (len > 19)
+		return (-1);
+	(*number) = ft_atoi(num);
+	if (is_overflow(&num[i], (*number)))
+		return (-1);
+	return (0);
 }

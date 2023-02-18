@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/16 14:30:18 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/18 16:36:17 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,6 +358,7 @@ int		check_line_alias(char *line);
 int		log_files_alias(char *alias, int err_code, int line);
 int		built_in(t_data *data, t_cmd *cmd, int fork);
 int		exit_process(t_data *data, t_cmd *cmd, int fork);
+int		check_valid_exit(char *num, long long *number);
 int		cd(t_data *data, t_cmd *cmd);
 int		echo(t_data *data, t_cmd *cmd);
 int		populate_alias(char *line);
@@ -367,7 +368,6 @@ int		print_err_built_in(t_cmd *cmd, char *str, int type);
 int		check_alias(t_node *alias, char *line);
 int		set_up_alias(t_data *data, t_node *node, t_node *alias);
 int		close_redirection(t_cmd *cmd);
-int		set_in_redirection_built_in(t_cmd *cmd);
 int		pwd(t_data *data, t_cmd *cmd);
 int		env(t_data *data, t_cmd *cmd);
 int		unset(t_cmd *cmd, t_env *env);
