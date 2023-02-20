@@ -6,16 +6,28 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:25:17 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/20 16:28:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/20 17:01:25 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int		find_other_half(char *line, int to_find, size_t i)
+{
+	while (line[++i])
+	{
+		if ((to_find == '"' && line[i] == '"') && valid_double(line, i))
+			return (1);
+		else if (to_find == '\'' && line[i] == '\'')
+			return (1);
+	}
+	return (0);
+}
+
 char	*clean_lines(t_data *data, char *line, int expand)
 {
 	size_t	i;
-
+	
 	i = -1;
 	if (line == NULL)
 		return (line);
@@ -23,8 +35,10 @@ char	*clean_lines(t_data *data, char *line, int expand)
 	{
 		if (expand == 1 && (line[i] == '$' || line[i] == '\\'))
 			return (clean_(data, line, 1));
-		else if (expand == 0 && ((line[i] == '"' && valid_double(line, i))
-				|| (line[i] == '\'' || line[i] == '\\')))
+		else if (expand == 0 && (((line[i] == '"' && valid_double(line, i))
+				|| (line[i] == '\\')) && find_other_half(line, line[i], i)))
+			return (clean_(data, line, 0));
+		else if (expand == 0 && line[i] == '\\')
 			return (clean_(data, line, 0));
 		else if (expand == 2 && (((line[i] == '"' && valid_double(line, i))
 			|| (line[i] == '\'' || line[i] == '\\'))
