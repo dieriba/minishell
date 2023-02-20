@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 01:36:13 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 19:21:08 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/20 16:22:36 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,24 @@ int	found_expand_(t_data *data, char *line, size_t *i)
 int	glob_args(t_data *data, char **line, int dollars, int quotes)
 {
 	size_t	i;
-
+	int		to_find;
+	
 	i = -1;
+	to_find = 0;
 	while ((*line)[++i])
 	{
 		if (((*line)[i] == '"' && valid_double(*line, i)) || (*line)[i] == '\'')
 			quotes = skip_and_check_glob((*line), &i, (*line)[i], '*');
 		else if ((*line)[i] == '$' && found_expand_(data, &(*line)[i], &i))
 			dollars = 1;
-		else if ((*line)[i] == '*' && (!quotes && !dollars))
-			return (1);
+		else if ((*line)[i] == '*')
+			to_find = 1;
 		if (quotes == -1)
 			return (0);
-		if ((*line)[i] == '*' || (dollars || quotes))
-		{
-			(*line) = clean_(data, *line, 1);
-			return (1);
-		}
 		if ((*line)[i] == 0)
 			break ;
 	}
-	return (0);
+	return ((to_find != 0) + (dollars != 0));
 }
 
 int	glob_character_(t_data *data, char **tab)
