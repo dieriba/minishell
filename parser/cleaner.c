@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 15:56:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/20 16:46:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	expand_and_clean(char *to_clean, char *res, t_node *expands, int skip)
 		else if ((to_clean[i] != '\'' && to_clean[i] != '"')
 			|| (to_clean[i] == '"' && !valid_double(to_clean, i)))
 			res[j++] = to_clean[i];
+		if (to_clean[i] == 0)
+			break ;
 	}
 }
 
