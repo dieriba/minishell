@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 17:10:54 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/20 17:25:49 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	loop_through_child(t_data *data, t_cmd **cmds)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 		else if ((!cmds[i]-> pid && cmds[i]-> built_in) && cmds[i]-> executed)
 			data -> status = cmds[i]-> exit_status;
-		if (cmds[i] && WIFSIGNALED(data -> status)
+		if (!cmds[i]-> to_not_exec && WIFSIGNALED(data -> status)
 			&& data -> status == SIGINT && nl)
 			print_new_line(&nl);
 	}
