@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/19 00:01:17 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:36:30 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 
-	if (isatty(STDIN_FILENO) == 0)
-		return (1);
 	init_struct(&data);
 	if (argc == 2)
 		populate(data, argv[1]);

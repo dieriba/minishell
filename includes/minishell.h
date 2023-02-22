@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/22 05:30:41 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:52:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ void	back_to_space(char **tab);
 void	update_list_args(
 			t_data *data, t_node **args_expands, char *args, int *len);
 void	free_tabs_args(t_star **tabs);
-void	expand_args(t_data *data, t_cmd *cmd);
+void	expand_args(t_cmd *cmd);
 size_t	copy_slash(char *to_clean, char *res, size_t *v);
 size_t	copy_expands_in_str(char *res, char quote, t_node **node);
 size_t	slash_len(char *to_clean, size_t i, size_t *len);

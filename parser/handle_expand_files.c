@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 03:40:35 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/20 16:51:04 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:51:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,23 @@ t_star	**find_pattern(t_data *data, char *args, char ***tab_arg)
 	return (star_tabs);
 }
 
-int	set_args_(t_data *data, t_args *args, char **cmd_args)
+int	set_args_(t_cmd *cmd, t_args *args, char **cmd_args, int len)
 {
 	int		i;
 	char	**tabs_arg;
-	int		len;
 	int		found;
 
 	i = -1;
-	len = 0;
 	found = 0;
 	while (cmd_args[++i])
 	{
-		if (glob_args(data, &cmd_args[i], 0, 0))
+		if (glob_args(cmd -> data, &cmd_args[i], 0, 0))
 		{
-			cmd_args[i] = clean_lines(data, cmd_args[i], 2);
-			args -> args = find_pattern(data, cmd_args[i], &tabs_arg);
-			found = fill_node_args(&len, data, args);
+			cmd_args[i] = clean_lines(cmd -> data, cmd_args[i], 2);
+			if (i == 0)
+				cmd -> cmd = cmd_args[i];
+			args -> args = find_pattern(cmd -> data, cmd_args[i], &tabs_arg);
+			found = fill_node_args(&len, cmd -> data, args);
 			if (len < 0)
 				break ;
 			free_tabs_args(args -> args);
@@ -88,7 +88,7 @@ int	set_args_(t_data *data, t_args *args, char **cmd_args)
 			if (found)
 				continue ;
 		}
-		update_list_args(data, &args -> args_expands, cmd_args[i], &len);
+		update_list_args(cmd -> data, &args -> args_expands, cmd_args[i], &len);
 	}
 	return (len);
 }
@@ -117,7 +117,7 @@ void	new_expanded_tab(t_cmd *cmd, t_node **args_expands, int len)
 	free_list(NULL, args_expands);
 }
 
-void	expand_args(t_data *data, t_cmd *cmd)
+void	expand_args(t_cmd *cmd)
 {
 	int		len;
 	char	*directory;
@@ -128,7 +128,7 @@ void	expand_args(t_data *data, t_cmd *cmd)
 		return ;
 	ft_free_elem((void **)&directory);
 	args.args_expands = NULL;
-	len = set_args_(data, &args, cmd -> args);
+	len = set_args_(cmd, &args, cmd -> args, 0);
 	if (len > 1)
 		new_expanded_tab(cmd, &args.args_expands, len);
 	else if (args.args_expands)

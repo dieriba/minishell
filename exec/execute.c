@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/22 05:11:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:52:22 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	run_cmd(t_cmd *cmd)
 int	verify_cmd(t_data *data, t_cmd *cmd)
 {
 	if (glob_character_(data, cmd -> args))
-		expand_args(data, cmd);
+		expand_args(cmd);
 	if (cmd -> to_not_calloc == 0)
 	{
 		clean_files(cmd);
