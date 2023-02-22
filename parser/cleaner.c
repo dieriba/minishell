@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 18:30:25 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/20 16:49:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:33:44 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,20 @@ void	expand_and_clean(char *to_clean, char *res, t_node *expands, int skip)
 {
 	size_t	i;
 	size_t	j;
-	t_node	*node;
 
-	node = expands;
 	i = -1;
 	j = 0;
 	while (to_clean[++i])
 	{
 		if ((to_clean[i] == '"' && valid_double(to_clean, i)))
-			j += copy_expands_quote(to_clean, &res[j], &i, &node);
+			j += copy_expands_quote(to_clean, &res[j], &i, &expands);
 		else if (to_clean[i] == '\'')
 			j += copy_single_quote(to_clean, &res[j], &i);
 		else if (to_clean[i] == '\\')
 			j += copy_slash(to_clean, &res[j], &i);
 		else if (skip && to_clean[i] == '$' && !check_dollars(to_clean[i + 1]))
 		{
-			j += copy_expands_in_str(&res[j], to_clean[i], &node);
+			j += copy_expands_in_str(&res[j], to_clean[i], &expands);
 			i += skip_next_stop(&to_clean[i]) - 1;
 		}
 		else if ((to_clean[i] != '\'' && to_clean[i] != '"')

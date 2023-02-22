@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 19:22:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:30:41 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@
 # define ALIAS_AUTHORIZED "._!-"
 /*-----------------GLOBAL_CHECK-----------------*/
 
-# define MALLOC_ERR "Sorry, no enough memory left for you."
-# define ENV_ERR "Sorry, no environnement variable avaible right now."
-# define PIPE_INIT_ERROR "Pipe initialization  error"
+# define MALLOC_ERR "Sorry, not enough memory left for you."
+# define ENV_ERR "Sorry, no environment variable avaible right now."
+# define PIPE_INIT_ERROR "Pipe initialization error"
 # define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
 # define TOKEN_EOF_ERR "bash: syntax error: unexpected end of file"
 # define AMB_REDIRECT "bash : ambiguous redirect"
@@ -322,6 +322,7 @@ int		glob_character_(t_data *data, char **tab);
 int		glob_args(t_data *data, char **line, int dollars, int quotes);
 int		fill_node_args(int *len, t_data *data, t_args *args);
 int		skip_and_check_glob(char *to_parse, size_t *i, int quote, char to_find);
+int		find_other_half(char *line, int to_find, size_t i);
 void	rescue_command(t_data *data, char **rescue_cmd, int err);
 char	*is_shell_variable(t_data *data, char *line);
 char	*cleaner(t_data *data, char *to_clean);

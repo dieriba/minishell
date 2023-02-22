@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/20 17:25:49 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:02:35 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	loop_through_child(t_data *data, t_cmd **cmds)
 
 	i = -1;
 	nl = 1;
-	(void)nl;
 	while (cmds[++i])
 	{
 		if (cmds[i]-> waited)

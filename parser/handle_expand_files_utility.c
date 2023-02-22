@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 01:36:13 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/20 16:22:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:12:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	glob_args(t_data *data, char **line, int dollars, int quotes)
 {
 	size_t	i;
 	int		to_find;
-	
+
 	i = -1;
 	to_find = 0;
 	while ((*line)[++i])

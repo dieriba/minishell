@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/20 17:24:47 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:11:40 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	executing(t_data *data, t_cmd **cmds)
 		if (res == 0 && is_subshell(data, cmds, &i) == 0)
 			execute_routine(data, cmds[i]);
 		if (cmds[i] == NULL || ((data -> subshell && cmds[i + 1])
-			&& cmds[i + 1]-> break_cmd))
+				&& cmds[i + 1]-> break_cmd))
 			break ;
 	}
 	clean_s_pipes(data);

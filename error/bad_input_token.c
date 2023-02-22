@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 01:29:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/20 16:40:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:08:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_token_length(char *to_parse)
 		len++;
 	if (len > 1 && to_parse[i - 1] == ';')
 		return (1);
-	else if (len > 2)
+	else if (len > 2 || (len == 1 && to_parse[0] == '&'))
 		return (1);
 	return (0);
 }

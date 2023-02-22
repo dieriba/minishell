@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 01:47:46 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:34:53 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:19:13 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,16 @@ void	back_to_space(char **tab)
 				tab[i][j] *= -1;
 		}
 	}
+}
+
+int	find_other_half(char *line, int to_find, size_t i)
+{
+	while (line[++i])
+	{
+		if ((to_find == '"' && line[i] == '"') && valid_double(line, i))
+			return (1);
+		else if (to_find == '\'' && line[i] == '\'')
+			return (1);
+	}
+	return (0);
 }

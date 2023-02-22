@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 15:06:11 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/22 05:02:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ void	wait_command_before(t_cmd **cmds, t_cmd *cmd)
 		return ;
 	while (j < i)
 	{
-		if (waitpid(cmds[j]-> pid, &cmds[j]-> exit_status, 0) < 0
-			&& errno != ECHILD)
-			print_err_and_exit(cmd -> data, NULL, "Error with waitpid", 1);
-		cmds[j]-> waited = 1;
+		if (!cmds[j]-> waited && !cmds[j]-> built_in)
+		{
+			if (waitpid(cmds[j]-> pid, &cmds[j]-> exit_status, 0) < 0
+				&& errno != ECHILD)
+				print_err_and_exit(cmd -> data, NULL, "Error with waitpid", 1);
+			cmds[j]-> waited = 1;
+		}
 		j++;
 	}
 }
@@ -76,12 +79,14 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 		wait_command_before(data -> cmds, cmd);
 	if (((!status && pid_ret) && pipes))
 	{
+		cmd -> prev_cmd -> waited = 1;
 		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 		if (WIFEXITED(status))
 			data -> status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			data -> status = status;
+		cmd -> prev_cmd -> exit_status = status;
 		data -> last_exec_stat = (data -> status > 0);
 		status = to_exec_or_not(cmd, status, data -> status, 0);
 	}
