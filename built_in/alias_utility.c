@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:10:28 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/07 00:40:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:32:29 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	handle_alias_node(t_data *data, t_cmd *cmd, char *res, char *line)
 		if (saved_stdout < 0 || saved_stderr < 0)
 			print_err_and_exit(data, NULL, "syscall", 1);
 		dup_and_close(data, STDERR_FILENO, STDOUT_FILENO, STDERR_FILENO);
-		if (ft_printf("bash : alias: %s : not found\n", line) < 0)
+		if (ft_printf("minishell : alias: %s : not found\n", line) < 0)
 			print_err_and_exit(data, NULL, "syscall", 1);
 		dup_and_close(data, saved_stdout, STDOUT_FILENO, saved_stdout);
 		dup_and_close(data, saved_stderr, STDERR_FILENO, saved_stderr);

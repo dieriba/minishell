@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:02:28 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 17:49:15 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	env(t_data *data, t_cmd *cmd)
 		if (ft_putendl_fd(tab[i], fd) < 0)
 		{
 			cmd -> exit_status = 1;
-			return (print_err_built_in(cmd, "bash", 1));
+			return (print_err_built_in(cmd, "minishell", 1));
 		}
 	}
 	if (cmd && cmd -> last_in && cmd -> last_in -> type == IN)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:23:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/23 18:27:11 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 12:17:42 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ void	lets_read(t_data *data)
 {
 	char	*rescue_cmd;
 	int		err;
-
+	
 	rescue_cmd = NULL;
 	while (1)
 	{
 		directory(data);
-		/*GNL*/
 		if (isatty(STDIN_FILENO))
 			data -> cp_to_parse = readline(data -> curr_dir.pwd);
+		else
+			data -> cp_to_parse = get_next_line(STDIN_FILENO, 1);
 		if (ft_strlen(data -> cp_to_parse) > 0)
 		{
 			err = valid_quotes(data, data -> cp_to_parse);

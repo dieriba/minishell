@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:28:59 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/06 22:58:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	close_all(t_data *data, t_cmd *cmd)
 {
 	if (cmd -> last_in && cmd -> last_in -> type == IN)
-		close_fd(cmd -> data, "bash4", &cmd -> last_in -> fd);
+		close_fd(cmd -> data, "minishell4", &cmd -> last_in -> fd);
 	if (cmd -> last_out)
-		close_fd(data, "bash5", &cmd -> last_out -> fd);
+		close_fd(data, "minishell5", &cmd -> last_out -> fd);
 	close_both_pipes(data, data -> pipes, &data -> inited);
 	clean_s_pipes(data);
-	close_fd(data, "bash6", &data -> prev_pipes);
+	close_fd(data, "minishell6", &data -> prev_pipes);
 	close_all_pipes(data, &data -> here_docs, 1, 0);
 }
 
@@ -44,11 +44,11 @@ void	open_files(t_data *data, t_cmd *cmd, t_files *files)
 	type = files -> type;
 	files -> fd = open(files -> files, files -> flags, 0644);
 	if (files -> fd == -1)
-		print_err_and_exit(data, NULL, "bash", 1);
+		print_err_and_exit(data, NULL, "minishell", 1);
 	if (last_in && type == IN && files -> files != last_in -> files)
-		close_fd(data, "bash", &files -> fd);
+		close_fd(data, "minishell", &files -> fd);
 	else if (last_out && type != IN && files -> files != last_out -> files)
-		close_fd(data, "bash", &files -> fd);
+		close_fd(data, "minishell", &files -> fd);
 }
 
 void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab)
@@ -68,7 +68,7 @@ void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab)
 		else if ((type == OUT || type == APPEND) && tab[i]-> amb == ALL_FLAGS)
 		{	
 			if (access(tab[i]-> files, F_OK))
-				print_err_and_exit(data, NULL, "bash", 1);
+				print_err_and_exit(data, NULL, "minishell", 1);
 		}
 		else if (type != DOC)
 			open_files(data, cmd, tab[i]);

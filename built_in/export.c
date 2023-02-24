@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 06:30:18 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 17:51:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	export_error(t_data *data, char *line)
 	if (saved_stdout < 0 || saved_stderr < 0)
 		print_err_and_exit(data, NULL, "syscall", 1);
 	dup_and_close(data, STDERR_FILENO, STDOUT_FILENO, STDERR_FILENO);
-	if (ft_printf("bash : export: %s : not a valid identifier\n", line) < 0)
+	if (ft_printf("minishell : export: %s : not a valid identifier\n", line) < 0)
 		print_err_and_exit(data, NULL, "syscall", 0);
 	dup_and_close(data, saved_stdout, STDOUT_FILENO, saved_stdout);
 	dup_and_close(data, saved_stderr, STDERR_FILENO, saved_stderr);
@@ -102,7 +102,7 @@ int	export(t_cmd *cmd, t_env *env)
 	len = ft_tab_len(cmd -> args);
 	if (len > 1 && (!ft_strcmp(cmd -> stop, "|")
 			|| !ft_strcmp(cmd -> prev_stop, "|")))
-		return (print_err_built_in(cmd, "bash", -1));
+		return (print_err_built_in(cmd, "minishell", -1));
 	if (len == 1 && print_export(cmd -> data, cmd, env -> tab) == 0)
 		return (1);
 	else if (len > 1 && ft_strcmp(cmd -> stop, "|"))

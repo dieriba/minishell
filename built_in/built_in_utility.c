@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:06:45 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 17:43:09 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 12:01:03 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ int	open_check_files_built_in(t_cmd *cmd, t_files **tab)
 		else if ((type == OUT || type == APPEND) && tab[i]-> amb == ALL_FLAGS)
 		{	
 			if (access(tab[i]-> files, F_OK))
-				return (print_err_built_in(NULL, "bash", 1));
+				return (print_err_built_in(NULL, "minishell", 1));
 		}
 		else if (type != DOC && open_files_built_in(cmd, tab[i]))
-			return (print_err_built_in(NULL, "bash", 1));
+			return (print_err_built_in(NULL, "minishell", 1));
 	}
-	cmd -> exit_status = 1;
+	cmd -> exit_status = 0;
 	return (0);
 }

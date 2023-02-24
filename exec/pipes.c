@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:28:49 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/20 17:24:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	close_all_pipes(t_data *data, t_doc **head, int read_, int write_)
 	while (node)
 	{
 		if (read_)
-			close_fd(data, "bash", &node -> pipes[0]);
+			close_fd(data, "minishell", &node -> pipes[0]);
 		if (write_)
-			close_fd(data, "bash", &node -> pipes[1]);
+			close_fd(data, "minishell", &node -> pipes[1]);
 		node = node -> next;
 	}
 }
@@ -31,8 +31,8 @@ void	close_both_pipes(t_data *data, int pipes[2], int *inited)
 {
 	if (*inited)
 	{
-		close_fd(data, "bash", &pipes[0]);
-		close_fd(data, "bash", &pipes[1]);
+		close_fd(data, "minishell", &pipes[0]);
+		close_fd(data, "minishell", &pipes[1]);
 		(*inited) -= 2;
 	}
 }
@@ -46,14 +46,12 @@ void	init_pipes(t_data *data, int pipes[2], int *inited)
 
 void	handle_pipes(t_data *data, t_cmd *cmd)
 {
-	if (data -> s_pipes && data -> prev_pipes == -1
-		&& !ft_strcmp(cmd -> prev_stop, "|"))
-		close_fd(data, "bash", &cmd -> read_end -> s_pipes[0]);
-	close_fd(data, "bash", &data -> prev_pipes);
+	(void)cmd;
+	close_fd(data, "minishell", &data -> prev_pipes);
 	if (data -> inited)
 	{
 		data -> prev_pipes = data -> pipes[0];
-		close_fd(data, "bash", &data -> pipes[1]);
+		close_fd(data, "minishell", &data -> pipes[1]);
 	}
 	data -> inited = 0;
 }

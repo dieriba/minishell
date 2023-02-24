@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/22 05:02:27 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 12:04:46 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,38 +95,12 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 	return (status);
 }
 
-void	init_s_pipes(t_data *data, t_cmd **cmds, int i)
-{
-	t_s_pipes	*node;
-	int			p_num;
-
-	p_num = 0;
-	node = ft_calloc(sizeof(t_s_pipes), 1);
-	is_error(data, node, MALLOC_ERR, 0);
-	if (pipe(node -> s_pipes) < 0)
-		print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 0);
-	while (cmds[i])
-	{
-		p_num += cmds[i]-> to_fork + cmds[i]-> p_close;
-		cmds[i]-> write_end = node;
-		if (p_num == 0)
-			break ;
-		i++;
-	}
-	cmds[++i]-> read_end = node;
-	if (data -> s_pipes == NULL)
-		data -> s_pipes = node;
-	else
-	{
-		node -> next = data -> s_pipes;
-		data -> s_pipes = node;
-	}
-}
-
 int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
 {
 	int			status;
+	t_cmd		*next_cmd;
 
+	next_cmd = cmds[*i + 1];
 	status = 0;
 	if ((*i) > 0 && cmds[(*i) - 1]-> p_close)
 	{
@@ -137,11 +111,12 @@ int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
 	else if ((*i) > 0)
 		status = get_status(
 				data, cmds[(*i)], cmds[(*i) - 1]-> pid, cmds[(*i)]-> prev_stop);
-	if (!status && cmds[(*i)]-> to_fork == 0
-		&& cmds[(*i)]-> p_close == 0 && !ft_strcmp("|", stop))
+	if ((!status && !cmds[(*i)]-> to_fork)
+		&& ((!cmds[(*i)]-> p_close
+				&& !ft_strcmp("|", stop)) && !next_cmd -> p_open))
 		init_pipes(data, data -> pipes, &data -> inited);
-	else if (status == 0 && pipe_par(&cmds[(*i)]) == 0)
-		init_s_pipes(data, cmds, (*i));
+	else if (!status)
+		init_s_pipes(cmds, (*i), ft_strcmp("|", stop), pipe_par(&cmds[(*i)]));
 	if (status > 0 && cmds[(*i)]-> p_open)
 		(*i) = end_cmd_par(cmds, *i);
 	return (status);

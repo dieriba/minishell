@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:30:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/15 00:34:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	dup_(t_data *data, int fd, int old_fd)
 {
 	if (dup2(fd, old_fd) < 0)
-		print_err_and_exit(data, NULL, "bash1", 1);
+		print_err_and_exit(data, NULL, "minishell1", 1);
 }
 
 void	dup_and_close(t_data *data, int fd, int old_fd, int to_close)
 {
 	if (dup2(fd, old_fd) < 0)
-		print_err_and_exit(data, NULL, "bash", 1);
-	close_fd(data, "bash", &to_close);
+		print_err_and_exit(data, NULL, "minishell", 1);
+	close_fd(data, "minishell", &to_close);
 }
 
 void	set_out_redirection(t_cmd *cmd)
@@ -55,10 +55,10 @@ void	set_in_redirection(t_cmd *cmd)
 				cmd -> data -> here_docs, cmd -> last_in -> files);
 		dup_(data, cmd -> last_in -> fd, STDIN_FILENO);
 	}
-	else if (cmd -> read_end && pipes == 0 && prev_cmd -> p_close)
-		dup_(data, cmd -> read_end -> s_pipes[0], STDIN_FILENO);
 	else if (pipes == 0 && data -> prev_pipes > 0)
 		dup_(data, data -> prev_pipes, STDIN_FILENO);
+	else if (cmd -> read_end)
+		dup_(data, cmd -> read_end -> s_pipes[0], STDIN_FILENO);
 }	
 
 void	set_redirections_files(t_cmd *cmd)

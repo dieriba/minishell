@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 05:36:27 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/14 00:21:00 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	clean_here_doc(t_data *data, t_doc **head)
 	node = *head;
 	while (node)
 	{
-		close_fd(data, "bash", &node -> pipes[0]);
-		close_fd(data, "bash", &node -> pipes[1]);
+		close_fd(data, "minishell", &node -> pipes[0]);
+		close_fd(data, "minishell", &node -> pipes[1]);
 		next = node -> next;
 		ft_free_elem((void **)&node);
 		node = next;

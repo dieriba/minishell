@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 07:24:38 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 17:11:34 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_err_exit_built_in(t_data *data, t_cmd *cmd, char *err, int fork)
 	else if (fork == 0)
 	{
 		if (ft_putendl_fd(err, STDERR_FILENO) < 0)
-			print_err_built_in(cmd, "bash", 1);
+			print_err_built_in(cmd, "minishell", 1);
 		return ;
 	}
 	close_all(data, cmd);

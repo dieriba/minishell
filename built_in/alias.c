@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:11:03 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:46:40 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:02 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	alias(t_data *data, t_cmd *cmd)
 	len = ft_tab_len(cmd -> args);
 	if (len > 1 && ((!ft_strcmp(cmd -> stop, "|")
 				|| !ft_strcmp(cmd -> prev_stop, "|"))))
-		return (print_err_built_in(cmd, "bash", -1));
+		return (print_err_built_in(cmd, "minishell", -1));
 	if (len == 1)
 		return (print_alias(data, cmd));
 	else if (len > 1)

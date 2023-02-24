@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/22 05:52:07 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,17 @@
 # define MALLOC_ERR "Sorry, not enough memory left for you."
 # define ENV_ERR "Sorry, no environment variable avaible right now."
 # define PIPE_INIT_ERROR "Pipe initialization error"
-# define TOKEN_SYNTAX_ERR "bash: syntax error near unexpected token : "
-# define TOKEN_EOF_ERR "bash: syntax error: unexpected end of file"
-# define AMB_REDIRECT "bash : ambiguous redirect"
-# define MISSING_QUOTES "bash : missing end quotes"
+# define TOKEN_SYNTAX_ERR "minishell: syntax error near unexpected token : "
+# define TOKEN_EOF_ERR "minishell: syntax error: unexpected end of file"
+# define AMB_REDIRECT "minishell : ambiguous redirect"
+# define MISSING_QUOTES "minishell : missing end quotes"
 # define GET_CWD_ERR "getcwd: cannot access parent directories"
 # define PWD_ERROR "pwd: error retrieving current directory: "
 # define CHDIR_ERROR "chdir: error retrieving current directory: "
 # define LOG_FILE "log_alias"
 # define ALIAS_FILENAME "populate_aliases"
-# define EXIT_ARGS "bash : exit: too many arguments"
-# define EXIT_NUM_ARGS "bash: exit: numeric argument required"
+# define EXIT_ARGS "minishell : exit: too many arguments"
+# define EXIT_NUM_ARGS "minishell: exit: numeric argument required"
 
 enum e_type
 {
@@ -400,6 +400,7 @@ void	clean_s_pipes(t_data *data);
 void	set_in_redirection(t_cmd *cmd);
 void	executing(t_data *data, t_cmd **cmds);
 void	run_cmd(t_cmd *cmd);
+void	init_s_pipes(t_cmd **cmds, int i, int in_pipe, int out_pipe);
 void	wait_all_child(t_data *data, t_cmd **cmds);
 void	open_check_files(t_data *data, t_cmd *cmd, t_files **tab);
 void	close_fd(t_data *data, char *str, int *fd);

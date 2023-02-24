@@ -1,7 +1,1 @@
-contrl c dans un heredoc
 259 sigcore dumped
-env >dev/full -> 125
-yes | (head && head)
-reset avec input vide
-echo lol > file1
-heredoc pipe limit

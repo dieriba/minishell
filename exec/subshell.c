@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 02:21:14 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 18:49:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ int	is_subshell(t_data *data, t_cmd **cmds, int *i)
 		data -> subshell_pid = fork();
 		cmds[(*i)]-> pid = data -> subshell_pid;
 		if (data -> subshell_pid == -1)
-			print_err_and_exit(data, NULL, "bash", 1);
+			print_err_and_exit(data, NULL, "minishell", 1);
 		if (data -> subshell_pid == 0)
 			executing(data, &cmds[(*i)]);
 		data -> subshell--;
 		(*i) = j;
 		if (cmds[j] && cmds[j + 1])
 			cmds[j + 1]-> break_cmd = 0;
-		close_fd(data, "bash", &data -> prev_pipes);
+		close_fd(data, "minishell", &data -> prev_pipes);
 		return (1);
 	}
 	return (0);

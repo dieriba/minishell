@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:39:54 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/18 23:45:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	init_struct(t_data **data)
 	(*data)-> alias = ft_calloc(sizeof(t_alias), 1);
 	is_error((*data), (*data)-> alias, MALLOC_ERR, 0);
 	(*data)-> curr_dir.dir_name = getcwd(NULL, 0);
-	is_error(*data, (*data)-> curr_dir.dir_name, "bash", 1);
+	is_error(*data, (*data)-> curr_dir.dir_name, "minishell", 1);
 	(*data)-> curr_dir.path = ft_strrchr((*data)-> curr_dir.dir_name, '/') + 1;
 	(*data)-> prev_pipes = -1;
 	handle_signals();

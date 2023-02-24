@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 04:28:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/02 17:36:26 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	clean_func(t_data *data, char **line, int fd)
 	get_next_line(fd, 0);
 	if (line)
 		ft_free_elem((void **)line);
-	close_fd(data, "bash17", &fd);
+	close_fd(data, "minishell17", &fd);
 }
 
 void	read_file(t_data *data, int fd)

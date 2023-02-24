@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/22 05:52:22 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/02/24 11:39:56 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	run_cmd(t_cmd *cmd)
 			if (access(cmd -> paths[i], X_OK) != -1)
 				execve(cmd -> paths[i], cmd -> args, cmd -> data -> envp);
 		}
-		print_err_and_exit(cmd -> data, cmd, "bash", 1);
+		print_err_and_exit(cmd -> data, cmd, "minishell", 1);
 	}
 	else
 	{
 		if (access(cmd -> cmd, X_OK) != -1)
 			execve(cmd -> cmd, cmd -> args, cmd -> data -> envp);
-		print_err_and_exit(cmd -> data, cmd, "bash", 1);
+		print_err_and_exit(cmd -> data, cmd, "minishell", 1);
 	}
 }
 
@@ -78,12 +78,12 @@ void	execute_routine(t_data *data, t_cmd *cmd)
 
 	if (data -> s_pipes && !ft_strcmp(cmd -> prev_stop, "|")
 		&& cmd -> prev_cmd -> p_close)
-		close_fd(data, "bash", &cmd -> read_end -> s_pipes[1]);
+		close_fd(data, "minishell", &cmd -> read_end -> s_pipes[1]);
 	if (!built_in(data, cmd, 0))
 	{
 		pid_ret = fork();
 		if (pid_ret < 0)
-			print_err_and_exit(data, NULL, "bash", 1);
+			print_err_and_exit(data, NULL, "minishell", 1);
 		if (pid_ret == 0)
 			forking(cmd);
 		cmd -> pid = pid_ret;
