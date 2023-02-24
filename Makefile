@@ -107,6 +107,7 @@ all:			$(MINISHELL)
 				$(CC) -g3 $(CFLAGS) -c $< -o $@
 
 $(MINISHELL):	${OBJS}
+				mkdir -p lib
 				make -C ./libft/get_next_line
 				cp ./libft/get_next_line/libgnl.a ./lib
 				make -C ./libft/ft_printf
