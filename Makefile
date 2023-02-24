@@ -126,6 +126,7 @@ clean:
 			
 fclean:			clean
 				make -C ./libft/ft_printf fclean
+				make -C ./libft/get_next_line fclean
 				make -C ./libft/ fclean
 				rm -rf $(MINISHELL) ./lib/libprintf.a ./lib/libft.a ./lib/libgnl.a
 
