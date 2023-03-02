@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:23:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/24 12:17:42 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/02 04:10:11 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	lets_read(t_data *data)
 {
 	char	*rescue_cmd;
 	int		err;
-	
+
 	rescue_cmd = NULL;
 	while (1)
 	{

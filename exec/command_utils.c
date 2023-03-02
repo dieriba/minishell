@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:37:31 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/24 12:04:46 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/02 03:57:54 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	prepare_next_step(t_data *data, t_cmd **cmds, char *stop, int *i)
 				data, cmds[(*i)], cmds[(*i) - 1]-> pid, cmds[(*i)]-> prev_stop);
 	if ((!status && !cmds[(*i)]-> to_fork)
 		&& ((!cmds[(*i)]-> p_close
-				&& !ft_strcmp("|", stop)) && !next_cmd -> p_open))
+				&& !ft_strcmp("|", stop)) && (next_cmd && !next_cmd -> p_open)))
 		init_pipes(data, data -> pipes, &data -> inited);
 	else if (!status)
 		init_s_pipes(cmds, (*i), ft_strcmp("|", stop), pipe_par(&cmds[(*i)]));
