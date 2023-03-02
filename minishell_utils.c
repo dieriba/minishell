@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:23:12 by dtoure            #+#    #+#             */
-/*   Updated: 2023/03/02 04:10:11 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/02 04:43:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,17 @@ void	lets_exec(t_data *data, int err)
 		ft_free_elem((void **)&data -> cp_to_parse);
 }
 
+void	ft_get_line(t_data *data)
+{
+	if (isatty(STDIN_FILENO))
+		data -> cp_to_parse = readline(data -> curr_dir.pwd);
+	else
+	{
+		data -> cp_to_parse = get_next_line(STDIN_FILENO, 1);
+		get_next_line(STDIN_FILENO, 0);
+	}
+}
+
 void	lets_read(t_data *data)
 {
 	char	*rescue_cmd;
@@ -60,10 +71,7 @@ void	lets_read(t_data *data)
 	while (1)
 	{
 		directory(data);
-		if (isatty(STDIN_FILENO))
-			data -> cp_to_parse = readline(data -> curr_dir.pwd);
-		else
-			data -> cp_to_parse = get_next_line(STDIN_FILENO, 1);
+		ft_get_line(data);
 		if (ft_strlen(data -> cp_to_parse) > 0)
 		{
 			err = valid_quotes(data, data -> cp_to_parse);
@@ -73,6 +81,7 @@ void	lets_read(t_data *data)
 		}
 		else if (data -> cp_to_parse == NULL)
 			free_all(data, 130);
-		ft_free_elem((void **)&data -> cp_to_parse);
+		if (!isatty(STDIN_FILENO))
+			free_all(data, data -> status);
 	}
 }
