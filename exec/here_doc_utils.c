@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 19:12:57 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/24 11:40:51 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/09 03:51:23 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ int	open_pipes(t_data *data, t_doc **head)
 			print_err_and_exit(data, NULL, PIPE_INIT_ERROR, 0);
 		node = node -> next;
 	}
-	g_collector = ft_calloc(sizeof(t_collector), 1);
-	is_error(data, g_collector, MALLOC_ERR, 0);
-	g_collector -> data = data;
 	return (0);
 }
 

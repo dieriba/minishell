@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:39:54 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/09 04:12:37 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	directory(t_data *data)
 	{
 		data -> curr_dir.pwd = ft_strjoin(
 				GREEN"➜ "RESET_COLOR CYAN, path, " "RESET_COLOR, 1);
-		ft_free_elem((void *)&tmp);
+		ft_free_elem((void **)&tmp);
 	}
 	else if (data -> status && status != data -> status)
 	{
 		(data -> curr_dir.pwd) = ft_strjoin(
 				RED"➜ "RESET_COLOR CYAN, path, " "RESET_COLOR, 1);
-		ft_free_elem((void *)&tmp);
+		ft_free_elem((void **)&tmp);
 	}
 	is_error(data, data -> curr_dir.pwd, MALLOC_ERR, 0);
 	data -> curr_dir.new_dir = 0;

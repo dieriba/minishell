@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 18:52:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/24 11:45:19 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/09 03:35:20 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	loop_through_child(t_data *data, t_cmd **cmds)
 			print_err_and_exit(data, NULL, "Error with waitpid", 1);
 		else if ((!cmds[i]-> pid && cmds[i]-> built_in) && cmds[i]-> executed)
 			data -> status = cmds[i]-> exit_status;
-		if (!cmds[i]-> to_not_exec && WIFSIGNALED(data -> status))
+		if (!cmds[i]-> to_not_exec && (data -> status != BROKEN_PIPE
+				&& WIFSIGNALED(data -> status)))
 			print_new_line(&nl);
 	}
 	if (cmds[--i]-> built_in && cmds[i]-> pid)
@@ -55,7 +56,11 @@ void	wait_all_child(t_data *data, t_cmd **cmds)
 	if (!built_in && WIFEXITED(data -> status))
 		data -> status = WEXITSTATUS(data -> status);
 	else if (!built_in && WIFSIGNALED(data -> status))
+	{
 		data -> status = 128 + data -> status;
+		if (data -> status > 255)
+			data -> status = data -> status - 128;
+	}
 	handle_signals();
 	if (data -> subshell)
 		free_all(data, data -> status);

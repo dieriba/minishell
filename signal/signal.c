@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 03:35:55 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/11 16:49:21 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/09 04:10:07 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 void	new_line(int signal)
 {
+	t_data	*data;
+
+	data = (t_data *)g_collector -> data;
 	if (signal == SIGINT)
 	{
 		ft_putchar_fd('\n', 0);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		data -> status = 130;
 	}
 }
 

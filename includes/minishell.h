@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 22:51:22 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/24 11:33:12 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/09 03:27:45 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 # define MAX_LEN_TOKEN 2
 # define EXCLUDE_TOKEN "{[]};"
 # define ALIAS_AUTHORIZED "._!-"
+# define BROKEN_PIPE 13
 /*-----------------GLOBAL_CHECK-----------------*/
 
 # define MALLOC_ERR "Sorry, not enough memory left for you."

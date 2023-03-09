@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 04:53:07 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/24 11:11:39 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/09 03:55:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,8 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 2)
 		populate(data, argv[1]);
 	init_env(data, envp);
+	g_collector = ft_calloc(sizeof(t_collector), 1);
+	is_error(data, g_collector, MALLOC_ERR, 0);
+	g_collector -> data = data;
 	lets_read(data);
 }

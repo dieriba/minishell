@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/24 11:39:56 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/09 03:53:16 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	forking(t_cmd *cmd)
 	struct sigaction	ctrl_c;
 	struct sigaction	sigquit;
 
+	ft_free_elem((void **)&g_collector);
 	g_collector = ft_calloc(sizeof(t_collector), 1);
 	is_error(cmd -> data, g_collector, MALLOC_ERR, 0);
 	g_collector -> data = cmd;
