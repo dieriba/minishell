@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/24 12:01:24 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/17 09:46:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	without_new_line(char *to_check)
 	size_t	i;
 
 	i = 0;
-	if (to_check[0] != '-')
+	if (to_check[0] != '-' || to_check[1] == 0)
 		return (1);
 	while (to_check[++i])
 	{

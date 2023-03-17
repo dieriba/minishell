@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 04:25:17 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/22 05:32:36 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/17 09:22:05 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*clean_lines(t_data *data, char *line, int expand)
 					|| (line[i] == '\\'))
 				&& find_other_half(line, line[i], i)))
 			return (clean_(data, line, 0));
-		else if (expand == 0 && line[i] == '\\')
+		else if (expand == 0 && (line[i] == '\\' || line[i] == '\''))
 			return (clean_(data, line, 0));
 		else if (expand == 2 && (((line[i] == '"' && valid_double(line, i))
 					|| (line[i] == '\'' || line[i] == '\\'))

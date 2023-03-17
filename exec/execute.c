@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:58:19 by dtoure            #+#    #+#             */
-/*   Updated: 2023/03/09 03:53:16 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/17 10:06:24 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	run_cmd(t_cmd *cmd)
 {
 	size_t	i;
 
-	if (cmd -> cmd == NULL)
+	if (cmd -> cmd == NULL
+		|| (ft_strlen(cmd -> cmd) == 1 && cmd -> cmd[0] == '/'))
 		return ;
 	i = -1;
 	if (cmd -> no_path)
