@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:03:06 by dtoure            #+#    #+#             */
-/*   Updated: 2023/03/17 10:25:20 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/17 10:28:27 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ int	update_prompt(t_data *data, char *path)
 	tmp = getcwd(NULL, 0);
 	if (tmp == NULL && opt == 1)
 	{
-		print_err_built_in(NULL, CHDIR_ERROR GET_CWD_ERR, 1);
 		opt = 0;
-		return (1);
+		return (print_err_built_in(NULL, CHDIR_ERROR GET_CWD_ERR, 1));
 	}
 	ft_free_elem((void **)&tmp);
 	if (chdir(path) < 0 && tmp)
