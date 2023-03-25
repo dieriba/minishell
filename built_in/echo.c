@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
+/*   By: dtoure <dtoure@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 05:38:32 by dtoure            #+#    #+#             */
-/*   Updated: 2023/03/17 09:46:05 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/03/25 22:43:47 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	write_to_fd(t_cmd *cmd, char *line, int fd)
 	return (0);
 }
 
-int	without_new_line(char *to_check)
+int	no_line_opt(char *to_check)
 {
 	size_t	i;
 
@@ -37,13 +37,29 @@ int	without_new_line(char *to_check)
 	return (0);
 }
 
+void	without_new_line(char **to_check, int *i, int *nl)
+{
+	int	j;
+
+	(*nl) = no_line_opt(to_check[1]);
+	j = 1;
+	if (*nl == 0)
+	{
+		while (to_check[++j])
+		{
+			if (no_line_opt(to_check[j]))
+				break ;
+		}
+	}
+	(*i) = j;
+}
+
 int	write_args_(t_cmd *cmd, int fd)
 {
 	int	i;
 	int	nl;
 
-	nl = without_new_line(cmd -> args[1]);
-	i = (nl == 0) + 1;
+	without_new_line(cmd -> args, &i, &nl);
 	while (cmd -> args[i])
 	{
 		if (write_to_fd(cmd, cmd -> args[i], fd))
