@@ -35,7 +35,7 @@ int	ft_write_hex_adress(unsigned long int nbr, int *count)
 	base = "0123456789abcdef";
 	if (nbr == 0 && !(*(count)))
 	{
-		write(1, "(nil)", 5);
+		write(FD, "(nil)", 5);
 		return (5);
 	}
 	val = 2;
