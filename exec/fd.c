@@ -33,6 +33,18 @@ void	close_fd(t_data *data, char *str, int *fd)
 	(*fd) = -1;
 }
 
+void	close_all_fds(t_files **tab)
+{
+	size_t	i;
+
+	i = -1;
+	while (tab[++i])
+	{
+		if (tab[i]-> fd > 0)
+			close(tab[i]-> fd);
+	}
+}
+
 void	open_files(t_data *data, t_cmd *cmd, t_files *files)
 {
 	enum e_type	type;
@@ -44,7 +56,10 @@ void	open_files(t_data *data, t_cmd *cmd, t_files *files)
 	type = files -> type;
 	files -> fd = open(files -> files, files -> flags, 0644);
 	if (files -> fd == -1)
+	{
+		close_all_fds(cmd -> tab);
 		print_err_and_exit(data, NULL, "minishell", 1);
+	}
 	if (last_in && type == IN && files -> files != last_in -> files)
 		close_fd(data, "minishell", &files -> fd);
 	else if (last_out && type != IN && files -> files != last_out -> files)

@@ -75,9 +75,7 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 	pipes = ft_strcmp("|", stop);
 	if (pipes == 0)
 		status = pipe_exec(cmd -> prev_cmd);
-	else if (pipes)
-		wait_command_before(data -> cmds, cmd);
-	if (((!status && pid_ret) && pipes))
+	if ((!status && pid_ret) && pipes)
 	{
 		cmd -> prev_cmd -> waited = 1;
 		if (waitpid(pid_ret, &status, 0) < 0 && errno != ECHILD)
