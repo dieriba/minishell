@@ -44,6 +44,8 @@ void	wait_command_before(t_cmd **cmds, t_cmd *cmd)
 
 	i = -1;
 	j = -1;
+	if (cmd -> prev_cmd -> p_close)
+		return ;
 	while (cmds[++i])
 	{
 		if (cmds[i + 1] == cmd)
@@ -75,6 +77,8 @@ int	get_status(t_data *data, t_cmd *cmd, pid_t pid_ret, char *stop)
 	pipes = ft_strcmp("|", stop);
 	if (pipes == 0)
 		status = pipe_exec(cmd -> prev_cmd);
+	else if (pipes)
+		wait_command_before(data -> cmds, cmd);
 	if ((!status && pid_ret) && pipes)
 	{
 		cmd -> prev_cmd -> waited = 1;
