@@ -83,6 +83,6 @@ int	check_behind(char *to_parse, int j)
 		return ((to_parse[j + (j < 0)] == ')'));
 	else if ((!ft_strchr(DELIM_TOKEN_SP, to_parse[j])
 			&& to_parse[j] != '('))
-		seen = 0;
+	seen = 0;
 	return (seen);
 }

@@ -39,18 +39,8 @@ char	*find_alias_node(t_data *data, char *line)
 
 void	print_err_alias(t_data *data, char *line)
 {
-	int	saved_stdout;
-	int	saved_stderr;
-
-	saved_stderr = dup(STDERR_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
-	if (saved_stdout < 0 || saved_stderr < 0)
-		print_err_and_exit(data, NULL, "syscall", 1);
-	dup_and_close(data, STDERR_FILENO, STDOUT_FILENO, STDERR_FILENO);
 	if (ft_printf("minishell : alias: %s : invalaid alias name\n", line) < 0)
 		print_err_and_exit(data, NULL, "syscall", 0);
-	dup_and_close(data, saved_stdout, STDOUT_FILENO, saved_stdout);
-	dup_and_close(data, saved_stderr, STDERR_FILENO, saved_stderr);
 }
 
 void	alias_(t_data *data, t_cmd *cmd, char *line)
