@@ -6,7 +6,7 @@
 /*   By: dtoure <dtoure@student42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:13:47 by dtoure            #+#    #+#             */
-/*   Updated: 2023/02/22 05:06:25 by dtoure           ###   ########.fr       */
+/*   Updated: 2023/10/08 04:11:19 by dtoure           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int	check_in_front(char *to_parse, int token, size_t *j)
 
 	i = *j;
 	flags = -1;
+	if (to_parse[i] == '&' && (ft_strchr(DELIM_TOKEN_SP, to_parse[i + 1]) && to_parse[i + 1] != '&'))
+		return flags;
+	else if (to_parse[i] == '|' && (ft_strchr(DELIM_TOKEN_SP, to_parse[i + 1]) && to_parse[i + 1] != '|'))
+		return flags;
+
 	while (to_parse[++i] && ft_strchr(DELIM_TOKEN_SP, to_parse[i]))
 		;
 	while (to_parse[i] && ft_isspace(to_parse[i]))
